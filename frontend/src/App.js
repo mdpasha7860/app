@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo } from "react";
 import "@/App.css";
 import { QRCodeSVG } from "qrcode.react";
-import { Phone, MessageCircle, Search, ShoppingCart, ArrowLeft, User, Package, Truck, BookOpen, Sparkles, Calculator, Download, Shield, LogOut, Trash2, Plus, Minus, Home as HomeIcon, ClipboardList } from "lucide-react";
+import { Phone, MessageCircle, Search, ShoppingCart, ArrowLeft, User, Package, Truck, BookOpen, Sparkles, Calculator, Download, Shield, LogOut, Trash2, Plus, Minus, Home as HomeIcon, ClipboardList, Menu, RefreshCw, Settings, Headphones, X } from "lucide-react";
 
 // ============= CONFIG =============
 const CFG = {
@@ -86,6 +86,7 @@ export default function App() {
   const [category, setCategory] = useState("ALL");
   const [upi, setUpi] = useState(getUPI());
   const [adminUnlocked, setAdminUnlocked] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const t = T[lang];
 
@@ -184,43 +185,92 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-stone-50 font-body text-stone-900">
-      {/* HEADER */}
-      <header className="sticky top-0 z-40 bg-white border-b-2 border-stone-900 shadow-sm">
+      {/* HEADER - NAVY #0A1931 */}
+      <header className="sticky top-0 z-40 border-b-4 border-orange-500 shadow-lg" style={{ backgroundColor: "#0A1931" }}>
         <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between gap-3">
           <button data-testid="home-btn" onClick={() => go("home")} className="flex items-center gap-2 group">
-            <div className="w-10 h-10 bg-orange-600 text-white flex items-center justify-center font-black text-lg rounded-md shadow group-hover:rotate-3 transition">AS</div>
+            <div className="w-10 h-10 bg-orange-500 text-white flex items-center justify-center font-black text-lg rounded-md shadow group-hover:rotate-3 transition">AS</div>
             <div className="text-left">
-              <div className="font-display font-black text-lg leading-none tracking-tight">{CFG.brand}</div>
-              <div className="text-[10px] text-stone-500 uppercase tracking-widest">BuildMart</div>
+              <div className="font-display font-black text-lg leading-none tracking-tight text-white">{CFG.brand}</div>
+              <div className="text-[10px] text-orange-300 uppercase tracking-widest">BuildMart</div>
             </div>
           </button>
           <div className="flex items-center gap-2">
-            <div className="flex gap-1 border border-stone-300 rounded-full p-1 bg-stone-50">
+            <div className="flex gap-1 border border-white/20 rounded-full p-1 bg-white/5">
               {["EN", "HI", "TE"].map(l => (
                 <button
                   key={l}
                   data-testid={`lang-${l}-btn`}
                   onClick={() => setLang(l)}
-                  className={`text-xs font-bold px-2 py-1 rounded-full transition ${lang===l?'bg-stone-900 text-white':'text-stone-600 hover:bg-stone-200'}`}
+                  className={`text-xs font-bold px-2 py-1 rounded-full transition ${lang===l?'bg-orange-500 text-white':'text-white/70 hover:bg-white/10'}`}
                 >{l}</button>
               ))}
             </div>
-            <button data-testid="cart-header-btn" onClick={() => go("cart")} className="relative p-2 hover:bg-stone-100 rounded-full">
+            <button data-testid="cart-header-btn" onClick={() => go("cart")} className="relative p-2 hover:bg-white/10 rounded-full text-white">
               <ShoppingCart size={20} />
-              {cart.length > 0 && <span className="absolute -top-1 -right-1 bg-red-600 text-white text-[10px] rounded-full w-5 h-5 flex items-center justify-center font-bold">{cart.reduce((s,x)=>s+x.q,0)}</span>}
+              {cart.length > 0 && <span className="absolute -top-1 -right-1 bg-orange-500 text-white text-[10px] rounded-full w-5 h-5 flex items-center justify-center font-bold">{cart.reduce((s,x)=>s+x.q,0)}</span>}
             </button>
-            <button data-testid="orders-header-btn" onClick={() => go("orders")} className="p-2 hover:bg-stone-100 rounded-full hidden sm:inline-flex">
+            <button data-testid="orders-header-btn" onClick={() => go("orders")} className="p-2 hover:bg-white/10 rounded-full text-white hidden sm:inline-flex">
               <ClipboardList size={20} />
             </button>
             {user ? (
-              <button data-testid="user-btn" onClick={logout} className="hidden md:flex items-center gap-1 text-sm bg-stone-900 text-white px-3 py-1.5 rounded-full">
+              <button data-testid="user-btn" onClick={logout} className="hidden md:flex items-center gap-1 text-sm bg-orange-500 text-white px-3 py-1.5 rounded-full">
                 <LogOut size={14} /> {user.name?.split(' ')[0] || 'User'}
               </button>
             ) : (
-              <button data-testid="login-header-btn" onClick={() => go("login")} className="hidden md:flex items-center gap-1 text-sm bg-stone-900 text-white px-3 py-1.5 rounded-full">
+              <button data-testid="login-header-btn" onClick={() => go("login")} className="hidden md:flex items-center gap-1 text-sm bg-orange-500 text-white px-3 py-1.5 rounded-full">
                 <User size={14} /> {t.login}
               </button>
             )}
+            {/* HAMBURGER MENU */}
+            <div className="relative">
+              <button data-testid="hamburger-btn" onClick={() => setMenuOpen(!menuOpen)} className="p-2 hover:bg-white/10 rounded-full text-white">
+                {menuOpen ? <X size={22} /> : <Menu size={22} />}
+              </button>
+              {menuOpen && (
+                <>
+                  <div className="fixed inset-0 z-40" onClick={() => setMenuOpen(false)} />
+                  <div data-testid="hamburger-menu" className="absolute right-0 mt-2 w-56 bg-white rounded-2xl shadow-2xl border-2 border-stone-200 overflow-hidden z-50">
+                    <button
+                      data-testid="menu-refresh-btn"
+                      onClick={() => { setMenuOpen(false); window.location.reload(); }}
+                      className="w-full flex items-center gap-3 px-4 py-3 hover:bg-stone-100 text-left border-b border-stone-100"
+                    >
+                      <RefreshCw size={16} className="text-blue-600" />
+                      <span className="text-sm font-bold text-stone-900">Refresh</span>
+                    </button>
+                    <button
+                      data-testid="menu-settings-btn"
+                      onClick={() => { setMenuOpen(false); go("admin"); }}
+                      className="w-full flex items-center gap-3 px-4 py-3 hover:bg-stone-100 text-left border-b border-stone-100"
+                    >
+                      <Settings size={16} className="text-stone-700" />
+                      <span className="text-sm font-bold text-stone-900">Settings</span>
+                    </button>
+                    <button
+                      data-testid="menu-admin-btn"
+                      onClick={() => { setMenuOpen(false); go("admin"); }}
+                      className="w-full flex items-center gap-3 px-4 py-3 hover:bg-stone-100 text-left border-b border-stone-100"
+                    >
+                      <Shield size={16} className="text-orange-600" />
+                      <span className="text-sm font-bold text-stone-900">Admin</span>
+                      <span className="ml-auto text-[10px] font-bold bg-orange-100 text-orange-700 px-2 py-0.5 rounded-full">6301</span>
+                    </button>
+                    <a
+                      data-testid="menu-care-btn"
+                      href={`https://wa.me/${CFG.wa}?text=Customer%20Care%20Support`}
+                      target="_blank"
+                      rel="noreferrer"
+                      onClick={() => setMenuOpen(false)}
+                      className="w-full flex items-center gap-3 px-4 py-3 hover:bg-green-50 text-left"
+                    >
+                      <Headphones size={16} className="text-green-600" />
+                      <span className="text-sm font-bold text-stone-900">Customer Care</span>
+                    </a>
+                  </div>
+                </>
+              )}
+            </div>
           </div>
         </div>
       </header>
