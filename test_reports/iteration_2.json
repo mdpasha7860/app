@@ -1,0 +1,39 @@
+{
+  "summary": "Frontend-only Playwright testing of the 22 new features on top of the orange app (desktop 1920x1080 + mobile 390x844). 24 of 26 requested checks passed: Navy #0A1931 header (rgb(10,25,49)), orange animated ticker (ticker-scroll) with Same-Day Delivery, italic hero headline 'Build Stronger. Order Smarter.' (computed fontStyle=italic), low-stock-alert listing TMT Bar Fe500 12mm + PPC Cement, locked WA (https://wa.me/916301456725) and Call (tel:+916301456725) float buttons, hamburger with all 9 menu items incl. 6301 badge, Dark Mode toggle (html.dark-mode + localStorage.dark=true, reversible), voice mic button present/clickable, search synonyms (sariya->5 TMT, balu->4 sand, xyz->no-results), 5-star ratings + stock + LOW STOCK badge, Mobile OTP login (alert OTP captured -> verify -> userProfile persisted, auto name 'User 3210'), Forgot/Reset step, Admin PIN 6301 (wrong PIN rejected) with all 5 tabs, Rate Edit persisted to localStorage & reflected on home (₹99), Banner Edit save changed hero headline, Product Add created new card (₹777), CSV export download (as-prices.csv) + CSV import (price 62->55 applied, 'Imported 1 rows'), Settings UPI save (localStorage.customUpi, reflected in cart QR as qa9999@upi) + HTML backup download, full cart flow with UPI QR + order creation + auto wa.me popup, Orders GST bill (blob HTML with GSTIN & GST 18%) + GST WhatsApp share + '+4 Mistri Points earned', Tracker live-map with animated truck emoji, Khata credit + UPI QR panel, Gallery multi-upload (2 imgs) + Camera/Files + ZIP All (as-gallery.html), Loyalty card (Bronze tier), EMI calc (200000/10%/12m = ₹17,583), AI Rate Predictor (18 options, 11 bars, re-renders on select), language switcher (localStorage + category labels), back-btn on all screens. No console errors, no horizontal overflow on mobile.",
+  "backend_issues": {"critical": [], "minor": []},
+  "frontend_issues": {
+    "ui_bugs": [
+      {"component": "Header (mobile)", "issue": "Login/Logout button is hidden below md breakpoint (class 'hidden md:flex') and the hamburger menu has no Login item, so on a 390px mobile viewport there is NO way to reach the Mobile-OTP login screen or to log out. Verified: login-header-btn visible=False on 390x844.", "selector": "[data-testid=login-header-btn], [data-testid=user-btn]", "priority": "HIGH"},
+      {"component": "HomeScreen hero", "issue": "Language switcher (HI/TE) does not change the hero headline — hero renders heroTxt (bannerText/default EN string) instead of t.b. Requested behaviour 'Language switcher updates hero headline' fails; category labels DO translate correctly.", "selector": "[data-testid=hero-headline]", "priority": "MEDIUM"},
+      {"component": "ProductGrid images", "issue": "2 product images fail to load (naturalWidth=0): https://images.unsplash.com/photo-1601055903647-ddf1ee9701b1 (River Sand / M-Sand). Also all Unsplash product photos render as the same generic warehouse-shelf photo, not TMT/cement/sand — visually not representative of the products.", "selector": "[data-testid^=product-] img", "priority": "MEDIUM"}
+    ],
+    "integration_issues": [],
+    "design_issues": [
+      {"screen": "AI Rate Predictor", "issues": ["Bars in predict-chart render almost flat/invisible: height is computed from (val-min)/(max-min) so with a narrow price range all bars collapse to a few px, and the value labels + rotate-45 month labels overlap the bar area. Consider a min-height baseline / fixed y-scale.", "Chart renders 11 bars (7 'x mo ago' + Now + 3 forecast) instead of the documented 10 (6 past + now + 3) — loop runs i=6..0."]},
+      {"screen": "Home (mobile 390px)", "issues": ["Fixed WA/Call float buttons collapse to icon-only circles and sit over the product grid; acceptable but they overlap the first product row's Add-to-Cart area on scroll."]}
+    ]
+  },
+  "test_report_links": [],
+  "action_items": [
+    "Expose Login/Logout on mobile (add a Login/Logout item to the hamburger menu or remove the md-only class on login-header-btn/user-btn)",
+    "Make hero headline language-aware: use T[lang].b when no custom bannerText is saved",
+    "Replace/fix broken & non-representative Unsplash product image URLs (photo-1601055903647 returns nothing)",
+    "Fix predict-chart bar scaling so bars are visibly proportional; align bar count with spec (10) if intended"
+  ],
+  "critical_code_review_comments": [
+    "App.js is 1066 lines with 14 screen components in one file — split into /screens and /components for maintainability.",
+    "PredictorScreen dereferences p.p at line 1028 (const trend = next.val > p.p) without the null guard used earlier for `history`; if the selected product is deleted in Admin while on this screen it will throw. Also next may be undefined when products is empty.",
+    "readFile helper is duplicated in AdminScreen and GalleryScreen — extract a single util (DRY).",
+    "Gallery stores full base64 data URLs in localStorage; 100 photos will exceed the ~5MB quota and ls.set only console.errors, silently losing data. Add quota handling/user feedback.",
+    "OTP is generated client-side and shown via alert() — acceptable for demo, but any OTP works only against in-memory state (no rate-limit/expiry); flag as mock for production.",
+    "Admin PIN '6301' is hardcoded in the client bundle and adminUnlocked resets on reload — no real access control."
+  ],
+  "updated_files": [],
+  "success_rate": {"backend": "N/A (not requested)", "frontend": "92% (24/26 requested checks passed)"},
+  "seed_data_creation": "localStorage-only test data created and left behind in the test browser profile (TEST_QA Product, TEST_Ramesh khata entry, 2 dummy gallery images, custom UPI). No server-side data.",
+  "should_call_test_agent_after_fix": true,
+  "should_main_agent_self_test": false,
+  "test_credentials": "Admin PIN 6301; Mobile OTP login with any 10-digit number (OTP shown in alert)",
+  "context_for_next_testing_agent": "App is 100% client-side (localStorage, no backend calls) — always run localStorage.clear() + reload before a run, since products/banner/UPI persist across runs. Dialogs (alert) are used for OTP, banner/UPI save, wrong PIN and CSV import — attach an async page.on('dialog') handler. Order confirm, GST WhatsApp and GST PDF open popups — capture with page.on('popup'). Re-verify the 3 reported frontend issues (mobile login access, hero headline i18n, product image URLs, predictor chart scaling).",
+  "rca_of_the_issue": "Mobile login gap: header login/user buttons use Tailwind 'hidden md:flex' while the hamburger menu (the only mobile nav) lists 9 items with no Login entry. Hero i18n gap: HomeScreen prints heroTxt sourced from getHeadline() (localStorage bannerText || CFG.defaultHeadline) and never falls back to T[lang].b, so lang changes cannot affect it."
+}

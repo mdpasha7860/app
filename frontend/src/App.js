@@ -1,74 +1,62 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect, useMemo, useRef } from "react";
 import "@/App.css";
 import { QRCodeSVG } from "qrcode.react";
-import { Phone, MessageCircle, Search, ShoppingCart, ArrowLeft, User, Package, Truck, BookOpen, Sparkles, Calculator, Download, Shield, LogOut, Trash2, Plus, Minus, Home as HomeIcon, ClipboardList, Menu, RefreshCw, Settings, Headphones, X } from "lucide-react";
+import { Phone, MessageCircle, Search, ShoppingCart, ArrowLeft, User, Truck, BookOpen, Sparkles, Calculator, Download, Shield, LogOut, Trash2, Plus, Minus, ClipboardList, Menu, RefreshCw, Settings, Headphones, X, Moon, Sun, Mic, Star, Camera, Upload, FileSpreadsheet, TrendingUp, Award, CreditCard, Edit3, Image as ImageIcon, FileText, MapPin, AlertTriangle, KeyRound, Percent } from "lucide-react";
 
 // ============= CONFIG =============
 const CFG = {
   phone: "+91 6301456725",
   wa: "916301456725",
   brand: "AS Enterprises",
-  tagline: "Build Stronger, Build Smarter",
-  hero: "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&w=1600&q=80",
+  defaultHero: "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&w=1600&q=80",
+  defaultHeadline: "Build Stronger. Order Smarter.",
 };
-
 const getUPI = () => localStorage.getItem("customUpi") || "9030574216@upi";
+const getHero = () => localStorage.getItem("bannerImg") || CFG.defaultHero;
+const getHeadline = () => localStorage.getItem("bannerText") || "";
 
-// ============= TRANSLATIONS =============
+// ============= TRANSLATIONS (unchanged) =============
 const T = {
-  EN: { b:"Build Stronger", c:"Cart", s:"Same-Day Delivery", w:"Wholesale Khata", g:"Genuine Brands", f:"Free Estimate", zip:"Download ZIP Backup", home:"Home", search:"Search TMT, Cement, Sand, Bricks...", login:"Login", logout:"Logout", orders:"My Orders", admin:"Admin", call:"Call Now", wa:"WhatsApp", cart:"Cart", buy:"Add to Cart", total:"Total", checkout:"Place Order", address:"Delivery Address", cod:"Cash on Delivery", upi:"Pay via UPI", confirm:"Confirm Order", noResults:"No products found. Call 6301456725 for custom order.", tracker:"Same-Day Tracker", khata:"Wholesale Khata", catalog:"Brand Catalog", estimator:"Estimate Calculator", welcome:"Welcome", name:"Full Name", mobile:"Mobile", email:"Email", pass:"Password", signin:"Sign In", pinLbl:"Enter Admin PIN", changeUpi:"Change UPI ID", currentUpi:"Current UPI", saveUpi:"Save UPI", zipInfo:"If publish fails, upload this ZIP to netlify.com/drop", qty:"Qty", price:"Price", stock:"In Stock", cat:"Category", all:"All", tmt:"TMT Bars", cement:"Cement", sand:"Sand & Aggregate", brick:"Bricks", tools:"Tools", empty:"Cart is empty", noord:"No orders yet", ordid:"Order", status:"Status", pending:"Pending", scan:"Scan QR to Pay", payto:"Pay to", est:"Enter dimensions to estimate", len:"Length (ft)", wid:"Width (ft)", ht:"Height (ft)", need:"You need approx", bags:"bags of Cement", tons:"tons of TMT", cft:"cft of Sand", bricks:"Bricks (approx)", calc:"Calculate", ledger:"Ledger", customer:"Customer", amt:"Amount", add:"Add Entry", type:"Type", credit:"Credit", debit:"Debit", note:"Note", del:"Delete", eta:"ETA Today", route:"Route", driver:"Driver" },
-  HI: { b:"मजबूत बनाएं", c:"टोकरी", s:"आज डिलीवरी", w:"थोक खाता", g:"असली ब्रांड", f:"फ्री एस्टीमेट", zip:"ZIP डाउनलोड", home:"होम", search:"सरिया, सीमेंट, रेत, ईंट खोजें...", login:"लॉगिन", logout:"लॉगआउट", orders:"मेरे ऑर्डर", admin:"एडमिन", call:"कॉल करें", wa:"व्हाट्सएप", cart:"टोकरी", buy:"जोड़ें", total:"कुल", checkout:"ऑर्डर करें", address:"पता", cod:"कैश ऑन डिलीवरी", upi:"UPI से भुगतान", confirm:"पुष्टि करें", noResults:"कोई सामान नहीं मिला। कस्टम ऑर्डर के लिए 6301456725 पर कॉल करें।", tracker:"डिलीवरी ट्रैकर", khata:"थोक खाता", catalog:"ब्रांड कैटलॉग", estimator:"अनुमान कैलकुलेटर", welcome:"स्वागत है", name:"पूरा नाम", mobile:"मोबाइल", email:"ईमेल", pass:"पासवर्ड", signin:"साइन इन", pinLbl:"एडमिन PIN डालें", changeUpi:"UPI बदलें", currentUpi:"मौजूदा UPI", saveUpi:"UPI सेव करें", zipInfo:"अगर पब्लिश फेल हो तो ये ZIP netlify.com/drop पर अपलोड करें", qty:"मात्रा", price:"कीमत", stock:"स्टॉक में", cat:"श्रेणी", all:"सभी", tmt:"सरिया", cement:"सीमेंट", sand:"रेत/गिट्टी", brick:"ईंट", tools:"औजार", empty:"टोकरी खाली है", noord:"कोई ऑर्डर नहीं", ordid:"ऑर्डर", status:"स्थिति", pending:"लंबित", scan:"भुगतान के लिए QR स्कैन करें", payto:"भुगतान", est:"अनुमान के लिए माप डालें", len:"लंबाई (फीट)", wid:"चौड़ाई (फीट)", ht:"ऊंचाई (फीट)", need:"आपको लगभग चाहिए", bags:"सीमेंट बैग", tons:"टन सरिया", cft:"cft रेत", bricks:"ईंटें (लगभग)", calc:"गणना करें", ledger:"बही", customer:"ग्राहक", amt:"राशि", add:"जोड़ें", type:"प्रकार", credit:"जमा", debit:"नाम", note:"नोट", del:"हटाएं", eta:"आज पहुंचेगा", route:"रूट", driver:"ड्राइवर" },
-  TE: { b:"బలంగా నిర్మించండి", c:"బుట్ట", s:"ఈరోజే డెలివరీ", w:"హోల్‌సేల్ ఖాతా", g:"అసలైన బ్రాండ్", f:"ఉచిత అంచనా", zip:"ZIP డౌన్‌లోడ్", home:"హోమ్", search:"సరియా, సిమెంట్, ఇసుక, ఇటుకలు...", login:"లాగిన్", logout:"లాగౌట్", orders:"నా ఆర్డర్లు", admin:"అడ్మిన్", call:"కాల్ చేయండి", wa:"వాట్సాప్", cart:"బుట్ట", buy:"జోడించు", total:"మొత్తం", checkout:"ఆర్డర్ చేయండి", address:"చిరునామా", cod:"క్యాష్ ఆన్ డెలివరీ", upi:"UPI ద్వారా చెల్లించండి", confirm:"నిర్ధారించండి", noResults:"వస్తువులు లేవు. కస్టమ్ ఆర్డర్ కోసం 6301456725 కు కాల్ చేయండి.", tracker:"డెలివరీ ట్రాకర్", khata:"హోల్‌సేల్ ఖాతా", catalog:"బ్రాండ్ కేటలాగ్", estimator:"అంచనా కాలిక్యులేటర్", welcome:"స్వాగతం", name:"పూర్తి పేరు", mobile:"మొబైల్", email:"ఇమెయిల్", pass:"పాస్‌వర్డ్", signin:"సైన్ ఇన్", pinLbl:"అడ్మిన్ PIN", changeUpi:"UPI మార్చండి", currentUpi:"ప్రస్తుత UPI", saveUpi:"UPI సేవ్ చేయండి", zipInfo:"పబ్లిష్ ఫెయిల్ అయితే ZIP ని netlify.com/drop కు అప్‌లోడ్ చేయండి", qty:"పరిమాణం", price:"ధర", stock:"స్టాక్‌లో", cat:"వర్గం", all:"అన్నీ", tmt:"సరియా", cement:"సిమెంట్", sand:"ఇసుక/కంకర", brick:"ఇటుకలు", tools:"పరికరాలు", empty:"బుట్ట ఖాళీ", noord:"ఆర్డర్లు లేవు", ordid:"ఆర్డర్", status:"స్థితి", pending:"పెండింగ్", scan:"చెల్లించడానికి QR స్కాన్ చేయండి", payto:"చెల్లింపు", est:"అంచనా కోసం కొలతలు ఇవ్వండి", len:"పొడవు (అడుగు)", wid:"వెడల్పు (అడుగు)", ht:"ఎత్తు (అడుగు)", need:"మీకు దాదాపు కావాలి", bags:"సిమెంట్ బస్తాలు", tons:"టన్నుల సరియా", cft:"cft ఇసుక", bricks:"ఇటుకలు (సుమారు)", calc:"లెక్కించండి", ledger:"లెడ్జర్", customer:"కస్టమర్", amt:"మొత్తం", add:"జోడించు", type:"రకం", credit:"క్రెడిట్", debit:"డెబిట్", note:"నోట్", del:"తొలగించు", eta:"ఈరోజు రావును", route:"రూట్", driver:"డ్రైవర్" }
+  EN: { b:"Build Stronger. Order Smarter.", c:"Cart", s:"Same-Day Delivery", w:"Wholesale Khata", g:"Genuine Brands", f:"Free Estimate", zip:"Download ZIP Backup", home:"Home", search:"Search TMT, Cement, Sand, Bricks...", login:"Login", logout:"Logout", orders:"My Orders", admin:"Admin", call:"Call Now", wa:"WhatsApp", cart:"Cart", buy:"Add to Cart", total:"Total", checkout:"Place Order", address:"Delivery Address", cod:"Cash on Delivery", upi:"Pay via UPI", confirm:"Confirm Order", noResults:"No products found. Call 6301456725 for custom order.", tracker:"Live Order Tracker", khata:"Wholesale Khata", catalog:"Brand Catalog", estimator:"Estimate Calculator", welcome:"Welcome", mobile:"Mobile Number", otp:"Enter OTP", sendOtp:"Send OTP", verify:"Verify & Login", pinLbl:"Enter Admin PIN", changeUpi:"Change UPI ID", currentUpi:"Current UPI", saveUpi:"Save UPI", zipInfo:"If publish fails, upload this ZIP to netlify.com/drop", qty:"Qty", stock:"In Stock", cat:"Category", all:"All", tmt:"TMT Bars", cement:"Cement", sand:"Sand & Aggregate", brick:"Bricks", tools:"Tools", empty:"Cart is empty", noord:"No orders yet", ordid:"Order", status:"Status", pending:"Pending", scan:"Scan QR to Pay", payto:"Pay to", est:"Enter dimensions to estimate", len:"Length (ft)", wid:"Width (ft)", ht:"Height (ft)", need:"You need approx", bags:"bags of Cement", tons:"tons of TMT", cft:"cft of Sand", bricks:"Bricks (approx)", calc:"Calculate", ledger:"Ledger", customer:"Customer", amt:"Amount", add:"Add Entry", credit:"Credit", debit:"Debit", note:"Note", del:"Delete", eta:"ETA Today", driver:"Driver", low:"LOW STOCK", tick:"⚡ Same-Day Delivery · Wholesale Rates · Genuine Brands · Free Estimate · Call 6301456725" },
+  HI: { b:"मजबूत बनाएं। स्मार्ट ऑर्डर करें।", c:"टोकरी", s:"आज डिलीवरी", w:"थोक खाता", g:"असली ब्रांड", f:"फ्री एस्टीमेट", zip:"ZIP डाउनलोड", home:"होम", search:"सरिया, सीमेंट, रेत, ईंट खोजें...", login:"लॉगिन", logout:"लॉगआउट", orders:"मेरे ऑर्डर", admin:"एडमिन", call:"कॉल करें", wa:"व्हाट्सएप", cart:"टोकरी", buy:"जोड़ें", total:"कुल", checkout:"ऑर्डर करें", address:"पता", cod:"कैश ऑन डिलीवरी", upi:"UPI से भुगतान", confirm:"पुष्टि करें", noResults:"कोई सामान नहीं मिला। 6301456725 पर कॉल करें।", tracker:"लाइव ऑर्डर ट्रैकर", khata:"थोक खाता", catalog:"ब्रांड कैटलॉग", estimator:"अनुमान कैलकुलेटर", welcome:"स्वागत है", mobile:"मोबाइल नंबर", otp:"OTP दर्ज करें", sendOtp:"OTP भेजें", verify:"वेरीफाई करें", pinLbl:"एडमिन PIN डालें", changeUpi:"UPI बदलें", currentUpi:"मौजूदा UPI", saveUpi:"UPI सेव करें", zipInfo:"पब्लिश फेल हो तो ZIP netlify.com/drop पर अपलोड करें", qty:"मात्रा", stock:"स्टॉक में", cat:"श्रेणी", all:"सभी", tmt:"सरिया", cement:"सीमेंट", sand:"रेत/गिट्टी", brick:"ईंट", tools:"औजार", empty:"टोकरी खाली", noord:"कोई ऑर्डर नहीं", ordid:"ऑर्डर", status:"स्थिति", pending:"लंबित", scan:"QR स्कैन करें", payto:"भुगतान", est:"माप डालें", len:"लंबाई (फीट)", wid:"चौड़ाई (फीट)", ht:"ऊंचाई (फीट)", need:"आपको चाहिए", bags:"सीमेंट बैग", tons:"टन सरिया", cft:"cft रेत", bricks:"ईंटें", calc:"गणना करें", ledger:"बही", customer:"ग्राहक", amt:"राशि", add:"जोड़ें", credit:"जमा", debit:"नाम", note:"नोट", del:"हटाएं", eta:"आज पहुंचेगा", driver:"ड्राइवर", low:"स्टॉक कम", tick:"⚡ आज डिलीवरी · थोक रेट · असली ब्रांड · फ्री एस्टीमेट · कॉल 6301456725" },
+  TE: { b:"బలంగా నిర్మించండి. తెలివిగా ఆర్డర్ చేయండి.", c:"బుట్ట", s:"ఈరోజే డెలివరీ", w:"హోల్‌సేల్ ఖాతా", g:"అసలైన బ్రాండ్", f:"ఉచిత అంచనా", zip:"ZIP డౌన్‌లోడ్", home:"హోమ్", search:"సరియా, సిమెంట్, ఇసుక, ఇటుకలు...", login:"లాగిన్", logout:"లాగౌట్", orders:"నా ఆర్డర్లు", admin:"అడ్మిన్", call:"కాల్ చేయండి", wa:"వాట్సాప్", cart:"బుట్ట", buy:"జోడించు", total:"మొత్తం", checkout:"ఆర్డర్ చేయండి", address:"చిరునామా", cod:"క్యాష్ ఆన్ డెలివరీ", upi:"UPI చెల్లింపు", confirm:"నిర్ధారించండి", noResults:"వస్తువులు లేవు. 6301456725 కు కాల్ చేయండి.", tracker:"లైవ్ ఆర్డర్ ట్రాకర్", khata:"హోల్‌సేల్ ఖాతా", catalog:"బ్రాండ్ కేటలాగ్", estimator:"అంచనా కాలిక్యులేటర్", welcome:"స్వాగతం", mobile:"మొబైల్ నంబర్", otp:"OTP నమోదు", sendOtp:"OTP పంపండి", verify:"వెరిఫై చేయండి", pinLbl:"అడ్మిన్ PIN", changeUpi:"UPI మార్చండి", currentUpi:"ప్రస్తుత UPI", saveUpi:"UPI సేవ్ చేయండి", zipInfo:"పబ్లిష్ ఫెయిల్ అయితే ZIP ని netlify.com/drop కు అప్‌లోడ్ చేయండి", qty:"పరిమాణం", stock:"స్టాక్‌లో", cat:"వర్గం", all:"అన్నీ", tmt:"సరియా", cement:"సిమెంట్", sand:"ఇసుక/కంకర", brick:"ఇటుకలు", tools:"పరికరాలు", empty:"బుట్ట ఖాళీ", noord:"ఆర్డర్లు లేవు", ordid:"ఆర్డర్", status:"స్థితి", pending:"పెండింగ్", scan:"QR స్కాన్ చేయండి", payto:"చెల్లింపు", est:"కొలతలు ఇవ్వండి", len:"పొడవు (అడుగు)", wid:"వెడల్పు (అడుగు)", ht:"ఎత్తు (అడుగు)", need:"కావాలి", bags:"సిమెంట్ బస్తాలు", tons:"టన్నుల సరియా", cft:"cft ఇసుక", bricks:"ఇటుకలు", calc:"లెక్కించండి", ledger:"లెడ్జర్", customer:"కస్టమర్", amt:"మొత్తం", add:"జోడించు", credit:"క్రెడిట్", debit:"డెబిట్", note:"నోట్", del:"తొలగించు", eta:"ఈరోజు", driver:"డ్రైవర్", low:"స్టాక్ తక్కువ", tick:"⚡ ఈరోజే డెలివరీ · హోల్‌సేల్ రేట్లు · అసలైన బ్రాండ్ · ఉచిత అంచనా · 6301456725" }
 };
 
-// Search synonyms map
 const MAP = { sariya:'tmt', saria:'tmt', steel:'tmt', rod:'tmt', tmt:'tmt', cement:'cement', simenti:'cement', ppc:'cement', opc:'cement', ret:'sand', balu:'sand', sand:'sand', isuka:'sand', metal:'sand', aggregate:'sand', gitti:'sand', brick:'brick', eent:'brick', itukalu:'brick', block:'brick', wire:'tools', tool:'tools' };
 
-// Sample product catalog (18 items)
-const PRODUCTS = [
-  { id:1, n:"TMT Bar Fe500 8mm", b:"Tata Tiscon", p:62, u:"per kg", cat:"tmt", img:"https://images.unsplash.com/photo-1590247813693-5541d1c609fd?auto=format&fit=crop&w=400&q=70" },
-  { id:2, n:"TMT Bar Fe500 10mm", b:"JSW Neosteel", p:61, u:"per kg", cat:"tmt", img:"https://images.unsplash.com/photo-1590247813693-5541d1c609fd?auto=format&fit=crop&w=400&q=70" },
-  { id:3, n:"TMT Bar Fe500 12mm", b:"SAIL", p:60, u:"per kg", cat:"tmt", img:"https://images.unsplash.com/photo-1590247813693-5541d1c609fd?auto=format&fit=crop&w=400&q=70" },
-  { id:4, n:"TMT Bar Fe500 16mm", b:"Kamdhenu", p:59, u:"per kg", cat:"tmt", img:"https://images.unsplash.com/photo-1590247813693-5541d1c609fd?auto=format&fit=crop&w=400&q=70" },
-  { id:5, n:"TMT Bar Fe550 20mm", b:"Tata Tiscon", p:63, u:"per kg", cat:"tmt", img:"https://images.unsplash.com/photo-1590247813693-5541d1c609fd?auto=format&fit=crop&w=400&q=70" },
-  { id:6, n:"OPC 53 Grade Cement", b:"UltraTech", p:410, u:"per bag (50kg)", cat:"cement", img:"https://images.unsplash.com/photo-1518709414768-a88981a4515d?auto=format&fit=crop&w=400&q=70" },
-  { id:7, n:"PPC Cement", b:"Ambuja", p:380, u:"per bag (50kg)", cat:"cement", img:"https://images.unsplash.com/photo-1518709414768-a88981a4515d?auto=format&fit=crop&w=400&q=70" },
-  { id:8, n:"PPC Cement", b:"ACC Gold", p:385, u:"per bag (50kg)", cat:"cement", img:"https://images.unsplash.com/photo-1518709414768-a88981a4515d?auto=format&fit=crop&w=400&q=70" },
-  { id:9, n:"White Cement", b:"JK White", p:850, u:"per bag (25kg)", cat:"cement", img:"https://images.unsplash.com/photo-1518709414768-a88981a4515d?auto=format&fit=crop&w=400&q=70" },
-  { id:10, n:"River Sand (Ret / Balu)", b:"Local", p:1800, u:"per ton", cat:"sand", img:"https://images.unsplash.com/photo-1601055903647-ddf1ee9701b1?auto=format&fit=crop&w=400&q=70" },
-  { id:11, n:"M-Sand (Manufactured)", b:"Robo Silicon", p:1400, u:"per ton", cat:"sand", img:"https://images.unsplash.com/photo-1601055903647-ddf1ee9701b1?auto=format&fit=crop&w=400&q=70" },
-  { id:12, n:"20mm Aggregate (Metal)", b:"Local", p:1200, u:"per ton", cat:"sand", img:"https://images.unsplash.com/photo-1615529162924-f8605388461d?auto=format&fit=crop&w=400&q=70" },
-  { id:13, n:"12mm Aggregate", b:"Local", p:1250, u:"per ton", cat:"sand", img:"https://images.unsplash.com/photo-1615529162924-f8605388461d?auto=format&fit=crop&w=400&q=70" },
-  { id:14, n:"Red Bricks Class A", b:"Local Kiln", p:9, u:"per piece", cat:"brick", img:"https://images.unsplash.com/photo-1595515106969-1ce29566ff1c?auto=format&fit=crop&w=400&q=70" },
-  { id:15, n:"Fly Ash Bricks", b:"EcoBrick", p:7, u:"per piece", cat:"brick", img:"https://images.unsplash.com/photo-1595515106969-1ce29566ff1c?auto=format&fit=crop&w=400&q=70" },
-  { id:16, n:"AAC Blocks 600x200x100", b:"Magicrete", p:65, u:"per piece", cat:"brick", img:"https://images.unsplash.com/photo-1595515106969-1ce29566ff1c?auto=format&fit=crop&w=400&q=70" },
-  { id:17, n:"Steel Binding Wire", b:"Tata Wiron", p:85, u:"per kg", cat:"tools", img:"https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=400&q=70" },
-  { id:18, n:"GI Wire 8 Gauge", b:"Bansal", p:95, u:"per kg", cat:"tools", img:"https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=400&q=70" }
+const DEFAULT_PRODUCTS = [
+  { id:1, n:"TMT Bar Fe500 8mm", b:"Tata Tiscon", p:62, u:"per kg", cat:"tmt", stock:250, rating:4.7, img:"https://images.unsplash.com/photo-1590247813693-5541d1c609fd?auto=format&fit=crop&w=400&q=70" },
+  { id:2, n:"TMT Bar Fe500 10mm", b:"JSW Neosteel", p:61, u:"per kg", cat:"tmt", stock:180, rating:4.6, img:"https://images.unsplash.com/photo-1590247813693-5541d1c609fd?auto=format&fit=crop&w=400&q=70" },
+  { id:3, n:"TMT Bar Fe500 12mm", b:"SAIL", p:60, u:"per kg", cat:"tmt", stock:8, rating:4.5, img:"https://images.unsplash.com/photo-1590247813693-5541d1c609fd?auto=format&fit=crop&w=400&q=70" },
+  { id:4, n:"TMT Bar Fe500 16mm", b:"Kamdhenu", p:59, u:"per kg", cat:"tmt", stock:120, rating:4.4, img:"https://images.unsplash.com/photo-1590247813693-5541d1c609fd?auto=format&fit=crop&w=400&q=70" },
+  { id:5, n:"TMT Bar Fe550 20mm", b:"Tata Tiscon", p:63, u:"per kg", cat:"tmt", stock:90, rating:4.8, img:"https://images.unsplash.com/photo-1590247813693-5541d1c609fd?auto=format&fit=crop&w=400&q=70" },
+  { id:6, n:"OPC 53 Grade Cement", b:"UltraTech", p:410, u:"per bag (50kg)", cat:"cement", stock:320, rating:4.9, img:"https://images.unsplash.com/photo-1518709414768-a88981a4515d?auto=format&fit=crop&w=400&q=70" },
+  { id:7, n:"PPC Cement", b:"Ambuja", p:380, u:"per bag (50kg)", cat:"cement", stock:210, rating:4.7, img:"https://images.unsplash.com/photo-1518709414768-a88981a4515d?auto=format&fit=crop&w=400&q=70" },
+  { id:8, n:"PPC Cement", b:"ACC Gold", p:385, u:"per bag (50kg)", cat:"cement", stock:6, rating:4.6, img:"https://images.unsplash.com/photo-1518709414768-a88981a4515d?auto=format&fit=crop&w=400&q=70" },
+  { id:9, n:"White Cement", b:"JK White", p:850, u:"per bag (25kg)", cat:"cement", stock:45, rating:4.5, img:"https://images.unsplash.com/photo-1518709414768-a88981a4515d?auto=format&fit=crop&w=400&q=70" },
+  { id:10, n:"River Sand (Ret / Balu)", b:"Local", p:1800, u:"per ton", cat:"sand", stock:60, rating:4.3, img:"https://images.unsplash.com/photo-1578662996442-48f60103fc96?auto=format&fit=crop&w=400&q=70" },
+  { id:11, n:"M-Sand (Manufactured)", b:"Robo Silicon", p:1400, u:"per ton", cat:"sand", stock:80, rating:4.4, img:"https://images.unsplash.com/photo-1578662996442-48f60103fc96?auto=format&fit=crop&w=400&q=70" },
+  { id:12, n:"20mm Aggregate (Metal)", b:"Local", p:1200, u:"per ton", cat:"sand", stock:100, rating:4.2, img:"https://images.unsplash.com/photo-1615529162924-f8605388461d?auto=format&fit=crop&w=400&q=70" },
+  { id:13, n:"12mm Aggregate", b:"Local", p:1250, u:"per ton", cat:"sand", stock:75, rating:4.3, img:"https://images.unsplash.com/photo-1615529162924-f8605388461d?auto=format&fit=crop&w=400&q=70" },
+  { id:14, n:"Red Bricks Class A", b:"Local Kiln", p:9, u:"per piece", cat:"brick", stock:5000, rating:4.5, img:"https://images.unsplash.com/photo-1595515106969-1ce29566ff1c?auto=format&fit=crop&w=400&q=70" },
+  { id:15, n:"Fly Ash Bricks", b:"EcoBrick", p:7, u:"per piece", cat:"brick", stock:3200, rating:4.4, img:"https://images.unsplash.com/photo-1595515106969-1ce29566ff1c?auto=format&fit=crop&w=400&q=70" },
+  { id:16, n:"AAC Blocks 600x200x100", b:"Magicrete", p:65, u:"per piece", cat:"brick", stock:900, rating:4.7, img:"https://images.unsplash.com/photo-1595515106969-1ce29566ff1c?auto=format&fit=crop&w=400&q=70" },
+  { id:17, n:"Steel Binding Wire", b:"Tata Wiron", p:85, u:"per kg", cat:"tools", stock:150, rating:4.6, img:"https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=400&q=70" },
+  { id:18, n:"GI Wire 8 Gauge", b:"Bansal", p:95, u:"per kg", cat:"tools", stock:110, rating:4.5, img:"https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=400&q=70" }
 ];
 
-// ============= UTILS =============
 const ls = {
   get: (k, d) => { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch { return d; } },
   set: (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) { console.error(e); } }
 };
 
-// ============= FLOAT ACTIONS (LOCKED) =============
+// ============= FLOAT BUTTONS (LOCKED) =============
 const FloatButtons = () => (
   <div className="fixed bottom-4 right-4 flex flex-col gap-3 z-50 wa-call-lock">
-    <a
-      data-testid="whatsapp-fixed-btn"
-      href={`https://wa.me/${CFG.wa}`}
-      target="_blank"
-      rel="noreferrer"
-      className="wa-btn-lock flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-4 py-3 rounded-full shadow-lg font-bold transition-transform hover:scale-105"
-    >
+    <a data-testid="whatsapp-fixed-btn" href={`https://wa.me/${CFG.wa}`} target="_blank" rel="noreferrer" className="wa-btn-lock flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-4 py-3 rounded-full shadow-lg font-bold transition-transform hover:scale-105">
       <MessageCircle size={20} /> <span className="hidden sm:inline">WA {CFG.wa}</span>
     </a>
-    <a
-      data-testid="call-fixed-btn"
-      href={`tel:${CFG.phone.replace(/\s/g,'')}`}
-      className="call-btn-lock flex items-center gap-2 bg-orange-600 hover:bg-orange-700 text-white px-4 py-3 rounded-full shadow-lg font-bold transition-transform hover:scale-105"
-    >
+    <a data-testid="call-fixed-btn" href={`tel:${CFG.phone.replace(/\s/g,'')}`} className="call-btn-lock flex items-center gap-2 bg-orange-600 hover:bg-orange-700 text-white px-4 py-3 rounded-full shadow-lg font-bold transition-transform hover:scale-105">
       <Phone size={20} /> <span className="hidden sm:inline">{CFG.phone}</span>
     </a>
   </div>
@@ -82,24 +70,29 @@ export default function App() {
   const [user, setUser] = useState(ls.get("userProfile", null));
   const [orders, setOrders] = useState(ls.get("myOrders", []));
   const [ledger, setLedger] = useState(ls.get("ledger", []));
+  const [products, setProducts] = useState(ls.get("products", DEFAULT_PRODUCTS));
+  const [gallery, setGallery] = useState(ls.get("gallery", []));
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState("ALL");
   const [upi, setUpi] = useState(getUPI());
+  const [heroImg, setHeroImg] = useState(getHero());
+  const [heroTxt, setHeroTxt] = useState(getHeadline());
   const [adminUnlocked, setAdminUnlocked] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-
+  const [dark, setDark] = useState(ls.get("dark", false));
   const t = T[lang];
 
   useEffect(() => ls.set("lang", lang), [lang]);
   useEffect(() => ls.set("cart", cart), [cart]);
   useEffect(() => ls.set("myOrders", orders), [orders]);
   useEffect(() => ls.set("ledger", ledger), [ledger]);
+  useEffect(() => ls.set("products", products), [products]);
+  useEffect(() => ls.set("gallery", gallery), [gallery]);
+  useEffect(() => { ls.set("dark", dark); document.documentElement.classList.toggle("dark-mode", dark); }, [dark]);
 
-  // Nav helpers
-  const go = (s) => setScreen(s);
-  const back = () => setScreen("home");
+  const go = (s) => { setScreen(s); window.scrollTo(0,0); };
+  const back = () => go("home");
 
-  // Cart helpers
   const addToCart = (p) => {
     try {
       const existing = cart.find(x => x.id === p.id);
@@ -111,7 +104,6 @@ export default function App() {
   const removeItem = (id) => setCart(cart.filter(x => x.id !== id));
   const cartTotal = useMemo(() => cart.reduce((s, x) => s + x.p * x.q, 0), [cart]);
 
-  // 4 CARDS
   const CARDS = [
     { t: t.s, go: "tracker", icon: Truck, color: "bg-orange-500" },
     { t: t.w, go: "khata", icon: BookOpen, color: "bg-amber-600" },
@@ -119,73 +111,53 @@ export default function App() {
     { t: t.f, go: "estimator", icon: Calculator, color: "bg-stone-700" }
   ];
 
-  // Filter products
   const filtered = useMemo(() => {
-    let list = PRODUCTS;
+    let list = products;
     if (category !== "ALL") list = list.filter(p => p.cat === category);
     if (query.trim()) {
       const q = query.toLowerCase().trim();
       const mapped = MAP[q];
-      list = list.filter(p =>
-        p.n.toLowerCase().includes(q) ||
-        p.b.toLowerCase().includes(q) ||
-        (mapped && p.cat === mapped)
-      );
+      list = list.filter(p => p.n.toLowerCase().includes(q) || p.b.toLowerCase().includes(q) || (mapped && p.cat === mapped));
     }
     return list;
-  }, [query, category]);
+  }, [query, category, products]);
 
-  const doSearch = (v) => {
-    setQuery(v);
-    if (v.trim()) setCategory("ALL");
-  };
+  const lowStock = useMemo(() => products.filter(p => p.stock < 10), [products]);
+
+  const doSearch = (v) => { setQuery(v); if (v.trim()) setCategory("ALL"); };
 
   const placeOrder = (payment, address) => {
     try {
       const order = {
         id: "ORD" + Date.now(),
-        items: cart,
-        total: cartTotal,
-        payment,
-        address,
+        items: cart, total: cartTotal, payment, address,
         date: new Date().toISOString(),
         status: t.pending,
-        user: user?.name || "Guest"
+        user: user?.name || user?.mobile || "Guest",
+        loyalty: Math.floor(cartTotal / 100)
       };
-      const updated = [order, ...orders];
-      setOrders(updated);
+      setOrders([order, ...orders]);
       setCart([]);
-      const msg = `New Order ${order.id}%0A${cart.map(x => `${x.n} x ${x.q} = ₹${x.p*x.q}`).join('%0A')}%0ATotal: ₹${cartTotal}%0APay: ${payment}%0AAddress: ${address}%0ACustomer: ${order.user}`;
+      // Feature 20: Auto WhatsApp Update
+      const msg = `New Order ${order.id}%0A${cart.map(x => `${x.n} x ${x.q} = ₹${x.p*x.q}`).join('%0A')}%0ATotal: ₹${cartTotal}%0APay: ${payment}%0AAddress: ${address}%0A+${order.loyalty} Mistri Points`;
       window.open(`https://wa.me/${CFG.wa}?text=${msg}`, "_blank");
       go("orders");
-    } catch (e) { console.error(e); alert("Order failed. Please call " + CFG.phone); }
+    } catch (e) { console.error(e); alert("Order failed. Call " + CFG.phone); }
   };
 
-  // ZIP download (18th feature)
   const downloadZip = () => {
     try {
       const code = "<!doctype html>" + document.documentElement.outerHTML;
       const blob = new Blob([code], { type: "text/html" });
-      const a = document.createElement("a");
-      a.href = URL.createObjectURL(blob);
-      a.download = "as-buildmart-backup.html";
-      a.click();
-    } catch (e) { console.error(e); alert("Download failed"); }
-  };
-
-  const saveUpi = (v) => {
-    try {
-      localStorage.setItem("customUpi", v);
-      setUpi(v);
-      alert("UPI saved: " + v);
+      const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = "as-buildmart-backup.html"; a.click();
     } catch (e) { console.error(e); }
   };
-
+  const saveUpi = (v) => { localStorage.setItem("customUpi", v); setUpi(v); alert("UPI saved"); };
   const logout = () => { setUser(null); localStorage.removeItem("userProfile"); go("home"); };
 
   return (
-    <div className="min-h-screen bg-stone-50 font-body text-stone-900">
-      {/* HEADER - NAVY #0A1931 */}
+    <div className={`min-h-screen font-body ${dark ? 'bg-stone-900 text-stone-100' : 'bg-stone-50 text-stone-900'}`}>
+      {/* HEADER NAVY */}
       <header className="sticky top-0 z-40 border-b-4 border-orange-500 shadow-lg" style={{ backgroundColor: "#0A1931" }}>
         <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between gap-3">
           <button data-testid="home-btn" onClick={() => go("home")} className="flex items-center gap-2 group">
@@ -197,73 +169,40 @@ export default function App() {
           </button>
           <div className="flex items-center gap-2">
             <div className="flex gap-1 border border-white/20 rounded-full p-1 bg-white/5">
-              {["EN", "HI", "TE"].map(l => (
-                <button
-                  key={l}
-                  data-testid={`lang-${l}-btn`}
-                  onClick={() => setLang(l)}
-                  className={`text-xs font-bold px-2 py-1 rounded-full transition ${lang===l?'bg-orange-500 text-white':'text-white/70 hover:bg-white/10'}`}
-                >{l}</button>
+              {["EN","HI","TE"].map(l => (
+                <button key={l} data-testid={`lang-${l}-btn`} onClick={() => setLang(l)} className={`text-xs font-bold px-2 py-1 rounded-full transition ${lang===l?'bg-orange-500 text-white':'text-white/70 hover:bg-white/10'}`}>{l}</button>
               ))}
             </div>
             <button data-testid="cart-header-btn" onClick={() => go("cart")} className="relative p-2 hover:bg-white/10 rounded-full text-white">
               <ShoppingCart size={20} />
               {cart.length > 0 && <span className="absolute -top-1 -right-1 bg-orange-500 text-white text-[10px] rounded-full w-5 h-5 flex items-center justify-center font-bold">{cart.reduce((s,x)=>s+x.q,0)}</span>}
             </button>
-            <button data-testid="orders-header-btn" onClick={() => go("orders")} className="p-2 hover:bg-white/10 rounded-full text-white hidden sm:inline-flex">
-              <ClipboardList size={20} />
-            </button>
+            <button data-testid="orders-header-btn" onClick={() => go("orders")} className="p-2 hover:bg-white/10 rounded-full text-white hidden sm:inline-flex"><ClipboardList size={20} /></button>
             {user ? (
-              <button data-testid="user-btn" onClick={logout} className="hidden md:flex items-center gap-1 text-sm bg-orange-500 text-white px-3 py-1.5 rounded-full">
-                <LogOut size={14} /> {user.name?.split(' ')[0] || 'User'}
-              </button>
+              <button data-testid="user-btn" onClick={logout} className="hidden md:flex items-center gap-1 text-sm bg-orange-500 text-white px-3 py-1.5 rounded-full"><LogOut size={14} /> {user.name?.split(' ')[0] || user.mobile}</button>
             ) : (
-              <button data-testid="login-header-btn" onClick={() => go("login")} className="hidden md:flex items-center gap-1 text-sm bg-orange-500 text-white px-3 py-1.5 rounded-full">
-                <User size={14} /> {t.login}
-              </button>
+              <button data-testid="login-header-btn" onClick={() => go("login")} className="hidden md:flex items-center gap-1 text-sm bg-orange-500 text-white px-3 py-1.5 rounded-full"><User size={14} /> {t.login}</button>
             )}
-            {/* HAMBURGER MENU */}
             <div className="relative">
-              <button data-testid="hamburger-btn" onClick={() => setMenuOpen(!menuOpen)} className="p-2 hover:bg-white/10 rounded-full text-white">
-                {menuOpen ? <X size={22} /> : <Menu size={22} />}
-              </button>
+              <button data-testid="hamburger-btn" onClick={() => setMenuOpen(!menuOpen)} className="p-2 hover:bg-white/10 rounded-full text-white">{menuOpen ? <X size={22} /> : <Menu size={22} />}</button>
               {menuOpen && (
                 <>
                   <div className="fixed inset-0 z-40" onClick={() => setMenuOpen(false)} />
-                  <div data-testid="hamburger-menu" className="absolute right-0 mt-2 w-56 bg-white rounded-2xl shadow-2xl border-2 border-stone-200 overflow-hidden z-50">
-                    <button
-                      data-testid="menu-refresh-btn"
-                      onClick={() => { setMenuOpen(false); window.location.reload(); }}
-                      className="w-full flex items-center gap-3 px-4 py-3 hover:bg-stone-100 text-left border-b border-stone-100"
-                    >
-                      <RefreshCw size={16} className="text-blue-600" />
-                      <span className="text-sm font-bold text-stone-900">Refresh</span>
-                    </button>
-                    <button
-                      data-testid="menu-settings-btn"
-                      onClick={() => { setMenuOpen(false); go("admin"); }}
-                      className="w-full flex items-center gap-3 px-4 py-3 hover:bg-stone-100 text-left border-b border-stone-100"
-                    >
-                      <Settings size={16} className="text-stone-700" />
-                      <span className="text-sm font-bold text-stone-900">Settings</span>
-                    </button>
-                    <button
-                      data-testid="menu-admin-btn"
-                      onClick={() => { setMenuOpen(false); go("admin"); }}
-                      className="w-full flex items-center gap-3 px-4 py-3 hover:bg-stone-100 text-left border-b border-stone-100"
-                    >
-                      <Shield size={16} className="text-orange-600" />
-                      <span className="text-sm font-bold text-stone-900">Admin</span>
-                      <span className="ml-auto text-[10px] font-bold bg-orange-100 text-orange-700 px-2 py-0.5 rounded-full">6301</span>
-                    </button>
-                    <a
-                      data-testid="menu-care-btn"
-                      href={`https://wa.me/${CFG.wa}?text=Customer%20Care%20Support`}
-                      target="_blank"
-                      rel="noreferrer"
-                      onClick={() => setMenuOpen(false)}
-                      className="w-full flex items-center gap-3 px-4 py-3 hover:bg-green-50 text-left"
-                    >
+                  <div data-testid="hamburger-menu" className="absolute right-0 mt-2 w-60 bg-white rounded-2xl shadow-2xl border-2 border-stone-200 overflow-hidden z-50">
+                    <MenuItem tid="menu-refresh-btn" icon={RefreshCw} color="text-blue-600" label="Refresh" onClick={() => { setMenuOpen(false); window.location.reload(); }} />
+                    {user ? (
+                      <MenuItem tid="menu-logout-btn" icon={LogOut} color="text-red-600" label={`Logout (${user.name?.split(' ')[0] || user.mobile})`} onClick={() => { setMenuOpen(false); logout(); }} />
+                    ) : (
+                      <MenuItem tid="menu-login-btn" icon={User} color="text-orange-600" label="Login (Mobile OTP)" onClick={() => { setMenuOpen(false); go("login"); }} />
+                    )}
+                    <MenuItem tid="menu-settings-btn" icon={Settings} color="text-stone-700" label="Settings" onClick={() => { setMenuOpen(false); go("admin"); }} />
+                    <MenuItem tid="menu-admin-btn" icon={Shield} color="text-orange-600" label="Admin" badge="6301" onClick={() => { setMenuOpen(false); go("admin"); }} />
+                    <MenuItem tid="menu-gallery-btn" icon={ImageIcon} color="text-purple-600" label="Gallery" onClick={() => { setMenuOpen(false); go("gallery"); }} />
+                    <MenuItem tid="menu-loyalty-btn" icon={Award} color="text-amber-600" label="Mistri Loyalty" onClick={() => { setMenuOpen(false); go("loyalty"); }} />
+                    <MenuItem tid="menu-emi-btn" icon={CreditCard} color="text-emerald-600" label="EMI Calculator" onClick={() => { setMenuOpen(false); go("emi"); }} />
+                    <MenuItem tid="menu-ai-btn" icon={TrendingUp} color="text-rose-600" label="AI Rate Predictor" onClick={() => { setMenuOpen(false); go("predictor"); }} />
+                    <MenuItem tid="menu-dark-btn" icon={dark?Sun:Moon} color="text-indigo-600" label={dark?"Light Mode":"Dark Mode"} onClick={() => { setDark(!dark); setMenuOpen(false); }} />
+                    <a data-testid="menu-care-btn" href={`https://wa.me/${CFG.wa}?text=Customer%20Care`} target="_blank" rel="noreferrer" onClick={() => setMenuOpen(false)} className="w-full flex items-center gap-3 px-4 py-3 hover:bg-green-50 text-left">
                       <Headphones size={16} className="text-green-600" />
                       <span className="text-sm font-bold text-stone-900">Customer Care</span>
                     </a>
@@ -275,36 +214,53 @@ export default function App() {
         </div>
       </header>
 
-      {/* BACK BUTTON (except home) */}
+      {/* Feature 3: TICKER */}
+      <div data-testid="ticker" className="bg-orange-500 text-white overflow-hidden py-2 border-b-2 border-orange-700">
+        <div className="ticker-track font-bold text-sm whitespace-nowrap">
+          {t.tick} · {t.tick} · {t.tick}
+        </div>
+      </div>
+
+      {/* Feature 14: LOW STOCK ALERT */}
+      {lowStock.length > 0 && screen === "home" && (
+        <div data-testid="low-stock-alert" className="bg-red-50 border-b-2 border-red-500 py-2">
+          <div className="max-w-6xl mx-auto px-4 flex items-center gap-2 text-xs sm:text-sm font-bold text-red-700">
+            <AlertTriangle size={16} className="animate-pulse flex-shrink-0" />
+            <span>{t.low}: {lowStock.map(p=>p.n).join(", ")}</span>
+          </div>
+        </div>
+      )}
+
       {screen !== "home" && (
         <div className="max-w-6xl mx-auto px-4 pt-4">
-          <button data-testid="back-btn" onClick={back} className="flex items-center gap-2 text-sm font-bold text-stone-700 hover:text-orange-600 transition">
+          <button data-testid="back-btn" onClick={back} className="flex items-center gap-2 text-sm font-bold text-stone-700 hover:text-orange-600 transition dark-text">
             <ArrowLeft size={16} /> {t.home}
           </button>
         </div>
       )}
 
       <main className="max-w-6xl mx-auto px-4 pb-24 pt-4">
-        {screen === "home" && <HomeScreen t={t} lang={lang} setScreen={go} CARDS={CARDS} query={query} doSearch={doSearch} category={category} setCategory={setCategory} filtered={filtered} addToCart={addToCart} setScreenAndCategory={(c)=>{setCategory(c); go("catalog");}} />}
+        {screen === "home" && <HomeScreen t={t} lang={lang} setScreen={go} CARDS={CARDS} query={query} doSearch={doSearch} category={category} setCategory={setCategory} filtered={filtered} addToCart={addToCart} heroImg={heroImg} heroTxt={heroTxt} />}
         {screen === "catalog" && <CatalogScreen t={t} query={query} doSearch={doSearch} category={category} setCategory={setCategory} filtered={filtered} addToCart={addToCart} />}
         {screen === "cart" && <CartScreen t={t} cart={cart} updateQty={updateQty} removeItem={removeItem} total={cartTotal} onCheckout={placeOrder} upi={upi} user={user} />}
-        {screen === "orders" && <OrdersScreen t={t} orders={orders} />}
+        {screen === "orders" && <OrdersScreen t={t} orders={orders} setOrders={setOrders} upi={upi} />}
         {screen === "tracker" && <TrackerScreen t={t} orders={orders} />}
-        {screen === "khata" && <KhataScreen t={t} ledger={ledger} setLedger={setLedger} />}
+        {screen === "khata" && <KhataScreen t={t} ledger={ledger} setLedger={setLedger} upi={upi} />}
         {screen === "estimator" && <EstimatorScreen t={t} />}
         {screen === "login" && <LoginScreen t={t} onLogin={(u)=>{setUser(u); ls.set("userProfile", u); go("home");}} />}
-        {screen === "admin" && <AdminScreen t={t} unlocked={adminUnlocked} setUnlocked={setAdminUnlocked} upi={upi} saveUpi={saveUpi} downloadZip={downloadZip} orders={orders} />}
+        {screen === "admin" && <AdminScreen t={t} unlocked={adminUnlocked} setUnlocked={setAdminUnlocked} upi={upi} saveUpi={saveUpi} downloadZip={downloadZip} orders={orders} products={products} setProducts={setProducts} setHeroImg={setHeroImg} setHeroTxt={setHeroTxt} heroImg={heroImg} heroTxt={heroTxt} />}
+        {screen === "gallery" && <GalleryScreen gallery={gallery} setGallery={setGallery} />}
+        {screen === "loyalty" && <LoyaltyScreen orders={orders} user={user} />}
+        {screen === "emi" && <EmiScreen />}
+        {screen === "predictor" && <PredictorScreen products={products} />}
       </main>
 
-      {/* FOOTER */}
-      <footer className="border-t-2 border-stone-900 bg-white py-6 mt-8">
-        <div className="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-stone-600">
+      <footer className="border-t-4 border-orange-500 py-6 mt-8" style={{ backgroundColor: "#0A1931" }}>
+        <div className="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-white/70">
           <div className="font-bold">© 2026 {CFG.brand}. All rights reserved.</div>
           <div className="flex gap-4">
-            <button data-testid="admin-footer-btn" onClick={() => go("admin")} className="flex items-center gap-1 hover:text-orange-600">
-              <Shield size={12} /> {t.admin}
-            </button>
-            <a href={`tel:${CFG.phone.replace(/\s/g,'')}`} className="hover:text-orange-600">{CFG.phone}</a>
+            <button data-testid="admin-footer-btn" onClick={() => go("admin")} className="flex items-center gap-1 hover:text-orange-400"><Shield size={12} /> {t.admin}</button>
+            <a href={`tel:${CFG.phone.replace(/\s/g,'')}`} className="hover:text-orange-400">{CFG.phone}</a>
           </div>
         </div>
       </footer>
@@ -314,122 +270,126 @@ export default function App() {
   );
 }
 
-// ============= HOME SCREEN =============
-function HomeScreen({ t, lang, setScreen, CARDS, query, doSearch, category, setCategory, filtered, addToCart, setScreenAndCategory }) {
-  const CATS = [
-    { k: "ALL", n: t.all },
-    { k: "tmt", n: t.tmt },
-    { k: "cement", n: t.cement },
-    { k: "sand", n: t.sand },
-    { k: "brick", n: t.brick },
-    { k: "tools", n: t.tools }
-  ];
+const MenuItem = ({ tid, icon: Icon, color, label, badge, onClick }) => (
+  <button data-testid={tid} onClick={onClick} className="w-full flex items-center gap-3 px-4 py-3 hover:bg-stone-100 text-left border-b border-stone-100">
+    <Icon size={16} className={color} />
+    <span className="text-sm font-bold text-stone-900 flex-1">{label}</span>
+    {badge && <span className="text-[10px] font-bold bg-orange-100 text-orange-700 px-2 py-0.5 rounded-full">{badge}</span>}
+  </button>
+);
+
+// ============= Feature 19: VOICE SEARCH =============
+function VoiceMic({ onResult, lang }) {
+  const [listening, setListening] = useState(false);
+  const start = () => {
+    try {
+      const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+      if (!SR) { alert("Voice not supported. Please type."); return; }
+      const rec = new SR();
+      rec.lang = lang === "HI" ? "hi-IN" : lang === "TE" ? "te-IN" : "en-IN";
+      rec.onresult = (e) => { onResult(e.results[0][0].transcript); setListening(false); };
+      rec.onerror = () => setListening(false);
+      rec.onend = () => setListening(false);
+      rec.start(); setListening(true);
+    } catch (e) { console.error(e); setListening(false); }
+  };
+  return (
+    <button data-testid="voice-mic-btn" onClick={start} className={`p-2 rounded-full transition ${listening ? 'bg-red-500 text-white animate-pulse' : 'bg-orange-100 text-orange-600 hover:bg-orange-200'}`} title="Voice Search">
+      <Mic size={18} />
+    </button>
+  );
+}
+
+// ============= HOME =============
+function HomeScreen({ t, lang, setScreen, CARDS, query, doSearch, category, setCategory, filtered, addToCart, heroImg, heroTxt }) {
+  const CATS = [{k:"ALL",n:t.all},{k:"tmt",n:t.tmt},{k:"cement",n:t.cement},{k:"sand",n:t.sand},{k:"brick",n:t.brick},{k:"tools",n:t.tools}];
   return (
     <div className="space-y-8">
-      {/* HERO */}
-      <section className="relative overflow-hidden rounded-2xl border-2 border-stone-900 shadow-lg" data-testid="hero-banner">
-        <img src={CFG.hero} alt="Construction site" className="absolute inset-0 w-full h-full object-cover" />
-        <div className="absolute inset-0 bg-gradient-to-r from-stone-950/85 via-stone-900/70 to-stone-900/30" />
+      {/* Feature 2 & 8: HERO ITALIC (banner editable) */}
+      <section className="relative overflow-hidden rounded-2xl border-2 border-orange-500 shadow-xl" data-testid="hero-banner">
+        <img src={heroImg} alt="Construction" className="absolute inset-0 w-full h-full object-cover" />
+        <div className="absolute inset-0 bg-gradient-to-r from-slate-950/90 via-slate-900/70 to-slate-900/30" />
         <div className="relative p-6 sm:p-10 lg:p-14 text-white">
-          <div className="inline-block px-3 py-1 bg-orange-500 text-white text-xs font-bold uppercase tracking-widest rounded-full mb-4">
-            {CFG.brand} · BuildMart
-          </div>
-          <h1 className="font-display font-black text-4xl sm:text-5xl lg:text-6xl leading-none tracking-tight max-w-2xl">
-            {t.b}
+          <div className="inline-block px-3 py-1 bg-orange-500 text-white text-xs font-bold uppercase tracking-widest rounded-full mb-4">{CFG.brand} · BuildMart</div>
+          <h1 data-testid="hero-headline" className="font-display font-black italic text-4xl sm:text-5xl lg:text-6xl leading-tight tracking-tight max-w-3xl">
+            "{heroTxt || t.b}"
           </h1>
-          <p className="text-base sm:text-lg mt-3 max-w-xl text-stone-200">
-            TMT · Cement · Sand · Bricks — Genuine brands, wholesale rates, same-day delivery across the city.
-          </p>
+          <p className="text-base sm:text-lg mt-3 max-w-xl text-stone-200">TMT · Cement · Sand · Bricks — Genuine brands, wholesale rates, same-day delivery across the city.</p>
           <div className="flex flex-wrap gap-3 mt-6">
-            <button data-testid="hero-shop-btn" onClick={() => setScreen("catalog")} className="bg-orange-500 hover:bg-orange-600 text-white font-bold px-6 py-3 rounded-full shadow-lg transition-transform hover:scale-105">
-              Shop Now →
-            </button>
-            <a data-testid="hero-wa-btn" href={`https://wa.me/${CFG.wa}?text=Hi%20AS%20Enterprises`} target="_blank" rel="noreferrer" className="bg-white/10 backdrop-blur border border-white/40 hover:bg-white/20 text-white font-bold px-6 py-3 rounded-full transition">
-              {t.wa}
-            </a>
+            <button data-testid="hero-shop-btn" onClick={() => setScreen("catalog")} className="bg-orange-500 hover:bg-orange-600 text-white font-bold px-6 py-3 rounded-full shadow-lg transition-transform hover:scale-105">Shop Now →</button>
+            <a data-testid="hero-wa-btn" href={`https://wa.me/${CFG.wa}?text=Hi%20AS`} target="_blank" rel="noreferrer" className="bg-white/10 backdrop-blur border border-white/40 hover:bg-white/20 text-white font-bold px-6 py-3 rounded-full transition">{t.wa}</a>
           </div>
         </div>
       </section>
 
-      {/* SEARCH BAR */}
-      <section className="bg-white border-2 border-stone-900 rounded-2xl p-4 shadow-sm">
+      {/* Feature 19: SEARCH + VOICE */}
+      <section className="bg-white border-2 border-stone-900 rounded-2xl p-4 shadow-sm dark-card">
         <div className="flex items-center gap-2">
           <Search size={20} className="text-stone-500" />
-          <input
-            data-testid="search-input"
-            value={query}
-            onChange={(e) => doSearch(e.target.value)}
-            placeholder={t.search}
-            className="flex-1 bg-transparent outline-none text-base placeholder:text-stone-400"
-          />
+          <input data-testid="search-input" value={query} onChange={(e) => doSearch(e.target.value)} placeholder={t.search} className="flex-1 bg-transparent outline-none text-base placeholder:text-stone-400" />
+          <VoiceMic onResult={doSearch} lang={lang} />
           {query && <button onClick={() => doSearch("")} className="text-xs text-stone-500 hover:text-red-600">✕</button>}
         </div>
       </section>
 
-      {/* 4 SERVICE CARDS */}
+      {/* Feature 17: 4 SERVICE CARDS with 3D hover */}
       <section className="grid grid-cols-2 lg:grid-cols-4 gap-3">
-        {CARDS.map((c, i) => {
+        {CARDS.map((c) => {
           const Icon = c.icon;
           return (
-            <button
-              key={c.go}
-              data-testid={`card-${c.go}-btn`}
-              onClick={() => setScreen(c.go)}
-              className={`${c.color} text-white p-5 rounded-2xl text-left font-bold shadow-md hover:shadow-xl transition-all hover:-translate-y-1 group`}
-            >
-              <Icon size={28} className="mb-3 opacity-90 group-hover:scale-110 transition" />
+            <button key={c.go} data-testid={`card-${c.go}-btn`} onClick={() => setScreen(c.go)} className={`${c.color} text-white p-5 rounded-2xl text-left font-bold shadow-md hover:shadow-2xl transition-all hover:-translate-y-2 hover:rotate-1 group card-3d`}>
+              <Icon size={30} className="mb-3 opacity-90 group-hover:scale-125 group-hover:-rotate-12 transition" />
               <div className="text-base sm:text-lg leading-tight">{c.t}</div>
             </button>
           );
         })}
       </section>
 
-      {/* CATEGORY PILLS */}
       <section className="flex flex-wrap gap-2">
         {CATS.map(c => (
-          <button
-            key={c.k}
-            data-testid={`cat-${c.k}-btn`}
-            onClick={() => setCategory(c.k)}
-            className={`text-sm font-bold px-4 py-2 rounded-full transition ${category===c.k?'bg-stone-900 text-white':'bg-white border-2 border-stone-300 text-stone-700 hover:border-stone-900'}`}
-          >{c.n}</button>
+          <button key={c.k} data-testid={`cat-${c.k}-btn`} onClick={() => setCategory(c.k)} className={`text-sm font-bold px-4 py-2 rounded-full transition ${category===c.k?'bg-orange-500 text-white':'bg-white border-2 border-stone-300 text-stone-700 hover:border-orange-500'}`}>{c.n}</button>
         ))}
       </section>
 
-      {/* PRODUCT GRID */}
       <ProductGrid t={t} filtered={filtered} addToCart={addToCart} />
     </div>
   );
 }
 
+// ============= Feature 15: STAR RATING =============
+const Stars = ({ n }) => (
+  <div className="flex gap-0.5">
+    {[1,2,3,4,5].map(i => <Star key={i} size={11} className={i<=Math.round(n)?"fill-amber-400 text-amber-400":"text-stone-300"} />)}
+  </div>
+);
+
 function ProductGrid({ t, filtered, addToCart }) {
-  if (filtered.length === 0) {
-    return (
-      <div data-testid="no-results" className="bg-amber-50 border-2 border-amber-500 rounded-2xl p-8 text-center">
-        <div className="font-bold text-lg text-stone-900 mb-2">{t.noResults}</div>
-        <a href={`tel:${CFG.phone.replace(/\s/g,'')}`} className="inline-flex items-center gap-2 bg-orange-600 hover:bg-orange-700 text-white font-bold px-5 py-2.5 rounded-full mt-2">
-          <Phone size={16} /> {CFG.phone}
-        </a>
-      </div>
-    );
-  }
+  if (filtered.length === 0) return (
+    <div data-testid="no-results" className="bg-amber-50 border-2 border-amber-500 rounded-2xl p-8 text-center">
+      <div className="font-bold text-lg text-stone-900 mb-2">{t.noResults}</div>
+      <a href={`tel:${CFG.phone.replace(/\s/g,'')}`} className="inline-flex items-center gap-2 bg-orange-600 hover:bg-orange-700 text-white font-bold px-5 py-2.5 rounded-full mt-2"><Phone size={16} /> {CFG.phone}</a>
+    </div>
+  );
   return (
     <section className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
       {filtered.map(p => (
-        <div key={p.id} data-testid={`product-${p.id}`} className="bg-white border-2 border-stone-200 hover:border-stone-900 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all group">
-          <div className="aspect-square bg-stone-100 overflow-hidden">
-            <img src={p.img} alt={p.n} className="w-full h-full object-cover group-hover:scale-105 transition" />
+        <div key={p.id} data-testid={`product-${p.id}`} className="bg-white border-2 border-stone-200 hover:border-orange-500 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all group dark-card">
+          <div className="aspect-square bg-stone-100 overflow-hidden relative">
+            <img src={p.img} alt={p.n} className="w-full h-full object-cover group-hover:scale-110 transition" />
+            {p.stock < 10 && <span className="absolute top-2 right-2 bg-red-600 text-white text-[9px] font-black px-2 py-0.5 rounded-full animate-pulse">{t.low}</span>}
           </div>
-          <div className="p-3 space-y-2">
+          <div className="p-3 space-y-1.5">
             <div className="text-[10px] uppercase tracking-widest text-orange-600 font-bold">{p.b}</div>
             <div className="font-bold text-sm leading-tight line-clamp-2 h-10">{p.n}</div>
+            <div className="flex items-center justify-between">
+              <Stars n={p.rating || 4.5} />
+              <span className="text-[10px] text-stone-500">{p.stock} {t.stock}</span>
+            </div>
             <div className="flex items-baseline gap-1">
               <span className="font-display font-black text-lg">₹{p.p}</span>
               <span className="text-[10px] text-stone-500">{p.u}</span>
             </div>
-            <button data-testid={`add-cart-${p.id}-btn`} onClick={() => addToCart(p)} className="w-full bg-stone-900 hover:bg-orange-600 text-white text-xs font-bold py-2 rounded-full transition">
-              + {t.buy}
-            </button>
+            <button data-testid={`add-cart-${p.id}-btn`} onClick={() => addToCart(p)} className="w-full bg-orange-500 hover:bg-orange-600 text-white text-xs font-bold py-2 rounded-full transition">+ {t.buy}</button>
           </div>
         </div>
       ))}
@@ -439,18 +399,16 @@ function ProductGrid({ t, filtered, addToCart }) {
 
 // ============= CATALOG =============
 function CatalogScreen({ t, query, doSearch, category, setCategory, filtered, addToCart }) {
-  const CATS = [{ k:"ALL", n:t.all },{ k:"tmt", n:t.tmt },{ k:"cement", n:t.cement },{ k:"sand", n:t.sand },{ k:"brick", n:t.brick },{ k:"tools", n:t.tools }];
+  const CATS = [{k:"ALL",n:t.all},{k:"tmt",n:t.tmt},{k:"cement",n:t.cement},{k:"sand",n:t.sand},{k:"brick",n:t.brick},{k:"tools",n:t.tools}];
   return (
     <div className="space-y-6">
       <h2 className="font-display font-black text-3xl">{t.g}</h2>
-      <div className="bg-white border-2 border-stone-900 rounded-2xl p-4 flex items-center gap-2">
+      <div className="bg-white border-2 border-stone-900 rounded-2xl p-4 flex items-center gap-2 dark-card">
         <Search size={20} className="text-stone-500" />
         <input data-testid="catalog-search" value={query} onChange={(e)=>doSearch(e.target.value)} placeholder={t.search} className="flex-1 bg-transparent outline-none" />
       </div>
       <div className="flex flex-wrap gap-2">
-        {CATS.map(c => (
-          <button key={c.k} onClick={() => setCategory(c.k)} className={`text-sm font-bold px-4 py-2 rounded-full transition ${category===c.k?'bg-stone-900 text-white':'bg-white border-2 border-stone-300 text-stone-700 hover:border-stone-900'}`}>{c.n}</button>
-        ))}
+        {CATS.map(c => <button key={c.k} onClick={() => setCategory(c.k)} className={`text-sm font-bold px-4 py-2 rounded-full transition ${category===c.k?'bg-orange-500 text-white':'bg-white border-2 border-stone-300 text-stone-700 hover:border-orange-500'}`}>{c.n}</button>)}
       </div>
       <ProductGrid t={t} filtered={filtered} addToCart={addToCart} />
     </div>
@@ -461,16 +419,13 @@ function CatalogScreen({ t, query, doSearch, category, setCategory, filtered, ad
 function CartScreen({ t, cart, updateQty, removeItem, total, onCheckout, upi, user }) {
   const [address, setAddress] = useState(user?.address || "");
   const [payment, setPayment] = useState("COD");
-
-  if (cart.length === 0) {
-    return <div data-testid="empty-cart" className="bg-white border-2 border-stone-200 rounded-2xl p-12 text-center text-stone-500 font-bold">{t.empty}</div>;
-  }
+  if (cart.length === 0) return <div data-testid="empty-cart" className="bg-white border-2 border-stone-200 rounded-2xl p-12 text-center text-stone-500 font-bold dark-card">{t.empty}</div>;
   return (
     <div className="space-y-6">
       <h2 className="font-display font-black text-3xl">{t.cart}</h2>
       <div className="space-y-3">
         {cart.map(item => (
-          <div key={item.id} data-testid={`cart-item-${item.id}`} className="bg-white border-2 border-stone-200 rounded-2xl p-3 flex items-center gap-3">
+          <div key={item.id} data-testid={`cart-item-${item.id}`} className="bg-white border-2 border-stone-200 rounded-2xl p-3 flex items-center gap-3 dark-card">
             <img src={item.img} alt={item.n} className="w-16 h-16 object-cover rounded-lg" />
             <div className="flex-1 min-w-0">
               <div className="text-[10px] uppercase text-orange-600 font-bold">{item.b}</div>
@@ -486,18 +441,15 @@ function CartScreen({ t, cart, updateQty, removeItem, total, onCheckout, upi, us
           </div>
         ))}
       </div>
-
-      <div className="bg-white border-2 border-stone-900 rounded-2xl p-4 space-y-3">
+      <div className="bg-white border-2 border-orange-500 rounded-2xl p-4 space-y-3 dark-card">
         <label className="block">
           <span className="text-xs font-bold uppercase tracking-widest text-stone-500">{t.address}</span>
-          <textarea data-testid="cart-address" value={address} onChange={(e)=>setAddress(e.target.value)} rows={2} className="w-full mt-1 border-2 border-stone-200 rounded-lg p-2 outline-none focus:border-stone-900" placeholder="House no, Street, City, Pincode" />
+          <textarea data-testid="cart-address" value={address} onChange={(e)=>setAddress(e.target.value)} rows={2} className="w-full mt-1 border-2 border-stone-200 rounded-lg p-2 outline-none focus:border-orange-500" placeholder="House, Street, City, Pincode" />
         </label>
-
         <div className="grid grid-cols-2 gap-2">
-          <button data-testid="pay-cod-btn" onClick={()=>setPayment("COD")} className={`p-3 rounded-xl border-2 font-bold text-sm ${payment==="COD"?'border-stone-900 bg-stone-900 text-white':'border-stone-200 bg-white'}`}>{t.cod}</button>
-          <button data-testid="pay-upi-btn" onClick={()=>setPayment("UPI")} className={`p-3 rounded-xl border-2 font-bold text-sm ${payment==="UPI"?'border-stone-900 bg-stone-900 text-white':'border-stone-200 bg-white'}`}>{t.upi}</button>
+          <button data-testid="pay-cod-btn" onClick={()=>setPayment("COD")} className={`p-3 rounded-xl border-2 font-bold text-sm ${payment==="COD"?'border-orange-500 bg-orange-500 text-white':'border-stone-200 bg-white'}`}>{t.cod}</button>
+          <button data-testid="pay-upi-btn" onClick={()=>setPayment("UPI")} className={`p-3 rounded-xl border-2 font-bold text-sm ${payment==="UPI"?'border-orange-500 bg-orange-500 text-white':'border-stone-200 bg-white'}`}>{t.upi}</button>
         </div>
-
         {payment === "UPI" && (
           <div data-testid="qr-box" className="bg-stone-50 border-2 border-dashed border-orange-500 rounded-xl p-4 flex flex-col items-center gap-2">
             <div className="text-xs font-bold uppercase text-stone-600 tracking-widest">{t.scan}</div>
@@ -506,27 +458,40 @@ function CartScreen({ t, cart, updateQty, removeItem, total, onCheckout, upi, us
             <div className="text-xs text-stone-500">Amount: ₹{total}</div>
           </div>
         )}
-
         <div className="flex justify-between items-center pt-2 border-t border-stone-200">
           <span className="font-bold text-lg">{t.total}</span>
           <span className="font-display font-black text-2xl">₹{total}</span>
         </div>
-        <button data-testid="confirm-order-btn" onClick={()=>{ if(!address.trim()){alert("Please enter address"); return;} onCheckout(payment, address); }} className="w-full bg-orange-600 hover:bg-orange-700 text-white font-bold py-3 rounded-full text-base transition">
-          {t.confirm} · ₹{total}
-        </button>
+        <button data-testid="confirm-order-btn" onClick={()=>{ if(!address.trim()){alert("Enter address"); return;} onCheckout(payment, address); }} className="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 rounded-full text-base transition">{t.confirm} · ₹{total}</button>
       </div>
     </div>
   );
 }
 
-// ============= ORDERS =============
-function OrdersScreen({ t, orders }) {
-  if (orders.length === 0) return <div data-testid="no-orders" className="bg-white border-2 border-stone-200 rounded-2xl p-12 text-center text-stone-500 font-bold">{t.noord}</div>;
+// ============= Feature 12: GST BILL PDF + WhatsApp =============
+function generateGstBill(order) {
+  const gst = Math.round(order.total * 0.18);
+  const grand = order.total + gst;
+  const html = `<!doctype html><html><head><title>GST Bill ${order.id}</title><style>body{font-family:Arial;padding:24px;color:#111}h1{color:#ea580c;margin:0}table{width:100%;border-collapse:collapse;margin-top:16px}th,td{border:1px solid #ddd;padding:8px;text-align:left}th{background:#0A1931;color:#fff}.tot{text-align:right;font-weight:bold}</style></head><body><h1>AS Enterprises</h1><div>GSTIN: 36ABCDE1234F1Z5 · Ph +91 6301456725</div><hr/><h2>Tax Invoice: ${order.id}</h2><div>Date: ${new Date(order.date).toLocaleString()}</div><div>Customer: ${order.user}</div><div>Address: ${order.address}</div><table><tr><th>Item</th><th>Qty</th><th>Rate</th><th>Amount</th></tr>${order.items.map(i=>`<tr><td>${i.n} - ${i.b}</td><td>${i.q}</td><td>₹${i.p}</td><td>₹${i.p*i.q}</td></tr>`).join('')}<tr><td colspan="3" class="tot">Subtotal</td><td>₹${order.total}</td></tr><tr><td colspan="3" class="tot">GST (18%)</td><td>₹${gst}</td></tr><tr><td colspan="3" class="tot">Grand Total</td><td>₹${grand}</td></tr></table><p>Payment: ${order.payment}</p><p>Thank you for your business!</p></body></html>`;
+  const blob = new Blob([html], { type: 'text/html' });
+  const url = URL.createObjectURL(blob);
+  window.open(url, '_blank');
+  return grand;
+}
+
+function OrdersScreen({ t, orders, setOrders, upi }) {
+  if (orders.length === 0) return <div data-testid="no-orders" className="bg-white border-2 border-stone-200 rounded-2xl p-12 text-center text-stone-500 font-bold dark-card">{t.noord}</div>;
+  const shareWA = (o) => {
+    const gst = Math.round(o.total * 0.18);
+    const grand = o.total + gst;
+    const msg = `GST Bill ${o.id}%0A${o.items.map(i=>`${i.n} x${i.q} = ₹${i.p*i.q}`).join('%0A')}%0ASubtotal: ₹${o.total}%0AGST 18%25: ₹${gst}%0ATotal: ₹${grand}`;
+    window.open(`https://wa.me/${CFG.wa}?text=${msg}`, "_blank");
+  };
   return (
     <div className="space-y-4">
       <h2 className="font-display font-black text-3xl">{t.orders}</h2>
       {orders.map(o => (
-        <div key={o.id} data-testid={`order-${o.id}`} className="bg-white border-2 border-stone-200 rounded-2xl p-4">
+        <div key={o.id} data-testid={`order-${o.id}`} className="bg-white border-2 border-stone-200 rounded-2xl p-4 dark-card">
           <div className="flex justify-between items-start mb-2">
             <div>
               <div className="text-xs uppercase tracking-widest text-orange-600 font-bold">{t.ordid}</div>
@@ -537,12 +502,61 @@ function OrdersScreen({ t, orders }) {
               <span className="inline-block bg-amber-100 text-amber-800 text-[10px] font-bold px-2 py-0.5 rounded-full uppercase mt-1">{o.status}</span>
             </div>
           </div>
-          <div className="text-sm text-stone-600 space-y-0.5 mt-2">
-            {o.items.map(i => <div key={i.id}>{i.n} × {i.q}</div>)}
-          </div>
+          <div className="text-sm text-stone-600 space-y-0.5 mt-2">{o.items.map(i => <div key={i.id}>{i.n} × {i.q}</div>)}</div>
           <div className="flex justify-between items-center mt-3 pt-3 border-t border-stone-100">
             <span className="text-xs text-stone-500">{o.payment} · {o.address?.slice(0,30)}</span>
             <span className="font-black text-lg">₹{o.total}</span>
+          </div>
+          <div className="grid grid-cols-2 gap-2 mt-3">
+            <button data-testid={`gst-btn-${o.id}`} onClick={() => generateGstBill(o)} className="flex items-center justify-center gap-1 bg-stone-900 text-white text-xs font-bold py-2 rounded-full"><FileText size={12} /> GST Bill PDF</button>
+            <button data-testid={`gst-wa-btn-${o.id}`} onClick={() => shareWA(o)} className="flex items-center justify-center gap-1 bg-green-600 text-white text-xs font-bold py-2 rounded-full"><MessageCircle size={12} /> Send WhatsApp</button>
+          </div>
+          {o.loyalty > 0 && <div className="text-xs text-amber-700 mt-2 font-bold">✨ +{o.loyalty} Mistri Points earned</div>}
+        </div>
+      ))}
+    </div>
+  );
+}
+
+// ============= Feature 13: LIVE TRUCK MAP =============
+function TrackerScreen({ t, orders }) {
+  const [pos, setPos] = useState(0);
+  useEffect(() => {
+    const id = setInterval(() => setPos(p => (p + 1) % 100), 200);
+    return () => clearInterval(id);
+  }, []);
+  return (
+    <div className="space-y-6">
+      <h2 className="font-display font-black text-3xl">{t.tracker}</h2>
+      <div className="bg-gradient-to-br from-orange-500 to-red-600 text-white rounded-2xl p-6 shadow-lg">
+        <Truck size={40} className="mb-3" />
+        <div className="text-2xl font-black">{t.eta}: 4-6 hours</div>
+        <div className="text-sm opacity-90 mt-1">Free delivery within 10km · ₹200 beyond</div>
+      </div>
+      {/* Live Map */}
+      <div data-testid="live-map" className="bg-emerald-50 border-2 border-emerald-500 rounded-2xl p-4 overflow-hidden relative" style={{ minHeight: 180 }}>
+        <div className="absolute inset-0 opacity-30" style={{ backgroundImage: 'repeating-linear-gradient(0deg, #10b981 0 1px, transparent 1px 40px), repeating-linear-gradient(90deg, #10b981 0 1px, transparent 1px 40px)' }} />
+        <div className="relative flex items-center justify-between text-emerald-800 font-bold text-xs mb-2 z-10">
+          <span className="flex items-center gap-1"><MapPin size={14}/> Warehouse</span>
+          <span className="flex items-center gap-1">Home <MapPin size={14}/></span>
+        </div>
+        <div className="relative h-3 bg-white/50 rounded-full mt-16 z-10">
+          <div className="absolute h-3 bg-emerald-600 rounded-full transition-all" style={{ width: pos + "%" }} />
+          <div className="absolute -top-6 transition-all text-2xl" style={{ left: pos + "%", transform: 'translateX(-50%)' }}>🚚</div>
+        </div>
+        <div className="relative text-center mt-3 text-xs text-emerald-800 font-bold z-10">Truck live · {pos}% route covered</div>
+      </div>
+      {orders.length === 0 ? (
+        <div className="bg-white border-2 border-stone-200 rounded-2xl p-8 text-center text-stone-500 dark-card">{t.noord}</div>
+      ) : orders.slice(0, 3).map(o => (
+        <div key={o.id} data-testid={`track-${o.id}`} className="bg-white border-2 border-stone-200 rounded-2xl p-4 dark-card">
+          <div className="flex justify-between mb-3">
+            <div className="font-bold">{o.id}</div>
+            <span className="bg-orange-100 text-orange-700 text-xs font-bold px-2 py-1 rounded-full">On the way</span>
+          </div>
+          <div className="flex justify-between text-xs text-stone-600">
+            <div><div className="text-[10px] uppercase font-bold text-stone-400">{t.driver}</div>Ramesh · 98765***25</div>
+            <div className="text-right"><div className="text-[10px] uppercase font-bold text-stone-400">Route</div>Warehouse → {o.address?.slice(0,20)}</div>
           </div>
         </div>
       ))}
@@ -550,42 +564,13 @@ function OrdersScreen({ t, orders }) {
   );
 }
 
-// ============= TRACKER =============
-function TrackerScreen({ t, orders }) {
-  return (
-    <div className="space-y-6">
-      <h2 className="font-display font-black text-3xl">{t.tracker}</h2>
-      <div className="bg-gradient-to-r from-orange-500 to-red-600 text-white rounded-2xl p-6 shadow-lg">
-        <Truck size={40} className="mb-3" />
-        <div className="text-2xl font-black">{t.eta}: 4-6 hours</div>
-        <div className="text-sm opacity-90 mt-1">Free delivery within 10km · ₹200 beyond</div>
-      </div>
-      {orders.length === 0 ? (
-        <div className="bg-white border-2 border-stone-200 rounded-2xl p-8 text-center text-stone-500">{t.noord}</div>
-      ) : (
-        orders.slice(0, 3).map(o => (
-          <div key={o.id} data-testid={`track-${o.id}`} className="bg-white border-2 border-stone-200 rounded-2xl p-4">
-            <div className="flex justify-between mb-3">
-              <div className="font-bold">{o.id}</div>
-              <span className="bg-orange-100 text-orange-700 text-xs font-bold px-2 py-1 rounded-full">On the way</span>
-            </div>
-            <div className="flex justify-between text-xs text-stone-600">
-              <div><div className="text-[10px] uppercase font-bold text-stone-400">{t.driver}</div>Ramesh · +91 98765***25</div>
-              <div className="text-right"><div className="text-[10px] uppercase font-bold text-stone-400">{t.route}</div>Warehouse → {o.address?.slice(0,20)}</div>
-            </div>
-          </div>
-        ))
-      )}
-    </div>
-  );
-}
-
-// ============= KHATA (Wholesale Ledger) =============
-function KhataScreen({ t, ledger, setLedger }) {
+// ============= KHATA + UPI QR (Feature 11) =============
+function KhataScreen({ t, ledger, setLedger, upi }) {
   const [customer, setCustomer] = useState("");
   const [amt, setAmt] = useState("");
   const [type, setType] = useState("credit");
   const [note, setNote] = useState("");
+  const [showQr, setShowQr] = useState(null);
 
   const add = () => {
     if (!customer.trim() || !amt) return;
@@ -603,31 +588,39 @@ function KhataScreen({ t, ledger, setLedger }) {
         <div className="font-display font-black text-4xl mt-1">₹{Math.abs(balance).toLocaleString()}</div>
         <div className="text-xs mt-1 opacity-80">{balance >= 0 ? 'To Receive' : 'To Pay'}</div>
       </div>
-
-      <div className="bg-white border-2 border-stone-900 rounded-2xl p-4 space-y-3">
+      <div className="bg-white border-2 border-orange-500 rounded-2xl p-4 space-y-3 dark-card">
         <div className="grid grid-cols-2 gap-2">
-          <input data-testid="ledger-customer" value={customer} onChange={e=>setCustomer(e.target.value)} placeholder={t.customer} className="border-2 border-stone-200 rounded-lg p-2 outline-none focus:border-stone-900" />
-          <input data-testid="ledger-amt" value={amt} onChange={e=>setAmt(e.target.value)} type="number" placeholder={t.amt} className="border-2 border-stone-200 rounded-lg p-2 outline-none focus:border-stone-900" />
+          <input data-testid="ledger-customer" value={customer} onChange={e=>setCustomer(e.target.value)} placeholder={t.customer} className="border-2 border-stone-200 rounded-lg p-2 outline-none focus:border-orange-500" />
+          <input data-testid="ledger-amt" value={amt} onChange={e=>setAmt(e.target.value)} type="number" placeholder={t.amt} className="border-2 border-stone-200 rounded-lg p-2 outline-none focus:border-orange-500" />
         </div>
         <div className="grid grid-cols-2 gap-2">
           <button onClick={()=>setType("credit")} className={`p-2 rounded-lg border-2 font-bold text-sm ${type==="credit"?'bg-emerald-700 text-white border-emerald-700':'border-stone-200'}`}>{t.credit}</button>
           <button onClick={()=>setType("debit")} className={`p-2 rounded-lg border-2 font-bold text-sm ${type==="debit"?'bg-red-700 text-white border-red-700':'border-stone-200'}`}>{t.debit}</button>
         </div>
-        <input value={note} onChange={e=>setNote(e.target.value)} placeholder={t.note} className="w-full border-2 border-stone-200 rounded-lg p-2 outline-none focus:border-stone-900" />
-        <button data-testid="ledger-add-btn" onClick={add} className="w-full bg-stone-900 text-white font-bold py-2.5 rounded-full">+ {t.add}</button>
+        <input value={note} onChange={e=>setNote(e.target.value)} placeholder={t.note} className="w-full border-2 border-stone-200 rounded-lg p-2 outline-none focus:border-orange-500" />
+        <button data-testid="ledger-add-btn" onClick={add} className="w-full bg-orange-500 text-white font-bold py-2.5 rounded-full">+ {t.add}</button>
       </div>
 
       <div className="space-y-2">
         {ledger.map(l => (
-          <div key={l.id} className="bg-white border-2 border-stone-200 rounded-xl p-3 flex justify-between items-center">
-            <div>
-              <div className="font-bold">{l.customer}</div>
-              <div className="text-xs text-stone-500">{l.note} · {new Date(l.date).toLocaleDateString()}</div>
+          <div key={l.id} className="bg-white border-2 border-stone-200 rounded-xl p-3 dark-card">
+            <div className="flex justify-between items-center">
+              <div>
+                <div className="font-bold">{l.customer}</div>
+                <div className="text-xs text-stone-500">{l.note} · {new Date(l.date).toLocaleDateString()}</div>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className={`font-black ${l.type==='credit'?'text-emerald-700':'text-red-700'}`}>{l.type==='credit'?'+':'-'}₹{l.amt}</span>
+                {l.type==='credit' && <button data-testid={`khata-qr-${l.id}`} onClick={() => setShowQr(showQr===l.id?null:l.id)} className="p-1.5 bg-orange-100 text-orange-600 rounded-full" title="UPI QR"><Camera size={12} /></button>}
+                <button onClick={()=>del(l.id)} className="p-1.5 text-red-500 hover:bg-red-50 rounded-full"><Trash2 size={14} /></button>
+              </div>
             </div>
-            <div className="flex items-center gap-2">
-              <span className={`font-black ${l.type==='credit'?'text-emerald-700':'text-red-700'}`}>{l.type==='credit'?'+':'-'}₹{l.amt}</span>
-              <button onClick={()=>del(l.id)} className="p-1.5 text-red-500 hover:bg-red-50 rounded-full"><Trash2 size={14} /></button>
-            </div>
+            {showQr === l.id && (
+              <div className="mt-3 p-3 bg-orange-50 rounded-lg flex flex-col items-center">
+                <QRCodeSVG value={`upi://pay?pa=${upi}&pn=AS&am=${l.amt}&cu=INR&tn=${encodeURIComponent(l.customer)}`} size={140} />
+                <div className="text-xs mt-2 font-bold text-orange-700">Pay ₹{l.amt} to {upi}</div>
+              </div>
+            )}
           </div>
         ))}
       </div>
@@ -637,58 +630,33 @@ function KhataScreen({ t, ledger, setLedger }) {
 
 // ============= ESTIMATOR =============
 function EstimatorScreen({ t }) {
-  const [len, setLen] = useState("");
-  const [wid, setWid] = useState("");
-  const [ht, setHt] = useState("");
+  const [len, setLen] = useState(""); const [wid, setWid] = useState(""); const [ht, setHt] = useState("");
   const [result, setResult] = useState(null);
-
   const calc = () => {
     const l = parseFloat(len), w = parseFloat(wid), h = parseFloat(ht);
     if (!l || !w || !h) return;
-    const area = l * w;
-    const vol = area * h;
-    setResult({
-      cement: Math.ceil(area * 0.4),   // bags per sqft (approx for 1000sqft house baseline)
-      tmt: (area * 4 / 1000).toFixed(2), // tons
-      sand: Math.ceil(vol * 0.5),
-      bricks: Math.ceil(area * 55),
-    });
+    const area = l * w, vol = area * h;
+    setResult({ cement: Math.ceil(area * 0.4), tmt: (area * 4 / 1000).toFixed(2), sand: Math.ceil(vol * 0.5), bricks: Math.ceil(area * 55) });
   };
-
   return (
     <div className="space-y-6">
       <h2 className="font-display font-black text-3xl">{t.estimator}</h2>
-      <div className="bg-white border-2 border-stone-900 rounded-2xl p-6 space-y-4">
+      <div className="bg-white border-2 border-orange-500 rounded-2xl p-6 space-y-4 dark-card">
         <div className="text-sm text-stone-600">{t.est}</div>
         <div className="grid grid-cols-3 gap-3">
-          <label className="block">
-            <span className="text-xs font-bold uppercase text-stone-500">{t.len}</span>
-            <input data-testid="est-len" type="number" value={len} onChange={e=>setLen(e.target.value)} className="w-full mt-1 border-2 border-stone-200 rounded-lg p-2 outline-none focus:border-stone-900" />
-          </label>
-          <label className="block">
-            <span className="text-xs font-bold uppercase text-stone-500">{t.wid}</span>
-            <input data-testid="est-wid" type="number" value={wid} onChange={e=>setWid(e.target.value)} className="w-full mt-1 border-2 border-stone-200 rounded-lg p-2 outline-none focus:border-stone-900" />
-          </label>
-          <label className="block">
-            <span className="text-xs font-bold uppercase text-stone-500">{t.ht}</span>
-            <input data-testid="est-ht" type="number" value={ht} onChange={e=>setHt(e.target.value)} className="w-full mt-1 border-2 border-stone-200 rounded-lg p-2 outline-none focus:border-stone-900" />
-          </label>
+          <label><span className="text-xs font-bold uppercase text-stone-500">{t.len}</span><input data-testid="est-len" type="number" value={len} onChange={e=>setLen(e.target.value)} className="w-full mt-1 border-2 border-stone-200 rounded-lg p-2 outline-none focus:border-orange-500" /></label>
+          <label><span className="text-xs font-bold uppercase text-stone-500">{t.wid}</span><input data-testid="est-wid" type="number" value={wid} onChange={e=>setWid(e.target.value)} className="w-full mt-1 border-2 border-stone-200 rounded-lg p-2 outline-none focus:border-orange-500" /></label>
+          <label><span className="text-xs font-bold uppercase text-stone-500">{t.ht}</span><input data-testid="est-ht" type="number" value={ht} onChange={e=>setHt(e.target.value)} className="w-full mt-1 border-2 border-stone-200 rounded-lg p-2 outline-none focus:border-orange-500" /></label>
         </div>
-        <button data-testid="est-calc-btn" onClick={calc} className="w-full bg-orange-600 hover:bg-orange-700 text-white font-bold py-3 rounded-full">{t.calc}</button>
+        <button data-testid="est-calc-btn" onClick={calc} className="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 rounded-full">{t.calc}</button>
       </div>
-
       {result && (
         <div data-testid="est-result" className="bg-amber-50 border-2 border-orange-500 rounded-2xl p-5">
           <div className="text-sm font-bold text-stone-600 mb-3">{t.need}:</div>
           <div className="grid grid-cols-2 gap-3">
-            <Stat label={t.bags} val={result.cement} />
-            <Stat label={t.tons} val={result.tmt} />
-            <Stat label={t.cft} val={result.sand} />
-            <Stat label={t.bricks} val={result.bricks} />
+            <Stat label={t.bags} val={result.cement} /><Stat label={t.tons} val={result.tmt} /><Stat label={t.cft} val={result.sand} /><Stat label={t.bricks} val={result.bricks} />
           </div>
-          <a href={`https://wa.me/${CFG.wa}?text=Estimate:%20${result.cement}%20bags,%20${result.tmt}%20tons%20TMT,%20${result.sand}%20cft%20sand,%20${result.bricks}%20bricks`} target="_blank" rel="noreferrer" className="mt-4 block bg-green-600 hover:bg-green-700 text-white text-center font-bold py-2.5 rounded-full">
-            Get Quote on WhatsApp
-          </a>
+          <a href={`https://wa.me/${CFG.wa}?text=Estimate:%20${result.cement}%20bags,%20${result.tmt}%20tons%20TMT,%20${result.sand}%20cft%20sand,%20${result.bricks}%20bricks`} target="_blank" rel="noreferrer" className="mt-4 block bg-green-600 hover:bg-green-700 text-white text-center font-bold py-2.5 rounded-full">Get Quote on WhatsApp</a>
         </div>
       )}
     </div>
@@ -701,86 +669,403 @@ const Stat = ({ label, val }) => (
   </div>
 );
 
-// ============= LOGIN =============
+// ============= Feature 4 & 6: LOGIN (Mobile OTP + Forgot Reset) =============
 function LoginScreen({ t, onLogin }) {
-  const [name, setName] = useState("");
+  const [step, setStep] = useState("mobile"); // mobile | otp | forgot
   const [mobile, setMobile] = useState("");
-  const [email, setEmail] = useState("");
-  const [pass, setPass] = useState("");
-  const submit = (e) => {
-    e.preventDefault();
-    if (!name.trim() || !mobile.trim()) { alert("Name and Mobile required"); return; }
-    onLogin({ name, mobile, email, pass });
+  const [otp, setOtp] = useState("");
+  const [name, setName] = useState("");
+  const [sentOtp, setSentOtp] = useState("");
+
+  const sendOtp = () => {
+    if (mobile.length < 10) { alert("Enter 10-digit mobile"); return; }
+    const code = String(Math.floor(1000 + Math.random() * 9000));
+    setSentOtp(code);
+    alert(`OTP sent to ${mobile}: ${code}\n(Demo mode — real SMS via provider)`);
+    setStep("otp");
   };
+  const verify = () => {
+    if (otp !== sentOtp) { alert("Wrong OTP"); return; }
+    onLogin({ mobile, name: name || `User ${mobile.slice(-4)}`, date: new Date().toISOString() });
+  };
+
   return (
     <div className="max-w-md mx-auto">
-      <div className="bg-white border-2 border-stone-900 rounded-2xl p-6 space-y-4">
+      <div className="bg-white border-2 border-orange-500 rounded-2xl p-6 space-y-4 dark-card">
         <h2 className="font-display font-black text-3xl">{t.welcome}</h2>
-        <p className="text-sm text-stone-500">Sign in for faster checkout & order tracking</p>
-        <form onSubmit={submit} className="space-y-3">
-          <input data-testid="login-name" value={name} onChange={e=>setName(e.target.value)} placeholder={t.name} className="w-full border-2 border-stone-200 rounded-lg p-3 outline-none focus:border-stone-900" />
-          <input data-testid="login-mobile" value={mobile} onChange={e=>setMobile(e.target.value)} placeholder={t.mobile} className="w-full border-2 border-stone-200 rounded-lg p-3 outline-none focus:border-stone-900" />
-          <input data-testid="login-email" value={email} onChange={e=>setEmail(e.target.value)} placeholder={t.email} type="email" className="w-full border-2 border-stone-200 rounded-lg p-3 outline-none focus:border-stone-900" />
-          <input data-testid="login-pass" value={pass} onChange={e=>setPass(e.target.value)} placeholder={t.pass} type="password" className="w-full border-2 border-stone-200 rounded-lg p-3 outline-none focus:border-stone-900" />
-          <button data-testid="login-submit-btn" type="submit" className="w-full bg-orange-600 hover:bg-orange-700 text-white font-bold py-3 rounded-full">{t.signin}</button>
-        </form>
+        {step === "mobile" && (
+          <>
+            <p className="text-sm text-stone-500">Login with Mobile OTP for faster checkout</p>
+            <input data-testid="login-name" value={name} onChange={e=>setName(e.target.value)} placeholder="Your Name (optional)" className="w-full border-2 border-stone-200 rounded-lg p-3 outline-none focus:border-orange-500" />
+            <input data-testid="login-mobile" value={mobile} onChange={e=>setMobile(e.target.value.replace(/\D/g,'').slice(0,10))} placeholder="10-digit Mobile Number" type="tel" className="w-full border-2 border-stone-200 rounded-lg p-3 outline-none focus:border-orange-500 tracking-widest text-lg" />
+            <button data-testid="send-otp-btn" onClick={sendOtp} className="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 rounded-full">{t.sendOtp}</button>
+            <button data-testid="forgot-btn" onClick={() => setStep("forgot")} className="w-full text-sm text-orange-600 font-bold hover:underline">Forgot / Reset?</button>
+          </>
+        )}
+        {step === "otp" && (
+          <>
+            <p className="text-sm text-stone-500">OTP sent to <b>+91 {mobile}</b></p>
+            <input data-testid="otp-input" value={otp} onChange={e=>setOtp(e.target.value.replace(/\D/g,'').slice(0,4))} placeholder={t.otp} maxLength={4} className="w-full text-center text-3xl font-black tracking-widest border-2 border-stone-200 rounded-lg p-3 outline-none focus:border-orange-500" />
+            <button data-testid="verify-otp-btn" onClick={verify} className="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 rounded-full">{t.verify}</button>
+            <button onClick={() => setStep("mobile")} className="w-full text-xs text-stone-500 hover:underline">Change mobile</button>
+          </>
+        )}
+        {step === "forgot" && (
+          <>
+            <div className="flex items-center gap-2 text-orange-600">
+              <KeyRound size={20} /> <span className="font-bold">Reset Access</span>
+            </div>
+            <p className="text-sm text-stone-500">Enter your mobile — we'll send a fresh OTP to reset.</p>
+            <input data-testid="forgot-mobile" value={mobile} onChange={e=>setMobile(e.target.value.replace(/\D/g,'').slice(0,10))} placeholder="Registered Mobile" type="tel" className="w-full border-2 border-stone-200 rounded-lg p-3 outline-none focus:border-orange-500" />
+            <button data-testid="forgot-send-btn" onClick={sendOtp} className="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 rounded-full">Send Reset OTP</button>
+            <button onClick={() => setStep("mobile")} className="w-full text-xs text-stone-500 hover:underline">← Back to login</button>
+          </>
+        )}
       </div>
     </div>
   );
 }
 
-// ============= ADMIN =============
-function AdminScreen({ t, unlocked, setUnlocked, upi, saveUpi, downloadZip, orders }) {
+// ============= Feature 5,7,8,9,15,18: ADMIN with tabs =============
+function AdminScreen({ t, unlocked, setUnlocked, upi, saveUpi, downloadZip, orders, products, setProducts, setHeroImg, setHeroTxt, heroImg, heroTxt }) {
   const [pin, setPin] = useState("");
+  const [tab, setTab] = useState("rates");
   const [newUpi, setNewUpi] = useState(upi);
+  const [newBanner, setNewBanner] = useState(heroImg);
+  const [newHead, setNewHead] = useState(heroTxt);
+  const [newProd, setNewProd] = useState({ n:"", b:"", p:"", u:"per unit", cat:"tmt", stock:100, img:"" });
 
-  if (!unlocked) {
-    return (
-      <div className="max-w-md mx-auto">
-        <div className="bg-white border-2 border-stone-900 rounded-2xl p-6 space-y-4 text-center">
-          <Shield size={40} className="mx-auto text-orange-600" />
-          <h2 className="font-display font-black text-2xl">{t.pinLbl}</h2>
-          <input
-            data-testid="admin-pin-input"
-            type="password"
-            value={pin}
-            onChange={(e)=>setPin(e.target.value)}
-            maxLength={4}
-            className="w-full text-center text-2xl font-black tracking-widest border-2 border-stone-200 rounded-lg p-3 outline-none focus:border-stone-900"
-            placeholder="••••"
-          />
-          <button data-testid="admin-unlock-btn" onClick={()=>{ if(pin==="6301") setUnlocked(true); else alert("Wrong PIN"); }} className="w-full bg-stone-900 text-white font-bold py-3 rounded-full">Unlock</button>
-        </div>
+  if (!unlocked) return (
+    <div className="max-w-md mx-auto">
+      <div className="bg-white border-2 border-orange-500 rounded-2xl p-6 space-y-4 text-center dark-card">
+        <Shield size={40} className="mx-auto text-orange-600" />
+        <h2 className="font-display font-black text-2xl">{t.pinLbl}</h2>
+        <input data-testid="admin-pin-input" type="password" value={pin} onChange={(e)=>setPin(e.target.value)} maxLength={4} className="w-full text-center text-2xl font-black tracking-widest border-2 border-stone-200 rounded-lg p-3 outline-none focus:border-orange-500" placeholder="••••" />
+        <button data-testid="admin-unlock-btn" onClick={()=>{ if(pin==="6301") setUnlocked(true); else alert("Wrong PIN"); }} className="w-full bg-orange-500 text-white font-bold py-3 rounded-full">Unlock</button>
       </div>
-    );
-  }
+    </div>
+  );
+
+  const updatePrice = (id, p) => setProducts(products.map(x => x.id===id?{...x, p:parseFloat(p)||0}:x));
+  const updateStock = (id, s) => setProducts(products.map(x => x.id===id?{...x, stock:parseInt(s)||0}:x));
+  const delProd = (id) => setProducts(products.filter(x => x.id !== id));
+  const addProd = () => {
+    if (!newProd.n || !newProd.p) { alert("Name & Price required"); return; }
+    setProducts([{ ...newProd, id:Date.now(), p:parseFloat(newProd.p), stock:parseInt(newProd.stock)||100, rating:4.5, img:newProd.img||"https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=400&q=70" }, ...products]);
+    setNewProd({ n:"", b:"", p:"", u:"per unit", cat:"tmt", stock:100, img:"" });
+  };
+  const exportCsv = () => {
+    const csv = "id,name,brand,price,unit,category,stock,rating\n" + products.map(p => `${p.id},"${p.n}","${p.b}",${p.p},"${p.u}",${p.cat},${p.stock},${p.rating||4.5}`).join("\n");
+    const blob = new Blob([csv], { type:'text/csv' });
+    const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'as-prices.csv'; a.click();
+  };
+  const importCsv = (e) => {
+    const f = e.target.files[0]; if (!f) return;
+    const r = new FileReader();
+    r.onload = () => {
+      try {
+        const lines = r.result.split(/\r?\n/).slice(1).filter(Boolean);
+        const updated = [...products];
+        lines.forEach(line => {
+          const m = line.match(/^(\d+),"?([^",]+)"?,"?([^",]*)"?,(\d+(?:\.\d+)?)/);
+          if (m) { const id = parseInt(m[1]), price = parseFloat(m[4]); const idx = updated.findIndex(p => p.id === id); if (idx >= 0) updated[idx] = { ...updated[idx], p: price }; }
+        });
+        setProducts(updated);
+        alert(`Imported ${lines.length} rows`);
+      } catch (err) { alert("Bad CSV format"); }
+    };
+    r.readAsText(f);
+  };
+  const readFile = (file, cb) => { const r = new FileReader(); r.onload = () => cb(r.result); r.readAsDataURL(file); };
+
+  const TABS = [{k:"rates",n:"Rate Edit"},{k:"banner",n:"Banner Edit"},{k:"products",n:"Products"},{k:"bulk",n:"Bulk CSV"},{k:"settings",n:"Settings"}];
+  return (
+    <div className="space-y-4">
+      <h2 className="font-display font-black text-3xl">{t.admin} Panel</h2>
+      <div className="flex flex-wrap gap-2">
+        {TABS.map(x => <button key={x.k} data-testid={`admin-tab-${x.k}`} onClick={() => setTab(x.k)} className={`text-xs font-bold px-3 py-2 rounded-full transition ${tab===x.k?'bg-orange-500 text-white':'bg-white border-2 border-stone-300 text-stone-700 hover:border-orange-500'}`}>{x.n}</button>)}
+      </div>
+
+      {/* Feature 7: Rate Edit */}
+      {tab === "rates" && (
+        <div className="bg-white border-2 border-stone-200 rounded-2xl p-4 dark-card">
+          <div className="text-xs uppercase tracking-widest text-stone-500 font-bold mb-3">Edit Prices & Stock</div>
+          <div className="space-y-2 max-h-96 overflow-auto">
+            {products.map(p => (
+              <div key={p.id} className="flex items-center gap-2 p-2 border border-stone-200 rounded-lg">
+                <img src={p.img} alt="" className="w-10 h-10 object-cover rounded" />
+                <div className="flex-1 min-w-0">
+                  <div className="text-xs font-bold truncate">{p.n}</div>
+                  <div className="text-[10px] text-stone-500">{p.b}</div>
+                </div>
+                <input data-testid={`rate-${p.id}`} type="number" defaultValue={p.p} onBlur={e=>updatePrice(p.id, e.target.value)} className="w-20 border-2 border-stone-200 rounded p-1 text-sm text-right" />
+                <input data-testid={`stock-${p.id}`} type="number" defaultValue={p.stock} onBlur={e=>updateStock(p.id, e.target.value)} className="w-16 border-2 border-stone-200 rounded p-1 text-sm text-right" />
+                <button onClick={()=>delProd(p.id)} className="p-1.5 text-red-500 hover:bg-red-50 rounded-full"><Trash2 size={12} /></button>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Feature 8: Banner Edit */}
+      {tab === "banner" && (
+        <div className="bg-white border-2 border-stone-200 rounded-2xl p-4 space-y-3 dark-card">
+          <div className="text-xs uppercase tracking-widest text-stone-500 font-bold">Edit Banner</div>
+          <label className="block text-xs font-bold">Headline<input data-testid="banner-head" value={newHead} onChange={e=>setNewHead(e.target.value)} className="w-full mt-1 border-2 border-stone-200 rounded-lg p-2 outline-none focus:border-orange-500" /></label>
+          <label className="block text-xs font-bold">Banner Image URL<input data-testid="banner-img" value={newBanner} onChange={e=>setNewBanner(e.target.value)} className="w-full mt-1 border-2 border-stone-200 rounded-lg p-2 outline-none focus:border-orange-500" /></label>
+          <label className="block text-xs font-bold">Or Upload Image<input type="file" accept="image/*" onChange={e => e.target.files[0] && readFile(e.target.files[0], (d)=>setNewBanner(d))} className="w-full mt-1" /></label>
+          <img src={newBanner} alt="preview" className="w-full h-32 object-cover rounded-lg border-2 border-stone-200" />
+          <button data-testid="banner-save-btn" onClick={()=>{ localStorage.setItem("bannerImg", newBanner); localStorage.setItem("bannerText", newHead); setHeroImg(newBanner); setHeroTxt(newHead); alert("Banner saved"); }} className="w-full bg-orange-500 text-white font-bold py-2.5 rounded-full">Save Banner</button>
+        </div>
+      )}
+
+      {/* Feature 9: Add Product with Photo */}
+      {tab === "products" && (
+        <div className="bg-white border-2 border-stone-200 rounded-2xl p-4 space-y-3 dark-card">
+          <div className="text-xs uppercase tracking-widest text-stone-500 font-bold">Add New Product</div>
+          <input data-testid="prod-name" value={newProd.n} onChange={e=>setNewProd({...newProd, n:e.target.value})} placeholder="Product name" className="w-full border-2 border-stone-200 rounded-lg p-2 outline-none focus:border-orange-500" />
+          <div className="grid grid-cols-2 gap-2">
+            <input data-testid="prod-brand" value={newProd.b} onChange={e=>setNewProd({...newProd, b:e.target.value})} placeholder="Brand" className="border-2 border-stone-200 rounded-lg p-2 outline-none focus:border-orange-500" />
+            <input data-testid="prod-price" type="number" value={newProd.p} onChange={e=>setNewProd({...newProd, p:e.target.value})} placeholder="Price ₹" className="border-2 border-stone-200 rounded-lg p-2 outline-none focus:border-orange-500" />
+          </div>
+          <div className="grid grid-cols-2 gap-2">
+            <select data-testid="prod-cat" value={newProd.cat} onChange={e=>setNewProd({...newProd, cat:e.target.value})} className="border-2 border-stone-200 rounded-lg p-2 outline-none focus:border-orange-500">
+              <option value="tmt">TMT</option><option value="cement">Cement</option><option value="sand">Sand</option><option value="brick">Brick</option><option value="tools">Tools</option>
+            </select>
+            <input data-testid="prod-stock" type="number" value={newProd.stock} onChange={e=>setNewProd({...newProd, stock:e.target.value})} placeholder="Stock" className="border-2 border-stone-200 rounded-lg p-2 outline-none focus:border-orange-500" />
+          </div>
+          <input data-testid="prod-unit" value={newProd.u} onChange={e=>setNewProd({...newProd, u:e.target.value})} placeholder="Unit (per bag, per kg)" className="w-full border-2 border-stone-200 rounded-lg p-2 outline-none focus:border-orange-500" />
+          <label className="block text-xs font-bold">Product Photo<input data-testid="prod-photo" type="file" accept="image/*,capture=camera" onChange={e => e.target.files[0] && readFile(e.target.files[0], d=>setNewProd({...newProd, img:d}))} className="w-full mt-1" /></label>
+          {newProd.img && <img src={newProd.img} alt="" className="w-24 h-24 object-cover rounded-lg border-2 border-stone-200" />}
+          <button data-testid="prod-add-btn" onClick={addProd} className="w-full bg-orange-500 text-white font-bold py-2.5 rounded-full">+ Add Product</button>
+        </div>
+      )}
+
+      {/* Feature 15 & 18: Bulk CSV */}
+      {tab === "bulk" && (
+        <div className="bg-white border-2 border-stone-200 rounded-2xl p-4 space-y-3 dark-card">
+          <div className="text-xs uppercase tracking-widest text-stone-500 font-bold">Bulk Price Excel/CSV</div>
+          <button data-testid="csv-export-btn" onClick={exportCsv} className="w-full flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-full"><Download size={16} /> Export Prices CSV</button>
+          <label className="block">
+            <span className="text-xs font-bold uppercase text-stone-500">Import Prices CSV</span>
+            <input data-testid="csv-import-input" type="file" accept=".csv" onChange={importCsv} className="w-full mt-1 border-2 border-stone-200 rounded-lg p-2 text-sm" />
+          </label>
+          <div className="text-[11px] text-stone-500 bg-stone-100 p-2 rounded">CSV format: id,name,brand,price,unit,category,stock,rating</div>
+        </div>
+      )}
+
+      {/* Settings tab: UPI + ZIP + Stats */}
+      {tab === "settings" && (
+        <div className="space-y-4">
+          <div className="bg-white border-2 border-stone-200 rounded-2xl p-5 space-y-3 dark-card">
+            <div className="text-xs font-bold uppercase tracking-widest text-stone-500">{t.changeUpi}</div>
+            <div className="text-sm">{t.currentUpi}: <span className="font-bold text-orange-600">{upi}</span></div>
+            <div className="flex gap-2">
+              <input data-testid="admin-upi-input" value={newUpi} onChange={e=>setNewUpi(e.target.value)} className="flex-1 border-2 border-stone-200 rounded-lg p-2 outline-none focus:border-orange-500" placeholder="yourname@upi" />
+              <button data-testid="admin-save-upi-btn" onClick={()=>saveUpi(newUpi)} className="bg-stone-900 text-white font-bold px-4 py-2 rounded-lg">{t.saveUpi}</button>
+            </div>
+          </div>
+          <div className="bg-gradient-to-r from-orange-500 to-red-600 text-white rounded-2xl p-5 space-y-3">
+            <div className="text-xs font-bold uppercase tracking-widest opacity-90">Backup & Deploy</div>
+            <button data-testid="admin-zip-btn" onClick={downloadZip} className="w-full bg-white text-stone-900 font-bold py-3 rounded-full flex items-center justify-center gap-2 hover:bg-stone-100"><Download size={18} /> {t.zip}</button>
+            <div className="text-xs opacity-90 text-center">{t.zipInfo}</div>
+          </div>
+          <div className="bg-white border-2 border-stone-200 rounded-2xl p-5 dark-card">
+            <div className="text-xs font-bold uppercase tracking-widest text-stone-500 mb-2">Total Orders</div>
+            <div className="font-display font-black text-4xl">{orders.length}</div>
+            <div className="text-xs text-stone-500">Revenue: ₹{orders.reduce((s,o)=>s+o.total,0).toLocaleString()}</div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ============= Feature 10: GALLERY (unlimited, camera, add/delete/edit) =============
+function GalleryScreen({ gallery, setGallery }) {
+  const fileRef = useRef();
+  const [editing, setEditing] = useState(null);
+  const [caption, setCaption] = useState("");
+  const readFile = (file, cb) => { const r = new FileReader(); r.onload = () => cb(r.result); r.readAsDataURL(file); };
+  const addImgs = (files) => {
+    const arr = Array.from(files).slice(0, 100);
+    const promises = arr.map(f => new Promise(res => readFile(f, res)));
+    Promise.all(promises).then(dataUrls => {
+      const newItems = dataUrls.map((d, i) => ({ id: Date.now() + i, img: d, caption: "", date: new Date().toISOString() }));
+      setGallery([...newItems, ...gallery]);
+    });
+  };
+  const del = (id) => setGallery(gallery.filter(g => g.id !== id));
+  const saveCaption = () => { setGallery(gallery.map(g => g.id===editing?{...g, caption}:g)); setEditing(null); setCaption(""); };
+  const downloadAll = () => {
+    if (gallery.length === 0) return;
+    const html = `<!doctype html><html><head><title>AS Gallery</title></head><body style="margin:0;background:#111;color:#fff;font-family:sans-serif"><h1 style="padding:20px">AS Enterprises Gallery (${gallery.length})</h1>${gallery.map(g=>`<div style="margin:20px"><img src="${g.img}" style="max-width:100%"/><p>${g.caption||''}</p></div>`).join('')}</body></html>`;
+    const blob = new Blob([html], { type:'text/html' });
+    const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'as-gallery.html'; a.click();
+  };
 
   return (
-    <div className="space-y-6">
-      <h2 className="font-display font-black text-3xl">{t.admin} Panel</h2>
-
-      <div className="bg-white border-2 border-stone-900 rounded-2xl p-5 space-y-3">
-        <div className="text-xs font-bold uppercase tracking-widest text-stone-500">{t.changeUpi}</div>
-        <div className="text-sm">{t.currentUpi}: <span className="font-bold text-orange-600">{upi}</span></div>
-        <div className="flex gap-2">
-          <input data-testid="admin-upi-input" value={newUpi} onChange={e=>setNewUpi(e.target.value)} className="flex-1 border-2 border-stone-200 rounded-lg p-2 outline-none focus:border-stone-900" placeholder="yourname@upi" />
-          <button data-testid="admin-save-upi-btn" onClick={()=>saveUpi(newUpi)} className="bg-stone-900 text-white font-bold px-4 py-2 rounded-lg">{t.saveUpi}</button>
+    <div className="space-y-4">
+      <h2 className="font-display font-black text-3xl">Project Gallery</h2>
+      <div className="bg-white border-2 border-orange-500 rounded-2xl p-4 space-y-3 dark-card">
+        <div className="text-xs font-bold uppercase tracking-widest text-stone-500">Add Photos (up to 100)</div>
+        <input ref={fileRef} data-testid="gallery-input" type="file" accept="image/*" multiple capture="environment" onChange={e => e.target.files.length && addImgs(e.target.files)} className="w-full" />
+        <div className="grid grid-cols-2 gap-2">
+          <button data-testid="gallery-camera-btn" onClick={() => fileRef.current?.click()} className="flex items-center justify-center gap-1 bg-orange-500 hover:bg-orange-600 text-white font-bold py-2.5 rounded-full"><Camera size={14} /> Camera / Files</button>
+          <button data-testid="gallery-zip-btn" onClick={downloadAll} className="flex items-center justify-center gap-1 bg-stone-900 text-white font-bold py-2.5 rounded-full"><Download size={14} /> ZIP All ({gallery.length})</button>
         </div>
       </div>
 
-      <div className="bg-gradient-to-r from-orange-500 to-red-600 text-white rounded-2xl p-5 space-y-3">
-        <div className="text-xs font-bold uppercase tracking-widest opacity-90">Backup & Deploy</div>
-        <button data-testid="admin-zip-btn" onClick={downloadZip} className="w-full bg-white text-stone-900 font-bold py-3 rounded-full flex items-center justify-center gap-2 hover:bg-stone-100">
-          <Download size={18} /> {t.zip}
-        </button>
-        <div className="text-xs opacity-90 text-center">{t.zipInfo}</div>
-      </div>
+      {gallery.length === 0 ? (
+        <div className="bg-white border-2 border-stone-200 rounded-2xl p-12 text-center text-stone-500 font-bold dark-card">No photos yet. Tap Camera to add.</div>
+      ) : (
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+          {gallery.map(g => (
+            <div key={g.id} data-testid={`gallery-${g.id}`} className="bg-white border-2 border-stone-200 rounded-2xl overflow-hidden group relative dark-card">
+              <img src={g.img} alt={g.caption} className="w-full aspect-square object-cover" />
+              {editing === g.id ? (
+                <div className="p-2 flex gap-1">
+                  <input value={caption} onChange={e=>setCaption(e.target.value)} placeholder="Caption" className="flex-1 border border-stone-300 rounded p-1 text-xs" />
+                  <button onClick={saveCaption} className="text-xs bg-orange-500 text-white px-2 rounded font-bold">✓</button>
+                </div>
+              ) : (
+                <div className="p-2 flex items-center justify-between gap-1">
+                  <div className="text-xs text-stone-700 truncate flex-1">{g.caption || <span className="text-stone-400">No caption</span>}</div>
+                  <button onClick={()=>{setEditing(g.id); setCaption(g.caption||"");}} className="p-1 text-blue-600 hover:bg-blue-50 rounded"><Edit3 size={12} /></button>
+                  <button onClick={()=>del(g.id)} className="p-1 text-red-500 hover:bg-red-50 rounded"><Trash2 size={12} /></button>
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
 
-      <div className="bg-white border-2 border-stone-200 rounded-2xl p-5">
-        <div className="text-xs font-bold uppercase tracking-widest text-stone-500 mb-2">Total Orders</div>
-        <div className="font-display font-black text-4xl">{orders.length}</div>
-        <div className="text-xs text-stone-500">Revenue: ₹{orders.reduce((s,o)=>s+o.total,0).toLocaleString()}</div>
+// ============= Feature 22: MISTRI LOYALTY =============
+function LoyaltyScreen({ orders, user }) {
+  const points = orders.reduce((s, o) => s + (o.loyalty || 0), 0);
+  const tier = points > 500 ? "Gold" : points > 100 ? "Silver" : "Bronze";
+  const tierColor = tier==="Gold"?"from-amber-400 to-yellow-600":tier==="Silver"?"from-slate-300 to-slate-500":"from-orange-700 to-amber-900";
+  return (
+    <div className="space-y-4">
+      <h2 className="font-display font-black text-3xl">Mistri Loyalty</h2>
+      <div data-testid="loyalty-card" className={`bg-gradient-to-br ${tierColor} text-white rounded-2xl p-6 shadow-xl relative overflow-hidden`}>
+        <Award size={100} className="absolute -right-4 -top-4 opacity-20" />
+        <div className="text-xs uppercase tracking-widest opacity-80">Total Points</div>
+        <div className="font-display font-black text-5xl mt-1">{points}</div>
+        <div className="text-sm mt-1 opacity-90">Tier: <b>{tier}</b></div>
+        <div className="text-xs mt-3 opacity-80">Customer: {user?.name || user?.mobile || "Guest"}</div>
       </div>
+      <div className="bg-white border-2 border-orange-500 rounded-2xl p-5 dark-card">
+        <div className="text-xs font-bold uppercase tracking-widest text-stone-500 mb-3">How it works</div>
+        <ul className="text-sm space-y-2 text-stone-700">
+          <li>• Earn <b>1 point</b> per ₹100 spent</li>
+          <li>• <b>100 points</b> → ₹100 off next order</li>
+          <li>• Silver <b>100+</b> → free delivery beyond 10km</li>
+          <li>• Gold <b>500+</b> → priority same-day delivery + 2% discount</li>
+        </ul>
+      </div>
+      <div className="bg-white border-2 border-stone-200 rounded-2xl p-4 dark-card">
+        <div className="text-xs font-bold uppercase tracking-widest text-stone-500 mb-2">Recent Earnings</div>
+        {orders.length === 0 ? <div className="text-sm text-stone-400">Place your first order to earn points!</div> : (
+          <div className="space-y-1">
+            {orders.slice(0,5).map(o => <div key={o.id} className="flex justify-between text-sm"><span className="text-stone-600">{o.id}</span><span className="font-bold text-amber-700">+{o.loyalty || 0}</span></div>)}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+// ============= Feature 22: EMI CALCULATOR =============
+function EmiScreen() {
+  const [amt, setAmt] = useState("100000");
+  const [rate, setRate] = useState("12");
+  const [months, setMonths] = useState("6");
+  const P = parseFloat(amt) || 0;
+  const r = (parseFloat(rate) || 0) / 12 / 100;
+  const n = parseInt(months) || 1;
+  const emi = r > 0 ? Math.round((P * r * Math.pow(1+r, n)) / (Math.pow(1+r, n) - 1)) : Math.round(P / n);
+  const total = emi * n;
+  return (
+    <div className="space-y-4">
+      <h2 className="font-display font-black text-3xl">EMI Calculator</h2>
+      <div className="bg-white border-2 border-orange-500 rounded-2xl p-5 space-y-3 dark-card">
+        <label className="block text-xs font-bold">Loan Amount ₹<input data-testid="emi-amt" type="number" value={amt} onChange={e=>setAmt(e.target.value)} className="w-full mt-1 border-2 border-stone-200 rounded-lg p-3 outline-none focus:border-orange-500 text-lg font-bold" /></label>
+        <label className="block text-xs font-bold">Interest Rate % p.a.<input data-testid="emi-rate" type="number" value={rate} onChange={e=>setRate(e.target.value)} className="w-full mt-1 border-2 border-stone-200 rounded-lg p-3 outline-none focus:border-orange-500" /></label>
+        <label className="block text-xs font-bold">Tenure (months)<input data-testid="emi-months" type="number" value={months} onChange={e=>setMonths(e.target.value)} className="w-full mt-1 border-2 border-stone-200 rounded-lg p-3 outline-none focus:border-orange-500" /></label>
+      </div>
+      <div data-testid="emi-result" className="bg-gradient-to-br from-emerald-600 to-emerald-800 text-white rounded-2xl p-6">
+        <div className="text-xs uppercase tracking-widest opacity-80">Monthly EMI</div>
+        <div className="font-display font-black text-5xl mt-1">₹{emi.toLocaleString()}</div>
+        <div className="grid grid-cols-2 gap-3 mt-4">
+          <div><div className="text-[10px] uppercase opacity-70">Total Payable</div><div className="font-bold text-lg">₹{total.toLocaleString()}</div></div>
+          <div><div className="text-[10px] uppercase opacity-70">Total Interest</div><div className="font-bold text-lg">₹{(total-P).toLocaleString()}</div></div>
+        </div>
+      </div>
+      <a href={`https://wa.me/${CFG.wa}?text=EMI%20Quote:%20%E2%82%B9${P}%20@${rate}%25%20for%20${n}m%20=%20%E2%82%B9${emi}/mo`} target="_blank" rel="noreferrer" className="block bg-green-600 hover:bg-green-700 text-white text-center font-bold py-3 rounded-full">Apply on WhatsApp</a>
+    </div>
+  );
+}
+
+// ============= Feature 21: AI RATE PREDICTOR =============
+function PredictorScreen({ products }) {
+  const [selected, setSelected] = useState(products[0]?.id || 1);
+  const p = products.find(x => x.id === Number(selected)) || products[0];
+  const history = useMemo(() => {
+    if (!p) return [];
+    const arr = [];
+    for (let i = 6; i >= 1; i--) {
+      const trend = 1 + (Math.sin(i * 0.5) * 0.03) + ((6-i) * 0.008);
+      arr.push({ label: `${i}mo ago`, val: Math.round(p.p / trend) });
+    }
+    arr.push({ label: "Now", val: p.p });
+    const slope = (p.p - arr[0].val) / 6;
+    for (let i = 1; i <= 3; i++) arr.push({ label: `+${i}mo`, val: Math.round(p.p + slope * i), predicted: true });
+    return arr;
+  }, [p]);
+  if (!p) return <div className="bg-white border-2 border-stone-200 rounded-2xl p-12 text-center text-stone-500 dark-card">No products to predict</div>;
+  const max = Math.max(...history.map(h => h.val));
+  const min = Math.min(...history.map(h => h.val));
+  const next = history[history.length - 1] || { val: p.p };
+  const trend = next.val > p.p ? "up" : "down";
+
+  return (
+    <div className="space-y-4">
+      <h2 className="font-display font-black text-3xl">AI Rate Predictor</h2>
+      <div className="bg-white border-2 border-orange-500 rounded-2xl p-5 dark-card">
+        <label className="block text-xs font-bold mb-2">Select Product</label>
+        <select data-testid="predict-select" value={selected} onChange={e=>setSelected(e.target.value)} className="w-full border-2 border-stone-200 rounded-lg p-2">
+          {products.map(x => <option key={x.id} value={x.id}>{x.n} - {x.b}</option>)}
+        </select>
+      </div>
+      <div className="bg-gradient-to-br from-rose-600 to-orange-600 text-white rounded-2xl p-5">
+        <div className="text-xs uppercase tracking-widest opacity-80">3-Month Forecast</div>
+        <div className="font-display font-black text-5xl mt-1">₹{next.val}</div>
+        <div className="text-sm mt-1 opacity-90 flex items-center gap-2">
+          <TrendingUp size={16} className={trend==="up"?"":"rotate-180"} />
+          {trend === "up" ? "Prices trending up" : "Prices trending down"} · {p?.u}
+        </div>
+      </div>
+      <div data-testid="predict-chart" className="bg-white border-2 border-stone-200 rounded-2xl p-4 dark-card">
+        <div className="text-xs font-bold uppercase text-stone-500 mb-3">Price Trend (past 6mo + forecast 3mo)</div>
+        <div className="flex items-end gap-1 h-40">
+          {history.map((h, i) => {
+            const range = max - min || 1;
+            const height = 25 + ((h.val - min) / range) * 70; // 25% baseline min, 95% max
+            return (
+              <div key={i} className="flex-1 flex flex-col items-center gap-1 h-full justify-end">
+                <div className="text-[9px] font-bold">{h.val}</div>
+                <div className={`w-full rounded-t ${h.predicted?'bg-rose-400 border-2 border-dashed border-rose-700':'bg-orange-500'}`} style={{ height: height + "%" }} />
+                <div className="text-[8px] text-stone-500 mt-1 whitespace-nowrap">{h.label}</div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+      <div className="text-xs text-stone-500 bg-stone-100 p-3 rounded-lg">💡 Prediction uses local linear trend + seasonal factor. For serious purchases, confirm with our team on WhatsApp.</div>
     </div>
   );
 }
