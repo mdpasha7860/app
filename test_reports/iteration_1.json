@@ -1,0 +1,28 @@
+{
+  "summary": "Full end-to-end frontend smoke of POCKET APP 18-in-1 for AS Enterprises. All 18 flows verified on public URL: hero+translations (EN/HI/TE), fixed WA/Call buttons w/ correct hrefs+locked CSS, 18 products, MAP synonym search (sariya->5 TMT, balu->4 sand, xyz->no-results), category pills, 4 service cards + back button, cart add/qty/address/COD+UPI toggle, QR renders default UPI 9030574216@upi, order created (ORD id) and shows on My Orders, login persists user, admin PIN 6301 unlocks panel (wrong PIN rejected), UPI change persists to localStorage.customUpi=1234567890@paytm, ZIP button present, estimator computes, khata ledger add updates balance, HI language persists across reload.",
+  "tested_scope": ["frontend", "integration"],
+  "passed": [
+    "Home loads with hero banner, search, 4 service cards, 6 category pills, 18 product cards",
+    "Language switcher EN/HI/TE updates hero heading (Build Stronger / मजबूत बनाएं / బలంగా నిర్మించండి)",
+    "Fixed WA button href=https://wa.me/916301456725 and Call href=tel:+916301456725",
+    "wa-btn-lock computed display:flex, visibility:visible (locked CSS effective)",
+    "Search synonyms: sariya->5 TMT items, balu->4 sand items, xyz->no-results element visible",
+    "Category pill 'cement' filters to 4 products",
+    "Service card 'tracker' navigates and back-btn visible; back returns home",
+    "Add to cart (2 items) increments header badge; cart screen lists items",
+    "cart-address input works; pay-upi-btn shows qr-box containing '9030574216@upi'; pay-cod-btn toggles back",
+    "confirm-order-btn creates order ORD{ts} and MyOrders screen shows 1 order",
+    "Login form saves user, header shows user-btn with name Ravi",
+    "admin-footer-btn opens PIN screen; wrong PIN alerts; PIN 6301 unlocks admin panel",
+    "admin-save-upi-btn updates localStorage.customUpi to '1234567890@paytm'",
+    "admin-zip-btn is visible/clickable on admin panel",
+    "Estimator (20x15x10) shows est-result with bags/tons/cft/bricks",
+    "Khata: adding Ramesh/5000 credit shows 'To Receive' balance",
+    "Language persistence: HI persists across page reload via localStorage"
+  ],
+  "failed": [],
+  "action_items": [],
+  "success_rate": {"backend": "n/a (frontend-only app)", "frontend": "100%"},
+  "retest_needed": false,
+  "full_testing_deferred": true
+}
