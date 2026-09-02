@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo, useRef } from "react";
 import "@/App.css";
 import { QRCodeSVG } from "qrcode.react";
-import { Phone, MessageCircle, Search, ShoppingCart, ArrowLeft, User, Truck, BookOpen, Sparkles, Calculator, Download, Shield, LogOut, Trash2, Plus, Minus, ClipboardList, Menu, RefreshCw, Settings, Headphones, X, Moon, Sun, Mic, Star, Camera, Upload, FileSpreadsheet, TrendingUp, Award, CreditCard, Edit3, Image as ImageIcon, FileText, MapPin, AlertTriangle, KeyRound, Percent } from "lucide-react";
+import { Phone, MessageCircle, Search, ShoppingCart, ArrowLeft, User, Truck, BookOpen, Sparkles, Calculator, Download, Shield, LogOut, Trash2, Plus, Minus, ClipboardList, Menu, RefreshCw, Settings, Headphones, X, Moon, Sun, Mic, Star, Camera, Upload, FileSpreadsheet, TrendingUp, Award, CreditCard, Edit3, Image as ImageIcon, FileText, MapPin, AlertTriangle, KeyRound, Percent, Database } from "lucide-react";
 
 // ============= CONFIG =============
 const CFG = {
@@ -184,10 +184,10 @@ export default function App() {
               <button data-testid="login-header-btn" onClick={() => go("login")} className="hidden md:flex items-center gap-1 text-sm bg-orange-500 text-white px-3 py-1.5 rounded-full"><User size={14} /> {t.login}</button>
             )}
             <div className="relative">
-              <button data-testid="hamburger-btn" onClick={() => setMenuOpen(!menuOpen)} className="p-2 hover:bg-white/10 rounded-full text-white">{menuOpen ? <X size={22} /> : <Menu size={22} />}</button>
+              <button data-testid="hamburger-btn" onClick={() => setMenuOpen(!menuOpen)} className="relative z-50 p-2 hover:bg-white/10 rounded-full text-white">{menuOpen ? <X size={22} /> : <Menu size={22} />}</button>
               {menuOpen && (
                 <>
-                  <div className="fixed inset-0 z-40" onClick={() => setMenuOpen(false)} />
+                  <div className="fixed inset-0 z-30" onClick={() => setMenuOpen(false)} />
                   <div data-testid="hamburger-menu" className="absolute right-0 mt-2 w-60 bg-white rounded-2xl shadow-2xl border-2 border-stone-200 overflow-hidden z-50">
                     <MenuItem tid="menu-refresh-btn" icon={RefreshCw} color="text-blue-600" label="Refresh" onClick={() => { setMenuOpen(false); window.location.reload(); }} />
                     {user ? (
@@ -201,6 +201,7 @@ export default function App() {
                     <MenuItem tid="menu-loyalty-btn" icon={Award} color="text-amber-600" label="Mistri Loyalty" onClick={() => { setMenuOpen(false); go("loyalty"); }} />
                     <MenuItem tid="menu-emi-btn" icon={CreditCard} color="text-emerald-600" label="EMI Calculator" onClick={() => { setMenuOpen(false); go("emi"); }} />
                     <MenuItem tid="menu-ai-btn" icon={TrendingUp} color="text-rose-600" label="AI Rate Predictor" onClick={() => { setMenuOpen(false); go("predictor"); }} />
+                    <MenuItem tid="menu-sync-btn" icon={Database} color="text-emerald-600" label="Data Sync (Backup)" onClick={() => { setMenuOpen(false); go("admin"); }} />
                     <MenuItem tid="menu-dark-btn" icon={dark?Sun:Moon} color="text-indigo-600" label={dark?"Light Mode":"Dark Mode"} onClick={() => { setDark(!dark); setMenuOpen(false); }} />
                     <a data-testid="menu-care-btn" href={`https://wa.me/${CFG.wa}?text=Customer%20Care`} target="_blank" rel="noreferrer" onClick={() => setMenuOpen(false)} className="w-full flex items-center gap-3 px-4 py-3 hover:bg-green-50 text-left">
                       <Headphones size={16} className="text-green-600" />
@@ -868,6 +869,36 @@ function AdminScreen({ t, unlocked, setUnlocked, upi, saveUpi, downloadZip, orde
             <button data-testid="admin-zip-btn" onClick={downloadZip} className="w-full bg-white text-stone-900 font-bold py-3 rounded-full flex items-center justify-center gap-2 hover:bg-stone-100"><Download size={18} /> {t.zip}</button>
             <div className="text-xs opacity-90 text-center">{t.zipInfo}</div>
           </div>
+          {/* Feature 8: SYNC (Export/Import All Data) */}
+          <div className="bg-white border-2 border-emerald-500 rounded-2xl p-5 space-y-3 dark-card">
+            <div className="text-xs font-bold uppercase tracking-widest text-emerald-600 flex items-center gap-2"><Database size={14} /> Data Sync (Backup / Restore)</div>
+            <div className="text-xs text-stone-500">Export all app data (orders, khata, products, gallery, UPI, banner) as one JSON file. Import on any device to restore.</div>
+            <div className="grid grid-cols-2 gap-2">
+              <button data-testid="sync-export-btn" onClick={() => {
+                try {
+                  const data = { customUpi: localStorage.getItem("customUpi"), products: localStorage.getItem("products"), myOrders: localStorage.getItem("myOrders"), ledger: localStorage.getItem("ledger"), gallery: localStorage.getItem("gallery"), bannerImg: localStorage.getItem("bannerImg"), bannerText: localStorage.getItem("bannerText"), lang: localStorage.getItem("lang"), userProfile: localStorage.getItem("userProfile"), _v: 1, _date: new Date().toISOString() };
+                  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+                  const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = `as-buildmart-sync-${Date.now()}.json`; a.click();
+                } catch (e) { alert("Export failed"); }
+              }} className="flex items-center justify-center gap-1 bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 rounded-full text-sm"><Download size={14} /> Export All</button>
+              <label className="flex items-center justify-center gap-1 bg-stone-900 hover:bg-stone-800 text-white font-bold py-2.5 rounded-full text-sm cursor-pointer">
+                <Upload size={14} /> Import All
+                <input data-testid="sync-import-input" type="file" accept=".json,application/json" className="hidden" onChange={(e) => {
+                  const f = e.target.files[0]; if (!f) return;
+                  const r = new FileReader();
+                  r.onload = () => {
+                    try {
+                      const d = JSON.parse(r.result);
+                      Object.entries(d).forEach(([k, v]) => { if (v !== null && !k.startsWith('_')) localStorage.setItem(k, v); });
+                      alert("Data restored. Reloading...");
+                      window.location.reload();
+                    } catch (err) { alert("Bad JSON file"); }
+                  };
+                  r.readAsText(f);
+                }} />
+              </label>
+            </div>
+          </div>
           <div className="bg-white border-2 border-stone-200 rounded-2xl p-5 dark-card">
             <div className="text-xs font-bold uppercase tracking-widest text-stone-500 mb-2">Total Orders</div>
             <div className="font-display font-black text-4xl">{orders.length}</div>
@@ -907,7 +938,7 @@ function GalleryScreen({ gallery, setGallery }) {
       <h2 className="font-display font-black text-3xl">Project Gallery</h2>
       <div className="bg-white border-2 border-orange-500 rounded-2xl p-4 space-y-3 dark-card">
         <div className="text-xs font-bold uppercase tracking-widest text-stone-500">Add Photos (up to 100)</div>
-        <input ref={fileRef} data-testid="gallery-input" type="file" accept="image/*" multiple capture="environment" onChange={e => e.target.files.length && addImgs(e.target.files)} className="w-full" />
+        <input ref={fileRef} data-testid="gallery-input" type="file" accept="image/*" multiple capture="environment" onChange={e => e.target.files.length && addImgs(e.target.files)} className="hidden" />
         <div className="grid grid-cols-2 gap-2">
           <button data-testid="gallery-camera-btn" onClick={() => fileRef.current?.click()} className="flex items-center justify-center gap-1 bg-orange-500 hover:bg-orange-600 text-white font-bold py-2.5 rounded-full"><Camera size={14} /> Camera / Files</button>
           <button data-testid="gallery-zip-btn" onClick={downloadAll} className="flex items-center justify-center gap-1 bg-stone-900 text-white font-bold py-2.5 rounded-full"><Download size={14} /> ZIP All ({gallery.length})</button>
