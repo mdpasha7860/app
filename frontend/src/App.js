@@ -50,6 +50,15 @@ const ls = {
   set: (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) { console.error(e); } }
 };
 
+// ============= WORKERS (edit name/rate/phone here) =============
+const WORKERS = [
+  { id:1, role:"Rajmistri (Mason)", name:"Ramesh Kumar", rate:850, phone:"916301456725", icon:"🧱", exp:"12 yrs" },
+  { id:2, role:"Electrician", name:"Suresh Reddy", rate:700, phone:"916301456725", icon:"⚡", exp:"8 yrs" },
+  { id:3, role:"Plumber", name:"Mahesh Yadav", rate:650, phone:"916301456725", icon:"🔧", exp:"10 yrs" },
+  { id:4, role:"Builder / Contractor", name:"Anil Sharma", rate:1500, phone:"916301456725", icon:"👷", exp:"18 yrs" },
+  { id:5, role:"Welder", name:"Prakash Verma", rate:800, phone:"916301456725", icon:"🔥", exp:"7 yrs" }
+];
+
 // ============= FLOAT BUTTONS (LOCKED) =============
 const FloatButtons = () => (
   <div className="fixed bottom-4 right-4 flex flex-col gap-3 z-50 wa-call-lock">
@@ -305,55 +314,96 @@ function VoiceMic({ onResult, lang }) {
 function HomeScreen({ t, lang, setScreen, CARDS, query, doSearch, category, setCategory, filtered, addToCart, heroImg, heroTxt }) {
   const CATS = [{k:"ALL",n:t.all},{k:"tmt",n:t.tmt},{k:"cement",n:t.cement},{k:"sand",n:t.sand},{k:"brick",n:t.brick},{k:"tools",n:t.tools}];
   return (
-    <div className="space-y-8">
-      {/* Feature 2 & 8: HERO NAVY (banner editable) */}
+    <div className="space-y-4">
+      {/* Feature 2 & 8: HERO NAVY (banner editable) - compact */}
       <section className="relative overflow-hidden rounded-2xl border-2 border-orange-500 shadow-xl" data-testid="hero-banner" style={{ backgroundColor: "#0A1931" }}>
-        <div className="relative p-6 sm:p-10 lg:p-14 text-white">
-          <div className="inline-block px-3 py-1 bg-orange-500 text-white text-xs font-bold uppercase tracking-widest rounded-full mb-4">{CFG.brand} · BuildMart</div>
-          <h1 data-testid="hero-headline" className="font-display font-black text-4xl sm:text-5xl lg:text-6xl leading-tight tracking-tight max-w-3xl">
+        <div className="relative p-4 sm:p-6 lg:p-8 text-white">
+          <div className="inline-block px-2 py-0.5 bg-orange-500 text-white text-[10px] font-bold uppercase tracking-widest rounded-full mb-2">{CFG.brand} · BuildMart</div>
+          <h1 data-testid="hero-headline" className="font-display font-black text-2xl sm:text-3xl lg:text-4xl leading-tight tracking-tight max-w-3xl">
             {heroTxt || t.b}
           </h1>
-          <p className="text-base sm:text-lg mt-3 max-w-xl text-stone-200">TMT · Cement · Sand · Bricks — Genuine brands, wholesale rates, same-day delivery across the city.</p>
-          <div className="flex flex-wrap gap-3 mt-6">
-            <button data-testid="hero-shop-btn" onClick={() => setScreen("catalog")} className="bg-orange-500 hover:bg-orange-600 text-white font-bold px-6 py-3 rounded-full shadow-lg transition-transform hover:scale-105">Shop Now →</button>
-            <a data-testid="hero-wa-btn" href={`https://wa.me/${CFG.wa}?text=Hi%20AS`} target="_blank" rel="noreferrer" className="bg-white/10 backdrop-blur border border-white/40 hover:bg-white/20 text-white font-bold px-6 py-3 rounded-full transition">{t.wa}</a>
+          <p className="text-xs sm:text-sm mt-2 max-w-xl text-stone-200">TMT · Cement · Sand · Bricks — Genuine brands, wholesale rates, same-day delivery.</p>
+          <div className="flex flex-wrap gap-2 mt-3">
+            <button data-testid="hero-shop-btn" onClick={() => setScreen("catalog")} className="bg-orange-500 hover:bg-orange-600 text-white font-bold text-xs px-4 py-2 rounded-full shadow-lg transition-transform hover:scale-105">Shop Now →</button>
+            <a data-testid="hero-wa-btn" href={`https://wa.me/${CFG.wa}?text=Hi%20AS`} target="_blank" rel="noreferrer" className="bg-white/10 backdrop-blur border border-white/40 hover:bg-white/20 text-white font-bold text-xs px-4 py-2 rounded-full transition">{t.wa}</a>
           </div>
         </div>
       </section>
 
-      {/* Feature 19: SEARCH + VOICE */}
-      <section className="bg-white border-2 border-stone-900 rounded-2xl p-4 shadow-sm dark-card">
+      {/* Feature 19: SEARCH + VOICE - compact */}
+      <section className="bg-white border-2 border-stone-900 rounded-full py-1.5 px-3 shadow-sm dark-card">
         <div className="flex items-center gap-2">
-          <Search size={20} className="text-stone-500" />
-          <input data-testid="search-input" value={query} onChange={(e) => doSearch(e.target.value)} placeholder={t.search} className="flex-1 bg-transparent outline-none text-base placeholder:text-stone-400" />
+          <Search size={16} className="text-stone-500 flex-shrink-0" />
+          <input data-testid="search-input" value={query} onChange={(e) => doSearch(e.target.value)} placeholder={t.search} className="flex-1 bg-transparent outline-none text-sm placeholder:text-stone-400 py-1" />
           <VoiceMic onResult={doSearch} lang={lang} />
-          {query && <button onClick={() => doSearch("")} className="text-xs text-stone-500 hover:text-red-600">✕</button>}
+          {query && <button onClick={() => doSearch("")} className="text-xs text-stone-500 hover:text-red-600 flex-shrink-0">✕</button>}
         </div>
       </section>
 
-      {/* Feature 17: 4 SERVICE CARDS with 3D hover */}
-      <section className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+      {/* Feature 17: 4 SERVICE CARDS - compact */}
+      <section className="grid grid-cols-4 gap-2">
         {CARDS.map((c) => {
           const Icon = c.icon;
           return (
-            <button key={c.go} data-testid={`card-${c.go}-btn`} onClick={() => setScreen(c.go)} className={`${c.color} text-white p-5 rounded-2xl text-left font-bold shadow-md hover:shadow-2xl transition-all hover:-translate-y-2 hover:rotate-1 group card-3d`}>
-              <Icon size={30} className="mb-3 opacity-90 group-hover:scale-125 group-hover:-rotate-12 transition" />
-              <div className="text-base sm:text-lg leading-tight">{c.t}</div>
+            <button key={c.go} data-testid={`card-${c.go}-btn`} onClick={() => setScreen(c.go)} className={`${c.color} text-white p-2.5 rounded-xl text-left font-bold shadow hover:shadow-lg transition-all hover:-translate-y-1 group`}>
+              <Icon size={18} className="mb-1 opacity-90 group-hover:scale-110 transition" />
+              <div className="text-[11px] sm:text-xs leading-tight">{c.t}</div>
             </button>
           );
         })}
       </section>
 
-      <section className="flex flex-wrap gap-2">
+      <section className="flex flex-wrap gap-1.5">
         {CATS.map(c => (
-          <button key={c.k} data-testid={`cat-${c.k}-btn`} onClick={() => setCategory(c.k)} className={`text-sm font-bold px-4 py-2 rounded-full transition ${category===c.k?'bg-orange-500 text-white':'bg-white border-2 border-stone-300 text-stone-700 hover:border-orange-500'}`}>{c.n}</button>
+          <button key={c.k} data-testid={`cat-${c.k}-btn`} onClick={() => setCategory(c.k)} className={`text-xs font-bold px-3 py-1 rounded-full transition ${category===c.k?'bg-orange-500 text-white':'bg-white border-2 border-stone-300 text-stone-700 hover:border-orange-500'}`}>{c.n}</button>
         ))}
       </section>
+
+      {/* WORKERS SECTION - Hire skilled workers */}
+      <WorkersSection wa={CFG.wa} />
 
       <ProductGrid t={t} filtered={filtered} addToCart={addToCart} />
     </div>
   );
 }
+
+// ============= WORKERS SECTION =============
+function WorkersSection({ wa }) {
+  return (
+    <section data-testid="workers-section" className="space-y-2 pt-2">
+      <div className="flex items-center justify-between">
+        <h3 className="font-display font-black text-lg" style={{ color: "#0A1931" }}>Hire Skilled Workers</h3>
+        <span className="text-[10px] uppercase tracking-widest text-orange-600 font-bold">Book Direct · No Commission</span>
+      </div>
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2">
+        {WORKERS.map(w => (
+          <div key={w.id} data-testid={`worker-${w.id}`} className="bg-white border-2 border-stone-200 hover:border-orange-500 rounded-xl p-2.5 shadow-sm hover:shadow-md transition group dark-card">
+            <div className="flex items-center gap-2">
+              <div className="w-9 h-9 rounded-full flex items-center justify-center text-lg flex-shrink-0" style={{ backgroundColor: "#0A1931" }}>
+                <span>{w.icon}</span>
+              </div>
+              <div className="min-w-0 flex-1">
+                <div className="text-[10px] uppercase tracking-widest text-orange-600 font-bold truncate">{w.role}</div>
+                <div className="font-bold text-xs truncate">{w.name}</div>
+              </div>
+            </div>
+            <div className="flex items-baseline gap-1 mt-2">
+              <span className="font-display font-black text-base">₹{w.rate}</span>
+              <span className="text-[10px] text-stone-500">/day · {w.exp}</span>
+            </div>
+            <a data-testid={`worker-call-${w.id}`} href={`tel:+${w.phone}`} className="mt-2 w-full bg-orange-500 hover:bg-orange-600 text-white text-[11px] font-bold py-1.5 rounded-full transition flex items-center justify-center gap-1">
+              <Phone size={11} /> Call
+            </a>
+            <a data-testid={`worker-wa-${w.id}`} href={`https://wa.me/${w.phone}?text=Hi%20${encodeURIComponent(w.name)}%2C%20need%20${encodeURIComponent(w.role)}`} target="_blank" rel="noreferrer" className="mt-1 w-full bg-green-600 hover:bg-green-700 text-white text-[11px] font-bold py-1.5 rounded-full transition flex items-center justify-center gap-1">
+              <MessageCircle size={11} /> WA
+            </a>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
 
 // ============= Feature 15: STAR RATING =============
 const Stars = ({ n }) => (
@@ -370,25 +420,25 @@ function ProductGrid({ t, filtered, addToCart }) {
     </div>
   );
   return (
-    <section className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+    <section className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
       {filtered.map(p => (
-        <div key={p.id} data-testid={`product-${p.id}`} className="bg-white border-2 border-stone-200 hover:border-orange-500 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all group dark-card">
-          <div className="aspect-square bg-stone-100 overflow-hidden relative">
-            <img src={p.img} alt={p.n} className="w-full h-full object-cover group-hover:scale-110 transition" />
-            {p.stock < 10 && <span className="absolute top-2 right-2 bg-red-600 text-white text-[9px] font-black px-2 py-0.5 rounded-full animate-pulse">{t.low}</span>}
+        <div key={p.id} data-testid={`product-${p.id}`} className="bg-white border-2 border-stone-200 hover:border-orange-500 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all group dark-card">
+          <div className="h-32 bg-stone-100 overflow-hidden relative">
+            <img src={p.img} alt={p.n} className="w-full h-full object-cover group-hover:scale-105 transition" />
+            {p.stock < 10 && <span className="absolute top-1.5 right-1.5 bg-red-600 text-white text-[9px] font-black px-1.5 py-0.5 rounded-full animate-pulse">{t.low}</span>}
           </div>
-          <div className="p-3 space-y-1.5">
-            <div className="text-[10px] uppercase tracking-widest text-orange-600 font-bold">{p.b}</div>
-            <div className="font-bold text-sm leading-tight line-clamp-2 h-10">{p.n}</div>
+          <div className="p-2 space-y-1">
+            <div className="text-[9px] uppercase tracking-widest text-orange-600 font-bold">{p.b}</div>
+            <div className="font-bold text-xs leading-tight line-clamp-2 h-8">{p.n}</div>
             <div className="flex items-center justify-between">
               <Stars n={p.rating || 4.5} />
-              <span className="text-[10px] text-stone-500">{p.stock} {t.stock}</span>
+              <span className="text-[9px] text-stone-500">{p.stock} {t.stock}</span>
             </div>
             <div className="flex items-baseline gap-1">
-              <span className="font-display font-black text-lg">₹{p.p}</span>
-              <span className="text-[10px] text-stone-500">{p.u}</span>
+              <span className="font-display font-black text-base">₹{p.p}</span>
+              <span className="text-[9px] text-stone-500">{p.u}</span>
             </div>
-            <button data-testid={`add-cart-${p.id}-btn`} onClick={() => addToCart(p)} className="w-full bg-orange-500 hover:bg-orange-600 text-white text-xs font-bold py-2 rounded-full transition">+ {t.buy}</button>
+            <button data-testid={`add-cart-${p.id}-btn`} onClick={() => addToCart(p)} className="w-full bg-orange-500 hover:bg-orange-600 text-white text-[11px] font-bold py-1.5 rounded-full transition">+ {t.buy}</button>
           </div>
         </div>
       ))}
