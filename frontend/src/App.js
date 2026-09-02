@@ -305,14 +305,12 @@ function HomeScreen({ t, lang, setScreen, CARDS, query, doSearch, category, setC
   const CATS = [{k:"ALL",n:t.all},{k:"tmt",n:t.tmt},{k:"cement",n:t.cement},{k:"sand",n:t.sand},{k:"brick",n:t.brick},{k:"tools",n:t.tools}];
   return (
     <div className="space-y-8">
-      {/* Feature 2 & 8: HERO ITALIC (banner editable) */}
-      <section className="relative overflow-hidden rounded-2xl border-2 border-orange-500 shadow-xl" data-testid="hero-banner">
-        <img src={heroImg} alt="Construction" className="absolute inset-0 w-full h-full object-cover" />
-        <div className="absolute inset-0 bg-gradient-to-r from-slate-950/90 via-slate-900/70 to-slate-900/30" />
+      {/* Feature 2 & 8: HERO NAVY (banner editable) */}
+      <section className="relative overflow-hidden rounded-2xl border-2 border-orange-500 shadow-xl" data-testid="hero-banner" style={{ backgroundColor: "#0A1931" }}>
         <div className="relative p-6 sm:p-10 lg:p-14 text-white">
           <div className="inline-block px-3 py-1 bg-orange-500 text-white text-xs font-bold uppercase tracking-widest rounded-full mb-4">{CFG.brand} · BuildMart</div>
-          <h1 data-testid="hero-headline" className="font-display font-black italic text-4xl sm:text-5xl lg:text-6xl leading-tight tracking-tight max-w-3xl">
-            "{heroTxt || t.b}"
+          <h1 data-testid="hero-headline" className="font-display font-black text-4xl sm:text-5xl lg:text-6xl leading-tight tracking-tight max-w-3xl">
+            {heroTxt || t.b}
           </h1>
           <p className="text-base sm:text-lg mt-3 max-w-xl text-stone-200">TMT · Cement · Sand · Bricks — Genuine brands, wholesale rates, same-day delivery across the city.</p>
           <div className="flex flex-wrap gap-3 mt-6">
