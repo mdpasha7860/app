@@ -837,6 +837,8 @@ function AdminScreen({ t, unlocked, setUnlocked, upi, saveUpi, downloadZip, orde
       <div className="flex flex-wrap gap-2">
         {TABS.map(x => <button key={x.k} data-testid={`admin-tab-${x.k}`} onClick={() => setTab(x.k)} className={`text-xs font-bold px-3 py-2 rounded-full transition ${tab===x.k?'bg-orange-500 text-white':'bg-white border-2 border-stone-300 text-stone-700 hover:border-orange-500'}`}>{x.n}</button>)}
       </div>
+<div className="mb-3"><button onClick={() => setTab("orders")} className={`px-4 py-1.5 rounded-full text-xs font-bold ${tab === "orders" ? "bg-orange-500 text-white" : "bg-stone-200 text-stone-700"}`}>📦 View Orders</button></div>
+
 {/* Feature: Orders Management with Approve/Reject */}
 {tab === "orders" && (
   <div className="bg-white border-2 border-stone-200 rounded-2xl p-4 dark-card">
