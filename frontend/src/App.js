@@ -511,6 +511,9 @@ function CartScreen({ t, cart, updateQty, removeItem, total, onCheckout, upi, us
           <span className="font-bold text-lg">{t.total}</span>
           <span className="font-display font-black text-2xl">₹{total}</span>
         </div>
+<div style={{margin:"12px 0",padding:"10px",background:"#fff8f0",borderRadius:"8px",border:"1px solid #fed7aa",fontSize:"12px"}}><label style={{display:"flex",gap:"8px",cursor:"pointer",color:"#333"}}><input type="checkbox" required defaultChecked={true} style={{marginTop:"2px",accentColor:"#f97316"}}/><span>Main <b>Terms & Conditions</b> se sahmat hoon: Unloading customer ki zimmedari hogi, cement aur saria wapas nahi hoga.</span></label></div>
+
+
         <button data-testid="confirm-order-btn" onClick={()=>{ if(!address.trim()){alert("Enter address"); return;} onCheckout(payment, address); }} className="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 rounded-full text-base transition">{t.confirm} · ₹{total}</button>
       </div>
     </div>
