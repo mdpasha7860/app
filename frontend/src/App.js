@@ -342,112 +342,128 @@ function HomeScreen({ t, lang, setScreen, CARDS, query, doSearch, category, setC
   const CATS = [{k:"ALL",n:t.all},{k:"tmt",n:t.tmt},{k:"cement",n:t.cement},{k:"sand",n:t.sand},{k:"brick",n:t.brick},{k:"tools",n:t.tools}];
   return (
     <div className="space-y-4">
-             {/* Full-Width Deep Navy Hero with Metallic Gold Accents */}
+                     {/* HERO SECTION - EXACT DESIGN (COMPACT & BUTTONS HIGHER) */}
         <section 
           data-testid="hero-banner"
           style={{
-            backgroundColor: '#071126',
+            position: 'relative',
             width: '100%',
-            padding: '24px 16px 28px 16px',
+            backgroundColor: '#020617',
+            padding: '20px 16px 16px 16px',
             margin: '0',
-            borderRadius: '0',
-            boxSizing: 'border-box'
+            boxSizing: 'border-box',
+            overflow: 'hidden'
           }}
         >
-          <div style={{ maxWidth: '768px', margin: '0 auto' }}>
-            {/* Brand Pill */}
+          {/* Background Construction Warehouse Image with Overlay */}
+          <div 
+            style={{
+              position: 'absolute',
+              inset: 0,
+              backgroundImage: `url('https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1200&q=80')`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+              opacity: 0.22,
+              filter: 'grayscale(60%)',
+              pointerEvents: 'none'
+            }}
+          />
+          <div 
+            style={{
+              position: 'absolute',
+              inset: 0,
+              background: 'linear-gradient(to bottom, rgba(2,6,23,0.8) 0%, rgba(2,6,23,0.95) 100%)',
+              pointerEvents: 'none'
+            }}
+          />
+
+          <div style={{ position: 'relative', zIndex: 2, maxWidth: '500px', margin: '0 auto' }}>
+            {/* Live daily rates pill */}
             <div style={{
-              display: 'inline-block',
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '6px',
               padding: '3px 10px',
-              background: 'rgba(212, 175, 55, 0.15)',
-              border: '1px solid #d4af37',
-              color: '#d4af37',
-              fontSize: '10px',
-              fontWeight: '800',
-              textTransform: 'uppercase',
-              letterSpacing: '1.2px',
-              borderRadius: '20px',
-              marginBottom: '12px'
+              backgroundColor: 'rgba(245, 158, 11, 0.12)',
+              border: '1px solid rgba(245, 158, 11, 0.4)',
+              borderRadius: '999px',
+              color: '#fbbf24',
+              fontSize: '11px',
+              fontWeight: '600',
+              marginBottom: '10px'
             }}>
-              {CFG.brand} · BuildMart
+              <span>⚡</span> Live daily rates • Hyderabad & Secunderabad
             </div>
 
-            {/* Headline */}
-            <h1 data-testid="hero-headline" style={{
-              color: '#ffffff',
-              fontStyle: 'italic',
-              fontWeight: '900',
-              fontSize: '28px',
-              lineHeight: '1.2',
-              margin: '0 0 12px 0'
-            }}>
-              Build Stronger.<br />Order Smarter.
-            </h1>
+            {/* AS BUILDMART Titles */}
+            <div style={{ lineHeight: '1', marginBottom: '4px' }}>
+              <div style={{ fontSize: '36px', fontWeight: '900', color: '#f59e0b', letterSpacing: '-0.5px' }}>AS</div>
+              <div style={{ fontSize: '36px', fontWeight: '900', color: '#ffffff', letterSpacing: '1px', textTransform: 'uppercase' }}>BUILDMART</div>
+            </div>
+
+            {/* Horizontal Line & Marketplace Tag */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', margin: '6px 0 10px 0' }}>
+              <div style={{ width: '28px', height: '3px', backgroundColor: '#f59e0b', borderRadius: '2px' }} />
+              <span style={{ fontSize: '11px', fontWeight: '700', letterSpacing: '1px', color: '#94a3b8', textTransform: 'uppercase' }}>
+                BUILDING MATERIALS MARKETPLACE
+              </span>
+            </div>
+
+            {/* Script Tagline */}
+            <div style={{ margin: '6px 0 8px 0' }}>
+              <div style={{ fontFamily: 'serif', fontStyle: 'italic', fontSize: '28px', color: '#ffffff', lineHeight: '1.2' }}>
+                Build Stronger.
+              </div>
+              <div style={{ fontFamily: 'serif', fontStyle: 'italic', fontSize: '28px', color: '#ffffff', lineHeight: '1.2' }}>
+                Order Smarter.
+              </div>
+            </div>
 
             {/* Subtext */}
             <p style={{
-              color: '#cbd5e1',
-              fontSize: '13px',
-              lineHeight: '1.6',
-              margin: '0 0 20px 0'
+              color: '#94a3b8',
+              fontSize: '12px',
+              lineHeight: '1.4',
+              margin: '0 0 12px 0'
             }}>
-              Cement, TMT steel, sand &amp; 10+ categories delivered across Greater Hyderabad. Live rates, wholesale pricing &amp; instant WhatsApp estimates.
+              Cement, TMT steel, sand & 10+ categories delivered across Greater Hyderabad. Live rates, wholesale pricing & instant WhatsApp estimates.
             </p>
 
-            {/* Metallic Gold Browse Catalog Button */}
-            <button
-              data-testid="hero-shop-btn"
-              onClick={() => setScreen("catalog")}
-              style={{
-                width: '100%',
-                background: 'linear-gradient(135deg, #d4af37 0%, #f9e79f 50%, #b8860b 100%)',
-                color: '#071126',
-                fontWeight: '900',
-                fontSize: '13px',
-                letterSpacing: '1px',
-                padding: '13px',
-                borderRadius: '8px',
-                border: 'none',
-                marginBottom: '12px',
-                cursor: 'pointer',
-                boxShadow: '0 4px 14px rgba(212, 175, 55, 0.3)'
-              }}
-            >
-              BROWSE CATALOG &rarr;
-            </button>
-
-            {/* Action Buttons: Mistri & Estimate */}
-            <div style={{ display: 'flex', gap: '10px' }}>
-              <a
-                data-testid="hero-mistri-btn"
-                href={`https://wa.me/${CFG.wa}?text=Hi%20AS,%20I%20want%20to%20book%20Mistri/Labour`}
-                target="_blank"
-                rel="noreferrer"
+            {/* Buttons Shifted Higher */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              <button
+                data-testid="hero-shop-btn"
+                onClick={() => setScreen("catalog")}
                 style={{
-                  flex: 1,
-                  backgroundColor: '#132347',
-                  color: '#ffd700',
-                  border: '1px solid #d4af37',
-                  fontWeight: '700',
-                  fontSize: '12px',
-                  padding: '10px 8px',
+                  width: '100%',
+                  padding: '12px',
+                  backgroundColor: '#f59e0b',
+                  color: '#0f172a',
+                  fontWeight: '800',
+                  fontSize: '14px',
                   borderRadius: '8px',
-                  textAlign: 'center',
-                  textDecoration: 'none'
+                  border: 'none',
+                  cursor: 'pointer',
+                  boxShadow: '0 4px 12px rgba(245, 158, 11, 0.25)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '6px'
                 }}
               >
-                👷 Book Mistri/Labour
-              </a>
+                Browse Catalog →
+              </button>
+
               <button
                 onClick={() => setScreen("estimator")}
                 style={{
-                  flex: 1,
-                  backgroundColor: 'transparent',
-                  color: '#e2e8f0',
+                  width: '100%',
+                  padding: '11px',
+                  backgroundColor: 'rgba(15, 23, 42, 0.85)',
+                  color: '#f8fafc',
                   border: '1px solid #334155',
                   fontWeight: '600',
-                  fontSize: '12px',
-                  padding: '10px 8px',
+                  fontSize: '13px',
                   borderRadius: '8px',
                   cursor: 'pointer'
                 }}
@@ -457,6 +473,7 @@ function HomeScreen({ t, lang, setScreen, CARDS, query, doSearch, category, setC
             </div>
           </div>
         </section>
+
 
 
 
