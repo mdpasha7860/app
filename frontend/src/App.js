@@ -71,7 +71,8 @@ const WORKERS = [
   { id:2, role:"Electrician", name:"Suresh Reddy", rate:700, phone:"916301456725", icon:"⚡", exp:"8 yrs" },
   { id:3, role:"Plumber", name:"Mahesh Yadav", rate:650, phone:"916301456725", icon:"🔧", exp:"10 yrs" },
   { id:4, role:"Builder / Contractor", name:"Anil Sharma", rate:1500, phone:"916301456725", icon:"👷", exp:"18 yrs" },
-  { id:5, role:"Welder", name:"Prakash Verma", rate:800, phone:"916301456725", icon:"🔥", exp:"7 yrs" }
+  { id:5, role:"Welder", name:"Prakash Verma", rate:800, phone:"916301456725", icon:"🔥", exp:"7 yrs" },
+  { id:6, role:"Painter", name:"Naresh Goud", rate:700, phone:"916301456725", icon:"🎨", exp:"9 yrs" }
 ];
 
 // ============= FLOAT BUTTONS (LOCKED) =============
