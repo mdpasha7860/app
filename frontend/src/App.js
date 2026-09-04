@@ -345,17 +345,18 @@ function HomeScreen({ t, lang, setScreen, CARDS, query, doSearch, category, setC
                        {/* HERO SECTION - FULL WIDTH */}
         <section 
           data-testid="hero-banner"
-          style={{
+                   style={{
             position: 'relative',
-            width: '100vw',
-            marginLeft: 'calc(-50vw + 50%)',
-            marginRight: 'calc(-50vw + 50%)',
+            marginLeft: '-16px',
+            marginRight: '-16px',
+            width: 'calc(100% + 32px)',
             backgroundColor: '#020617',
             padding: '24px 16px 20px 16px',
             boxSizing: 'border-box',
             overflow: 'hidden'
           }}
         >
+
           {/* Background Image with Dark Overlay */}
           <div 
             style={{
