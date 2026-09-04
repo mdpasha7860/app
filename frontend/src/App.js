@@ -2,6 +2,21 @@ import React, { useState, useEffect, useMemo, useRef } from "react";
 import "@/App.css";
 import { QRCodeSVG } from "qrcode.react";
 import { Phone, MessageCircle, Search, ShoppingCart, ArrowLeft, User, Truck, BookOpen, Sparkles, Calculator, Download, Shield, LogOut, Trash2, Plus, Minus, ClipboardList, Menu, RefreshCw, Settings, Headphones, X, Moon, Sun, Mic, Star, Camera, Upload, FileSpreadsheet, TrendingUp, Award, CreditCard, Edit3, Image as ImageIcon, FileText, MapPin, AlertTriangle, KeyRound, Percent, Database } from "lucide-react";
+import { initializeApp } from "firebase/app";
+import { getFirestore } from "firebase/firestore";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCEtTaCAhkGUKGfWUQRTCj1xujnidgk2vI",
+  authDomain: "as-enterprises-bd7f1.firebaseapp.com",
+  projectId: "as-enterprises-bd7f1",
+  storageBucket: "as-enterprises-bd7f1.firebasestorage.app",
+  messagingSenderId: "667179272592",
+  appId: "1:667179272592:web:56a95a9dfdb108bdee8b15"
+};
+
+const firebaseApp = initializeApp(firebaseConfig);
+const db = getFirestore(firebaseApp);
+
 
 // ============= CONFIG =============
 const CFG = {
