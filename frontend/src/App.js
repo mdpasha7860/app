@@ -1030,11 +1030,39 @@ function AdminScreen({ t, unlocked, setUnlocked, upi, saveUpi, downloadZip, orde
                 <input data-testid={`rate-${p.id}`} type="number" defaultValue={p.p} onBlur={e=>updatePrice(p.id, e.target.value)} className="w-20 border-2 border-stone-200 rounded p-1 text-sm text-right" />
                 <input data-testid={`stock-${p.id}`} type="number" defaultValue={p.stock} onBlur={e=>updateStock(p.id, e.target.value)} className="w-16 border-2 border-stone-200 rounded p-1 text-sm text-right" />
                 <button onClick={()=>delProd(p.id)} className="p-1.5 text-red-500 hover:bg-red-50 rounded-full"><Trash2 size={12} /></button>
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-4 pt-4 border-t border-stone-200">
+              <div className="text-xs uppercase tracking-widest text-orange-600 font-bold mb-2">Edit Worker Daily Rates (₹/day)</div>
+              <div className="space-y-2">
+                {WORKERS.map(w => (
+                  <div key={w.id} className="flex items-center justify-between gap-2 p-2 border border-stone-200 rounded-lg bg-stone-50">
+                    <div className="flex items-center gap-2 min-w-0">
+                      <span className="text-base">{w.icon}</span>
+                      <div>
+                        <div className="text-xs font-bold text-stone-800 truncate">{w.role}</div>
+                        <div className="text-[10px] text-stone-500">{w.name}</div>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-1">
+                      <span className="text-xs font-bold text-stone-600">₹</span>
+                      <input
+                        type="number"
+                        defaultValue={w.rate}
+                        onChange={(e) => { w.rate = Number(e.target.value); }}
+                        className="w-20 border-2 border-stone-200 rounded p-1 text-sm text-right font-bold focus:border-orange-500 outline-none"
+                      />
+                      <span className="text-[10px] text-stone-400">/day</span>
+                    </div>
+                  </div>
+                ))}
               </div>
-            ))}
+            </div>
           </div>
-        </div>
-      )}
+        )}
+
 
       {/* Feature 8: Banner Edit */}
       {tab === "banner" && (
