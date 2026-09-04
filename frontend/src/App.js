@@ -342,54 +342,122 @@ function HomeScreen({ t, lang, setScreen, CARDS, query, doSearch, category, setC
   const CATS = [{k:"ALL",n:t.all},{k:"tmt",n:t.tmt},{k:"cement",n:t.cement},{k:"sand",n:t.sand},{k:"brick",n:t.brick},{k:"tools",n:t.tools}];
   return (
     <div className="space-y-4">
-      {/* Feature 2 & 8: HERO NAVY (banner editable) - compact */}
-      <section className="relative overflow-hidden rounded-2xl border-2 border-orange-500 shadow-xl" data-testid="hero-banner" style={{ backgroundColor: "#0A1931" }}>
-        <div className="relative p-4 sm:p-6 lg:p-8 text-white">
-          <div className="inline-block px-2 py-0.5 bg-orange-500 text-white text-[10px] font-bold uppercase tracking-widest rounded-full mb-2">{CFG.brand} · BuildMart</div>
-          <h1 data-testid="hero-headline" className="font-display font-black text-2xl 
- sm:text-3xl lg:text-4xl leading-tight tracking-tight max-w-3xl">
-              <span className="font-serif italic font-bold">Build Stronger.<br />Order Smarter.</span>
+             {/* Full-Width Deep Navy Hero with Metallic Gold Accents */}
+        <section 
+          data-testid="hero-banner"
+          style={{
+            backgroundColor: '#071126',
+            width: '100%',
+            padding: '24px 16px 28px 16px',
+            margin: '0',
+            borderRadius: '0',
+            boxSizing: 'border-box'
+          }}
+        >
+          <div style={{ maxWidth: '768px', margin: '0 auto' }}>
+            {/* Brand Pill */}
+            <div style={{
+              display: 'inline-block',
+              padding: '3px 10px',
+              background: 'rgba(212, 175, 55, 0.15)',
+              border: '1px solid #d4af37',
+              color: '#d4af37',
+              fontSize: '10px',
+              fontWeight: '800',
+              textTransform: 'uppercase',
+              letterSpacing: '1.2px',
+              borderRadius: '20px',
+              marginBottom: '12px'
+            }}>
+              {CFG.brand} · BuildMart
+            </div>
+
+            {/* Headline */}
+            <h1 data-testid="hero-headline" style={{
+              color: '#ffffff',
+              fontStyle: 'italic',
+              fontWeight: '900',
+              fontSize: '28px',
+              lineHeight: '1.2',
+              margin: '0 0 12px 0'
+            }}>
+              Build Stronger.<br />Order Smarter.
             </h1>
 
-            {/* Bada aur Saaf Font - Bina Chashme Ke Saaf Dikhne Wala */}
-            <p className="text-base sm:text-lg mt-3 max-w-2xl text-stone-100 font-medium leading-relaxed">
+            {/* Subtext */}
+            <p style={{
+              color: '#cbd5e1',
+              fontSize: '13px',
+              lineHeight: '1.6',
+              margin: '0 0 20px 0'
+            }}>
               Cement, TMT steel, sand &amp; 10+ categories delivered across Greater Hyderabad. Live rates, wholesale pricing &amp; instant WhatsApp estimates.
             </p>
 
-            {/* Premium Golden Button & Options */}
-            <div className="flex flex-col sm:flex-row gap-2.5 mt-4">
-              <button
-                data-testid="hero-shop-btn"
-                onClick={() => setScreen("catalog")}
-                className="bg-[#f59e0b] hover:bg-[#d97706] text-stone-950 font-extrabold text-xs uppercase tracking-wider px-5 py-3 rounded-xl shadow-lg transition-transform hover:scale-105 flex items-center justify-center gap-2"
+            {/* Metallic Gold Browse Catalog Button */}
+            <button
+              data-testid="hero-shop-btn"
+              onClick={() => setScreen("catalog")}
+              style={{
+                width: '100%',
+                background: 'linear-gradient(135deg, #d4af37 0%, #f9e79f 50%, #b8860b 100%)',
+                color: '#071126',
+                fontWeight: '900',
+                fontSize: '13px',
+                letterSpacing: '1px',
+                padding: '13px',
+                borderRadius: '8px',
+                border: 'none',
+                marginBottom: '12px',
+                cursor: 'pointer',
+                boxShadow: '0 4px 14px rgba(212, 175, 55, 0.3)'
+              }}
+            >
+              BROWSE CATALOG &rarr;
+            </button>
+
+            {/* Action Buttons: Mistri & Estimate */}
+            <div style={{ display: 'flex', gap: '10px' }}>
+              <a
+                data-testid="hero-mistri-btn"
+                href={`https://wa.me/${CFG.wa}?text=Hi%20AS,%20I%20want%20to%20book%20Mistri/Labour`}
+                target="_blank"
+                rel="noreferrer"
+                style={{
+                  flex: 1,
+                  backgroundColor: '#132347',
+                  color: '#ffd700',
+                  border: '1px solid #d4af37',
+                  fontWeight: '700',
+                  fontSize: '12px',
+                  padding: '10px 8px',
+                  borderRadius: '8px',
+                  textAlign: 'center',
+                  textDecoration: 'none'
+                }}
               >
-                BROWSE CATALOG &rarr;
+                👷 Book Mistri/Labour
+              </a>
+              <button
+                onClick={() => setScreen("estimator")}
+                style={{
+                  flex: 1,
+                  backgroundColor: 'transparent',
+                  color: '#e2e8f0',
+                  border: '1px solid #334155',
+                  fontWeight: '600',
+                  fontSize: '12px',
+                  padding: '10px 8px',
+                  borderRadius: '8px',
+                  cursor: 'pointer'
+                }}
+              >
+                Get Free Estimate
               </button>
-
-              <div className="flex gap-2">
-                <a
-                  data-testid="hero-mistri-btn"
-                  href={`https://wa.me/${CFG.wa}?text=Hi%20AS,%20I%20want%20to%20book%20Mistri/Labour`}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="flex-1 bg-[#059669] hover:bg-emerald-600 text-white font-bold text-xs px-3 py-2.5 rounded-xl flex items-center justify-center gap-1.5 shadow"
-                >
-                  👷 Book Mistri/Labour
-                </a>
-
-                <a
-                  data-testid="hero-wa-btn"
-                  href={`https://wa.me/${CFG.wa}?text=Hi%20AS,%20I%20need%20a%20Free%20Estimate`}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="flex-1 bg-[#1c2541] hover:bg-slate-800 text-white border border-amber-400/40 font-bold text-xs px-3 py-2.5 rounded-xl flex items-center justify-center shadow"
-                >
-                  Get Free Estimate
-                </a>
-              </div>
             </div>
           </div>
         </section>
+
 
 
       {/* Feature 19: SEARCH + VOICE - compact */}
