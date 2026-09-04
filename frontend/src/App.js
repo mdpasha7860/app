@@ -319,16 +319,51 @@ function HomeScreen({ t, lang, setScreen, CARDS, query, doSearch, category, setC
       <section className="relative overflow-hidden rounded-2xl border-2 border-orange-500 shadow-xl" data-testid="hero-banner" style={{ backgroundColor: "#0A1931" }}>
         <div className="relative p-4 sm:p-6 lg:p-8 text-white">
           <div className="inline-block px-2 py-0.5 bg-orange-500 text-white text-[10px] font-bold uppercase tracking-widest rounded-full mb-2">{CFG.brand} · BuildMart</div>
-          <h1 data-testid="hero-headline" className="font-display font-black text-2xl sm:text-3xl lg:text-4xl leading-tight tracking-tight max-w-3xl">
-            {heroTxt || t.b}
-          </h1>
-          <p className="text-xs sm:text-sm mt-2 max-w-xl text-stone-200">TMT · Cement · Sand · Bricks — Genuine brands, wholesale rates, same-day delivery.</p>
-          <div className="flex flex-wrap gap-2 mt-3">
-            <button data-testid="hero-shop-btn" onClick={() => setScreen("catalog")} className="bg-orange-500 hover:bg-orange-600 text-white font-bold text-xs px-4 py-2 rounded-full shadow-lg transition-transform hover:scale-105">Shop Now →</button>
-            <a data-testid="hero-wa-btn" href={`https://wa.me/${CFG.wa}?text=Hi%20AS`} target="_blank" rel="noreferrer" className="bg-white/10 backdrop-blur border border-white/40 hover:bg-white/20 text-white font-bold text-xs px-4 py-2 rounded-full transition">{t.wa}</a>
+          <h1 data-testid="hero-headline" className="font-display font-black text-2xl 
+ sm:text-3xl lg:text-4xl leading-tight tracking-tight max-w-3xl">
+              <span className="font-serif italic font-bold">Build Stronger.<br />Order Smarter.</span>
+            </h1>
+
+            {/* Bada aur Saaf Font - Bina Chashme Ke Saaf Dikhne Wala */}
+            <p className="text-base sm:text-lg mt-3 max-w-2xl text-stone-100 font-medium leading-relaxed">
+              Cement, TMT steel, sand &amp; 10+ categories delivered across Greater Hyderabad. Live rates, wholesale pricing &amp; instant WhatsApp estimates.
+            </p>
+
+            {/* Premium Golden Button & Options */}
+            <div className="flex flex-col sm:flex-row gap-2.5 mt-4">
+              <button
+                data-testid="hero-shop-btn"
+                onClick={() => setScreen("catalog")}
+                className="bg-[#f59e0b] hover:bg-[#d97706] text-stone-950 font-extrabold text-xs uppercase tracking-wider px-5 py-3 rounded-xl shadow-lg transition-transform hover:scale-105 flex items-center justify-center gap-2"
+              >
+                BROWSE CATALOG &rarr;
+              </button>
+
+              <div className="flex gap-2">
+                <a
+                  data-testid="hero-mistri-btn"
+                  href={`https://wa.me/${CFG.wa}?text=Hi%20AS,%20I%20want%20to%20book%20Mistri/Labour`}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="flex-1 bg-[#059669] hover:bg-emerald-600 text-white font-bold text-xs px-3 py-2.5 rounded-xl flex items-center justify-center gap-1.5 shadow"
+                >
+                  👷 Book Mistri/Labour
+                </a>
+
+                <a
+                  data-testid="hero-wa-btn"
+                  href={`https://wa.me/${CFG.wa}?text=Hi%20AS,%20I%20need%20a%20Free%20Estimate`}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="flex-1 bg-[#1c2541] hover:bg-slate-800 text-white border border-amber-400/40 font-bold text-xs px-3 py-2.5 rounded-xl flex items-center justify-center shadow"
+                >
+                  Get Free Estimate
+                </a>
+              </div>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+
 
       {/* Feature 19: SEARCH + VOICE - compact */}
       <section className="bg-white border-2 border-stone-900 rounded-full py-1.5 px-3 shadow-sm dark-card">
