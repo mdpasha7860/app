@@ -342,22 +342,21 @@ function HomeScreen({ t, lang, setScreen, CARDS, query, doSearch, category, setC
   const CATS = [{k:"ALL",n:t.all},{k:"tmt",n:t.tmt},{k:"cement",n:t.cement},{k:"sand",n:t.sand},{k:"brick",n:t.brick},{k:"tools",n:t.tools}];
   return (
     <div className="space-y-4">
-                     {/* HERO SECTION - EXACT DESIGN (COMPACT & BUTTONS HIGHER) */}
+                       {/* HERO SECTION - FULL WIDTH */}
         <section 
           data-testid="hero-banner"
-                   style={{
+          style={{
             position: 'relative',
-            backgroundColor: '#020617',
-            padding: '20px 16px 16px 16px',
             width: '100vw',
             marginLeft: 'calc(-50vw + 50%)',
             marginRight: 'calc(-50vw + 50%)',
+            backgroundColor: '#020617',
+            padding: '24px 16px 20px 16px',
             boxSizing: 'border-box',
             overflow: 'hidden'
           }}
         >
-
-          {/* Background Construction Warehouse Image with Overlay */}
+          {/* Background Image with Dark Overlay */}
           <div 
             style={{
               position: 'absolute',
@@ -380,7 +379,7 @@ function HomeScreen({ t, lang, setScreen, CARDS, query, doSearch, category, setC
           />
 
           <div style={{ position: 'relative', zIndex: 2, maxWidth: '500px', margin: '0 auto' }}>
-            {/* Live daily rates pill */}
+            {/* Live Daily Rates Tag */}
             <div style={{
               display: 'inline-flex',
               alignItems: 'center',
@@ -397,13 +396,13 @@ function HomeScreen({ t, lang, setScreen, CARDS, query, doSearch, category, setC
               <span>⚡</span> Live daily rates • Hyderabad & Secunderabad
             </div>
 
-            {/* AS BUILDMART Titles */}
+            {/* AS BUILDMART Headings */}
             <div style={{ lineHeight: '1', marginBottom: '4px' }}>
               <div style={{ fontSize: '36px', fontWeight: '900', color: '#f59e0b', letterSpacing: '-0.5px' }}>AS</div>
               <div style={{ fontSize: '36px', fontWeight: '900', color: '#ffffff', letterSpacing: '1px', textTransform: 'uppercase' }}>BUILDMART</div>
             </div>
 
-            {/* Horizontal Line & Marketplace Tag */}
+            {/* Sub-tagline */}
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px', margin: '6px 0 10px 0' }}>
               <div style={{ width: '28px', height: '3px', backgroundColor: '#f59e0b', borderRadius: '2px' }} />
               <span style={{ fontSize: '11px', fontWeight: '700', letterSpacing: '1px', color: '#94a3b8', textTransform: 'uppercase' }}>
@@ -411,7 +410,7 @@ function HomeScreen({ t, lang, setScreen, CARDS, query, doSearch, category, setC
               </span>
             </div>
 
-            {/* Script Tagline */}
+            {/* Script Text */}
             <div style={{ margin: '6px 0 8px 0' }}>
               <div style={{ fontFamily: 'serif', fontStyle: 'italic', fontSize: '28px', color: '#ffffff', lineHeight: '1.2' }}>
                 Build Stronger.
@@ -421,7 +420,7 @@ function HomeScreen({ t, lang, setScreen, CARDS, query, doSearch, category, setC
               </div>
             </div>
 
-            {/* Subtext */}
+            {/* Details */}
             <p style={{
               color: '#94a3b8',
               fontSize: '12px',
@@ -431,7 +430,7 @@ function HomeScreen({ t, lang, setScreen, CARDS, query, doSearch, category, setC
               Cement, TMT steel, sand & 10+ categories delivered across Greater Hyderabad. Live rates, wholesale pricing & instant WhatsApp estimates.
             </p>
 
-            {/* Buttons Shifted Higher */}
+            {/* Buttons */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
               <button
                 data-testid="hero-shop-btn"
@@ -475,8 +474,6 @@ function HomeScreen({ t, lang, setScreen, CARDS, query, doSearch, category, setC
             </div>
           </div>
         </section>
-
-
 
 
       {/* Feature 19: SEARCH + VOICE - compact */}
