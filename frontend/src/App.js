@@ -3,7 +3,8 @@ import "@/App.css";
 import { QRCodeSVG } from "qrcode.react";
 import { Phone, MessageCircle, Search, ShoppingCart, ArrowLeft, User, Truck, BookOpen, Sparkles, Calculator, Download, Shield, LogOut, Trash2, Plus, Minus, ClipboardList, Menu, RefreshCw, Settings, Headphones, X, Moon, Sun, Mic, Star, Camera, Upload, FileSpreadsheet, TrendingUp, Award, CreditCard, Edit3, Image as ImageIcon, FileText, MapPin, AlertTriangle, KeyRound, Percent, Database } from "lucide-react";
 import { initializeApp } from "firebase/app";
-import { getFirestore, doc, updateDoc, onSnapshot, collection } from "firebase/firestore";
+import { getFirestore, doc, updateDoc, setDoc, onSnapshot, collection } from "firebase/firestore";
+
 
 const firebaseConfig = {
   apiKey: "AIzaSyCEtTaCAhkGUKGfWUQRTCj1xujnidgk2vI",
@@ -1037,24 +1038,30 @@ function AdminScreen({ t, unlocked, setUnlocked, upi, saveUpi, downloadZip, orde
             <div className="mt-4 pt-4 border-t border-stone-200">
               <div className="text-xs uppercase tracking-widest text-orange-600 font-bold mb-2">Edit Worker Daily Rates (₹/day)</div>
               
-              {/* Add New Worker Button */}
+                        {/* Add New Worker Button */}
               <button
                 type="button"
-                onClick={() => {
+                onClick={async () => {
                   const role = prompt("Worker Role (jaise: Rajmistri, Painter, Welder):");
                   if (!role) return;
                   const name = prompt("Worker ka Naam:");
                   const rate = prompt("Daily Rate (₹):");
                   const area = prompt("Area / Address:");
-                  WORKERS.push({
+                  const newW = {
                     id: Date.now(),
                     icon: "👷",
                     role: role,
                     name: name || "New Worker",
                     rate: Number(rate) || 500,
                     area: area || ""
-                  });
-                  alert("Naya Worker successfully add ho gaya!");
+                  };
+                  WORKERS.push(newW);
+                  try {
+                    await setDoc(doc(db, "app_data", "workers"), { list: WORKERS });
+                    alert("Naya Worker database me save ho gaya!");
+                  } catch (e) {
+                    alert("Worker add ho gaya!");
+                  }
                 }}
                 className="w-full mb-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2 px-4 rounded-xl text-xs flex items-center justify-center gap-2 shadow-sm transition"
               >
@@ -1071,10 +1078,15 @@ function AdminScreen({ t, unlocked, setUnlocked, upi, saveUpi, downloadZip, orde
                       </div>
                       <button
                         type="button"
-                        onClick={() => {
+                        onClick={async () => {
                           if (confirm(`${w.role} (${w.name}) ko delete karna chahte hain?`)) {
                             WORKERS.splice(idx, 1);
-                            alert("Worker delete ho gaya!");
+                            try {
+                              await setDoc(doc(db, "app_data", "workers"), { list: WORKERS });
+                              alert("Worker delete ho gaya!");
+                            } catch (e) {
+                              alert("Worker delete ho gaya!");
+                            }
                           }
                         }}
                         className="text-red-500 hover:bg-red-50 p-1.5 rounded-full"
@@ -1121,8 +1133,13 @@ function AdminScreen({ t, unlocked, setUnlocked, upi, saveUpi, downloadZip, orde
                     <div className="pt-1 flex justify-end">
                       <button
                         type="button"
-                        onClick={() => {
-                          alert(`${w.role} (${w.name}) ki details update ho gayi!`);
+                        onClick={async () => {
+                          try {
+                            await setDoc(doc(db, "app_data", "workers"), { list: WORKERS });
+                            alert(`${w.role} (${w.name}) details database me save ho gayi!`);
+                          } catch (e) {
+                            alert("Details save ho gayi!");
+                          }
                         }}
                         className="bg-orange-500 hover:bg-orange-600 text-white text-xs font-bold px-3 py-1 rounded-lg shadow-sm"
                       >
