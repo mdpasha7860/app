@@ -238,13 +238,25 @@ export default function App() {
           </div>
         </div>
       </header>
-
-      {/* Feature 3: TICKER */}
-      <div data-testid="ticker" className="bg-orange-500 text-white overflow-hidden py-2 border-b-2 border-orange-700">
-        <div className="ticker-track font-bold text-sm whitespace-nowrap">
-          {t.tick} · {t.tick} · {t.tick}
-        </div>
+      {/* Golden Metallic Ticker Strip */}
+      <div style={{
+        background: 'linear-gradient(90deg, #b8860b 0%, #ffd700 25%, #fff1a8 50%, #ffd700 75%, #b8860b 100%)',
+        color: '#071126',
+        fontWeight: '800',
+        fontSize: '12px',
+        padding: '9px 0',
+        letterSpacing: '0.6px',
+        textTransform: 'uppercase',
+        boxShadow: '0 2px 10px rgba(0,0,0,0.35)',
+        width: '100%',
+        overflow: 'hidden',
+        whiteSpace: 'nowrap'
+      }}>
+        <marquee scrollamount="6">
+          ★ Same-Day Delivery Across Hyderabad • Wholesale Rates • Genuine Brands • Instant WhatsApp Estimates ★
+        </marquee>
       </div>
+
 
       {/* Feature 14: LOW STOCK ALERT */}
       {lowStock.length > 0 && screen === "home" && (
