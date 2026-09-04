@@ -1036,25 +1036,98 @@ function AdminScreen({ t, unlocked, setUnlocked, upi, saveUpi, downloadZip, orde
 
             <div className="mt-4 pt-4 border-t border-stone-200">
               <div className="text-xs uppercase tracking-widest text-orange-600 font-bold mb-2">Edit Worker Daily Rates (₹/day)</div>
-              <div className="space-y-2">
-                {WORKERS.map(w => (
-                  <div key={w.id} className="flex items-center justify-between gap-2 p-2 border border-stone-200 rounded-lg bg-stone-50">
-                    <div className="flex items-center gap-2 min-w-0">
-                      <span className="text-base">{w.icon}</span>
+              
+              {/* Add New Worker Button */}
+              <button
+                type="button"
+                onClick={() => {
+                  const role = prompt("Worker Role (jaise: Rajmistri, Painter, Welder):");
+                  if (!role) return;
+                  const name = prompt("Worker ka Naam:");
+                  const rate = prompt("Daily Rate (₹):");
+                  const area = prompt("Area / Address:");
+                  WORKERS.push({
+                    id: Date.now(),
+                    icon: "👷",
+                    role: role,
+                    name: name || "New Worker",
+                    rate: Number(rate) || 500,
+                    area: area || ""
+                  });
+                  alert("Naya Worker successfully add ho gaya!");
+                }}
+                className="w-full mb-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2 px-4 rounded-xl text-xs flex items-center justify-center gap-2 shadow-sm transition"
+              >
+                <Plus size={16} /> + Add New Worker
+              </button>
+
+              <div className="space-y-3">
+                {WORKERS.map((w, idx) => (
+                  <div key={w.id || idx} className="p-3 border border-stone-200 rounded-xl bg-stone-50 space-y-2">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <span className="text-lg">{w.icon || "👷"}</span>
+                        <span className="text-xs font-bold text-stone-800">{w.role}</span>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          if (confirm(`${w.role} (${w.name}) ko delete karna chahte hain?`)) {
+                            WORKERS.splice(idx, 1);
+                            alert("Worker delete ho gaya!");
+                          }
+                        }}
+                        className="text-red-500 hover:bg-red-50 p-1.5 rounded-full"
+                        title="Delete Worker"
+                      >
+                        <Trash2 size={15} />
+                      </button>
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-2">
                       <div>
-                        <div className="text-xs font-bold text-stone-800 truncate">{w.role}</div>
-                        <div className="text-[10px] text-stone-500">{w.name}</div>
+                        <label className="text-[10px] font-bold text-stone-500 block">Name</label>
+                        <input
+                          type="text"
+                          defaultValue={w.name}
+                          onChange={(e) => { w.name = e.target.value; }}
+                          placeholder="Worker Name"
+                          className="w-full border border-stone-300 rounded px-2 py-1 text-xs bg-white focus:border-orange-500 outline-none"
+                        />
+                      </div>
+                      <div>
+                        <label className="text-[10px] font-bold text-stone-500 block">Rate (₹/day)</label>
+                        <input
+                          type="number"
+                          defaultValue={w.rate}
+                          onChange={(e) => { w.rate = Number(e.target.value); }}
+                          placeholder="Daily Rate"
+                          className="w-full border border-stone-300 rounded px-2 py-1 text-xs font-bold bg-white focus:border-orange-500 outline-none"
+                        />
                       </div>
                     </div>
-                    <div className="flex items-center gap-1">
-                      <span className="text-xs font-bold text-stone-600">₹</span>
+
+                    <div>
+                      <label className="text-[10px] font-bold text-stone-500 block">Area / Address</label>
                       <input
-                        type="number"
-                        defaultValue={w.rate}
-                        onChange={(e) => { w.rate = Number(e.target.value); }}
-                        className="w-20 border-2 border-stone-200 rounded p-1 text-sm text-right font-bold focus:border-orange-500 outline-none"
+                        type="text"
+                        defaultValue={w.area || w.loc || ""}
+                        onChange={(e) => { w.area = e.target.value; }}
+                        placeholder="e.g. Hyderabad, Secunderabad, etc."
+                        className="w-full border border-stone-300 rounded px-2 py-1 text-xs bg-white focus:border-orange-500 outline-none"
                       />
-                      <span className="text-[10px] text-stone-400">/day</span>
+                    </div>
+
+                    <div className="pt-1 flex justify-end">
+                      <button
+                        type="button"
+                        onClick={() => {
+                          alert(`${w.role} (${w.name}) ki details update ho gayi!`);
+                        }}
+                        className="bg-orange-500 hover:bg-orange-600 text-white text-xs font-bold px-3 py-1 rounded-lg shadow-sm"
+                      >
+                        Save Details
+                      </button>
                     </div>
                   </div>
                 ))}
