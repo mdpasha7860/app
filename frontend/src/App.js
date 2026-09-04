@@ -345,16 +345,18 @@ function HomeScreen({ t, lang, setScreen, CARDS, query, doSearch, category, setC
                      {/* HERO SECTION - EXACT DESIGN (COMPACT & BUTTONS HIGHER) */}
         <section 
           data-testid="hero-banner"
-          style={{
+                   style={{
             position: 'relative',
-            width: '100%',
             backgroundColor: '#020617',
             padding: '20px 16px 16px 16px',
-            margin: '0',
+            width: '100vw',
+            marginLeft: 'calc(-50vw + 50%)',
+            marginRight: 'calc(-50vw + 50%)',
             boxSizing: 'border-box',
             overflow: 'hidden'
           }}
         >
+
           {/* Background Construction Warehouse Image with Overlay */}
           <div 
             style={{
