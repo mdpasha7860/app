@@ -53,21 +53,21 @@ const getHeadline = () => localStorage.getItem("bannerText") || "";
 const T = {
   EN: { b:"Build Stronger. Order Smarter.", c:"Cart", s:"Same-Day Delivery", w:"Wholesale Khata", g:"Brand Catalog", f:"Free Estimate", zip:"Download Full Site Backup", home:"Home", search:"Search Sariya, Cement, Sand, Bricks...", login:"Login", logout:"Logout", orders:"My Orders", admin:"Admin", call:"Call Now", wa:"WhatsApp", cart:"Cart", buy:"Add to Cart", total:"Total", checkout:"Place Order", address:"Delivery Address", cod:"Cash on Delivery", upi:"Pay via UPI", confirm:"Confirm Order", noResults:"No materials found. Add inventory from Admin Panel.", tracker:"Live Order Tracker", khata:"Wholesale Khata", catalog:"Brand Catalog", estimator:"Estimate Calculator", welcome:"Welcome", mobile:"Mobile Number", otp:"Enter OTP", sendOtp:"Send OTP", verify:"Verify & Login", pinLbl:"Enter Admin PIN", changeUpi:"Change UPI ID", currentUpi:"Current UPI", saveUpi:"Save UPI", zipInfo:"Full backup file", qty:"Qty (Weight)", stock:"In Stock", cat:"Category", all:"All", tmt:"Sariya (TMT)", cement:"Cement", sand:"Sand & Aggregate", brick:"Bricks", tools:"Tools", empty:"Cart is empty", noord:"No orders yet", ordid:"Order", status:"Status", pending:"Pending", scan:"Scan QR to Pay", payto:"Pay to", est:"Enter dimensions to estimate", len:"Length (ft)", wid:"Width (ft)", ht:"Height (ft)", need:"You need approx", bags:"bags of Cement", tons:"tons of Sariya", cft:"cft of Sand", bricks:"Bricks (approx)", calc:"Calculate", ledger:"Ledger", customer:"Customer", amt:"Amount", add:"Add Entry", credit:"Credit", debit:"Debit", note:"Note", del:"Delete", eta:"ETA Today", driver:"Driver", low:"LOW STOCK", tick:"★ Same-Day Delivery Across Hyderabad • Wholesale Rates • Genuine Brands • Instant WhatsApp Estimates ★" },
   HI: { b:"मजबूत बनाएं। स्मार्ट ऑर्डर करें।", c:"टोकरी", s:"आज डिलीवरी", w:"थोक खाता", g:"ब्रांड कैटलॉग", f:"फ्री एस्टीमेट", zip:"साइट बैकअप डाउनलोड करें", home:"होम", search:"सरिया, सीमेंट, रेत, ईंट खोजें...", login:"लॉगिन", logout:"लॉगआउट", orders:"मेरे ऑर्डर", admin:"एडमिन", call:"कॉल करें", wa:"व्हाट्सएप", cart:"टोकरी", buy:"जोड़ें", total:"कुल", checkout:"ऑर्डर करें", address:"पता", cod:"कैश ऑन डिलीवरी", upi:"UPI से भुगतान", confirm:"पुष्टि करें", noResults:"सामान नहीं मिला। एडमिन पैनल से स्टॉक जोड़ें।", tracker:"लाइव ऑर्डर ट्रैकर", khata:"थोक खाता", catalog:"ब्रांड कैटलॉग", estimator:"अनुमान कैलकुलेटर", welcome:"स्वागत है", mobile:"मोबाइल नंबर", otp:"OTP दर्ज करें", sendOtp:"OTP भेजें", verify:"वेरीफाई करें", pinLbl:"एडमिन PIN डालें", changeUpi:"UPI बदलें", currentUpi:"मौजूदा UPI", saveUpi:"UPI सेव करें", zipInfo:"पूरा बैकअप", qty:"वज़न (किलो / बैग)", stock:"स्टॉक में", cat:"श्रेणी", all:"सभी", tmt:"सरिया (TMT)", cement:"सीमेंट", sand:"रेत/गिट्टी", brick:"ईंट", tools:"औजार", empty:"टोकरी खाली", noord:"कोई ऑर्डर नहीं", ordid:"ऑर्डर", status:"स्थिति", pending:"लंबित", scan:"QR स्कैन करें", payto:"भुगतान", est:"माप डालें", len:"लंबाई (फीट)", wid:"चौड़ाई (फीट)", ht:"ऊंचाई (फीट)", need:"आपको चाहिए", bags:"सीमेंट बैग", tons:"टन सरिया", cft:"cft रेत", bricks:"ईंटें", calc:"गणना करें", ledger:"बही", customer:"ग्राहक", amt:"राशि", add:"जोड़ें", credit:"जमा", debit:"नाम", note:"नोट", del:"हटाएं", eta:"आज पहुंचेगा", driver:"ड्राइवर", low:"स्टॉक कम", tick:"★ हैदराबाद में आज ही डिलीवरी • थोक रेट • असली ब्रांड • इंस्टेंट व्हाट्सएप एस्टीमेट ★" },
-  TE: { b:"బలంగా నిర్మించండి. తెలివిగా ఆర్డర్ చేయండి.", c:"బుట్ట", s:"ఈరోజే డెలివరీ", w:"హోల్‌సేల్ ఖాతా", g:"బ్రాండ్ కేటలాగ్", f:"ఉచిత అంచనా", zip:"బ్యాకప్ డౌన్‌లోడ్", home:"హోమ్", search:"సరియా, సిమెంట్, ఇసుక, ఇటుకలు...", login:"లాగిన్", logout:"లాగౌట్", orders:"నా ఆర్డర్లు", admin:"అడ్మిన్", call:"కాల్ చేయండి", wa:"వాట్సాప్", cart:"బుట్ట", buy:"జోడించు", total:"మొత్తం", checkout:"ఆర్డర్ చేయండి", address:"చిరునామా", cod:"క్యాష్ ఆన్ డెలివరీ", upi:"UPI చెల్లింపు", confirm:"నిర్ధారించండి", noResults:"సరుకులు లేవు. అడ్మిన్ ప్యానెల్ నుండి జోడించండి.", tracker:"లైవ్ ఆర్డర్ ట్రాకర్", khata:"హోల్‌సేల్ ఖాతా", catalog:"బ్రాండ్ కేటలాగ్", estimator:"అంచనా కాలిక్యులేటర్", welcome:"స్వాగతం", mobile:"మొబైల్ నంబర్", otp:"OTP నమోదు", sendOtp:"OTP పంపండి", verify:"వెరిఫై చేయండి", pinLbl:"అడ్మిన్ PIN", changeUpi:"UPI మార్చండి", currentUpi:"ప్రస్తుత UPI", saveUpi:"UPI సేవ్ చేయండి", zipInfo:"పూర్తి బ్యాకప్", qty:"పరిమాణం (కిలోలు)", stock:"స్టాక్‌లో", cat:"వర్గం", all:"అన్నీ", tmt:"సరియా (TMT)", cement:"సిమెంట్", sand:"ఇసుక/కంకర", brick:"ఇటుకలు", tools:"పరికరాలు", empty:"బుట్ట ఖಾళీ", noord:"ఆర్డర్లు లేవు", ordid:"ఆర్డర్", status:"స్థితి", pending:"పెండింగ్", scan:"QR స్కాన్ చేయండి", payto:"చెల్లింపు", est:"కొలతలు ఇవ్వండి", len:"పొడవు (అడుగు)", wid:"వెడల్పు (అడుగు)", ht:"ఎత్తు (అడుగు)", need:"కావాలి", bags:"సిమెంట్ బస్తాలు", tons:"టన్నుల సరియా", cft:"cft ఇసుక", bricks:"ఇటుకలు", calc:"లెక్కించండి", ledger:"లెడ్జర్", customer:"కస్టమర్", amt:"మొత్తం", add:"జోడించు", credit:"క్రెడిట్", debit:"డెబిట్", note:"నోట్", del:"తొలగించు", eta:"ఈరోజు", driver:"డ్రाइवर", low:"స్టాక్ తక్కువ", tick:"★ హైదరాబాద్‌లో ఈరోజే డెలివరీ • హోల్‌సేల్ రేట్లు • అసలైన బ్రాండ్ • తక్షణ వాట్సాప్ అంచనా ★" }
+  TE: { b:"బలంగా నిర్మించండి. తెలివిగా ఆర్డర్ చేయండి.", c:"బుట్ట", s:"ఈరోజే డెలివరీ", w:"హోల్‌సేల్ ఖాతా", g:"బ్రాండ్ కేటలాగ్", f:"ఉచిత అంచనా", zip:"బ్యాకప్ డౌన్‌లోడ్", home:"హోమ్", search:"సరియా, సిమెంట్, ఇసుక, ఇటుకలు...", login:"లాగిన్", logout:"లాగౌట్", orders:"నా ఆర్డర్లు", admin:"అడ్మిన్", call:"కాల్ చేయండి", wa:"వాట్సాప్", cart:"బుట్ట", buy:"జోడించు", total:"మొత్తం", checkout:"ఆర్డర్ చేయండి", address:"చిరునామా", cod:"క్యాష్ ఆన్ డెలివరీ", upi:"UPI చెల్లింపు", confirm:"నిర్ధారించండి", noResults:"సరుకులు లేవు. అడ్మిన్ ప్యానెల్ నుండి జోడించండి.", tracker:"లైవ్ ఆర్డర్ ట్రాకర్", khata:"హోల్‌సేల్ ఖాతా", catalog:"బ్రాండ్ కేటలాగ్", estimator:"అంచనా కాలిక్యులేటర్", welcome:"స్వాగతం", mobile:"మొబైల్ నంబర్", otp:"OTP నమోదు", sendOtp:"OTP పంపండి", verify:"వెరిఫై చేయండి", pinLbl:"అడ్మిన్ PIN", changeUpi:"UPI మార్చండి", currentUpi:"ప్రస్తుత UPI", saveUpi:"UPI సేవ్ చేయండి", zipInfo:"పూర్తి బ్యాకప్", qty:"పరిమాణం (కిలోలు)", stock:"స్టాక్‌లో", cat:"వర్గం", all:"అన్నీ", tmt:"సరియా (TMT)", cement:"సిమెంట్", sand:"ఇసుక/కంకర", brick:"ఇటుకలు", tools:"పరికరాలు", empty:"బుట్ట ఖాళీ", noord:"ఆర్డర్లు లేవు", ordid:"ఆర్డర్", status:"స్థితి", pending:"పెండింగ్", scan:"QR స్కాన్ చేయండి", payto:"చెల్లింపు", est:"కొలతలు ఇవ్వండి", len:"పొడవు (అడుగు)", wid:"వెడల్పు (అడుగు)", ht:"ఎత్తు (అడుగు)", need:"కావాలి", bags:"సిమెంట్ బస్తాలు", tons:"టన్నుల సరియా", cft:"cft ఇసుక", bricks:"ఇటుకలు", calc:"లెక్కించండి", ledger:"లెడ్జర్", customer:"కస్టమర్", amt:"మొత్తం", add:"జోడించు", credit:"క్రెడిట్", debit:"డెబిట్", note:"నోట్", del:"తొలగించు", eta:"ఈరోజు", driver:"డ్రైవర్", low:"స్టాక్ తక్కువ", tick:"★ హైదరాబాద్‌లో ఈరోజే డెలివరీ • హోల్‌సేల్ రేట్లు • అసలైన బ్రాండ్ • తక్షణ వాట్సాప్ అంచనా ★" }
 };
 
 const MAP = { sariya:'tmt', saria:'tmt', steel:'tmt', rod:'tmt', tmt:'tmt', cement:'cement', simenti:'cement', ppc:'cement', opc:'cement', ret:'sand', balu:'sand', sand:'sand', isuka:'sand', metal:'sand', aggregate:'sand', gitti:'sand', brick:'brick', eent:'brick', itukalu:'brick', block:'brick', wire:'tools', tool:'tools' };
 
 const CLEAN_FRESH_PRODUCTS = [
-  { id: 1101, n: "सरिया 8 MM (Tata Tiscon)", b: "Tata Tiscon", p: 62, u: "प्रति किलो (per kg)", cat: "tmt", stock: 500, rating: 4.8, visible: true, img: "", moq: 10 },
-  { id: 1102, n: "सरिया 10 MM (JSW Neosteel)", b: "JSW Neosteel", p: 61, u: "प्रति किलो (per kg)", cat: "tmt", stock: 500, rating: 4.7, visible: true, img: "", moq: 10 },
-  { id: 1103, n: "सरिया 12 MM (SAIL)", b: "SAIL", p: 60, u: "प्रति किलो (per kg)", cat: "tmt", stock: 500, rating: 4.6, visible: true, img: "", moq: 10 },
-  { id: 1104, n: "सरिया 16 MM (Kamdhenu)", b: "Kamdhenu", p: 59, u: "प्रति किलो (per kg)", cat: "tmt", stock: 500, rating: 4.5, visible: true, img: "", moq: 10 },
-  { id: 1105, n: "सीमेंट UltraTech OPC 53 Grade", b: "UltraTech", p: 410, u: "प्रति बैग (50kg bag)", cat: "cement", stock: 300, rating: 4.9, visible: true, img: "", moq: 10 },
-  { id: 1106, n: "सीमेंट Ambuja PPC", b: "Ambuja", p: 380, u: "प्रति बैग (50kg bag)", cat: "cement", stock: 200, rating: 4.8, visible: true, img: "", moq: 10 },
-  { id: 1107, n: "रेत River Sand (बालू)", b: "Local River", p: 1800, u: "प्रति टन (per ton)", cat: "sand", stock: 50, rating: 4.5, visible: true, img: "", moq: 1 },
-  { id: 1108, n: "गिट्टी 20 MM Aggregate", b: "Local Quarry", p: 1200, u: "प्रति टन (per ton)", cat: "sand", stock: 80, rating: 4.4, visible: true, img: "", moq: 1 },
-  { id: 1109, n: "लाल ईंट Red Bricks Class A", b: "Kiln Standard", p: 9, u: "प्रति पीस (per piece)", cat: "brick", stock: 5000, rating: 4.6, visible: true, img: "", moq: 200 }
+  { id: 1201, n: "सरिया 8 MM (Tata Tiscon)", b: "Tata Tiscon", p: 62, u: "प्रति किलो (per kg)", cat: "tmt", stock: 500, rating: 4.8, visible: true, img: "", moq: 10 },
+  { id: 1202, n: "सरिया 10 MM (JSW Neosteel)", b: "JSW Neosteel", p: 61, u: "प्रति किलो (per kg)", cat: "tmt", stock: 500, rating: 4.7, visible: true, img: "", moq: 10 },
+  { id: 1203, n: "सरिया 12 MM (SAIL)", b: "SAIL", p: 60, u: "प्रति किलो (per kg)", cat: "tmt", stock: 500, rating: 4.6, visible: true, img: "", moq: 10 },
+  { id: 1204, n: "सरिया 16 MM (Kamdhenu)", b: "Kamdhenu", p: 59, u: "प्रति किलो (per kg)", cat: "tmt", stock: 500, rating: 4.5, visible: true, img: "", moq: 10 },
+  { id: 1205, n: "सीमेंट UltraTech OPC 53 Grade", b: "UltraTech", p: 410, u: "प्रति बैग (50kg bag)", cat: "cement", stock: 300, rating: 4.9, visible: true, img: "", moq: 10 },
+  { id: 1206, n: "सीमेंट Ambuja PPC", b: "Ambuja", p: 380, u: "प्रति बैग (50kg bag)", cat: "cement", stock: 200, rating: 4.8, visible: true, img: "", moq: 10 },
+  { id: 1207, n: "रेत River Sand (बालू)", b: "Local River", p: 1800, u: "प्रति टन (per ton)", cat: "sand", stock: 50, rating: 4.5, visible: true, img: "", moq: 1 },
+  { id: 1208, n: "गिट्टी 20 MM Aggregate", b: "Local Quarry", p: 1200, u: "प्रति टन (per ton)", cat: "sand", stock: 80, rating: 4.4, visible: true, img: "", moq: 1 },
+  { id: 1209, n: "लाल ईंट Red Bricks Class A", b: "Kiln Standard", p: 9, u: "प्रति पीस (per piece)", cat: "brick", stock: 5000, rating: 4.6, visible: true, img: "", moq: 200 }
 ];
 
 const DEFAULT_WORKERS = [
@@ -105,8 +105,8 @@ export default function App() {
   const [ledger, setLedger] = useState(ls.get("ledger", []));
   const [invoices, setInvoices] = useState(ls.get("saved_invoices", []));
   
-  const [products, setProducts] = useState(ls.get("as_prod_master_v14", CLEAN_FRESH_PRODUCTS));
-  const [workers, setWorkers] = useState(ls.get("as_wrk_master_v14", DEFAULT_WORKERS));
+  const [products, setProducts] = useState(ls.get("as_prod_master_v15", CLEAN_FRESH_PRODUCTS));
+  const [workers, setWorkers] = useState(ls.get("as_wrk_master_v15", DEFAULT_WORKERS));
   const [bankInfo, setBankInfo] = useState(ls.get("bank_info", DEFAULT_BANK));
   const [gallery, setGallery] = useState(ls.get("gallery", []));
   const [query, setQuery] = useState("");
@@ -136,7 +136,7 @@ export default function App() {
 
   useEffect(() => {
     try {
-      const unsub = onSnapshot(doc(db, "app_data", "main_store_v14"), (snap) => {
+      const unsub = onSnapshot(doc(db, "app_data", "main_store_v15"), (snap) => {
         if (snap.exists()) {
           const data = snap.data();
           if (data.products && Array.isArray(data.products) && data.products.length > 0) {
@@ -161,8 +161,8 @@ export default function App() {
   useEffect(() => ls.set("myOrders", orders), [orders]);
   useEffect(() => ls.set("ledger", ledger), [ledger]);
   useEffect(() => ls.set("saved_invoices", invoices), [invoices]);
-  useEffect(() => ls.set("as_prod_master_v14", products), [products]);
-  useEffect(() => ls.set("as_wrk_master_v14", workers), [workers]);
+  useEffect(() => ls.set("as_prod_master_v15", products), [products]);
+  useEffect(() => ls.set("as_wrk_master_v15", workers), [workers]);
   useEffect(() => ls.set("bank_info", bankInfo), [bankInfo]);
   useEffect(() => ls.set("gallery", gallery), [gallery]);
   useEffect(() => { ls.set("dark", dark); document.documentElement.classList.toggle("dark-mode", dark); }, [dark]);
@@ -794,7 +794,7 @@ function AdminScreen({
   );
 
   const syncToFirestore = async (newProds, newWrks, newBank) => {
-    try { await setDoc(doc(db, "app_data", "main_store_v14"), { products: newProds || products, workers: newWrks || workers, bankInfo: newBank || bankInfo }, { merge: true }); } catch (e) {}
+    try { await setDoc(doc(db, "app_data", "main_store_v15"), { products: newProds || products, workers: newWrks || workers, bankInfo: newBank || bankInfo }, { merge: true }); } catch (e) {}
   };
 
   const handleProductImageUpload = async (productId, file) => {
