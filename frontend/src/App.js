@@ -8,7 +8,7 @@ import {
   X, Moon, Sun, Mic, Star, Camera, Upload, TrendingUp, Award, CreditCard, 
   Edit3, Image as ImageIcon, FileText, MapPin, AlertTriangle, KeyRound, 
   Database, Eye, EyeOff, Check, Send, Navigation, Printer, BellRing, 
-  CheckCircle2, Compass, BarChart3, Share2, Building, Receipt, ToggleLeft, ToggleRight
+  CheckCircle2, Compass, BarChart3, Share2, Building, Receipt, FileSpreadsheet, RotateCcw
 } from "lucide-react";
 import { initializeApp } from "firebase/app";
 import { getFirestore, doc, setDoc, onSnapshot } from "firebase/firestore";
@@ -53,23 +53,23 @@ const getHeadline = () => localStorage.getItem("bannerText") || "";
 
 // ============= TRANSLATIONS =============
 const T = {
-  EN: { b:"Build Stronger. Order Smarter.", c:"Cart", s:"Same-Day Delivery", w:"Wholesale Khata", g:"Brand Catalog", f:"Free Estimate", zip:"Download ZIP Backup", home:"Home", search:"Search TMT, Cement, Sand, Bricks...", login:"Login", logout:"Logout", orders:"My Orders", admin:"Admin", call:"Call Now", wa:"WhatsApp", cart:"Cart", buy:"Add to Cart", total:"Total", checkout:"Place Order", address:"Delivery Address", cod:"Cash on Delivery", upi:"Pay via UPI", confirm:"Confirm Order", noResults:"No materials added yet. Please add real inventory from Admin Panel.", tracker:"Live Order Tracker", khata:"Wholesale Khata", catalog:"Brand Catalog", estimator:"Estimate Calculator", welcome:"Welcome", mobile:"Mobile Number", otp:"Enter OTP", sendOtp:"Send OTP", verify:"Verify & Login", pinLbl:"Enter Admin PIN", changeUpi:"Change UPI ID", currentUpi:"Current UPI", saveUpi:"Save UPI", zipInfo:"If publish fails, upload this ZIP to netlify.com/drop", qty:"Qty", stock:"In Stock", cat:"Category", all:"All", tmt:"TMT Bars", cement:"Cement", sand:"Sand & Aggregate", brick:"Bricks", tools:"Tools", empty:"Cart is empty", noord:"No orders yet", ordid:"Order", status:"Status", pending:"Pending", scan:"Scan QR to Pay", payto:"Pay to", est:"Enter dimensions to estimate", len:"Length (ft)", wid:"Width (ft)", ht:"Height (ft)", need:"You need approx", bags:"bags of Cement", tons:"tons of TMT", cft:"cft of Sand", bricks:"Bricks (approx)", calc:"Calculate", ledger:"Ledger", customer:"Customer", amt:"Amount", add:"Add Entry", credit:"Credit", debit:"Debit", note:"Note", del:"Delete", eta:"ETA Today", driver:"Driver", low:"LOW STOCK", tick:"★ Same-Day Delivery Across Hyderabad • Wholesale Rates • Genuine Brands • Instant WhatsApp Estimates ★" },
-  HI: { b:"मजबूत बनाएं। स्मार्ट ऑर्डर करें।", c:"टोकरी", s:"आज डिलीवरी", w:"थोक खाता", g:"ब्रांड कैटलॉग", f:"फ्री एस्टीमेट", zip:"ZIP डाउनलोड", home:"होम", search:"सरिया, सीमेंट, रेत, ईंट खोजें...", login:"लॉगिन", logout:"लॉगआउट", orders:"मेरे ऑर्डर", admin:"एडमिन", call:"कॉल करें", wa:"व्हाट्सएप", cart:"टोकरी", buy:"जोड़ें", total:"कुल", checkout:"ऑर्डर करें", address:"पता", cod:"कैश ऑन डिलीवरी", upi:"UPI से भुगतान", confirm:"पुष्टि करें", noResults:"सामान उपलब्ध नहीं है। एडमिन पैनल से असली फोटो और रेट जोड़ें।", tracker:"लाइव ऑर्डर ट्रैकर", khata:"थोक खाता", catalog:"ब्रांड कैटलॉग", estimator:"अनुमान कैलकुलेटर", welcome:"स्वागत है", mobile:"मोबाइल नंबर", otp:"OTP दर्ज करें", sendOtp:"OTP भेजें", verify:"वेरीफाई करें", pinLbl:"एडमिन PIN डालें", changeUpi:"UPI बदलें", currentUpi:"मौजूदा UPI", saveUpi:"UPI सेव करें", zipInfo:"पब्लिश फेल हो तो ZIP netlify.com/drop पर अपलोड करें", qty:"मात्रा", stock:"स्टॉक में", cat:"श्रेणी", all:"सभी", tmt:"सरिया", cement:"सीमेंट", sand:"रेत/गिट्टी", brick:"ईंट", tools:"औजार", empty:"टोकरी खाली", noord:"कोई ऑर्डर नहीं", ordid:"ऑर्डर", status:"स्थिति", pending:"लंबित", scan:"QR स्कैन करें", payto:"भुगतान", est:"माप डालें", len:"लंबाई (फीट)", wid:"चौड़ाई (फीट)", ht:"ऊंचाई (फीट)", need:"आपको चाहिए", bags:"सीमेंट बैग", tons:"टन सरिया", cft:"cft रेत", bricks:"ईंटें", calc:"गणना करें", ledger:"बही", customer:"ग्राहक", amt:"राशि", add:"जोड़ें", credit:"जमा", debit:"नाम", note:"नोट", del:"हटाएं", eta:"आज पहुंचेगा", driver:"ड्राइवर", low:"स्टॉक कम", tick:"★ हैदराबाद में आज ही डिलीवरी • थोक रेट • असली ब्रांड • इंस्टेंट व्हाट्सएप एस्टीमेट ★" },
-  TE: { b:"బలంగా నిర్మించండి. తెలివిగా ఆర్డర్ చేయండి.", c:"బుట్ట", s:"ఈరోజే డెలివరీ", w:"హోల్‌సేల్ ఖాతా", g:"బ్రాండ్ కేటలాగ్", f:"ఉచిత అంచనా", zip:"ZIP డౌన్‌లోడ్", home:"హోమ్", search:"సరియా, సిమెంట్, ఇసుక, ఇటుకలు...", login:"లాగిన్", logout:"లాగౌట్", orders:"నా ఆర్డర్లు", admin:"అడ్మిన్", call:"కాల్ చేయండి", wa:"వాట్సాప్", cart:"బుట్ట", buy:"జోడించు", total:"మొత్తం", checkout:"ఆర్డర్ చేయండి", address:"చిరునామా", cod:"క్యాష్ ఆన్ డెలివరీ", upi:"UPI చెల్లింపు", confirm:"నిర్ధారించండి", noResults:"సరుకులు లేవు. అడ్మిన్ ప్యానెల్ నుండి అసలైన ఉత్పత్తులను జోడించండి.", tracker:"లైవ్ ఆర్డర్ ట్రాకర్", khata:"హోల్‌సేల్ ఖాతా", catalog:"బ్రాండ్ కేటలాగ్", estimator:"అంచనా కాలిక్యులేటర్", welcome:"స్వాగతం", mobile:"మొబైల్ నంబర్", otp:"OTP నమోదు", sendOtp:"OTP పంపండి", verify:"వెరిఫై చేయండి", pinLbl:"అడ్మిన్ PIN", changeUpi:"UPI మార్చండి", currentUpi:"ప్రస్తుత UPI", saveUpi:"UPI సేవ్ చేయండి", zipInfo:"పబ్లిష్ ఫెయిల్ అయితే ZIP ని netlify.com/drop కు అప్‌లోడ్ చేయండి", qty:"పరిమాణం", stock:"స్టాక్‌లో", cat:"వర్గం", all:"అన్నీ", tmt:"సరియా", cement:"సిమెంట్", sand:"ఇసుక/కంకర", brick:"ఇటుకలు", tools:"పరికరాలు", empty:"బుట్ట ఖాళీ", noord:"ఆర్డర్లు లేవు", ordid:"ఆర్డర్", status:"స్థితి", pending:"పెండింగ్", scan:"QR స్కాన్ చేయండి", payto:"చెల్లింపు", est:"కొలతలు ఇవ్వండి", len:"పొడవు (అడుగు)", wid:"వెడల్పు (అడుగు)", ht:"ఎత్తు (అడుగు)", need:"కావాలి", bags:"సిమెంట్ బస్తాలు", tons:"టన్నుల సరియా", cft:"cft ఇసుక", bricks:"ఇటుకలు", calc:"లెక్కించండి", ledger:"లెడ్జర్", customer:"కస్టమర్", amt:"మొత్తం", add:"జోడించు", credit:"క్రెడిట్", debit:"డెబిట్", note:"నోట్", del:"తొలగించు", eta:"ఈరోజు", driver:"డ్రైవర్", low:"స్టాక్ తక్కువ", tick:"★ హైదరాబాద్‌లో ఈరోజే డెలివరీ • హోల్‌సేల్ రేట్లు • అసలైన బ్రాండ్ • తక్షణ వాట్సాప్ అంచనా ★" }
+  EN: { b:"Build Stronger. Order Smarter.", c:"Cart", s:"Same-Day Delivery", w:"Wholesale Khata", g:"Brand Catalog", f:"Free Estimate", zip:"Download Full Site Backup", home:"Home", search:"Search Sariya, Cement, Sand, Bricks...", login:"Login", logout:"Logout", orders:"My Orders", admin:"Admin", call:"Call Now", wa:"WhatsApp", cart:"Cart", buy:"Add to Cart", total:"Total", checkout:"Place Order", address:"Delivery Address", cod:"Cash on Delivery", upi:"Pay via UPI", confirm:"Confirm Order", noResults:"No materials found. Add inventory from Admin Panel.", tracker:"Live Order Tracker", khata:"Wholesale Khata", catalog:"Brand Catalog", estimator:"Estimate Calculator", welcome:"Welcome", mobile:"Mobile Number", otp:"Enter OTP", sendOtp:"Send OTP", verify:"Verify & Login", pinLbl:"Enter Admin PIN", changeUpi:"Change UPI ID", currentUpi:"Current UPI", saveUpi:"Save UPI", zipInfo:"Full backup file", qty:"Qty (Weight)", stock:"In Stock", cat:"Category", all:"All", tmt:"Sariya (TMT)", cement:"Cement", sand:"Sand & Aggregate", brick:"Bricks", tools:"Tools", empty:"Cart is empty", noord:"No orders yet", ordid:"Order", status:"Status", pending:"Pending", scan:"Scan QR to Pay", payto:"Pay to", est:"Enter dimensions to estimate", len:"Length (ft)", wid:"Width (ft)", ht:"Height (ft)", need:"You need approx", bags:"bags of Cement", tons:"tons of Sariya", cft:"cft of Sand", bricks:"Bricks (approx)", calc:"Calculate", ledger:"Ledger", customer:"Customer", amt:"Amount", add:"Add Entry", credit:"Credit", debit:"Debit", note:"Note", del:"Delete", eta:"ETA Today", driver:"Driver", low:"LOW STOCK", tick:"★ Same-Day Delivery Across Hyderabad • Wholesale Rates • Genuine Brands • Instant WhatsApp Estimates ★" },
+  HI: { b:"मजबूत बनाएं। स्मार्ट ऑर्डर करें।", c:"टोकरी", s:"आज डिलीवरी", w:"थोक खाता", g:"ब्रांड कैटलॉग", f:"फ्री एस्टीमेट", zip:"साइट बैकअप डाउनलोड करें", home:"होम", search:"सरिया, सीमेंट, रेत, ईंट खोजें...", login:"लॉगिन", logout:"लॉगआउट", orders:"मेरे ऑर्डर", admin:"एडमिन", call:"कॉल करें", wa:"व्हाट्सएप", cart:"टोकरी", buy:"जोड़ें", total:"कुल", checkout:"ऑर्डर करें", address:"पता", cod:"कैश ऑन डिलीवरी", upi:"UPI से भुगतान", confirm:"पुष्टि करें", noResults:"सामान नहीं मिला। एडमिन पैनल से स्टॉक जोड़ें।", tracker:"लाइव ऑर्डर ट्रैकर", khata:"थोक खाता", catalog:"ब्रांड कैटलॉग", estimator:"अनुमान कैलकुलेटर", welcome:"स्वागत है", mobile:"मोबाइल नंबर", otp:"OTP दर्ज करें", sendOtp:"OTP भेजें", verify:"वेरीफाई करें", pinLbl:"एडमिन PIN डालें", changeUpi:"UPI बदलें", currentUpi:"मौजूदा UPI", saveUpi:"UPI सेव करें", zipInfo:"पूरा बैकअप", qty:"वज़न (किलो / बैग)", stock:"स्टॉक में", cat:"श्रेणी", all:"सभी", tmt:"सरिया (TMT)", cement:"सीमेंट", sand:"रेत/गिट्टी", brick:"ईंट", tools:"औजार", empty:"टोकरी खाली", noord:"कोई ऑर्डर नहीं", ordid:"ऑर्डर", status:"स्थिति", pending:"लंबित", scan:"QR स्कैन करें", payto:"भुगतान", est:"माप डालें", len:"लंबाई (फीट)", wid:"चौड़ाई (फीट)", ht:"ऊंचाई (फीट)", need:"आपको चाहिए", bags:"सीमेंट बैग", tons:"टन सरिया", cft:"cft रेत", bricks:"ईंटें", calc:"गणना करें", ledger:"बही", customer:"ग्राहक", amt:"राशि", add:"जोड़ें", credit:"जमा", debit:"नाम", note:"नोट", del:"हटाएं", eta:"आज पहुंचेगा", driver:"ड्राइवर", low:"स्टॉक कम", tick:"★ हैदराबाद में आज ही डिलीवरी • थोक रेट • असली ब्रांड • इंस्टेंट व्हाट्सएप एस्टीमेट ★" },
+  TE: { b:"బలంగా నిర్మించండి. తెలివిగా ఆర్డర్ చేయండి.", c:"బుట్ట", s:"ఈరోజే డెలివరీ", w:"హోల్‌సేల్ ఖాతా", g:"బ్రాండ్ కేటలాగ్", f:"ఉచిత అంచనా", zip:"బ్యాకప్ డౌన్‌లోడ్", home:"హోమ్", search:"సరియా, సిమెంట్, ఇసుక, ఇటుకలు...", login:"లాగిన్", logout:"లాగౌట్", orders:"నా ఆర్డర్లు", admin:"అడ్మిన్", call:"కాల్ చేయండి", wa:"వాట్సాప్", cart:"బుట్ట", buy:"జోడించు", total:"మొత్తం", checkout:"ఆర్డర్ చేయండి", address:"చిరునామా", cod:"క్యాష్ ఆన్ డెలివరీ", upi:"UPI చెల్లింపు", confirm:"నిర్ధారించండి", noResults:"సరుకులు లేవు. అడ్మిన్ ప్యానెల్ నుండి జోడించండి.", tracker:"లైవ్ ఆర్డర్ ట్రాకర్", khata:"హోల్‌సేల్ ఖాతా", catalog:"బ్రాండ్ కేటలాగ్", estimator:"అంచనా కాలిక్యులేటర్", welcome:"స్వాగతం", mobile:"మొబైల్ నంబర్", otp:"OTP నమోదు", sendOtp:"OTP పంపండి", verify:"వెరిఫై చేయండి", pinLbl:"అడ్మిన్ PIN", changeUpi:"UPI మార్చండి", currentUpi:"ప్రస్తుత UPI", saveUpi:"UPI సేవ్ చేయండి", zipInfo:"పూర్తి బ్యాకప్", qty:"పరిమాణం (కిలోలు)", stock:"స్టాక్‌లో", cat:"వర్గం", all:"అన్నీ", tmt:"సరియా (TMT)", cement:"సిమెంట్", sand:"ఇసుక/కంకర", brick:"ఇటుకలు", tools:"పరికరాలు", empty:"బుట్ట ఖాళీ", noord:"ఆర్డర్లు లేవు", ordid:"ఆర్డర్", status:"స్థితి", pending:"పెండింగ్", scan:"QR స్కాన్ చేయండి", payto:"చెల్లింపు", est:"కొలతలు ఇవ్వండి", len:"పొడవు (అడుగు)", wid:"వెడల్పు (అడుగు)", ht:"ఎత్తు (అడుగు)", need:"కావాలి", bags:"సిమెంట్ బస్తాలు", tons:"టన్నుల సరియా", cft:"cft ఇసుక", bricks:"ఇటుకలు", calc:"లెక్కించండి", ledger:"లెడ్జర్", customer:"కస్టమర్", amt:"మొత్తం", add:"జోడించు", credit:"క్రెడిట్", debit:"డెబిట్", note:"నోట్", del:"తొలగించు", eta:"ఈరోజు", driver:"డ్రाइवर", low:"స్టాక్ తక్కువ", tick:"★ హైదరాబాద్‌లో ఈరోజే డెలివరీ • హోల్‌సేల్ రేట్లు • అసలైన బ్రాండ్ • తక్షణ వాట్సాప్ అంచనా ★" }
 };
 
 const MAP = { sariya:'tmt', saria:'tmt', steel:'tmt', rod:'tmt', tmt:'tmt', cement:'cement', simenti:'cement', ppc:'cement', opc:'cement', ret:'sand', balu:'sand', sand:'sand', isuka:'sand', metal:'sand', aggregate:'sand', gitti:'sand', brick:'brick', eent:'brick', itukalu:'brick', block:'brick', wire:'tools', tool:'tools' };
 
-// 🔥 100% CLEAN REAL INVENTORY (NO DUMMY RANDOM PHOTOS)
-const INITIAL_PRODUCTS = [
-  { id: 1, n: "TMT Bar Fe500 8mm", b: "Tata Tiscon", p: 62, u: "per kg", cat: "tmt", stock: 250, rating: 4.8, visible: true, img: "", moq: 50 },
-  { id: 2, n: "TMT Bar Fe500 10mm", b: "JSW Neosteel", p: 61, u: "per kg", cat: "tmt", stock: 180, rating: 4.7, visible: true, img: "", moq: 50 },
-  { id: 3, n: "TMT Bar Fe500 12mm", b: "SAIL", p: 60, u: "per kg", cat: "tmt", stock: 120, rating: 4.6, visible: true, img: "", moq: 50 },
-  { id: 4, n: "OPC 53 Grade Cement", b: "UltraTech", p: 410, u: "per bag (50kg)", cat: "cement", stock: 320, rating: 4.9, visible: true, img: "", moq: 20 },
-  { id: 5, n: "PPC Cement", b: "Ambuja", p: 380, u: "per bag (50kg)", cat: "cement", stock: 210, rating: 4.8, visible: true, img: "", moq: 20 },
-  { id: 6, n: "River Sand (Balu / Ret)", b: "Local River", p: 1800, u: "per ton", cat: "sand", stock: 60, rating: 4.5, visible: true, img: "", moq: 1 },
-  { id: 7, n: "20mm Aggregate (Metal)", b: "Local Quarry", p: 1200, u: "per ton", cat: "sand", stock: 100, rating: 4.4, visible: true, img: "", moq: 1 },
-  { id: 8, n: "Red Bricks Class A", b: "Kiln Standard", p: 9, u: "per piece", cat: "brick", stock: 5000, rating: 4.6, visible: true, img: "", moq: 500 }
+const CLEAN_FRESH_PRODUCTS = [
+  { id: 501, n: "सरिया 8 MM (Tata Tiscon)", b: "Tata Tiscon", p: 62, u: "प्रति किलो (per kg)", cat: "tmt", stock: 500, rating: 4.8, visible: true, img: "", moq: 10 },
+  { id: 502, n: "सरिया 10 MM (JSW Neosteel)", b: "JSW Neosteel", p: 61, u: "प्रति किलो (per kg)", cat: "tmt", stock: 500, rating: 4.7, visible: true, img: "", moq: 10 },
+  { id: 503, n: "सरिया 12 MM (SAIL)", b: "SAIL", p: 60, u: "प्रति किलो (per kg)", cat: "tmt", stock: 500, rating: 4.6, visible: true, img: "", moq: 10 },
+  { id: 504, n: "सरिया 16 MM (Kamdhenu)", b: "Kamdhenu", p: 59, u: "प्रति किलो (per kg)", cat: "tmt", stock: 500, rating: 4.5, visible: true, img: "", moq: 10 },
+  { id: 505, n: "सीमेंट UltraTech OPC 53 Grade", b: "UltraTech", p: 410, u: "प्रति बैग (50kg bag)", cat: "cement", stock: 300, rating: 4.9, visible: true, img: "", moq: 10 },
+  { id: 506, n: "सीमेंट Ambuja PPC", b: "Ambuja", p: 380, u: "प्रति बैग (50kg bag)", cat: "cement", stock: 200, rating: 4.8, visible: true, img: "", moq: 10 },
+  { id: 507, n: "रेत River Sand (बालू)", b: "Local River", p: 1800, u: "प्रति टन (per ton)", cat: "sand", stock: 50, rating: 4.5, visible: true, img: "", moq: 1 },
+  { id: 508, n: "गिट्टी 20 MM Aggregate", b: "Local Quarry", p: 1200, u: "प्रति टन (per ton)", cat: "sand", stock: 80, rating: 4.4, visible: true, img: "", moq: 1 },
+  { id: 509, n: "लाल ईंट Red Bricks Class A", b: "Kiln Standard", p: 9, u: "प्रति पीस (per piece)", cat: "brick", stock: 5000, rating: 4.6, visible: true, img: "", moq: 200 }
 ];
 
 const DEFAULT_WORKERS = [
@@ -79,13 +79,24 @@ const DEFAULT_WORKERS = [
   { id: 4, role: "Contractor / Builder", name: "Anil Sharma", rate: 1500, phone: "916301456725", icon: "👷", exp: "18 yrs", area: "Telangana" }
 ];
 
-// Helper to read file to DataURL
 const fileToDataURL = (file) => new Promise((res, rej) => {
   const r = new FileReader();
   r.onload = () => res(r.result);
   r.onerror = rej;
   r.readAsDataURL(file);
 });
+
+const downloadCSV = (filename, rows) => {
+  const processRow = (row) => row.map(val => `"${(val || '').toString().replace(/"/g, '""')}"`).join(',');
+  const csvContent = "data:text/csv;charset=utf-8," + rows.map(processRow).join("\n");
+  const encodedUri = encodeURI(csvContent);
+  const link = document.createElement("a");
+  link.setAttribute("href", encodedUri);
+  link.setAttribute("download", filename);
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+};
 
 // ============= MAIN APP =============
 export default function App() {
@@ -96,8 +107,9 @@ export default function App() {
   const [orders, setOrders] = useState(ls.get("myOrders", []));
   const [ledger, setLedger] = useState(ls.get("ledger", []));
   const [invoices, setInvoices] = useState(ls.get("saved_invoices", []));
-  const [products, setProducts] = useState(ls.get("products", INITIAL_PRODUCTS));
-  const [workers, setWorkers] = useState(ls.get("workers", DEFAULT_WORKERS));
+  
+  const [products, setProducts] = useState(ls.get("as_prod_master_v7", CLEAN_FRESH_PRODUCTS));
+  const [workers, setWorkers] = useState(ls.get("as_wrk_master_v7", DEFAULT_WORKERS));
   const [bankInfo, setBankInfo] = useState(ls.get("bank_info", DEFAULT_BANK));
   const [gallery, setGallery] = useState(ls.get("gallery", []));
   const [query, setQuery] = useState("");
@@ -110,10 +122,9 @@ export default function App() {
   const [dark, setDark] = useState(ls.get("dark", false));
   const t = T[lang];
 
-  // 🔥 Firebase Real-time Listener (Always Live)
   useEffect(() => {
     try {
-      const unsub = onSnapshot(doc(db, "app_data", "main_store"), (snap) => {
+      const unsub = onSnapshot(doc(db, "app_data", "main_store_v7"), (snap) => {
         if (snap.exists()) {
           const data = snap.data();
           if (data.products && Array.isArray(data.products) && data.products.length > 0) {
@@ -138,8 +149,8 @@ export default function App() {
   useEffect(() => ls.set("myOrders", orders), [orders]);
   useEffect(() => ls.set("ledger", ledger), [ledger]);
   useEffect(() => ls.set("saved_invoices", invoices), [invoices]);
-  useEffect(() => ls.set("products", products), [products]);
-  useEffect(() => ls.set("workers", workers), [workers]);
+  useEffect(() => ls.set("as_prod_master_v7", products), [products]);
+  useEffect(() => ls.set("as_wrk_master_v7", workers), [workers]);
   useEffect(() => ls.set("bank_info", bankInfo), [bankInfo]);
   useEffect(() => ls.set("gallery", gallery), [gallery]);
   useEffect(() => { ls.set("dark", dark); document.documentElement.classList.toggle("dark-mode", dark); }, [dark]);
@@ -193,7 +204,7 @@ export default function App() {
       };
       setOrders([order, ...orders]);
       setCart([]);
-      const msg = `*NEW ORDER - AS ENTERPRISES*%0AOrder ID: ${order.id}%0A${cart.map(x => `• ${x.n} x ${x.q} = Rs.${x.p*x.q}`).join('%0A')}%0A*Total: Rs.${cartTotal}*%0APayment: ${payment}%0AAddress: ${address}%0A%0A_Terms Accepted: Unloading customer side, cement/steel non-returnable._`;
+      const msg = `*NEW ORDER - AS ENTERPRISES*%0AOrder ID: ${order.id}%0A${cart.map(x => `• ${x.n} x ${x.q} ${x.u} = Rs.${x.p*x.q}`).join('%0A')}%0A*Total: Rs.${cartTotal}*%0APayment: ${payment}%0AAddress: ${address}%0A%0A_Terms Accepted: Unloading customer side, cement/steel non-returnable._`;
       window.open(`https://wa.me/${CFG.wa}?text=${msg}`, "_blank");
       go("orders");
     } catch (e) { console.error(e); alert("Order failed. Call " + CFG.phone); }
@@ -242,7 +253,7 @@ export default function App() {
                 <>
                   <div className="fixed inset-0 z-30" onClick={() => setMenuOpen(false)} />
                   <div className="absolute right-0 mt-2 w-64 bg-white rounded-2xl shadow-2xl border-2 border-stone-200 overflow-hidden z-50">
-                    <MenuItem icon={RefreshCw} color="text-blue-600" label="Refresh" onClick={() => { setMenuOpen(false); window.location.reload(); }} />
+                    <MenuItem icon={RefreshCw} color="text-blue-600" label="Refresh App" onClick={() => { setMenuOpen(false); window.location.reload(); }} />
                     <MenuItem icon={FileText} color="text-emerald-600" label="GST Bill / Invoice Maker" badge="Multi-Item" onClick={() => { setMenuOpen(false); go("admin"); }} />
                     {user ? (
                       <MenuItem icon={LogOut} color="text-red-600" label={`Logout (${user.name?.split(' ')[0] || user.mobile})`} onClick={() => { setMenuOpen(false); logout(); }} />
@@ -329,7 +340,7 @@ export default function App() {
         {screen === "emi" && <EmiScreen />}
       </main>
 
-      {/* 🔥 HIGH-VISIBILITY FLOATING BACK BUTTON (ALWAYS VISIBLE IN DARK & LIGHT MODE) */}
+      {/* Floating Back Button */}
       {screen !== "home" && (
         <div className="fixed bottom-5 left-4 z-50">
           <button 
@@ -343,7 +354,7 @@ export default function App() {
         </div>
       )}
 
-      {/* FLOAT BUTTONS FOR WHATSAPP & CALL */}
+      {/* Float Buttons */}
       <div className="fixed bottom-5 right-4 flex flex-col gap-3 z-50">
         <a href={`https://wa.me/${CFG.wa}`} target="_blank" rel="noreferrer" className="flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-4 py-3 rounded-full shadow-xl font-bold transition-transform hover:scale-105">
           <MessageCircle size={20} /> <span className="hidden sm:inline">WhatsApp</span>
@@ -379,47 +390,45 @@ function VoiceMic({ onResult, lang }) {
   const start = () => {
     try {
       const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-      if (!SR) { alert("Voice search is not supported in this browser. Please type."); return; }
+      if (!SR) { alert("Voice search not supported."); return; }
       const rec = new SR();
       rec.lang = lang === "HI" ? "hi-IN" : lang === "TE" ? "te-IN" : "en-IN";
       rec.onresult = (e) => { onResult(e.results[0][0].transcript); setListening(false); };
       rec.onerror = () => setListening(false);
       rec.onend = () => setListening(false);
       rec.start(); setListening(true);
-    } catch (e) { console.error(e); setListening(false); }
+    } catch (e) { setListening(false); }
   };
   return (
-    <button onClick={start} className={`p-2 rounded-full transition ${listening ? 'bg-red-500 text-white animate-pulse' : 'bg-orange-100 text-orange-600 hover:bg-orange-200'}`} title="Voice Search">
+    <button onClick={start} className={`p-2 rounded-full transition ${listening ? 'bg-red-500 text-white animate-pulse' : 'bg-orange-100 text-orange-600'}`} title="Voice Search">
       <Mic size={18} />
     </button>
   );
 }
 
-// ============= SMART CONSTRUCTION GRADE SELECTOR =============
 function SmartGradeSelector({ products, addToCart }) {
   const [useCase, setUseCase] = useState("slab");
-
   const recommendations = useMemo(() => {
     if (useCase === "slab") {
       return {
-        title: "Roof & Slab Casting (छत ढलाई)",
-        desc: "Requires high initial strength & optimal load distribution.",
-        cement: products.find(p => p.n.includes("OPC 53") || p.b.includes("UltraTech")) || products[3],
-        steel: products.find(p => p.n.includes("12mm") || p.n.includes("10mm")) || products[1]
+        title: "छत ढलाई (Roof & Slab Casting)",
+        desc: "छत के लिए अल्ट्राटेक 53 ग्रेड और सरिया सबसे सही रहता है।",
+        cement: products.find(p => p.n.includes("OPC 53") || p.b.includes("UltraTech")) || products[4],
+        steel: products.find(p => p.n.includes("10 MM") || p.n.includes("12 MM")) || products[1]
       };
     } else if (useCase === "pillar") {
       return {
-        title: "Pillars, Beams & Heavy Foundation (पिलर और बीम)",
-        desc: "Demands heavy gauge Fe500/Fe550 rebars for maximum tensile load.",
-        cement: products.find(p => p.n.includes("53 Grade")) || products[3],
-        steel: products.find(p => p.n.includes("12mm") || p.n.includes("16mm")) || products[2]
+        title: "पिलर और बीम (Pillars & Beams)",
+        desc: "मजबूत पिलर के लिए 12mm और 16mm का भारी सरिया इस्तेमाल करें।",
+        cement: products.find(p => p.n.includes("53 Grade")) || products[4],
+        steel: products.find(p => p.n.includes("16 MM") || p.n.includes("12 MM")) || products[2]
       };
     } else {
       return {
-        title: "Brick Masonry & Plastering (ईंट चुनाई और प्लास्टर)",
-        desc: "PPC cement provides superior cohesion, zero cracks & smoother finish.",
-        cement: products.find(p => p.n.includes("PPC") || p.b.includes("Ambuja")) || products[4],
-        steel: products.find(p => p.cat === "brick") || products[7]
+        title: "ईंट चुनाई और प्लास्टर (Brickwork & Plaster)",
+        desc: "प्लास्टर में दरार न आए इसलिए PPC सीमेंट और महीन रेत सबसे उत्तम है।",
+        cement: products.find(p => p.n.includes("PPC") || p.b.includes("Ambuja")) || products[5],
+        steel: products.find(p => p.cat === "brick") || products[8]
       };
     }
   }, [useCase, products]);
@@ -427,69 +436,29 @@ function SmartGradeSelector({ products, addToCart }) {
   return (
     <div className="bg-gradient-to-br from-slate-900 to-indigo-950 text-white rounded-2xl p-4 sm:p-5 shadow-lg space-y-3">
       <div className="flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <Compass className="text-amber-400" size={20} />
-          <h3 className="font-bold text-sm sm:text-base">Smart Grade Selector (सही ग्रेड गाइड)</h3>
-        </div>
-        <span className="text-[10px] bg-amber-400/20 text-amber-300 font-bold px-2 py-0.5 rounded-full border border-amber-400/30">Auto Recommendation</span>
+        <div className="flex items-center gap-2"><Compass className="text-amber-400" size={20} /><h3 className="font-bold text-sm sm:text-base">Smart Grade Guide (सही मटीरियल गाइड)</h3></div>
+        <span className="text-[10px] bg-amber-400/20 text-amber-300 font-bold px-2 py-0.5 rounded-full border border-amber-400/30">Auto Advice</span>
       </div>
-      <p className="text-xs text-slate-300">Select what you are constructing to get verified IS-grade materials & instant market rates:</p>
-
+      <p className="text-xs text-slate-300">साइट के काम के हिसाब से तुरंत सही माल और रेट चुनें:</p>
       <div className="grid grid-cols-3 gap-2 pt-1">
-        <button 
-          onClick={() => setUseCase("slab")}
-          className={`py-2 px-1 text-xs font-bold rounded-xl transition border text-center ${useCase === "slab" ? "bg-amber-500 text-slate-950 border-amber-400 shadow" : "bg-white/5 border-white/10 text-white/80 hover:bg-white/10"}`}
-        >
-          🏠 Roof Slab
-        </button>
-        <button 
-          onClick={() => setUseCase("pillar")}
-          className={`py-2 px-1 text-xs font-bold rounded-xl transition border text-center ${useCase === "pillar" ? "bg-amber-500 text-slate-950 border-amber-400 shadow" : "bg-white/5 border-white/10 text-white/80 hover:bg-white/10"}`}
-        >
-          🏛️ Pillars / Beam
-        </button>
-        <button 
-          onClick={() => setUseCase("brickwork")}
-          className={`py-2 px-1 text-xs font-bold rounded-xl transition border text-center ${useCase === "brickwork" ? "bg-amber-500 text-slate-950 border-amber-400 shadow" : "bg-white/5 border-white/10 text-white/80 hover:bg-white/10"}`}
-        >
-          🧱 Brick & Plaster
-        </button>
+        <button onClick={() => setUseCase("slab")} className={`py-2 px-1 text-xs font-bold rounded-xl transition border text-center ${useCase === "slab" ? "bg-amber-500 text-slate-950 border-amber-400 shadow" : "bg-white/5 border-white/10 text-white/80"}`}>🏠 छत ढलाई</button>
+        <button onClick={() => setUseCase("pillar")} className={`py-2 px-1 text-xs font-bold rounded-xl transition border text-center ${useCase === "pillar" ? "bg-amber-500 text-slate-950 border-amber-400 shadow" : "bg-white/5 border-white/10 text-white/80"}`}>🏛️ पिलर/बीम</button>
+        <button onClick={() => setUseCase("brickwork")} className={`py-2 px-1 text-xs font-bold rounded-xl transition border text-center ${useCase === "brickwork" ? "bg-amber-500 text-slate-950 border-amber-400 shadow" : "bg-white/5 border-white/10 text-white/80"}`}>🧱 चुनाई/प्लास्टर</button>
       </div>
-
       <div className="bg-white/10 rounded-xl p-3 border border-white/10 space-y-2 mt-2">
         <div className="text-xs font-bold text-amber-300">{recommendations.title}</div>
         <div className="text-[11px] text-slate-300">{recommendations.desc}</div>
-
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
           {recommendations.cement && (
             <div className="bg-slate-900/80 p-2.5 rounded-lg flex items-center justify-between border border-white/5">
-              <div>
-                <div className="text-[10px] text-amber-400 uppercase font-bold">Recommended Cement</div>
-                <div className="text-xs font-bold truncate max-w-[150px]">{recommendations.cement.n}</div>
-                <div className="text-xs font-black text-white">₹{recommendations.cement.p} <span className="text-[10px] font-normal text-slate-400">/{recommendations.cement.u}</span></div>
-              </div>
-              <button 
-                onClick={() => addToCart(recommendations.cement)}
-                className="bg-amber-500 hover:bg-amber-600 text-slate-950 text-xs font-bold px-3 py-1.5 rounded-lg transition"
-              >
-                + Add
-              </button>
+              <div><div className="text-[10px] text-amber-400 uppercase font-bold">Cement</div><div className="text-xs font-bold truncate max-w-[140px]">{recommendations.cement.n}</div><div className="text-xs font-black text-white">₹{recommendations.cement.p}</div></div>
+              <button onClick={() => addToCart(recommendations.cement)} className="bg-amber-500 text-slate-950 text-xs font-bold px-3 py-1.5 rounded-lg">+ Add</button>
             </div>
           )}
-
           {recommendations.steel && (
             <div className="bg-slate-900/80 p-2.5 rounded-lg flex items-center justify-between border border-white/5">
-              <div>
-                <div className="text-[10px] text-amber-400 uppercase font-bold">Recommended Material</div>
-                <div className="text-xs font-bold truncate max-w-[150px]">{recommendations.steel.n}</div>
-                <div className="text-xs font-black text-white">₹{recommendations.steel.p} <span className="text-[10px] font-normal text-slate-400">/{recommendations.steel.u}</span></div>
-              </div>
-              <button 
-                onClick={() => addToCart(recommendations.steel)}
-                className="bg-amber-500 hover:bg-amber-600 text-slate-950 text-xs font-bold px-3 py-1.5 rounded-lg transition"
-              >
-                + Add
-              </button>
+              <div><div className="text-[10px] text-amber-400 uppercase font-bold">Sariya</div><div className="text-xs font-bold truncate max-w-[140px]">{recommendations.steel.n}</div><div className="text-xs font-black text-white">₹{recommendations.steel.p}</div></div>
+              <button onClick={() => addToCart(recommendations.steel)} className="bg-amber-500 text-slate-950 text-xs font-bold px-3 py-1.5 rounded-lg">+ Add</button>
             </div>
           )}
         </div>
@@ -498,124 +467,31 @@ function SmartGradeSelector({ products, addToCart }) {
   );
 }
 
-// ============= HOME SCREEN =============
 function HomeScreen({ t, lang, setScreen, CARDS, query, doSearch, category, setCategory, filtered, addToCart, heroImg, heroTxt, workers, products }) {
   const CATS = [{k:"ALL",n:t.all},{k:"tmt",n:t.tmt},{k:"cement",n:t.cement},{k:"sand",n:t.sand},{k:"brick",n:t.brick},{k:"tools",n:t.tools}];
   return (
     <div className="space-y-4">
-      <section 
-        style={{
-          position: 'relative',
-          marginLeft: '-16px',
-          marginRight: '-16px',
-          width: 'calc(100% + 32px)',
-          backgroundColor: '#020617',
-          padding: '24px 16px 20px 16px',
-          boxSizing: 'border-box',
-          overflow: 'hidden'
-        }}
-      >
-        <div 
-          style={{
-            position: 'absolute',
-            inset: 0,
-            backgroundImage: `url('${heroImg || "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1200&q=80"}')`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            opacity: 0.22,
-            filter: 'grayscale(60%)',
-            pointerEvents: 'none'
-          }}
-        />
-        <div 
-          style={{
-            position: 'absolute',
-            inset: 0,
-            background: 'linear-gradient(to bottom, rgba(2,6,23,0.8) 0%, rgba(2,6,23,0.95) 100%)',
-            pointerEvents: 'none'
-          }}
-        />
-
+      <section style={{ position: 'relative', marginLeft: '-16px', marginRight: '-16px', width: 'calc(100% + 32px)', backgroundColor: '#020617', padding: '24px 16px 20px 16px', boxSizing: 'border-box', overflow: 'hidden' }}>
+        <div style={{ position: 'absolute', inset: 0, backgroundImage: `url('${heroImg || "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1200&q=80"}')`, backgroundSize: 'cover', backgroundPosition: 'center', opacity: 0.22, filter: 'grayscale(60%)', pointerEvents: 'none' }} />
+        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, rgba(2,6,23,0.8) 0%, rgba(2,6,23,0.95) 100%)', pointerEvents: 'none' }} />
         <div style={{ position: 'relative', zIndex: 2, maxWidth: '500px', margin: '0 auto' }}>
-          <div style={{
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: '6px',
-            padding: '3px 10px',
-            backgroundColor: 'rgba(245, 158, 11, 0.12)',
-            border: '1px solid rgba(245, 158, 11, 0.4)',
-            borderRadius: '999px',
-            color: '#fbbf24',
-            fontSize: '11px',
-            fontWeight: '600',
-            marginBottom: '10px'
-          }}>
-            <span>⚡</span> Wholesale Construction Hub • Hyderabad & Secunderabad
-          </div>
-
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', padding: '3px 10px', backgroundColor: 'rgba(245, 158, 11, 0.12)', border: '1px solid rgba(245, 158, 11, 0.4)', borderRadius: '999px', color: '#fbbf24', fontSize: '11px', fontWeight: '600', marginBottom: '10px' }}><span>⚡</span> Wholesale Construction Hub • Hyderabad & Secunderabad</div>
           <div style={{ lineHeight: '1', marginBottom: '4px' }}>
             <div style={{ fontSize: '36px', fontWeight: '900', color: '#f59e0b', letterSpacing: '-0.5px' }}>AS</div>
             <div style={{ fontSize: '36px', fontWeight: '900', color: '#ffffff', letterSpacing: '1px', textTransform: 'uppercase' }}>ENTERPRISES</div>
           </div>
-
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px', margin: '6px 0 10px 0' }}>
             <div style={{ width: '28px', height: '3px', backgroundColor: '#f59e0b', borderRadius: '2px' }} />
-            <span style={{ fontSize: '11px', fontWeight: '700', letterSpacing: '1px', color: '#94a3b8', textTransform: 'uppercase' }}>
-              GENUINE MATERIALS & DIRECT BILLING
-            </span>
+            <span style={{ fontSize: '11px', fontWeight: '700', letterSpacing: '1px', color: '#94a3b8', textTransform: 'uppercase' }}>GENUINE MATERIALS & DIRECT BILLING</span>
           </div>
-
           <div style={{ margin: '6px 0 8px 0' }}>
-            <div style={{ fontFamily: 'serif', fontStyle: 'italic', fontSize: '28px', color: '#ffffff', lineHeight: '1.2' }}>
-              {heroTxt ? heroTxt.split(".")[0] : "Build Stronger."}
-            </div>
-            <div style={{ fontFamily: 'serif', fontStyle: 'italic', fontSize: '28px', color: '#ffffff', lineHeight: '1.2' }}>
-              {heroTxt && heroTxt.split(".")[1] ? heroTxt.split(".")[1] : "Order Smarter."}
-            </div>
+            <div style={{ fontFamily: 'serif', fontStyle: 'italic', fontSize: '28px', color: '#ffffff', lineHeight: '1.2' }}>{heroTxt ? heroTxt.split(".")[0] : "Build Stronger."}</div>
+            <div style={{ fontFamily: 'serif', fontStyle: 'italic', fontSize: '28px', color: '#ffffff', lineHeight: '1.2' }}>{heroTxt && heroTxt.split(".")[1] ? heroTxt.split(".")[1] : "Order Smarter."}</div>
           </div>
-
-          <p style={{ color: '#94a3b8', fontSize: '12px', lineHeight: '1.4', margin: '0 0 12px 0' }}>
-            Direct supply of Tata/JSW Steel, UltraTech/Ambuja Cement, River Sand & Bricks. Transparent wholesale pricing with GST invoice.
-          </p>
-
+          <p style={{ color: '#94a3b8', fontSize: '12px', lineHeight: '1.4', margin: '0 0 12px 0' }}>Direct wholesale supply of Tata/JSW Sariya, UltraTech/Ambuja Cement, River Sand & Bricks with GST Invoice.</p>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-            <button
-              onClick={() => setScreen("catalog")}
-              style={{
-                width: '100%',
-                padding: '12px',
-                backgroundColor: '#f59e0b',
-                color: '#0f172a',
-                fontWeight: '800',
-                fontSize: '14px',
-                borderRadius: '8px',
-                border: 'none',
-                cursor: 'pointer',
-                boxShadow: '0 4px 12px rgba(245, 158, 11, 0.25)',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: '6px'
-              }}
-            >
-              Browse Products & Rates →
-            </button>
-            <button
-              onClick={() => setScreen("estimator")}
-              style={{
-                width: '100%',
-                padding: '11px',
-                backgroundColor: 'rgba(15, 23, 42, 0.85)',
-                color: '#f8fafc',
-                border: '1px solid #334155',
-                fontWeight: '600',
-                fontSize: '13px',
-                borderRadius: '8px',
-                cursor: 'pointer'
-              }}
-            >
-              Calculate Material Estimate
-            </button>
+            <button onClick={() => setScreen("catalog")} style={{ width: '100%', padding: '12px', backgroundColor: '#f59e0b', color: '#0f172a', fontWeight: '800', fontSize: '14px', borderRadius: '8px', border: 'none', cursor: 'pointer', boxShadow: '0 4px 12px rgba(245, 158, 11, 0.25)', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}>Browse Products & Rates →</button>
+            <button onClick={() => setScreen("estimator")} style={{ width: '100%', padding: '11px', backgroundColor: 'rgba(15, 23, 42, 0.85)', color: '#f8fafc', border: '1px solid #334155', fontWeight: '600', fontSize: '13px', borderRadius: '8px', cursor: 'pointer' }}>Calculate Material Estimate</button>
           </div>
         </div>
       </section>
@@ -644,9 +520,7 @@ function HomeScreen({ t, lang, setScreen, CARDS, query, doSearch, category, setC
       </section>
 
       <section className="flex flex-wrap gap-1.5">
-        {CATS.map(c => (
-          <button key={c.k} onClick={() => setCategory(c.k)} className={`text-xs font-bold px-3 py-1 rounded-full transition ${category===c.k?'bg-orange-500 text-white':'bg-white border-2 border-stone-300 text-stone-700 hover:border-orange-500'}`}>{c.n}</button>
-        ))}
+        {CATS.map(c => <button key={c.k} onClick={() => setCategory(c.k)} className={`text-xs font-bold px-3 py-1 rounded-full transition ${category===c.k?'bg-orange-500 text-white':'bg-white border-2 border-stone-300 text-stone-700'}`}>{c.n}</button>)}
       </section>
 
       <WorkersSection workers={workers} />
@@ -655,38 +529,18 @@ function HomeScreen({ t, lang, setScreen, CARDS, query, doSearch, category, setC
   );
 }
 
-// ============= WORKERS SECTION =============
 function WorkersSection({ workers }) {
   return (
     <section className="space-y-2 pt-2">
-      <div className="flex items-center justify-between">
-        <h3 className="font-display font-black text-lg" style={{ color: "#0A1931" }}>Hire Skilled Workers</h3>
-        <span className="text-[10px] uppercase tracking-widest text-orange-600 font-bold">Direct Booking · No Commission</span>
-      </div>
+      <div className="flex items-center justify-between"><h3 className="font-display font-black text-lg" style={{ color: "#0A1931" }}>Hire Skilled Workers</h3><span className="text-[10px] uppercase tracking-widest text-orange-600 font-bold">Direct Booking · No Commission</span></div>
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2">
         {workers.map(w => (
-          <div key={w.id} className="bg-white border-2 border-stone-200 hover:border-orange-500 rounded-xl p-2.5 shadow-sm hover:shadow-md transition group">
-            <div className="flex items-center gap-2">
-              <div className="w-9 h-9 rounded-full flex items-center justify-center text-lg flex-shrink-0" style={{ backgroundColor: "#0A1931" }}>
-                <span>{w.icon || "👷"}</span>
-              </div>
-              <div className="min-w-0 flex-1">
-                <div className="text-[10px] uppercase tracking-widest text-orange-600 font-bold truncate">{w.role}</div>
-                <div className="font-bold text-xs truncate">{w.name}</div>
-              </div>
-            </div>
-            <div className="flex items-baseline gap-1 mt-2">
-              <span className="font-display font-black text-base">₹{w.rate}</span>
-              <span className="text-[10px] text-stone-500">/day · {w.exp || "Verified"}</span>
-            </div>
-            {w.area && <div className="text-[9px] text-stone-400 truncate">📍 {w.area}</div>}
+          <div key={w.id} className="bg-white border-2 border-stone-200 hover:border-orange-500 rounded-xl p-2.5 shadow-sm transition">
+            <div className="flex items-center gap-2"><div className="w-9 h-9 rounded-full flex items-center justify-center text-lg flex-shrink-0" style={{ backgroundColor: "#0A1931" }}><span>{w.icon || "👷"}</span></div><div className="min-w-0 flex-1"><div className="text-[10px] uppercase tracking-widest text-orange-600 font-bold truncate">{w.role}</div><div className="font-bold text-xs truncate">{w.name}</div></div></div>
+            <div className="flex items-baseline gap-1 mt-2"><span className="font-display font-black text-base">₹{w.rate}</span><span className="text-[10px] text-stone-500">/day · {w.exp}</span></div>
             <div className="grid grid-cols-2 gap-1 mt-2">
-              <a href={`tel:+${w.phone || CFG.wa}`} className="bg-orange-500 hover:bg-orange-600 text-white text-[11px] font-bold py-1.5 rounded-lg transition flex items-center justify-center gap-1">
-                <Phone size={11} /> Call
-              </a>
-              <a href={`https://wa.me/${w.phone || CFG.wa}?text=Hi%20${encodeURIComponent(w.name)}%2C%20need%20${encodeURIComponent(w.role)}`} target="_blank" rel="noreferrer" className="bg-green-600 hover:bg-green-700 text-white text-[11px] font-bold py-1.5 rounded-lg transition flex items-center justify-center gap-1">
-                <MessageCircle size={11} /> WhatsApp
-              </a>
+              <a href={`tel:+${w.phone}`} className="bg-orange-500 text-white text-[11px] font-bold py-1.5 rounded-lg flex items-center justify-center gap-1"><Phone size={11} /> Call</a>
+              <a href={`https://wa.me/${w.phone}?text=Hi`} target="_blank" rel="noreferrer" className="bg-green-600 text-white text-[11px] font-bold py-1.5 rounded-lg flex items-center justify-center gap-1"><MessageCircle size={11} /> WhatsApp</a>
             </div>
           </div>
         ))}
@@ -695,93 +549,47 @@ function WorkersSection({ workers }) {
   );
 }
 
-const Stars = ({ n }) => (
-  <div className="flex gap-0.5">
-    {[1,2,3,4,5].map(i => <Star key={i} size={11} className={i<=Math.round(n)?"fill-amber-400 text-amber-400":"text-stone-300"} />)}
-  </div>
-);
-
-// 🔥 100% REAL PRODUCT GRID (Shows image only if uploaded, else shows clean badge)
 function ProductGrid({ t, filtered, addToCart }) {
-  if (filtered.length === 0) return (
-    <div className="bg-amber-50 border-2 border-amber-500 rounded-2xl p-8 text-center">
-      <div className="font-bold text-lg text-stone-900 mb-2">{t.noResults}</div>
-      <a href={`tel:${CFG.phone.replace(/\s/g,'')}`} className="inline-flex items-center gap-2 bg-orange-600 hover:bg-orange-700 text-white font-bold px-5 py-2.5 rounded-full mt-2"><Phone size={16} /> {CFG.phone}</a>
-    </div>
-  );
+  if (filtered.length === 0) return <div className="bg-amber-50 border-2 border-amber-500 rounded-2xl p-8 text-center font-bold text-stone-900">{t.noResults}</div>;
   return (
     <section className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
       {filtered.map(p => (
-        <div key={p.id} className="bg-white border-2 border-stone-200 hover:border-orange-500 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all group flex flex-col justify-between">
+        <div key={p.id} className="bg-white border-2 border-stone-200 hover:border-orange-500 rounded-xl overflow-hidden shadow-sm transition flex flex-col justify-between">
           <div>
             <div className="h-32 bg-stone-100 overflow-hidden relative flex items-center justify-center">
-              {p.img ? (
-                <img src={p.img} alt={p.n} className="w-full h-full object-cover group-hover:scale-105 transition" />
-              ) : (
-                <div className="flex flex-col items-center justify-center text-stone-400 p-2 text-center">
-                  <ImageIcon size={30} className="mb-1 text-stone-300" />
-                  <span className="text-[10px] font-bold uppercase tracking-wider">{p.b}</span>
-                </div>
-              )}
-              {p.stock <= 0 ? (
-                <span className="absolute top-1.5 right-1.5 bg-stone-800 text-white text-[9px] font-black px-2 py-0.5 rounded-full">Out of Stock</span>
-              ) : p.stock < 10 ? (
-                <span className="absolute top-1.5 right-1.5 bg-red-600 text-white text-[9px] font-black px-1.5 py-0.5 rounded-full animate-pulse">{t.low}</span>
-              ) : null}
+              {p.img ? <img src={p.img} alt="" className="w-full h-full object-cover" /> : <div className="text-center p-2"><ImageIcon size={32} className="mx-auto text-stone-300 mb-1" /><span className="text-[10px] font-bold uppercase text-stone-400">{p.b}</span></div>}
+              {p.stock <= 0 ? <span className="absolute top-1.5 right-1.5 bg-stone-800 text-white text-[9px] font-black px-2 py-0.5 rounded-full">Out of Stock</span> : p.stock < 10 ? <span className="absolute top-1.5 right-1.5 bg-red-600 text-white text-[9px] font-black px-1.5 py-0.5 rounded-full animate-pulse">{t.low}</span> : null}
             </div>
             <div className="p-2 space-y-1">
               <div className="text-[9px] uppercase tracking-widest text-orange-600 font-bold">{p.b}</div>
               <div className="font-bold text-xs leading-tight line-clamp-2 h-8 text-stone-900">{p.n}</div>
-              <div className="flex items-center justify-between">
-                <Stars n={p.rating || 4.5} />
-                <span className="text-[9px] text-stone-500">{p.stock > 0 ? `${p.stock} ${t.stock}` : 'Available on Call'}</span>
-              </div>
-              <div className="flex items-baseline gap-1">
-                <span className="font-display font-black text-base text-stone-900">₹{p.p}</span>
-                <span className="text-[9px] text-stone-500">{p.u}</span>
-              </div>
-              {p.moq > 1 && <div className="text-[9px] text-amber-700 font-bold">Min Order: {p.moq} units</div>}
+              <div className="flex items-center justify-between"><div className="text-xs font-bold text-amber-500">★ 4.8</div><span className="text-[9px] text-stone-500">{p.stock > 0 ? `${p.stock} उपलब्ध` : 'कॉल करें'}</span></div>
+              <div className="flex items-baseline gap-1"><span className="font-display font-black text-base text-stone-900">₹{p.p}</span><span className="text-[9px] text-stone-500">{p.u}</span></div>
             </div>
           </div>
-          <div className="p-2 pt-0">
-            <button 
-              onClick={() => addToCart(p)} 
-              disabled={p.stock <= 0}
-              className={`w-full text-[11px] font-bold py-1.5 rounded-full transition ${p.stock <= 0 ? 'bg-stone-300 text-stone-500 cursor-not-allowed' : 'bg-orange-500 hover:bg-orange-600 text-white'}`}
-            >
-              {p.stock <= 0 ? 'Out of Stock' : `+ ${t.buy}`}
-            </button>
-          </div>
+          <div className="p-2 pt-0"><button onClick={() => addToCart(p)} disabled={p.stock <= 0} className={`w-full text-[11px] font-bold py-1.5 rounded-full transition ${p.stock <= 0 ? 'bg-stone-300 text-stone-500' : 'bg-orange-500 hover:bg-orange-600 text-white'}`}>{p.stock <= 0 ? 'Out of Stock' : `+ ${t.buy}`}</button></div>
         </div>
       ))}
     </section>
   );
 }
 
-// ============= CATALOG =============
 function CatalogScreen({ t, query, doSearch, category, setCategory, filtered, addToCart }) {
   const CATS = [{k:"ALL",n:t.all},{k:"tmt",n:t.tmt},{k:"cement",n:t.cement},{k:"sand",n:t.sand},{k:"brick",n:t.brick},{k:"tools",n:t.tools}];
   return (
     <div className="space-y-6">
       <h2 className="font-display font-black text-3xl">{t.g}</h2>
-      <div className="bg-white border-2 border-stone-900 rounded-2xl p-4 flex items-center gap-2">
-        <Search size={20} className="text-stone-500" />
-        <input value={query} onChange={(e)=>doSearch(e.target.value)} placeholder={t.search} className="flex-1 bg-transparent outline-none" />
-      </div>
-      <div className="flex flex-wrap gap-2">
-        {CATS.map(c => <button key={c.k} onClick={() => setCategory(c.k)} className={`text-sm font-bold px-4 py-2 rounded-full transition ${category===c.k?'bg-orange-500 text-white':'bg-white border-2 border-stone-300 text-stone-700 hover:border-orange-500'}`}>{c.n}</button>)}
-      </div>
+      <div className="bg-white border-2 border-stone-900 rounded-2xl p-4 flex items-center gap-2"><Search size={20} className="text-stone-500" /><input value={query} onChange={(e)=>doSearch(e.target.value)} placeholder={t.search} className="flex-1 bg-transparent outline-none" /></div>
+      <div className="flex flex-wrap gap-2">{CATS.map(c => <button key={c.k} onClick={() => setCategory(c.k)} className={`text-sm font-bold px-4 py-2 rounded-full transition ${category===c.k?'bg-orange-500 text-white':'bg-white border-2 border-stone-300 text-stone-700'}`}>{c.n}</button>)}</div>
       <ProductGrid t={t} filtered={filtered} addToCart={addToCart} />
     </div>
   );
 }
 
-// ============= CART =============
 function CartScreen({ t, cart, updateQty, removeItem, total, onCheckout, upi, user }) {
   const [address, setAddress] = useState(user?.address || "");
   const [payment, setPayment] = useState("COD");
   const [termsAgreed, setTermsAgreed] = useState(true);
-
   if (cart.length === 0) return <div className="bg-white border-2 border-stone-200 rounded-2xl p-12 text-center text-stone-500 font-bold">{t.empty}</div>;
   return (
     <div className="space-y-6">
@@ -789,1243 +597,353 @@ function CartScreen({ t, cart, updateQty, removeItem, total, onCheckout, upi, us
       <div className="space-y-3">
         {cart.map(item => (
           <div key={item.id} className="bg-white border-2 border-stone-200 rounded-2xl p-3 flex items-center gap-3">
-            {item.img ? <img src={item.img} alt={item.n} className="w-16 h-16 object-cover rounded-lg" /> : <div className="w-16 h-16 bg-stone-100 rounded-lg flex items-center justify-center text-[10px] font-bold text-stone-400">{item.b}</div>}
-            <div className="flex-1 min-w-0">
-              <div className="text-[10px] uppercase text-orange-600 font-bold">{item.b}</div>
-              <div className="font-bold text-sm truncate">{item.n}</div>
-              <div className="text-xs text-stone-500">₹{item.p} {item.u}</div>
-            </div>
-            <div className="flex items-center gap-1 border-2 border-stone-300 rounded-full">
-              <button onClick={() => updateQty(item.id, -1)} className="p-1.5 hover:bg-stone-100 rounded-full"><Minus size={14} /></button>
-              <span className="font-bold w-6 text-center text-sm">{item.q}</span>
-              <button onClick={() => updateQty(item.id, 1)} className="p-1.5 hover:bg-stone-100 rounded-full"><Plus size={14} /></button>
-            </div>
-            <button onClick={() => removeItem(item.id)} className="p-2 text-red-500 hover:bg-red-50 rounded-full"><Trash2 size={14} /></button>
+            {item.img ? <img src={item.img} alt="" className="w-16 h-16 object-cover rounded-lg" /> : <div className="w-16 h-16 bg-stone-100 rounded-lg flex items-center justify-center text-[10px] font-bold text-stone-400">{item.b}</div>}
+            <div className="flex-1 min-w-0"><div className="text-[10px] uppercase text-orange-600 font-bold">{item.b}</div><div className="font-bold text-sm truncate">{item.n}</div><div className="text-xs text-stone-500">₹{item.p} {item.u}</div></div>
+            <div className="flex items-center gap-1 border-2 border-stone-300 rounded-full"><button onClick={() => updateQty(item.id, -1)} className="p-1.5"><Minus size={14} /></button><span className="font-bold w-6 text-center text-sm">{item.q}</span><button onClick={() => updateQty(item.id, 1)} className="p-1.5"><Plus size={14} /></button></div>
+            <button onClick={() => removeItem(item.id)} className="p-2 text-red-500"><Trash2 size={14} /></button>
           </div>
         ))}
       </div>
       <div className="bg-white border-2 border-orange-500 rounded-2xl p-4 space-y-3">
-        <label className="block">
-          <span className="text-xs font-bold uppercase tracking-widest text-stone-500">{t.address}</span>
-          <textarea value={address} onChange={(e)=>setAddress(e.target.value)} rows={2} className="w-full mt-1 border-2 border-stone-200 rounded-lg p-2 outline-none focus:border-orange-500" placeholder="Delivery Site Address, City, Pincode" />
-        </label>
-        <div className="grid grid-cols-2 gap-2">
-          <button onClick={()=>setPayment("COD")} className={`p-3 rounded-xl border-2 font-bold text-sm ${payment==="COD"?'border-orange-500 bg-orange-500 text-white':'border-stone-200 bg-white'}`}>{t.cod}</button>
-          <button onClick={()=>setPayment("UPI")} className={`p-3 rounded-xl border-2 font-bold text-sm ${payment==="UPI"?'border-orange-500 bg-orange-500 text-white':'border-stone-200 bg-white'}`}>{t.upi}</button>
-        </div>
-        {payment === "UPI" && (
-          <div className="bg-stone-50 border-2 border-dashed border-orange-500 rounded-xl p-4 flex flex-col items-center gap-2">
-            <div className="text-xs font-bold uppercase text-stone-600 tracking-widest">{t.scan}</div>
-            <QRCodeSVG value={`upi://pay?pa=${upi}&pn=AS%20Enterprises&am=${total}&cu=INR`} size={200} />
-            <div className="text-sm font-bold mt-2">{t.payto}: <span className="text-orange-600">{upi}</span></div>
-            <div className="text-xs text-stone-500">Amount: ₹{total}</div>
-          </div>
-        )}
-        <div className="flex justify-between items-center pt-2 border-t border-stone-200">
-          <span className="font-bold text-lg">{t.total}</span>
-          <span className="font-display font-black text-2xl">₹{total}</span>
-        </div>
-        <div style={{margin:"12px 0",padding:"10px",background:"#fff8f0",borderRadius:"8px",border:"1px solid #fed7aa",fontSize:"12px"}}>
-          <label style={{display:"flex",gap:"8px",cursor:"pointer",color:"#333"}}>
-            <input type="checkbox" checked={termsAgreed} onChange={(e)=>setTermsAgreed(e.target.checked)} style={{marginTop:"2px",accentColor:"#f97316"}}/>
-            <span>I agree to <b>Terms & Conditions</b>: Unloading is customer responsibility. Materials once unloaded are non-returnable. Subject to Hyderabad Jurisdiction.</span>
-          </label>
-        </div>
-        <button 
-          onClick={()=>{ 
-            if(!address.trim()){alert("Please enter delivery site address"); return;} 
-            if(!termsAgreed){alert("Please accept Terms & Conditions"); return;}
-            onCheckout(payment, address); 
-          }} 
-          className="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 rounded-full text-base transition"
-        >
-          {t.confirm} · ₹{total}
-        </button>
+        <label className="block"><span className="text-xs font-bold uppercase text-stone-500">{t.address}</span><textarea value={address} onChange={(e)=>setAddress(e.target.value)} rows={2} className="w-full mt-1 border-2 rounded-lg p-2 outline-none" placeholder="Delivery Address" /></label>
+        <div className="grid grid-cols-2 gap-2"><button onClick={()=>setPayment("COD")} className={`p-3 rounded-xl border-2 font-bold text-sm ${payment==="COD"?'border-orange-500 bg-orange-500 text-white':'bg-white'}`}>{t.cod}</button><button onClick={()=>setPayment("UPI")} className={`p-3 rounded-xl border-2 font-bold text-sm ${payment==="UPI"?'border-orange-500 bg-orange-500 text-white':'bg-white'}`}>{t.upi}</button></div>
+        {payment === "UPI" && (<div className="bg-stone-50 border-2 border-dashed border-orange-500 rounded-xl p-4 flex flex-col items-center gap-2"><QRCodeSVG value={`upi://pay?pa=${upi}&pn=AS%20Enterprises&am=${total}&cu=INR`} size={180} /><div className="text-sm font-bold mt-1">Pay to: <span className="text-orange-600">{upi}</span></div></div>)}
+        <div className="flex justify-between items-center pt-2 border-t"><span className="font-bold text-lg">{t.total}</span><span className="font-display font-black text-2xl">₹{total}</span></div>
+        <button onClick={()=>{ if(!address.trim()){alert("Enter address"); return;} if(!termsAgreed){alert("Accept terms"); return;} onCheckout(payment, address); }} className="w-full bg-orange-500 text-white font-bold py-3 rounded-full">{t.confirm} · ₹{total}</button>
       </div>
     </div>
   );
 }
 
-// ============= GST TAX INVOICE & DELIVERY CHALLAN PRINT ENGINE =============
 function printTaxInvoiceDocument(inv, isChallan = false, currentBank = DEFAULT_BANK) {
   const taxable = parseFloat(inv.taxable || inv.total || 0);
   const discount = parseFloat(inv.discount || 0);
+  const freight = parseFloat(inv.freight || 0);
   const adjustedTaxable = Math.max(0, taxable - discount);
   const gst = parseFloat(inv.gst || (adjustedTaxable * 0.18));
-  const grand = Math.round(adjustedTaxable + gst);
+  const grand = Math.round(adjustedTaxable + gst + freight);
   const cgst = (gst / 2).toFixed(2);
   const sgst = (gst / 2).toFixed(2);
-
   const bank = inv.bankSnapshot || currentBank;
 
-  const html = `<!doctype html>
-<html>
-<head>
-  <meta charset="utf-8"/>
-  <title>${isChallan ? 'Delivery Challan' : 'Tax Invoice'} - ${inv.id || 'DOC'}</title>
-  <style>
-    body { font-family: 'Segoe UI', Arial, sans-serif; padding: 24px; color: #111; max-width: 800px; margin: auto; }
-    .header { border-bottom: 3px solid #ea580c; padding-bottom: 12px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: flex-start; }
-    .brand { font-size: 26px; font-weight: 900; color: #0A1931; margin: 0; }
-    .badge { background: ${isChallan ? '#0A1931' : '#ea580c'}; color: #fff; padding: 4px 10px; font-size: 12px; font-weight: bold; border-radius: 4px; }
-    .meta-table { width: 100%; margin-bottom: 20px; font-size: 13px; }
-    .meta-table td { padding: 4px 0; vertical-align: top; }
-    table.items { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 13px; }
-    table.items th, table.items td { border: 1px solid #cbd5e1; padding: 10px; text-align: left; }
-    table.items th { background: #0A1931; color: #fff; font-weight: 700; }
-    .text-right { text-align: right; }
-    .tot-row td { font-weight: bold; }
-    .grand-tot td { font-size: 16px; color: #ea580c; font-weight: 900; background: #fff7ed; }
-    .eway-alert { background: #dcfce7; border: 1px solid #16a34a; color: #166534; padding: 6px 10px; border-radius: 4px; font-weight: bold; font-size: 12px; margin: 10px 0; }
-    .bank-box { margin-top: 20px; padding: 12px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 12px; background: #f8fafc; }
-    .terms { margin-top: 25px; border-top: 1px dashed #94a3b8; padding-top: 12px; font-size: 11px; color: #475569; }
-    .sign-box { margin-top: 35px; display: flex; justify-content: space-between; align-items: flex-end; font-size: 12px; }
-    .sign-img { max-height: 55px; border-bottom: 1px solid #333; margin-bottom: 4px; display: block; }
-    .kanta-preview { margin-top: 20px; border: 1px dashed #cbd5e1; padding: 8px; border-radius: 6px; }
-  </style>
-</head>
-<body>
-  <div class="header">
-    <div>
-      <h1 class="brand">AS ENTERPRISES</h1>
-      <div style="font-size: 13px; color: #475569; margin-top: 3px;">Wholesale Building Materials & TMT Supply</div>
-      <div style="font-size: 12px; margin-top: 2px;"><strong>GSTIN:</strong> ${CFG.gstin} · <strong>Phone:</strong> ${CFG.phone}</div>
-      <div style="font-size: 12px;">Hyderabad, Telangana, 500077</div>
-    </div>
-    <div style="text-align: right;">
-      <span class="badge">${isChallan ? 'DELIVERY CHALLAN / GATE PASS' : 'TAX INVOICE'}</span>
-      <div style="margin-top: 6px; font-size: 13px;"><strong>${isChallan ? 'Challan No' : 'Invoice No'}:</strong> ${inv.id || 'DOC-'+Date.now()}</div>
-      <div style="font-size: 12px; color: #64748b;"><strong>Date:</strong> ${new Date(inv.date || Date.now()).toLocaleDateString('en-IN')}</div>
-    </div>
-  </div>
-
-  ${grand >= 50000 ? `
-    <div class="eway-alert">
-      ✓ Statutory E-Way Bill Rule Applied (Consignment > ₹50,000) | E-Way Ref: ${inv.ewayNo || 'Verified Transport Dispatch'}
-    </div>
-  ` : ''}
-
-  <table class="meta-table">
-    <tr>
-      <td style="width: 50%;">
-        <strong>Billed / Dispatched To:</strong><br/>
-        <span style="font-size: 15px; font-weight: bold; color: #0A1931;">${inv.customer || inv.user || 'Valued Customer'}</span><br/>
-        Phone: ${inv.phone || 'N/A'}<br/>
-        Delivery Site: ${inv.address || 'Direct Yard Pickup'}
-      </td>
-      <td style="width: 50%; text-align: right;">
-        <strong>Vehicle & Transit Details:</strong><br/>
-        Vehicle No: <strong>${inv.vehicle || 'Dispatched Lorry'}</strong><br/>
-        Payment Terms: <strong>${inv.payment || 'Recorded'}</strong><br/>
-        Transit Status: Direct Yard Dispatch
-      </td>
-    </tr>
-  </table>
-
-  <table class="items">
-    <thead>
-      <tr>
-        <th>S.No</th>
-        <th>Material Description</th>
-        <th class="text-right">Qty</th>
-        ${!isChallan ? '<th class="text-right">Rate (₹)</th><th class="text-right">Taxable Amount (₹)</th>' : ''}
-      </tr>
-    </thead>
-    <tbody>
-      ${inv.items && inv.items.length > 0 ? inv.items.map((it, idx) => `
-        <tr>
-          <td>${idx + 1}</td>
-          <td>${it.n || it.name} - ${it.b || ''}</td>
-          <td class="text-right"><strong>${it.q || it.qty} ${it.u || ''}</strong></td>
-          ${!isChallan ? `
-            <td class="text-right">${parseFloat(it.p || it.rate).toFixed(2)}</td>
-            <td class="text-right">${((it.q || it.qty) * (it.p || it.rate)).toFixed(2)}</td>
-          ` : ''}
-        </tr>
-      `).join('') : `
-        <tr>
-          <td>1</td>
-          <td>${inv.material || 'Construction Material'}</td>
-          <td class="text-right"><strong>${inv.qty || 1}</strong></td>
-          ${!isChallan ? `
-            <td class="text-right">${taxable.toFixed(2)}</td>
-            <td class="text-right">${taxable.toFixed(2)}</td>
-          ` : ''}
-        </tr>
-      `}
-      ${!isChallan ? `
-        <tr class="tot-row">
-          <td colspan="4" class="text-right">Taxable Subtotal</td>
-          <td class="text-right">₹${taxable.toFixed(2)}</td>
-        </tr>
-        ${discount > 0 ? `
-          <tr>
-            <td colspan="4" class="text-right" style="color: #15803d;">Cash Discount Applied</td>
-            <td class="text-right" style="color: #15803d;">-₹${discount.toFixed(2)}</td>
-          </tr>
-        ` : ''}
-        <tr>
-          <td colspan="4" class="text-right">CGST @ 9%</td>
-          <td class="text-right">₹${cgst}</td>
-        </tr>
-        <tr>
-          <td colspan="4" class="text-right">SGST @ 9%</td>
-          <td class="text-right">₹${sgst}</td>
-        </tr>
-        <tr class="grand-tot">
-          <td colspan="4" class="text-right">GRAND TOTAL (Round Off)</td>
-          <td class="text-right">₹${grand.toLocaleString('en-IN')}.00</td>
-        </tr>
-      ` : ''}
-    </tbody>
-  </table>
-
-  ${!isChallan ? `
-    <div class="bank-box">
-      <strong>Direct NEFT / RTGS Bank Transfer Details:</strong><br/>
-      Bank: <b>${bank.bankName}</b> | A/c No: <b>${bank.accNo}</b> | IFSC: <b>${bank.ifsc}</b> | Branch: ${bank.branch}<br/>
-      UPI ID: <b>${getUPI()}</b>
-    </div>
-  ` : ''}
-
-  ${inv.kantaImg ? `
-    <div class="kanta-preview">
-      <strong>Attached Weighbridge / Dharam Kanta Slip:</strong><br/>
-      <img src="${inv.kantaImg}" style="max-height: 120px; margin-top: 6px; border-radius: 4px;" alt="Kanta Slip" />
-    </div>
-  ` : ''}
-
-  <div class="terms">
-    <strong>Terms & Conditions (नियम व शर्तें):</strong><br/>
-    1. Unloading of materials at destination site is customer's sole responsibility.<br/>
-    2. Goods once unloaded and checked are strictly non-returnable and non-refundable.<br/>
-    3. Any discrepancy in count or bags must be recorded on this dispatch copy before discharge.<br/>
-    4. Delayed payments beyond agreed credit period attract interest @ 18% p.a.<br/>
-    5. All disputes subject to Hyderabad Jurisdiction only.
-  </div>
-
-  <div class="sign-box">
-    <div>
-      ${inv.signature ? `<img class="sign-img" src="${inv.signature}" alt="Customer Sign"/>` : '<div style="height:40px; border-bottom:1px solid #333; width:180px;"></div>'}
-      <div>Customer / Site Munshi Receiving Sign</div>
-    </div>
-    <div style="text-align: right;">
-      For <strong>AS ENTERPRISES</strong><br/><br/><br/>Authorized Signatory
-    </div>
-  </div>
-</body>
-</html>`;
+  const html = `<!doctype html><html><head><meta charset="utf-8"/><title>${isChallan ? 'Challan' : 'Invoice'} - ${inv.id}</title><style>body { font-family: Arial, sans-serif; padding: 20px; color: #111; max-width: 800px; margin: auto; } .header { border-bottom: 3px solid #ea580c; padding-bottom: 10px; display: flex; justify-content: space-between; } table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 13px; } th, td { border: 1px solid #cbd5e1; padding: 8px; text-align: left; } th { background: #0A1931; color: #fff; } .text-right { text-align: right; }</style></head><body>
+  <div class="header"><div><h1 style="margin:0; color:#0A1931;">AS ENTERPRISES</h1><div>Wholesale Building Materials Supply</div><div>GSTIN: ${CFG.gstin} · Ph: ${CFG.phone}</div></div><div style="text-align:right;"><strong>${isChallan ? 'DELIVERY CHALLAN' : 'TAX INVOICE'}</strong><br/>No: ${inv.id}<br/>Date: ${new Date(inv.date).toLocaleDateString('en-IN')}</div></div>
+  <p><strong>Billed To:</strong> ${inv.customer} (Ph: ${inv.phone})<br/><strong>Site:</strong> ${inv.address} | <strong>Vehicle:</strong> ${inv.vehicle}</p>
+  <table><thead><tr><th>S.No</th><th>Material Description</th><th class="text-right">Qty</th>${!isChallan ? '<th class="text-right">Rate</th><th class="text-right">Amount</th>' : ''}</tr></thead>
+  <tbody>${inv.items.map((it, i)=>`<tr><td>${i+1}</td><td>${it.n}</td><td class="text-right"><strong>${it.q} ${it.u}</strong></td>${!isChallan ? `<td class="text-right">₹${it.p}</td><td class="text-right">₹${it.q*it.p}</td>` : ''}</tr>`).join('')}
+  ${!isChallan ? `<tr style="font-weight:bold;"><td colspan="4" class="text-right">Subtotal</td><td class="text-right">₹${taxable.toFixed(2)}</td></tr><tr><td colspan="4" class="text-right">GST (18%)</td><td class="text-right">₹${gst.toFixed(2)}</td></tr>${freight>0?`<tr><td colspan="4" class="text-right" style="color:#ea580c;">Freight (भाड़ा)</td><td class="text-right" style="color:#ea580c;">+₹${freight.toFixed(2)}</td></tr>`:''}<tr style="font-size:15px; color:#ea580c; font-weight:900;"><td colspan="4" class="text-right">GRAND TOTAL</td><td class="text-right">₹${grand}.00</td></tr>` : ''}
+  </tbody></table>
+  ${!isChallan ? `<div style="margin-top:15px; font-size:12px; background:#f8fafc; padding:10px; border:1px solid #cbd5e1;">Bank: <b>${bank.bankName}</b> | A/c: <b>${bank.accNo}</b> | IFSC: <b>${bank.ifsc}</b> | UPI: <b>${getUPI()}</b></div>` : ''}
+  <div style="margin-top:30px; display:flex; justify-content:space-between; font-size:12px;"><div>Receiver Sign</div><div style="text-align:right;">For <b>AS ENTERPRISES</b><br/><br/>Authorized Signatory</div></div>
+  </body></html>`;
 
   const blob = new Blob([html], { type: 'text/html;charset=utf-8' });
-  const url = URL.createObjectURL(blob);
-  const win = window.open(url, '_blank');
-  if (win) {
-    win.focus();
-  }
-}
-
-// ============= PRINT CUSTOMER STATEMENT OF ACCOUNT =============
-function printCustomerStatement(customerName, entries) {
-  const custEntries = entries.filter(e => e.customer.toLowerCase().trim() === customerName.toLowerCase().trim());
-  const balance = custEntries.reduce((s, l) => s + (l.type === 'credit' ? l.amt : -l.amt), 0);
-
-  const html = `<!doctype html>
-<html>
-<head>
-  <meta charset="utf-8"/>
-  <title>Khata Statement - ${customerName}</title>
-  <style>
-    body { font-family: Arial, sans-serif; padding: 24px; color: #111; max-width: 800px; margin: auto; }
-    .header { border-bottom: 3px solid #ea580c; padding-bottom: 12px; margin-bottom: 20px; display: flex; justify-content: space-between; }
-    table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 13px; }
-    th, td { border: 1px solid #cbd5e1; padding: 10px; text-align: left; }
-    th { background: #0A1931; color: #fff; }
-    .text-right { text-align: right; }
-    .cr { color: #dc2626; font-weight: bold; }
-    .dr { color: #16a34a; font-weight: bold; }
-    .balance-box { background: #fff7ed; border: 2px solid #ea580c; border-radius: 8px; padding: 15px; margin-top: 20px; display: flex; justify-content: space-between; font-size: 16px; font-weight: bold; }
-  </style>
-</head>
-<body>
-  <div class="header">
-    <div>
-      <h2 style="margin: 0; color: #0A1931;">AS ENTERPRISES</h2>
-      <div>Wholesale Customer Statement / Bahi Khata</div>
-      <div>Ph: ${CFG.phone} · Hyderabad</div>
-    </div>
-    <div style="text-align: right;">
-      <h3>Party: ${customerName}</h3>
-      <div>Statement Date: ${new Date().toLocaleDateString('en-IN')}</div>
-    </div>
-  </div>
-
-  <table>
-    <thead>
-      <tr>
-        <th>Date</th>
-        <th>Particulars / Invoice Note</th>
-        <th class="text-right">Debit (Received / जमा)</th>
-        <th class="text-right">Credit (Due / उधारी)</th>
-      </tr>
-    </thead>
-    <tbody>
-      ${custEntries.map(e => `
-        <tr>
-          <td>${new Date(e.date).toLocaleDateString('en-IN')}</td>
-          <td>${e.note || 'Material Transaction'}</td>
-          <td class="text-right dr">${e.type === 'debit' ? '₹' + e.amt.toLocaleString('en-IN') : '-'}</td>
-          <td class="text-right cr">${e.type === 'credit' ? '₹' + e.amt.toLocaleString('en-IN') : '-'}</td>
-        </tr>
-      `).join('')}
-    </tbody>
-  </table>
-
-  <div class="balance-box">
-    <span>Closing Balance:</span>
-    <span style="color: ${balance >= 0 ? '#dc2626' : '#16a34a'};">
-      ₹${Math.abs(balance).toLocaleString('en-IN')} ${balance >= 0 ? '(Pending To Receive)' : '(Advance Received)'}
-    </span>
-  </div>
-</body>
-</html>`;
-
-  const blob = new Blob([html], { type: 'text/html;charset=utf-8' });
-  const url = URL.createObjectURL(blob);
-  const win = window.open(url, '_blank');
+  const win = window.open(URL.createObjectURL(blob), '_blank');
   if (win) win.focus();
 }
 
-// ============= ORDERS SCREEN =============
+function printCustomerStatement(customerName, entries) {
+  const custEntries = entries.filter(e => e.customer.toLowerCase().trim() === customerName.toLowerCase().trim());
+  const balance = custEntries.reduce((s, l) => s + (l.type === 'credit' ? l.amt : -l.amt), 0);
+  const html = `<!doctype html><html><head><meta charset="utf-8"/><title>Khata - ${customerName}</title><style>body { font-family: Arial; padding: 20px; max-width:800px; margin:auto; } table { width:100%; border-collapse:collapse; margin-top:15px; font-size:13px; } th,td { border:1px solid #cbd5e1; padding:8px; text-align:left; } th { background:#0A1931; color:#fff; }</style></head><body>
+  <h2>AS ENTERPRISES - Khata Statement: ${customerName}</h2>
+  <table><thead><tr><th>Date</th><th>Note</th><th style="text-align:right;">Debit (जमा)</th><th style="text-align:right;">Credit (उधारी)</th></tr></thead>
+  <tbody>${custEntries.map(e=>`<tr><td>${new Date(e.date).toLocaleDateString()}</td><td>${e.note||''}</td><td style="text-align:right; color:#16a34a;">${e.type==='debit'?'₹'+e.amt:'-'}</td><td style="text-align:right; color:#dc2626;">${e.type==='credit'?'₹'+e.amt:'-'}</td></tr>`).join('')}</tbody></table>
+  <h3>Closing Balance: ₹${Math.abs(balance)} ${balance>=0?'(Due to Receive)':'(Advance)'}</h3></body></html>`;
+  const win = window.open(URL.createObjectURL(new Blob([html], { type: 'text/html;charset=utf-8' })), '_blank');
+  if (win) win.focus();
+}
+
 function OrdersScreen({ t, orders, setOrders, upi, bankInfo }) {
   if (orders.length === 0) return <div className="bg-white border-2 border-stone-200 rounded-2xl p-12 text-center text-stone-500 font-bold">{t.noord}</div>;
-  
-  const shareWA = (o) => {
-    const gst = Math.round(o.total * 0.18);
-    const grand = o.total + gst;
-    const msg = `*AS ENTERPRISES - TAX INVOICE*%0AInvoice: ${o.id}%0ACustomer: ${o.user}%0A${o.items.map(i=>`• ${i.n} x ${i.q} = Rs.${i.p*i.q}`).join('%0A')}%0ASubtotal: Rs.${o.total}%0AGST (18%): Rs.${gst}%0A*Grand Total: Rs.${grand}*%0A%0A_Terms: Unloading customer side, goods non-returnable._`;
-    window.open(`https://wa.me/${CFG.wa}?text=${msg}`, "_blank");
-  };
-
   return (
     <div className="space-y-4">
       <h2 className="font-display font-black text-3xl">{t.orders}</h2>
       {orders.map(o => (
         <div key={o.id} className="bg-white border-2 border-stone-200 rounded-2xl p-4">
-          <div className="flex justify-between items-start mb-2">
-            <div>
-              <div className="text-xs uppercase tracking-widest text-orange-600 font-bold">{t.ordid}</div>
-              <div className="font-bold">{o.id}</div>
-            </div>
-            <div className="text-right">
-              <div className="text-xs text-stone-500">{new Date(o.date).toLocaleDateString()}</div>
-              <span className="inline-block bg-amber-100 text-amber-800 text-[10px] font-bold px-2 py-0.5 rounded-full uppercase mt-1">{o.status}</span>
-            </div>
-          </div>
-          <div className="text-sm text-stone-600 space-y-0.5 mt-2">{o.items.map((i, idx) => <div key={idx}>{i.n} × {i.q}</div>)}</div>
-          <div className="flex justify-between items-center mt-3 pt-3 border-t border-stone-100">
-            <span className="text-xs text-stone-500">{o.payment} · {o.address?.slice(0,30)}</span>
-            <span className="font-black text-lg">₹{o.total}</span>
-          </div>
-          <div className="grid grid-cols-2 gap-2 mt-3">
-            <button onClick={() => printTaxInvoiceDocument(o, false, bankInfo)} className="flex items-center justify-center gap-1 bg-stone-900 text-white text-xs font-bold py-2 rounded-full"><FileText size={12} /> Tax Invoice PDF</button>
-            <button onClick={() => shareWA(o)} className="flex items-center justify-center gap-1 bg-green-600 text-white text-xs font-bold py-2 rounded-full"><MessageCircle size={12} /> WhatsApp Bill</button>
-          </div>
+          <div className="flex justify-between font-bold text-sm"><span>{o.id} - {o.user}</span><span>₹{o.total}</span></div>
+          <div className="text-xs text-stone-600 mt-1">{o.address}</div>
+          <button onClick={() => printTaxInvoiceDocument(o, false, bankInfo)} className="mt-3 bg-stone-900 text-white text-xs font-bold py-2 px-4 rounded-full">Print Tax Invoice</button>
         </div>
       ))}
     </div>
   );
 }
 
-// ============= REAL GPS TRACKER SCREEN =============
-function TrackerScreen({ t, orders }) {
-  const [driverLocation, setDriverLocation] = useState(null);
-  const [gpsError, setGpsError] = useState("");
-
-  const getDriverGPS = () => {
-    if (!navigator.geolocation) {
-      setGpsError("Geolocation is not supported by your browser");
-      return;
-    }
-    navigator.geolocation.getCurrentPosition(
-      (pos) => {
-        const coords = {
-          lat: pos.coords.latitude,
-          lng: pos.coords.longitude,
-          time: new Date().toLocaleTimeString()
-        };
-        setDriverLocation(coords);
-        setGpsError("");
-      },
-      (err) => {
-        setGpsError("Unable to retrieve GPS: " + err.message);
-      },
-      { enableHighAccuracy: true }
-    );
-  };
-
+function TrackerScreen({ t }) {
+  const [loc, setLoc] = useState(null);
   return (
     <div className="space-y-6">
       <h2 className="font-display font-black text-3xl">Live Delivery GPS Tracker</h2>
-      
-      <div className="bg-white border-2 border-stone-200 rounded-2xl p-5 shadow-sm space-y-3">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <Navigation className="text-orange-600" size={22} />
-            <h3 className="font-black text-base text-stone-900">Driver Live GPS Station</h3>
-          </div>
-          <span className="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2 py-0.5 rounded-full">Real GPS</span>
-        </div>
-        <p className="text-xs text-stone-500">
-          Delivery vehicle driver can tap below to broadcast exact live GPS location on Google Maps directly to customer.
-        </p>
-
-        <button 
-          onClick={getDriverGPS} 
-          className="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-2.5 rounded-xl text-xs flex items-center justify-center gap-2 shadow"
-        >
-          <MapPin size={15} /> Fetch Driver Phone GPS Location
-        </button>
-
-        {gpsError && <div className="text-xs text-red-600 font-bold">{gpsError}</div>}
-
-        {driverLocation && (
-          <div className="p-3 bg-emerald-50 border border-emerald-300 rounded-xl text-xs space-y-2">
-            <div className="text-emerald-900 font-bold">📍 Current Coordinates Acquired:</div>
-            <div>Latitude: <b>{driverLocation.lat.toFixed(5)}</b> | Longitude: <b>{driverLocation.lng.toFixed(5)}</b></div>
-            <div className="text-stone-500 text-[10px]">Updated at: {driverLocation.time}</div>
-            <div className="flex gap-2 pt-1">
-              <a 
-                href={`https://www.google.com/maps?q=${driverLocation.lat},${driverLocation.lng}`} 
-                target="_blank" 
-                rel="noreferrer"
-                className="flex-1 bg-stone-900 text-white text-center py-2 rounded-lg font-bold"
-              >
-                View on Google Maps
-              </a>
-              <a 
-                href={`https://wa.me/${CFG.wa}?text=${encodeURIComponent(`*AS ENTERPRISES - DRIVER LIVE LOCATION*\nVehicle is on the way.\nTrack live on Google Maps: https://www.google.com/maps?q=${driverLocation.lat},${driverLocation.lng}`)}`} 
-                target="_blank" 
-                rel="noreferrer"
-                className="flex-1 bg-green-600 text-white text-center py-2 rounded-lg font-bold flex items-center justify-center gap-1"
-              >
-                <MessageCircle size={14} /> Send Link to Client
-              </a>
-            </div>
-          </div>
-        )}
-      </div>
-
-      <div className="space-y-3">
-        <h4 className="text-xs font-bold uppercase tracking-widest text-stone-500">Active Delivery Orders</h4>
-        {orders.length === 0 ? (
-          <div className="bg-white border-2 border-stone-200 rounded-2xl p-8 text-center text-stone-500">{t.noord}</div>
-        ) : (
-          orders.slice(0, 5).map(o => (
-            <div key={o.id} className="bg-white border-2 border-stone-200 rounded-2xl p-4 space-y-2">
-              <div className="flex justify-between items-center text-xs">
-                <span className="font-bold">{o.id} ({o.user})</span>
-                <span className="bg-blue-100 text-blue-800 text-[10px] font-bold px-2 py-0.5 rounded-full">{o.status}</span>
-              </div>
-              <div className="text-xs text-stone-600"><strong>Address:</strong> {o.address}</div>
-              <div className="text-xs text-stone-500">Total: ₹{o.total} · Payment: {o.payment}</div>
-              <div className="pt-2 flex gap-2">
-                <a 
-                  href={`https://wa.me/${CFG.wa}?text=${encodeURIComponent(`Hi ${o.user}, your AS Enterprises material order #${o.id} is dispatched. Warehouse contact: ${CFG.phone}`)}`} 
-                  target="_blank" 
-                  rel="noreferrer" 
-                  className="flex-1 bg-green-600 text-white text-xs font-bold py-1.5 rounded-lg text-center flex items-center justify-center gap-1"
-                >
-                  <MessageCircle size={12} /> WhatsApp ETA
-                </a>
-              </div>
-            </div>
-          ))
-        )}
-      </div>
+      <button onClick={() => { if(navigator.geolocation) navigator.geolocation.getCurrentPosition(p=>setLoc({lat:p.coords.latitude, lng:p.coords.longitude})); }} className="w-full bg-orange-500 text-white font-bold py-3 rounded-xl text-xs">Fetch Current Driver GPS Location</button>
+      {loc && <div className="p-3 bg-emerald-50 border rounded-xl text-xs">Lat: {loc.lat}, Lng: {loc.lng} <a href={`https://www.google.com/maps?q=${loc.lat},${loc.lng}`} target="_blank" rel="noreferrer" className="block text-blue-600 font-bold underline mt-1">Open in Google Maps</a></div>}
     </div>
   );
 }
 
-// ============= WHOLESALE KHATA =============
 function KhataScreen({ t, ledger, setLedger, upi, bankInfo }) {
   const [customer, setCustomer] = useState("");
   const [phone, setPhone] = useState("");
   const [amt, setAmt] = useState("");
   const [type, setType] = useState("credit");
   const [note, setNote] = useState("");
-  const [showQr, setShowQr] = useState(null);
-
-  const add = () => {
-    if (!customer.trim() || !amt) return;
-    setLedger([{ id: Date.now(), customer, phone, amt: parseFloat(amt), type, note, date: new Date().toISOString() }, ...ledger]);
-    setCustomer(""); setPhone(""); setAmt(""); setNote("");
-  };
-  const del = (id) => setLedger(ledger.filter(l => l.id !== id));
+  const add = () => { if(!customer || !amt) return; setLedger([{ id: Date.now(), customer, phone, amt: parseFloat(amt), type, note, date: new Date().toISOString() }, ...ledger]); setCustomer(""); setPhone(""); setAmt(""); setNote(""); };
   const balance = ledger.reduce((s, l) => s + (l.type === 'credit' ? l.amt : -l.amt), 0);
-
-  const sendPaymentReminder = (entry) => {
-    const custPhone = entry.phone || prompt("Enter Party's 10-digit WhatsApp Number:");
-    if (!custPhone) return;
-
-    const msg = `*PAYMENT REMINDER - AS ENTERPRISES*\n` +
-                `आदरणीय ${entry.customer} जी,\n` +
-                `आपके खाते में *₹${entry.amt.toLocaleString('en-IN')}* का बकाया शेष है (${entry.note || 'Material Purchase'}).\n\n` +
-                `कृपया नीचे दिए गए UPI या बैंक विवरण पर भुगतान करें:\n` +
-                `UPI ID: *${upi}*\n` +
-                `Bank A/c: ${bankInfo.accNo} (${bankInfo.ifsc})\n` +
-                `संपर्क: ${CFG.phone}\n\n` +
-                `_AS Enterprises, Wholesale Building Materials, Hyderabad_`;
-
-    window.open(`https://wa.me/91${custPhone.replace(/\D/g,'').slice(-10)}?text=${encodeURIComponent(msg)}`, '_blank');
-  };
-
   return (
     <div className="space-y-6">
       <h2 className="font-display font-black text-3xl">{t.khata}</h2>
-      <div className={`p-6 rounded-2xl text-white shadow-lg ${balance>=0?'bg-emerald-700':'bg-red-700'}`}>
-        <div className="text-xs uppercase tracking-widest opacity-80">Net Balance</div>
-        <div className="font-display font-black text-4xl mt-1">₹{Math.abs(balance).toLocaleString()}</div>
-        <div className="text-xs mt-1 opacity-80">{balance >= 0 ? 'To Receive (उधारी लेना बाकी)' : 'To Pay (भुगतान करना है)'}</div>
-      </div>
-
+      <div className={`p-6 rounded-2xl text-white shadow-lg ${balance>=0?'bg-emerald-700':'bg-red-700'}`}><div className="text-xs uppercase opacity-80">Net Balance</div><div className="font-display font-black text-4xl mt-1">₹{Math.abs(balance).toLocaleString()}</div></div>
       <div className="bg-white border-2 border-orange-500 rounded-2xl p-4 space-y-3">
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
-          <input value={customer} onChange={e=>setCustomer(e.target.value)} placeholder={t.customer} className="border-2 border-stone-200 rounded-lg p-2 outline-none focus:border-orange-500 text-sm" />
-          <input value={phone} onChange={e=>setPhone(e.target.value)} placeholder="WhatsApp Phone" className="border-2 border-stone-200 rounded-lg p-2 outline-none focus:border-orange-500 text-sm" />
-          <input value={amt} onChange={e=>setAmt(e.target.value)} type="number" placeholder={t.amt} className="border-2 border-stone-200 rounded-lg p-2 outline-none focus:border-orange-500 text-sm font-bold" />
-        </div>
-        <div className="grid grid-cols-2 gap-2">
-          <button onClick={()=>setType("credit")} className={`p-2 rounded-lg border-2 font-bold text-sm ${type==="credit"?'bg-emerald-700 text-white border-emerald-700':'border-stone-200'}`}>{t.credit} (बाकी / To Receive)</button>
-          <button onClick={()=>setType("debit")} className={`p-2 rounded-lg border-2 font-bold text-sm ${type==="debit"?'bg-red-700 text-white border-red-700':'border-stone-200'}`}>{t.debit} (जमा / Received)</button>
-        </div>
-        <input value={note} onChange={e=>setNote(e.target.value)} placeholder={t.note} className="w-full border-2 border-stone-200 rounded-lg p-2 outline-none focus:border-orange-500 text-sm" />
-        <button onClick={add} className="w-full bg-orange-500 text-white font-bold py-2.5 rounded-full">+ {t.add}</button>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-2"><input value={customer} onChange={e=>setCustomer(e.target.value)} placeholder="Customer Name" className="border-2 rounded-lg p-2 text-sm outline-none" /><input value={phone} onChange={e=>setPhone(e.target.value)} placeholder="WhatsApp Phone" className="border-2 rounded-lg p-2 text-sm outline-none" /><input value={amt} onChange={e=>setAmt(e.target.value)} type="number" placeholder="Amount" className="border-2 rounded-lg p-2 text-sm font-bold outline-none" /></div>
+        <div className="grid grid-cols-2 gap-2"><button onClick={()=>setType("credit")} className={`p-2 rounded-lg border-2 font-bold text-sm ${type==="credit"?'bg-emerald-700 text-white':'bg-white'}`}>To Receive (उधारी)</button><button onClick={()=>setType("debit")} className={`p-2 rounded-lg border-2 font-bold text-sm ${type==="debit"?'bg-red-700 text-white':'bg-white'}`}>Received (जमा)</button></div>
+        <input value={note} onChange={e=>setNote(e.target.value)} placeholder="Note / Material" className="w-full border-2 rounded-lg p-2 text-sm outline-none" />
+        <button onClick={add} className="w-full bg-orange-500 text-white font-bold py-2.5 rounded-full">+ Add Entry</button>
       </div>
-
-      <div className="space-y-2">
-        {ledger.map(l => (
-          <div key={l.id} className="bg-white border-2 border-stone-200 rounded-xl p-3">
-            <div className="flex justify-between items-center">
-              <div>
-                <div className="font-bold text-sm">{l.customer}</div>
-                <div className="text-xs text-stone-500">{l.note} · {new Date(l.date).toLocaleDateString()}</div>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className={`font-black ${l.type==='credit'?'text-emerald-700':'text-red-700'}`}>{l.type==='credit'?'+':'-'}₹{l.amt}</span>
-                <button 
-                  onClick={() => printCustomerStatement(l.customer, ledger)} 
-                  className="p-1.5 bg-stone-100 hover:bg-stone-200 text-stone-800 rounded-full text-[11px] font-bold px-2 flex items-center gap-1"
-                  title="Print Party Ledger Statement"
-                >
-                  <Receipt size={12} /> Statement
-                </button>
-                {l.type === 'credit' && (
-                  <button 
-                    onClick={() => sendPaymentReminder(l)} 
-                    className="p-1.5 bg-green-100 hover:bg-green-200 text-green-700 rounded-full flex items-center gap-1 text-[11px] font-bold px-2.5" 
-                    title="Send WhatsApp Payment Reminder"
-                  >
-                    <BellRing size={13} /> Remind
-                  </button>
-                )}
-                {l.type==='credit' && <button onClick={() => setShowQr(showQr===l.id?null:l.id)} className="p-1.5 bg-orange-100 text-orange-600 rounded-full" title="UPI QR"><Camera size={12} /></button>}
-                <button onClick={()=>del(l.id)} className="p-1.5 text-red-500 hover:bg-red-50 rounded-full"><Trash2 size={14} /></button>
-              </div>
-            </div>
-            {showQr === l.id && (
-              <div className="mt-3 p-3 bg-orange-50 rounded-lg flex flex-col items-center">
-                <QRCodeSVG value={`upi://pay?pa=${upi}&pn=AS%20Enterprises&am=${l.amt}&cu=INR&tn=${encodeURIComponent(l.customer)}`} size={140} />
-                <div className="text-xs mt-2 font-bold text-orange-700">Pay ₹{l.amt} to {upi}</div>
-              </div>
-            )}
-          </div>
-        ))}
-      </div>
+      <div className="space-y-2">{ledger.map(l => (<div key={l.id} className="bg-white border-2 rounded-xl p-3 flex justify-between items-center"><div><div className="font-bold text-sm">{l.customer}</div><div className="text-xs text-stone-500">{l.note}</div></div><div className="flex items-center gap-2"><span className={`font-black ${l.type==='credit'?'text-emerald-700':'text-red-700'}`}>{l.type==='credit'?'+':'-'}₹{l.amt}</span><button onClick={()=>printCustomerStatement(l.customer, ledger)} className="px-2 py-1 bg-stone-100 rounded text-xs font-bold">Statement</button><button onClick={()=>setLedger(ledger.filter(x=>x.id!==l.id))} className="text-red-500"><Trash2 size={14}/></button></div></div>))}</div>
     </div>
   );
 }
 
-// ============= ESTIMATOR SCREEN =============
 function EstimatorScreen({ t }) {
   const [len, setLen] = useState(""); const [wid, setWid] = useState(""); const [ht, setHt] = useState("");
-  const [result, setResult] = useState(null);
-  const calc = () => {
-    const l = parseFloat(len), w = parseFloat(wid), h = parseFloat(ht);
-    if (!l || !w || !h) return;
-    const area = l * w, vol = area * h;
-    setResult({ cement: Math.ceil(area * 0.4), tmt: (area * 4 / 1000).toFixed(2), sand: Math.ceil(vol * 0.5), bricks: Math.ceil(area * 55) });
-  };
+  const [res, setRes] = useState(null);
   return (
     <div className="space-y-6">
       <h2 className="font-display font-black text-3xl">{t.estimator}</h2>
       <div className="bg-white border-2 border-orange-500 rounded-2xl p-6 space-y-4">
-        <div className="text-sm text-stone-600">{t.est}</div>
-        <div className="grid grid-cols-3 gap-3">
-          <label><span className="text-xs font-bold uppercase text-stone-500">{t.len}</span><input type="number" value={len} onChange={e=>setLen(e.target.value)} className="w-full mt-1 border-2 border-stone-200 rounded-lg p-2 outline-none focus:border-orange-500" /></label>
-          <label><span className="text-xs font-bold uppercase text-stone-500">{t.wid}</span><input type="number" value={wid} onChange={e=>setWid(e.target.value)} className="w-full mt-1 border-2 border-stone-200 rounded-lg p-2 outline-none focus:border-orange-500" /></label>
-          <label><span className="text-xs font-bold uppercase text-stone-500">{t.ht}</span><input type="number" value={ht} onChange={e=>setHt(e.target.value)} className="w-full mt-1 border-2 border-stone-200 rounded-lg p-2 outline-none focus:border-orange-500" /></label>
-        </div>
-        <button onClick={calc} className="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 rounded-full">{t.calc}</button>
+        <div className="grid grid-cols-3 gap-3"><input type="number" value={len} onChange={e=>setLen(e.target.value)} placeholder="Length (ft)" className="border-2 rounded-lg p-2" /><input type="number" value={wid} onChange={e=>setWid(e.target.value)} placeholder="Width (ft)" className="border-2 rounded-lg p-2" /><input type="number" value={ht} onChange={e=>setHt(e.target.value)} placeholder="Height (ft)" className="border-2 rounded-lg p-2" /></div>
+        <button onClick={()=>{ const l=parseFloat(len)||0, w=parseFloat(wid)||0, h=parseFloat(ht)||0; if(l&&w&&h) setRes({cement:Math.ceil(l*w*0.4), tmt:(l*w*4/1000).toFixed(2), sand:Math.ceil(l*w*h*0.5), bricks:Math.ceil(l*w*55)}); }} className="w-full bg-orange-500 text-white font-bold py-3 rounded-full">Calculate</button>
       </div>
-      {result && (
-        <div className="bg-amber-50 border-2 border-orange-500 rounded-2xl p-5">
-          <div className="text-sm font-bold text-stone-600 mb-3">{t.need}:</div>
-          <div className="grid grid-cols-2 gap-3">
-            <Stat label={t.bags} val={result.cement} /><Stat label={t.tons} val={result.tmt} /><Stat label={t.cft} val={result.sand} /><Stat label={t.bricks} val={result.bricks} />
-          </div>
-          <a href={`https://wa.me/${CFG.wa}?text=AS%20Enterprises%20Estimate:%20${result.cement}%20bags%20cement,%20${result.tmt}%20tons%20TMT,%20${result.sand}%20cft%20sand,%20${result.bricks}%20bricks`} target="_blank" rel="noreferrer" className="mt-4 block bg-green-600 hover:bg-green-700 text-white text-center font-bold py-2.5 rounded-full">Get Quote on WhatsApp</a>
-        </div>
-      )}
+      {res && <div className="bg-amber-50 border-2 border-orange-500 rounded-2xl p-5 grid grid-cols-2 gap-3"><Stat label="Cement Bags" val={res.cement} /><Stat label="TMT Tons" val={res.tmt} /><Stat label="Sand CFT" val={res.sand} /><Stat label="Bricks" val={res.bricks} /></div>}
     </div>
   );
 }
-const Stat = ({ label, val }) => (
-  <div className="bg-white rounded-xl p-3 border-2 border-orange-200">
-    <div className="font-display font-black text-2xl">{val}</div>
-    <div className="text-xs text-stone-600 font-bold">{label}</div>
-  </div>
-);
+const Stat = ({ label, val }) => (<div className="bg-white rounded-xl p-3 border-2 border-orange-200"><div className="font-display font-black text-2xl">{val}</div><div className="text-xs text-stone-600 font-bold">{label}</div></div>);
 
-// ============= LOGIN SCREEN =============
 function LoginScreen({ t, onLogin }) {
-  const [step, setStep] = useState("mobile");
-  const [mobile, setMobile] = useState("");
-  const [otp, setOtp] = useState("");
-  const [name, setName] = useState("");
-  const [sentOtp, setSentOtp] = useState("");
-
-  const sendOtp = () => {
-    if (mobile.length < 10) { alert("Enter 10-digit mobile"); return; }
-    const code = String(Math.floor(1000 + Math.random() * 9000));
-    setSentOtp(code);
-    alert(`Verification OTP for ${mobile}: ${code}`);
-    setStep("otp");
-  };
-  const verify = () => {
-    if (otp !== sentOtp) { alert("Wrong OTP entered"); return; }
-    onLogin({ mobile, name: name || `Customer ${mobile.slice(-4)}`, date: new Date().toISOString() });
-  };
-
+  const [mob, setMob] = useState("");
   return (
-    <div className="max-w-md mx-auto">
-      <div className="bg-white border-2 border-orange-500 rounded-2xl p-6 space-y-4">
-        <h2 className="font-display font-black text-3xl">{t.welcome}</h2>
-        {step === "mobile" && (
-          <>
-            <p className="text-sm text-stone-500">Customer Login for Fast Billing & Order Records</p>
-            <input value={name} onChange={e=>setName(e.target.value)} placeholder="Your Name / Business Name" className="w-full border-2 border-stone-200 rounded-lg p-3 outline-none focus:border-orange-500" />
-            <input value={mobile} onChange={e=>setMobile(e.target.value.replace(/\D/g,'').slice(0,10))} placeholder="10-digit Mobile Number" type="tel" className="w-full border-2 border-stone-200 rounded-lg p-3 outline-none focus:border-orange-500 tracking-widest text-lg" />
-            <button onClick={sendOtp} className="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 rounded-full">{t.sendOtp}</button>
-          </>
-        )}
-        {step === "otp" && (
-          <>
-            <p className="text-sm text-stone-500">OTP sent to <b>+91 {mobile}</b></p>
-            <input value={otp} onChange={e=>setOtp(e.target.value.replace(/\D/g,'').slice(0,4))} placeholder={t.otp} maxLength={4} className="w-full text-center text-3xl font-black tracking-widest border-2 border-stone-200 rounded-lg p-3 outline-none focus:border-orange-500" />
-            <button onClick={verify} className="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 rounded-full">{t.verify}</button>
-            <button onClick={() => setStep("mobile")} className="w-full text-xs text-stone-500 hover:underline">Change mobile</button>
-          </>
-        )}
-      </div>
-    </div>
+    <div className="max-w-md mx-auto"><div className="bg-white border-2 border-orange-500 rounded-2xl p-6 space-y-4"><h2 className="font-display font-black text-3xl">{t.welcome}</h2><input value={mob} onChange={e=>setMob(e.target.value)} placeholder="10-digit Mobile" maxLength={10} className="w-full border-2 rounded-lg p-3 text-lg font-bold tracking-widest" /><button onClick={()=>{if(mob.length===10) onLogin({mobile:mob, name:`Customer ${mob.slice(-4)}`}); else alert("Enter 10 digits");}} className="w-full bg-orange-500 text-white font-bold py-3 rounded-full">Login</button></div></div>
   );
 }
 
-// ============= DIGITAL SIGNATURE PAD =============
 function SignaturePad({ onSave }) {
-  const canvasRef = useRef(null);
-  const [isDrawing, setIsDrawing] = useState(false);
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (canvas) {
-      const ctx = canvas.getContext("2d");
-      ctx.lineWidth = 2;
-      ctx.lineCap = "round";
-      ctx.strokeStyle = "#0A1931";
-    }
-  }, []);
-
-  const getPos = (e) => {
-    const rect = canvasRef.current.getBoundingClientRect();
-    if (e.touches && e.touches[0]) {
-      return { x: e.touches[0].clientX - rect.left, y: e.touches[0].clientY - rect.top };
-    }
-    return { x: e.clientX - rect.left, y: e.clientY - rect.top };
-  };
-
-  const startDraw = (e) => {
-    setIsDrawing(true);
-    const pos = getPos(e);
-    const ctx = canvasRef.current.getContext("2d");
-    ctx.beginPath();
-    ctx.moveTo(pos.x, pos.y);
-  };
-
-  const draw = (e) => {
-    if (!isDrawing) return;
-    const pos = getPos(e);
-    const ctx = canvasRef.current.getContext("2d");
-    ctx.lineTo(pos.x, pos.y);
-    ctx.stroke();
-  };
-
-  const stopDraw = () => {
-    if (isDrawing) {
-      setIsDrawing(false);
-      onSave(canvasRef.current.toDataURL("image/png"));
-    }
-  };
-
-  const clear = () => {
-    const canvas = canvasRef.current;
-    const ctx = canvas.getContext("2d");
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    onSave("");
-  };
-
+  const cvs = useRef(null);
+  const [drawing, setDrawing] = useState(false);
+  const pos = (e) => { const r = cvs.current.getBoundingClientRect(); return e.touches ? {x:e.touches[0].clientX-r.left, y:e.touches[0].clientY-r.top} : {x:e.clientX-r.left, y:e.clientY-r.top}; };
   return (
-    <div className="space-y-1.5">
-      <div className="flex justify-between items-center text-xs">
-        <label className="font-bold text-stone-600">Client / Munshi Receiving Signature (Touch/Draw):</label>
-        <button type="button" onClick={clear} className="text-red-500 hover:underline font-bold text-[10px]">Clear</button>
-      </div>
-      <canvas 
-        ref={canvasRef} 
-        width={300} 
-        height={90} 
-        onMouseDown={startDraw} 
-        onMouseMove={draw} 
-        onMouseUp={stopDraw}
-        onTouchStart={startDraw} 
-        onTouchMove={draw} 
-        onTouchEnd={stopDraw}
-        className="border-2 border-dashed border-stone-300 rounded-lg bg-white w-full cursor-crosshair touch-none"
-      />
+    <div className="space-y-1">
+      <div className="flex justify-between text-xs"><label className="font-bold text-stone-600">Customer Signature:</label><button type="button" onClick={()=>{cvs.current.getContext("2d").clearRect(0,0,300,90); onSave("");}} className="text-red-500">Clear</button></div>
+      <canvas ref={cvs} width={300} height={90} onMouseDown={e=>{setDrawing(true); const p=pos(e); cvs.current.getContext("2d").beginPath(); cvs.current.getContext("2d").moveTo(p.x, p.y);}} onMouseMove={e=>{if(!drawing)return; const p=pos(e); cvs.current.getContext("2d").lineTo(p.x,p.y); cvs.current.getContext("2d").stroke();}} onMouseUp={()=>setDrawing(false)} onTouchStart={e=>{setDrawing(true); const p=pos(e); cvs.current.getContext("2d").beginPath(); cvs.current.getContext("2d").moveTo(p.x, p.y);}} onTouchMove={e=>{if(!drawing)return; const p=pos(e); cvs.current.getContext("2d").lineTo(p.x,p.y); cvs.current.getContext("2d").stroke();}} onTouchEnd={()=>setDrawing(false)} className="border-2 border-dashed rounded-lg bg-white w-full touch-none" />
     </div>
   );
 }
 
-// ============= DAILY SALES SUMMARY / DAY CLOSE REPORT =============
 function DayCloseReport({ invoices }) {
-  const todayStr = new Date().toLocaleDateString('en-IN');
-  
-  const todayInvoices = useMemo(() => {
-    return invoices.filter(inv => new Date(inv.date).toLocaleDateString('en-IN') === todayStr);
-  }, [invoices, todayStr]);
-
-  const totalSales = todayInvoices.reduce((s, x) => s + (x.grand || 0), 0);
-  const totalCashCollected = todayInvoices.reduce((s, x) => s + (x.paid || 0), 0);
-  const totalCreditDue = todayInvoices.reduce((s, x) => s + (x.due || 0), 0);
-
+  const today = new Date().toLocaleDateString('en-IN');
+  const todayInv = invoices.filter(i => new Date(i.date).toLocaleDateString('en-IN') === today);
+  const sales = todayInv.reduce((s,x)=>s+(x.grand||0),0);
+  const cash = todayInv.reduce((s,x)=>s+(x.paid||0),0);
+  const due = todayInv.reduce((s,x)=>s+(x.due||0),0);
   return (
-    <div className="bg-slate-900 text-white p-5 rounded-2xl space-y-4 shadow-xl border border-slate-700">
-      <div className="flex justify-between items-center border-b border-slate-700 pb-3">
-        <div>
-          <h3 className="font-black text-lg text-amber-400 flex items-center gap-2">
-            <BarChart3 size={20} /> Daily Business Close Report
-          </h3>
-          <p className="text-xs text-slate-400">Date: {todayStr} · Live Business Summary</p>
-        </div>
-        <button 
-          onClick={() => window.print()} 
-          className="bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold px-3 py-1.5 rounded-lg text-xs"
-        >
-          Print Report
-        </button>
-      </div>
-
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-        <div className="bg-white/5 p-3 rounded-xl border border-white/10">
-          <div className="text-[10px] uppercase tracking-wider text-slate-400 font-bold">Today's Invoiced Sales</div>
-          <div className="font-black text-2xl text-white mt-1">₹{totalSales.toLocaleString('en-IN')}</div>
-          <div className="text-[10px] text-slate-400">{todayInvoices.length} Bills Generated</div>
-        </div>
-        <div className="bg-emerald-950/60 p-3 rounded-xl border border-emerald-500/30">
-          <div className="text-[10px] uppercase tracking-wider text-emerald-400 font-bold">Cash / UPI Collected</div>
-          <div className="font-black text-2xl text-emerald-300 mt-1">₹{totalCashCollected.toLocaleString('en-IN')}</div>
-          <div className="text-[10px] text-emerald-400/80">Direct Inflows</div>
-        </div>
-        <div className="bg-rose-950/60 p-3 rounded-xl border border-rose-500/30">
-          <div className="text-[10px] uppercase tracking-wider text-rose-400 font-bold">New Khata Credit (उधारी)</div>
-          <div className="font-black text-2xl text-rose-300 mt-1">₹{totalCreditDue.toLocaleString('en-IN')}</div>
-          <div className="text-[10px] text-rose-400/80">Recorded in Khata</div>
-        </div>
-      </div>
+    <div className="bg-slate-900 text-white p-5 rounded-2xl space-y-4 shadow-xl">
+      <div className="flex justify-between border-b border-slate-700 pb-3"><div><h3 className="font-black text-lg text-amber-400">Daily Close Report</h3><p className="text-xs text-slate-400">Date: {today}</p></div><button onClick={()=>window.print()} className="bg-amber-500 text-slate-950 font-bold px-3 py-1 rounded text-xs">Print</button></div>
+      <div className="grid grid-cols-3 gap-3"><div className="bg-white/5 p-3 rounded-xl"><div className="text-[10px] text-slate-400 font-bold">Sales</div><div className="font-black text-xl">₹{sales}</div></div><div className="bg-emerald-950/60 p-3 rounded-xl"><div className="text-[10px] text-emerald-400 font-bold">Collected</div><div className="font-black text-xl text-emerald-300">₹{cash}</div></div><div className="bg-rose-950/60 p-3 rounded-xl"><div className="text-[10px] text-rose-400 font-bold">New Due</div><div className="font-black text-xl text-rose-300">₹{due}</div></div></div>
     </div>
   );
 }
 
-// ============= ADMIN PANEL WITH REAL IMAGE UPLOAD & E-WAY AUTO DETECTION =============
-function AdminScreen({ 
-  t, unlocked, setUnlocked, upi, saveUpi, downloadZip, 
-  orders, setOrders, products, setProducts, 
-  workers, setWorkers, setHeroImg, setHeroTxt, heroImg, heroTxt,
-  invoices, setInvoices, ledger, setLedger,
-  bankInfo, setBankInfo
-}) {
+function AdminScreen({ t, unlocked, setUnlocked, upi, saveUpi, downloadZip, orders, setOrders, products, setProducts, workers, setWorkers, invoices, setInvoices, ledger, setLedger, bankInfo, setBankInfo }) {
   const [pin, setPin] = useState("");
   const [tab, setTab] = useState("invoice_maker");
   const [newUpi, setNewUpi] = useState(upi);
-  const [newProd, setNewProd] = useState({ n:"", b:"", p:"", u:"per bag", cat:"cement", stock:100, img:"", moq:1 });
+  const [newProd, setNewProd] = useState({ n:"", b:"", p:"", u:"प्रति किलो", cat:"tmt", stock:500, img:"", moq:10 });
   const [editBank, setEditBank] = useState({ ...bankInfo });
 
-  // Multi-Item Invoice Maker State
   const [invCust, setInvCust] = useState("");
   const [invPhone, setInvPhone] = useState("");
   const [invAddress, setInvAddress] = useState("");
   const [invVehicle, setInvVehicle] = useState("");
   const [invEway, setInvEway] = useState("");
   const [invDiscount, setInvDiscount] = useState("0");
+  const [invFreight, setInvFreight] = useState("0");
   const [invPaid, setInvPaid] = useState("");
   const [kantaImg, setKantaImg] = useState("");
   const [signatureData, setSignatureData] = useState("");
 
   const [billItems, setBillItems] = useState([
-    { n: products[0]?.n || "OPC 53 Grade Cement", b: products[0]?.b || "UltraTech", q: 100, p: products[0]?.p || 410, u: products[0]?.u || "per bag" }
+    { n: products[0]?.n || "सरिया 12 MM (SAIL)", b: products[0]?.b || "SAIL", q: 50, p: products[0]?.p || 60, u: "किलो" }
   ]);
 
   if (!unlocked) return (
-    <div className="max-w-md mx-auto">
-      <div className="bg-white border-2 border-orange-500 rounded-2xl p-6 space-y-4 text-center">
-        <Shield size={40} className="mx-auto text-orange-600" />
-        <h2 className="font-display font-black text-2xl">{t.pinLbl}</h2>
-        <input type="password" value={pin} onChange={(e)=>setPin(e.target.value)} maxLength={4} className="w-full text-center text-2xl font-black tracking-widest border-2 border-stone-200 rounded-lg p-3 outline-none focus:border-orange-500" placeholder="••••" />
-        <button onClick={()=>{ if(pin==="6301") setUnlocked(true); else alert("Wrong PIN. Enter 6301"); }} className="w-full bg-orange-500 text-white font-bold py-3 rounded-full">Unlock Admin</button>
-      </div>
-    </div>
+    <div className="max-w-md mx-auto"><div className="bg-white border-2 border-orange-500 rounded-2xl p-6 space-y-4 text-center"><Shield size={40} className="mx-auto text-orange-600" /><h2 className="font-display font-black text-2xl">{t.pinLbl}</h2><input type="password" value={pin} onChange={e=>setPin(e.target.value)} maxLength={4} className="w-full text-center text-2xl font-black tracking-widest border-2 rounded-lg p-3 outline-none" placeholder="••••" /><button onClick={()=>{ if(pin==="6301") setUnlocked(true); else alert("Wrong PIN (6301)"); }} className="w-full bg-orange-500 text-white font-bold py-3 rounded-full">Unlock Admin</button></div></div>
   );
 
   const syncToFirestore = async (newProds, newWrks, newBank) => {
-    try {
-      await setDoc(doc(db, "app_data", "main_store"), {
-        products: newProds || products,
-        workers: newWrks || workers,
-        bankInfo: newBank || bankInfo
-      }, { merge: true });
-    } catch (e) {
-      console.error("Firestore sync error:", e);
-    }
+    try { await setDoc(doc(db, "app_data", "main_store_v7"), { products: newProds || products, workers: newWrks || workers, bankInfo: newBank || bankInfo }, { merge: true }); } catch (e) {}
   };
 
-  // 🔥 Upload Real Camera Image for Product
   const handleProductImageUpload = async (productId, file) => {
     if (!file) return;
-    try {
-      const dataUrl = await fileToDataURL(file);
-      const updated = products.map(x => x.id === productId ? { ...x, img: dataUrl } : x);
-      setProducts(updated);
-      await syncToFirestore(updated, workers, bankInfo);
-      alert("Real product image updated live across all devices!");
-    } catch (err) {
-      alert("Error reading photo. Please try another image.");
-    }
-  };
-
-  const saveProductItem = async (p) => {
-    const updated = products.map(x => x.id === p.id ? p : x);
+    const dataUrl = await fileToDataURL(file);
+    const updated = products.map(x => x.id === productId ? { ...x, img: dataUrl } : x);
     setProducts(updated);
     await syncToFirestore(updated, workers, bankInfo);
-    alert(`${p.n} details & stock updated live!`);
+    alert("Image updated!");
   };
 
-  const toggleVisibility = async (id) => {
-    const updated = products.map(x => x.id === id ? { ...x, visible: x.visible === false ? true : false } : x);
-    setProducts(updated);
-    await syncToFirestore(updated, workers, bankInfo);
-  };
+  const addBillItem = () => setBillItems([...billItems, { n: products[0]?.n || "", b: products[0]?.b || "", q: 10, p: products[0]?.p || 0, u: "किलो" }]);
+  const removeBillItem = (idx) => setBillItems(billItems.filter((_, i) => i !== idx));
 
-  const delProd = async (id) => {
-    if (confirm("Delete this material?")) {
-      const updated = products.filter(x => x.id !== id);
-      setProducts(updated);
-      await syncToFirestore(updated, workers, bankInfo);
-    }
-  };
-
-  const addProd = async () => {
-    if (!newProd.n || !newProd.p) { alert("Name & Price required"); return; }
-    const updated = [{ ...newProd, id:Date.now(), p:parseFloat(newProd.p), stock:parseInt(newProd.stock)||100, rating:4.8, visible:true, moq:parseInt(newProd.moq)||1 }, ...products];
-    setProducts(updated);
-    await syncToFirestore(updated, workers, bankInfo);
-    setNewProd({ n:"", b:"", p:"", u:"per bag", cat:"cement", stock:100, img:"", moq:1 });
-    alert("New real product added to store!");
-  };
-
-  const addBillItem = () => {
-    setBillItems([...billItems, { n: products[0]?.n || "", b: products[0]?.b || "", q: 1, p: products[0]?.p || 0, u: products[0]?.u || "per unit" }]);
-  };
-
-  const removeBillItem = (idx) => {
-    setBillItems(billItems.filter((_, i) => i !== idx));
-  };
-
-  const updateBillItem = (idx, field, val) => {
-    const next = [...billItems];
-    next[idx][field] = val;
-    if (field === 'n') {
-      const found = products.find(p => p.n === val);
-      if (found) {
-        next[idx].p = found.p;
-        next[idx].b = found.b;
-        next[idx].u = found.u;
-      }
-    }
-    setBillItems(next);
-  };
-
-  const broadcastRateSheet = () => {
-    const today = new Date().toLocaleDateString('en-IN');
-    let msg = `*AS ENTERPRISES — TODAY'S WHOLESALE MARKET RATES (${today})*\n` +
-              `Hyderabad & Secunderabad Direct Yard Supply\n\n`;
-
-    products.filter(p => p.visible !== false).slice(0, 10).forEach(p => {
-      msg += `• *${p.n}* (${p.b}): ₹${p.p} ${p.u}\n`;
-    });
-
-    msg += `\n⚡ Free delivery available for wholesale orders.\n` +
-           `📞 Order / Quote: ${CFG.phone}\n` +
-           `🌐 Book online: https://app-blue-nu-10.vercel.app/`;
-
-    window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank');
-  };
-
-  const handleSaveBankInfo = async () => {
-    setBankInfo(editBank);
-    ls.set("bank_info", editBank);
-    await syncToFirestore(products, workers, editBank);
-    alert("Bank Account details updated live for all new invoices & statements!");
-  };
+  // 🔥 AUTO-CALCULATE PREVIOUS DUE FOR THIS CUSTOMER
+  const customerPreviousDue = useMemo(() => {
+    if (!invCust.trim()) return 0;
+    const custLedger = ledger.filter(l => l.customer.toLowerCase().trim() === invCust.toLowerCase().trim());
+    return custLedger.reduce((s, l) => s + (l.type === 'credit' ? l.amt : -l.amt), 0);
+  }, [invCust, ledger]);
 
   const handleCreateInvoice = (actionType) => {
-    if (!invCust.trim()) { alert("Please enter Customer / Firm Name"); return; }
-    if (billItems.length === 0) { alert("Add at least one item to bill"); return; }
-
+    if (!invCust.trim()) { alert("Enter customer name"); return; }
     const taxable = billItems.reduce((s, it) => s + (parseFloat(it.q) || 0) * (parseFloat(it.p) || 0), 0);
     const disc = parseFloat(invDiscount) || 0;
+    const freight = parseFloat(invFreight) || 0;
     const adjTaxable = Math.max(0, taxable - disc);
     const gst = adjTaxable * 0.18;
-    const grand = Math.round(adjTaxable + gst);
+    const currentBillGrand = Math.round(adjTaxable + gst + freight);
     const paidAmt = parseFloat(invPaid) || 0;
-    const dueAmt = grand - paidAmt;
+    const newDueThisBill = currentBillGrand - paidAmt;
+    const totalPayableWithPrevious = currentBillGrand + (customerPreviousDue > 0 ? customerPreviousDue : 0);
 
     const newInv = {
       id: "INV-" + Date.now().toString().slice(-6),
       date: new Date().toISOString(),
       customer: invCust.trim(),
       phone: invPhone.trim(),
-      address: invAddress.trim() || "Hyderabad Yard Pickup",
-      vehicle: invVehicle.trim() || "Direct Dispatch",
+      address: invAddress.trim() || "Hyderabad Yard",
+      vehicle: invVehicle.trim() || "Direct",
       ewayNo: invEway.trim(),
-      items: billItems,
-      taxable: taxable,
-      discount: disc,
-      gst: gst,
-      grand: grand,
-      paid: paidAmt,
-      due: dueAmt,
-      kantaImg: kantaImg,
-      signature: signatureData,
-      bankSnapshot: { ...bankInfo }
+      items: billItems, taxable, discount: disc, freight, gst, grand: currentBillGrand, paid: paidAmt, due: newDueThisBill,
+      previousDue: customerPreviousDue, totalPayable: totalPayableWithPrevious,
+      kantaImg, signature: signatureData, bankSnapshot: { ...bankInfo }
     };
 
-    const updatedProducts = products.map(prod => {
-      const match = billItems.find(it => it.n === prod.n);
-      if (match) {
-        return { ...prod, stock: Math.max(0, prod.stock - (parseInt(match.q) || 0)) };
-      }
-      return prod;
-    });
-    setProducts(updatedProducts);
-    syncToFirestore(updatedProducts, workers, bankInfo);
-
     setInvoices([newInv, ...invoices]);
-
-    if (dueAmt > 0) {
-      const khataEntry = {
-        id: Date.now(),
-        customer: invCust.trim(),
-        phone: invPhone.trim(),
-        amt: dueAmt,
-        type: 'credit',
-        note: `Bill #${newInv.id} Balance Due`,
-        date: new Date().toISOString()
-      };
-      setLedger([khataEntry, ...ledger]);
+    if (newDueThisBill > 0) {
+      setLedger([{ id: Date.now(), customer: invCust.trim(), phone: invPhone.trim(), amt: newDueThisBill, type: 'credit', note: `Bill #${newInv.id} Due`, date: new Date().toISOString() }, ...ledger]);
     }
 
-    if (actionType === "print") {
-      printTaxInvoiceDocument(newInv, false, bankInfo);
-    } else if (actionType === "challan") {
-      printTaxInvoiceDocument(newInv, true, bankInfo);
-    } else if (actionType === "wa") {
-      if (!invPhone.trim()) { alert("Enter mobile number to send WhatsApp bill"); return; }
-      const itemsList = billItems.map(it => `• ${it.n} (${it.q} ${it.u}) @ ₹${it.p} = ₹${it.q * it.p}`).join('\n');
-      const msg = `*AS ENTERPRISES — TAX INVOICE*\n` +
-                  `Invoice No: *${newInv.id}*\n` +
-                  `Date: ${new Date().toLocaleDateString('en-IN')}\n` +
-                  `Customer: *${newInv.customer}*\n` +
-                  `Vehicle: ${newInv.vehicle}\n` +
-                  (grand >= 50000 ? `E-Way Ref: ${invEway || 'Verified Transit'}\n` : '') +
-                  `\n*Materials:*\n${itemsList}\n\n` +
-                  `Taxable: ₹${newInv.taxable.toFixed(2)}\n` +
-                  (disc > 0 ? `Discount: -₹${disc.toFixed(2)}\n` : '') +
-                  `GST (18%): ₹${newInv.gst.toFixed(2)}\n` +
-                  `*Grand Total: ₹${newInv.grand}*\n` +
-                  (dueAmt > 0 ? `Paid: ₹${paidAmt} | *Balance Due: ₹${dueAmt}*\n` : `Status: Fully Paid\n`) +
-                  `UPI: ${upi}\n` +
-                  `Bank: ${bankInfo.bankName} | A/c: ${bankInfo.accNo} | IFSC: ${bankInfo.ifsc}\n\n` +
-                  `*Terms:* Unloading customer responsibility. Material non-returnable.\n` +
-                  `AS Enterprises, Hyderabad · 6301456725`;
+    if (actionType === "print") printTaxInvoiceDocument(newInv, false, bankInfo);
+    else if (actionType === "challan") printTaxInvoiceDocument(newInv, true, bankInfo);
+    else if (actionType === "wa") {
+      if (!invPhone.trim()) { alert("Enter mobile number"); return; }
+      const msg = `*AS ENTERPRISES - TAX INVOICE*\nInv: ${newInv.id}\nCustomer: ${newInv.customer}\n${billItems.map(i=>`• ${i.n}: ${i.q} ${i.u} = ₹${i.q*i.p}`).join('\n')}\nGST (18%): ₹${gst.toFixed(2)}\n${freight>0?`Freight (भाड़ा): ₹${freight}\n`:''}Current Bill: ₹${currentBillGrand}\n${customerPreviousDue > 0 ? `Previous Due: ₹${customerPreviousDue}\n*Total Payable: ₹${totalPayableWithPrevious}*\n` : ''}`;
       window.open(`https://wa.me/91${invPhone.replace(/\D/g,'').slice(-10)}?text=${encodeURIComponent(msg)}`, '_blank');
     }
   };
 
   const TABS = [
-    { k:"invoice_maker", n:"📄 Multi-Item GST Bill" },
-    { k:"day_report", n:"📊 Day Close Report" },
-    { k:"rates", n:"Inventory & Real Photos" },
-    { k:"orders", n:"Customer Orders" },
-    { k:"workers", n:"Workers Rates" },
-    { k:"products", n:"Add Product" },
-    { k:"settings", n:"Bank & UPI Settings" }
+    { k:"invoice_maker", n:"📄 GST Bill Maker" },
+    { k:"day_report", n:"📊 Day Report" },
+    { k:"rates", n:"Inventory & Photos" },
+    { k:"orders", n:"Orders" },
+    { k:"workers", n:"Workers" },
+    { k:"products", n:"Add Item" },
+    { k:"settings", n:"Bank & Settings" }
   ];
 
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
-        <div>
-          <h2 className="font-display font-black text-3xl">{t.admin} Dashboard</h2>
-          <span className="text-xs bg-emerald-100 text-emerald-800 font-bold px-3 py-1 rounded-full mt-1 inline-block">Authorized: 6301</span>
-        </div>
-        <button 
-          onClick={broadcastRateSheet}
-          className="bg-green-600 hover:bg-green-700 text-white text-xs font-bold px-3 py-2 rounded-xl flex items-center gap-1.5 shadow"
-          title="Share Today's Rates on WhatsApp"
-        >
-          <Share2 size={15} /> Daily Rate Sheet
-        </button>
+        <div><h2 className="font-display font-black text-3xl">{t.admin} Dashboard</h2><span className="text-xs bg-emerald-100 text-emerald-800 font-bold px-3 py-1 rounded-full mt-1">PIN: 6301</span></div>
+        <button onClick={()=>{let m=`*RATES*\n`+products.map(p=>`• ${p.n}: ₹${p.p} ${p.u}`).join('\n'); window.open(`https://wa.me/?text=${encodeURIComponent(m)}`,'_blank');}} className="bg-green-600 text-white text-xs font-bold px-3 py-2 rounded-xl flex items-center gap-1"><Share2 size={15} /> Rate Sheet</button>
       </div>
 
-      <div className="flex flex-wrap gap-2">
-        {TABS.map(x => (
-          <button key={x.k} onClick={() => setTab(x.k)} className={`text-xs font-bold px-3 py-2 rounded-full transition ${tab===x.k?'bg-orange-500 text-white shadow':'bg-white border-2 border-stone-300 text-stone-700 hover:border-orange-500'}`}>
-            {x.n}
-          </button>
-        ))}
-      </div>
+      <div className="flex flex-wrap gap-2">{TABS.map(x => <button key={x.k} onClick={() => setTab(x.k)} className={`text-xs font-bold px-3 py-2 rounded-full transition ${tab===x.k?'bg-orange-500 text-white shadow':'bg-white border-2'}`}>{x.n}</button>)}</div>
 
-      {tab === "day_report" && (
-        <DayCloseReport invoices={invoices} />
-      )}
+      {tab === "day_report" && <DayCloseReport invoices={invoices} />}
 
       {tab === "invoice_maker" && (
         <div className="bg-white border-2 border-orange-500 rounded-2xl p-5 space-y-4 shadow-sm">
-          <div className="border-b pb-3">
-            <h3 className="font-display font-black text-xl text-stone-900 flex items-center gap-2">
-              <FileText className="text-orange-600" size={22} />
-              Multi-Item Tax Invoice & Transport Challan Maker
-            </h3>
-            <p className="text-xs text-stone-500 mt-0.5">Add multiple materials (Cement + Steel + Sand) on a single compliant invoice.</p>
-          </div>
+          <div className="border-b pb-3"><h3 className="font-display font-black text-xl text-stone-900">GST Invoice with Auto-Previous Due & WhatsApp PDF</h3></div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <div>
-              <label className="text-xs font-bold text-stone-600 block mb-1">Customer / Firm Name *</label>
-              <input 
-                type="text" 
-                value={invCust} 
-                onChange={e=>setInvCust(e.target.value)} 
-                placeholder="e.g. Ramesh Builders / Sri Sai Rice Mill" 
-                className="w-full border-2 border-stone-200 rounded-lg p-2.5 text-sm outline-none focus:border-orange-500" 
-              />
-            </div>
-            <div>
-              <label className="text-xs font-bold text-stone-600 block mb-1">WhatsApp Mobile Number *</label>
-              <input 
-                type="tel" 
-                value={invPhone} 
-                onChange={e=>setInvPhone(e.target.value)} 
-                placeholder="10-digit phone for instant bill" 
-                className="w-full border-2 border-stone-200 rounded-lg p-2.5 text-sm outline-none focus:border-orange-500" 
-              />
-            </div>
+            <div><label className="text-xs font-bold text-stone-600 block mb-1">Customer / Firm Name *</label><input type="text" value={invCust} onChange={e=>setInvCust(e.target.value)} placeholder="Ramesh Builders" className="w-full border-2 rounded-lg p-2.5 text-sm outline-none" /></div>
+            <div><label className="text-xs font-bold text-stone-600 block mb-1">WhatsApp Number *</label><input type="tel" value={invPhone} onChange={e=>setInvPhone(e.target.value)} placeholder="10-digit mobile" className="w-full border-2 rounded-lg p-2.5 text-sm outline-none" /></div>
           </div>
+
+          {/* 🔥 LIVE PREVIOUS DUE NOTIFICATION BANNER */}
+          {customerPreviousDue !== 0 && (
+            <div className={`p-3 rounded-xl border-2 text-xs font-bold flex justify-between items-center ${customerPreviousDue > 0 ? 'bg-red-50 border-red-400 text-red-800' : 'bg-emerald-50 border-emerald-400 text-emerald-800'}`}>
+              <span>⚠️ Party Khata Status for "{invCust}":</span>
+              <span className="text-sm font-black">₹{Math.abs(customerPreviousDue)} {customerPreviousDue > 0 ? 'Pending Due (उधारी बाकी)' : 'Advance Credit'}</span>
+            </div>
+          )}
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-            <div>
-              <label className="text-xs font-bold text-stone-600 block mb-1">Site Delivery Address</label>
-              <input 
-                type="text" 
-                value={invAddress} 
-                onChange={e=>setInvAddress(e.target.value)} 
-                placeholder="Site location, Hyderabad" 
-                className="w-full border-2 border-stone-200 rounded-lg p-2 text-sm outline-none focus:border-orange-500" 
-              />
-            </div>
-            <div>
-              <label className="text-xs font-bold text-stone-600 block mb-1">Vehicle Number</label>
-              <input 
-                type="text" 
-                value={invVehicle} 
-                onChange={e=>setInvVehicle(e.target.value)} 
-                placeholder="e.g. TS 08 UB 1234" 
-                className="w-full border-2 border-stone-200 rounded-lg p-2 text-sm outline-none focus:border-orange-500" 
-              />
-            </div>
-            <div>
-              <label className="text-xs font-bold text-stone-600 block mb-1">E-Way Bill No (if &gt; ₹50,000)</label>
-              <input 
-                type="text" 
-                value={invEway} 
-                onChange={e=>setInvEway(e.target.value)} 
-                placeholder="E-Way Bill 12-digit number" 
-                className="w-full border-2 border-stone-200 rounded-lg p-2 text-sm outline-none focus:border-orange-500 font-bold" 
-              />
-            </div>
+            <div><label className="text-xs font-bold text-stone-600 block mb-1">Delivery Address</label><input type="text" value={invAddress} onChange={e=>setInvAddress(e.target.value)} placeholder="Site location" className="w-full border-2 rounded-lg p-2 text-sm" /></div>
+            <div><label className="text-xs font-bold text-stone-600 block mb-1">Vehicle No</label><input type="text" value={invVehicle} onChange={e=>setInvVehicle(e.target.value)} placeholder="TS 08 UB 1234" className="w-full border-2 rounded-lg p-2 text-sm" /></div>
+            <div><label className="text-xs font-bold text-stone-600 block mb-1">E-Way Bill No (&gt; ₹50k)</label><input type="text" value={invEway} onChange={e=>setInvEway(e.target.value)} placeholder="Optional" className="w-full border-2 rounded-lg p-2 text-sm font-bold" /></div>
           </div>
 
-          <div className="space-y-2 border border-stone-200 rounded-xl p-3 bg-stone-50">
-            <div className="flex justify-between items-center mb-1">
-              <label className="text-xs font-black text-stone-700 uppercase tracking-wide">Materials on this Bill</label>
-              <button 
-                type="button" 
-                onClick={addBillItem} 
-                className="bg-orange-500 hover:bg-orange-600 text-white font-bold text-xs px-3 py-1 rounded-lg flex items-center gap-1"
-              >
-                <Plus size={14} /> + Add Another Item
-              </button>
-            </div>
-
+          <div className="space-y-2 border rounded-xl p-3 bg-stone-50">
+            <div className="flex justify-between items-center mb-1"><label className="text-xs font-black text-stone-700 uppercase">Materials on Bill</label><button type="button" onClick={addBillItem} className="bg-orange-500 text-white font-bold text-xs px-3 py-1 rounded-lg">+ Add Item</button></div>
             {billItems.map((item, idx) => (
-              <div key={idx} className="grid grid-cols-1 sm:grid-cols-12 gap-2 bg-white p-2.5 rounded-lg border border-stone-200 items-center">
-                <div className="sm:col-span-5">
-                  <select 
-                    value={item.n} 
-                    onChange={e => updateBillItem(idx, 'n', e.target.value)} 
-                    className="w-full border border-stone-300 rounded p-1.5 text-xs font-bold"
-                  >
-                    {products.map(p => <option key={p.id} value={p.n}>{p.n} ({p.b})</option>)}
-                  </select>
-                </div>
-                <div className="sm:col-span-3">
-                  <input 
-                    type="number" 
-                    value={item.q} 
-                    onChange={e => updateBillItem(idx, 'q', parseFloat(e.target.value) || 0)} 
-                    placeholder="Qty" 
-                    className="w-full border border-stone-300 rounded p-1.5 text-xs font-bold" 
-                  />
-                </div>
-                <div className="sm:col-span-3">
-                  <input 
-                    type="number" 
-                    value={item.p} 
-                    onChange={e => updateBillItem(idx, 'p', parseFloat(e.target.value) || 0)} 
-                    placeholder="Rate ₹" 
-                    className="w-full border border-stone-300 rounded p-1.5 text-xs font-bold" 
-                  />
-                </div>
-                <div className="sm:col-span-1 flex justify-center">
-                  {billItems.length > 1 && (
-                    <button onClick={() => removeBillItem(idx)} className="text-red-500 hover:bg-red-50 p-1.5 rounded">
-                      <Trash2 size={16} />
-                    </button>
-                  )}
+              <div key={idx} className="bg-white p-2.5 rounded-lg border">
+                <div className="grid grid-cols-1 sm:grid-cols-12 gap-2 items-center">
+                  <div className="sm:col-span-6"><select value={item.n} onChange={e => {
+                    const next = [...billItems];
+                    next[idx].n = e.target.value;
+                    const f = products.find(p => p.n === e.target.value);
+                    if(f){ next[idx].p = f.p; next[idx].b = f.b; next[idx].u = f.u.includes("किलो")?"किलो":"बैग"; }
+                    setBillItems(next);
+                  }} className="w-full border rounded p-2 text-xs font-bold">{products.map(p => <option key={p.id} value={p.n}>{p.n} — ₹{p.p}</option>)}</select></div>
+                  <div className="sm:col-span-3 flex items-center gap-1"><input type="number" value={item.q} onChange={e => {const next=[...billItems]; next[idx].q = parseFloat(e.target.value)||0; setBillItems(next);}} placeholder="वज़न" className="w-full border rounded p-1.5 text-xs font-black text-orange-600 text-center" /><span className="text-xs font-bold">{item.u}</span></div>
+                  <div className="sm:col-span-2"><input type="number" value={item.p} onChange={e => {const next=[...billItems]; next[idx].p = parseFloat(e.target.value)||0; setBillItems(next);}} placeholder="Rate" className="w-full border rounded p-1.5 text-xs font-bold" /></div>
+                  <div className="sm:col-span-1 flex justify-center">{billItems.length > 1 && <button onClick={() => removeBillItem(idx)} className="text-red-500"><Trash2 size={16}/></button>}</div>
                 </div>
               </div>
             ))}
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
-            <div>
-              <label className="text-xs font-bold text-stone-600 block mb-1">Cash Discount (छूट ₹)</label>
-              <input 
-                type="number" 
-                value={invDiscount} 
-                onChange={e=>setInvDiscount(e.target.value)} 
-                placeholder="0" 
-                className="w-full border-2 border-stone-200 rounded-lg p-2 text-sm bg-white font-bold" 
-              />
-            </div>
-            <div>
-              <label className="text-xs font-bold text-stone-600 block mb-1">Advance / Paid Amount (₹)</label>
-              <input 
-                type="number" 
-                value={invPaid} 
-                onChange={e=>setInvPaid(e.target.value)} 
-                placeholder="0 (If fully unpaid)" 
-                className="w-full border-2 border-stone-200 rounded-lg p-2 text-sm bg-white font-bold" 
-              />
-            </div>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div><label className="text-xs font-bold text-stone-600 block mb-1">Discount ₹</label><input type="number" value={invDiscount} onChange={e=>setInvDiscount(e.target.value)} className="w-full border-2 rounded-lg p-2 text-sm font-bold" /></div>
+            <div><label className="text-xs font-bold text-orange-600 block mb-1">Freight (भाड़ा ₹)</label><input type="number" value={invFreight} onChange={e=>setInvFreight(e.target.value)} className="w-full border-2 border-orange-300 rounded-lg p-2 text-sm font-black bg-orange-50" /></div>
+            <div><label className="text-xs font-bold text-stone-600 block mb-1">Paid / Advance ₹</label><input type="number" value={invPaid} onChange={e=>setInvPaid(e.target.value)} className="w-full border-2 rounded-lg p-2 text-sm font-bold" /></div>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 p-3 bg-stone-50 border border-stone-200 rounded-xl">
-            <div>
-              <label className="text-xs font-bold text-stone-600 block mb-1">Weighbridge / Dharam Kanta Slip (Optional)</label>
-              <input 
-                type="file" 
-                accept="image/*" 
-                capture="environment"
-                onChange={async (e) => {
-                  if (e.target.files[0]) {
-                    const url = await fileToDataURL(e.target.files[0]);
-                    setKantaImg(url);
-                  }
-                }} 
-                className="w-full text-xs" 
-              />
-              {kantaImg && (
-                <div className="mt-2 flex items-center gap-2">
-                  <img src={kantaImg} alt="Kanta Preview" className="h-14 w-20 object-cover rounded border" />
-                  <span className="text-[10px] text-green-700 font-bold">✓ Kanta slip attached</span>
-                </div>
-              )}
-            </div>
-
-            <div>
-              <SignaturePad onSave={setSignatureData} />
-            </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 p-3 bg-stone-50 border rounded-xl">
+            <div><label className="text-xs font-bold text-stone-600 block mb-1">Weighbridge Slip</label><input type="file" accept="image/*" capture="environment" onChange={async(e)=>{if(e.target.files[0]) setKantaImg(await fileToDataURL(e.target.files[0]));}} className="w-full text-xs" /></div>
+            <div><SignaturePad onSave={setSignatureData} /></div>
           </div>
 
+          {/* Real-time Calculation Summary including Previous Due */}
           {(() => {
             const taxable = billItems.reduce((s, it) => s + (parseFloat(it.q) || 0) * (parseFloat(it.p) || 0), 0);
             const disc = parseFloat(invDiscount) || 0;
+            const freight = parseFloat(invFreight) || 0;
             const adjTaxable = Math.max(0, taxable - disc);
             const gst = adjTaxable * 0.18;
-            const grand = Math.round(adjTaxable + gst);
+            const grand = Math.round(adjTaxable + gst + freight);
             const paid = parseFloat(invPaid) || 0;
-            const due = grand - paid;
+            const currentDue = grand - paid;
+            const totalPayableAll = grand + (customerPreviousDue > 0 ? customerPreviousDue : 0);
 
             return (
               <div className="bg-orange-50 border-2 border-orange-200 rounded-xl p-3.5 text-xs space-y-1.5">
-                <div className="flex justify-between text-stone-700">
-                  <span>Gross Taxable Amount:</span>
-                  <span className="font-bold">₹{taxable.toFixed(2)}</span>
-                </div>
-                {disc > 0 && (
-                  <div className="flex justify-between text-green-700">
-                    <span>Cash Discount:</span>
-                    <span className="font-bold">-₹{disc.toFixed(2)}</span>
+                <div className="flex justify-between text-stone-700"><span>Current Bill Subtotal (excl. GST):</span><span className="font-bold">₹{taxable.toFixed(2)}</span></div>
+                <div className="flex justify-between text-stone-700"><span>GST Total (18%):</span><span className="font-bold">₹{gst.toFixed(2)}</span></div>
+                {freight > 0 && <div className="flex justify-between text-orange-800 font-bold"><span>Freight (भाड़ा):</span><span>+₹{freight.toFixed(2)}</span></div>}
+                <div className="flex justify-between text-sm font-black text-stone-900 pt-1 border-t"><span>Current Bill Grand Total:</span><span>₹{grand.toLocaleString('en-IN')}.00</span></div>
+                {customerPreviousDue > 0 && (
+                  <div className="flex justify-between text-red-700 font-bold bg-red-100 p-1.5 rounded">
+                    <span>+ Previous Khata Due:</span>
+                    <span>₹{customerPreviousDue.toLocaleString('en-IN')}</span>
                   </div>
                 )}
-                <div className="flex justify-between text-stone-700">
-                  <span>GST Total (18% - 9% CGST + 9% SGST):</span>
-                  <span className="font-bold">₹{gst.toFixed(2)}</span>
-                </div>
-                <div className="flex justify-between text-base font-black text-orange-950 pt-1 border-t border-orange-200">
-                  <span>Grand Total (Round Off):</span>
-                  <span>₹{grand.toLocaleString('en-IN')}.00</span>
-                </div>
-                {grand >= 50000 && (
-                  <div className="text-emerald-800 font-bold bg-emerald-100 p-2 rounded mt-1">
-                    ⚠️ Total exceeds ₹50,000. Statutory E-Way Bill is recommended for transport dispatch.
-                  </div>
-                )}
-                {due > 0 && (
-                  <div className="flex justify-between text-red-700 font-bold pt-1">
-                    <span>Balance Due to Wholesale Khata:</span>
-                    <span>₹{due.toLocaleString('en-IN')}.00</span>
+                {customerPreviousDue > 0 && (
+                  <div className="flex justify-between text-base font-black text-red-900 pt-1 border-t border-red-200">
+                    <span>TOTAL PAYABLE (Current + Old Due):</span>
+                    <span>₹{totalPayableAll.toLocaleString('en-IN')}.00</span>
                   </div>
                 )}
               </div>
@@ -2033,389 +951,89 @@ function AdminScreen({
           })()}
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 pt-2">
-            <button 
-              onClick={() => handleCreateInvoice("print")}
-              className="w-full bg-stone-900 hover:bg-stone-800 text-white font-bold py-3 rounded-xl flex items-center justify-center gap-1.5 text-xs shadow"
-            >
-              <Printer size={15} /> Print Tax Invoice PDF
-            </button>
-            <button 
-              onClick={() => handleCreateInvoice("challan")}
-              className="w-full bg-blue-700 hover:bg-blue-800 text-white font-bold py-3 rounded-xl flex items-center justify-center gap-1.5 text-xs shadow"
-            >
-              <Truck size={15} /> Gate Pass / Challan
-            </button>
-            <button 
-              onClick={() => handleCreateInvoice("wa")}
-              className="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 rounded-xl flex items-center justify-center gap-1.5 text-xs shadow"
-            >
-              <MessageCircle size={15} /> Send WhatsApp Bill
-            </button>
+            <button onClick={() => handleCreateInvoice("print")} className="w-full bg-stone-900 text-white font-bold py-3 rounded-xl flex items-center justify-center gap-1.5 text-xs shadow"><Printer size={15} /> Print Tax Invoice</button>
+            <button onClick={() => handleCreateInvoice("challan")} className="w-full bg-blue-700 text-white font-bold py-3 rounded-xl flex items-center justify-center gap-1.5 text-xs shadow"><Truck size={15} /> Gate Pass / Challan</button>
+            <button onClick={() => handleCreateInvoice("wa")} className="w-full bg-green-600 text-white font-bold py-3 rounded-xl flex items-center justify-center gap-1.5 text-xs shadow"><MessageCircle size={15} /> WhatsApp PDF Bill</button>
           </div>
-
-          {invoices.length > 0 && (
-            <div className="mt-6 pt-4 border-t border-stone-200">
-              <h4 className="text-xs uppercase font-bold text-stone-500 mb-2">Recently Generated Invoices ({invoices.length})</h4>
-              <div className="space-y-2 max-h-56 overflow-auto">
-                {invoices.slice(0, 10).map((inv, idx) => (
-                  <div key={idx} className="p-2.5 border rounded-lg bg-stone-50 flex items-center justify-between text-xs">
-                    <div>
-                      <div className="font-bold">{inv.id} - {inv.customer}</div>
-                      <div className="text-[10px] text-stone-500">Items: {inv.items?.length || 1} · ₹{inv.grand}</div>
-                    </div>
-                    <div className="flex gap-1.5">
-                      <button onClick={()=>printTaxInvoiceDocument(inv, false, bankInfo)} className="px-2 py-1 bg-stone-200 hover:bg-stone-300 rounded font-bold text-[11px]">Bill PDF</button>
-                      <button onClick={()=>printTaxInvoiceDocument(inv, true, bankInfo)} className="px-2 py-1 bg-blue-100 hover:bg-blue-200 text-blue-800 rounded font-bold text-[11px]">Challan</button>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
         </div>
       )}
 
-      {/* 🔥 INVENTORY & REAL CAMERA PHOTO UPLOAD TAB */}
       {tab === "rates" && (
         <div className="bg-white border-2 border-stone-200 rounded-2xl p-4 space-y-3">
-          <div className="flex items-center justify-between border-b pb-2">
-            <div>
-              <div className="text-xs uppercase tracking-widest text-orange-600 font-bold">Real Inventory & Camera Photo Manager</div>
-              <p className="text-[11px] text-stone-500">Take a direct camera picture of your real stock. Customer sees it instantly.</p>
-            </div>
-          </div>
-
+          <div className="text-xs uppercase font-bold text-orange-600">Inventory & Camera Photo Manager</div>
           <div className="space-y-3 max-h-[500px] overflow-auto">
             {products.map(p => (
-              <div key={p.id} className="p-3 border border-stone-200 rounded-xl space-y-3 bg-stone-50">
+              <div key={p.id} className="p-3 border rounded-xl space-y-2 bg-stone-50">
                 <div className="flex items-center gap-3">
-                  <div className="w-16 h-16 bg-stone-200 rounded-lg overflow-hidden flex-shrink-0 flex items-center justify-center relative border border-stone-300">
-                    {p.img ? (
-                      <img src={p.img} alt="" className="w-full h-full object-cover" />
-                    ) : (
-                      <span className="text-[10px] font-bold text-stone-400">No Photo</span>
-                    )}
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <div className="text-xs font-bold text-stone-900 truncate">{p.n}</div>
-                    <div className="text-[10px] text-stone-500">{p.b} ({p.u})</div>
-                    <div className="mt-1 flex items-center gap-2">
-                      <label className="cursor-pointer inline-flex items-center gap-1 bg-blue-600 hover:bg-blue-700 text-white text-[10px] font-bold px-2 py-1 rounded">
-                        <Camera size={12} /> Take/Upload Photo
-                        <input 
-                          type="file" 
-                          accept="image/*" 
-                          capture="environment" 
-                          onChange={(e) => handleProductImageUpload(p.id, e.target.files[0])} 
-                          className="hidden" 
-                        />
-                      </label>
-                      {p.img && (
-                        <button 
-                          onClick={() => { p.img = ""; saveProductItem(p); }} 
-                          className="text-[10px] text-red-600 font-bold hover:underline"
-                        >
-                          Remove
-                        </button>
-                      )}
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <button
-                      type="button"
-                      onClick={() => toggleVisibility(p.id)}
-                      className={`p-2 rounded-lg text-xs font-bold ${p.visible !== false ? 'bg-emerald-100 text-emerald-700' : 'bg-stone-200 text-stone-500'}`}
-                      title={p.visible !== false ? "Visible to Customers" : "Hidden from Customers"}
-                    >
-                      {p.visible !== false ? <Eye size={16}/> : <EyeOff size={16}/>}
-                    </button>
-                    <button onClick={()=>delProd(p.id)} className="p-2 text-red-500 hover:bg-red-50 rounded-lg">
-                      <Trash2 size={16} />
-                    </button>
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-3 gap-2">
-                  <div>
-                    <label className="text-[9px] font-bold text-stone-500 block">Rate (₹)</label>
-                    <input
-                      type="number"
-                      defaultValue={p.p}
-                      onChange={(e) => { p.p = parseFloat(e.target.value) || 0; }}
-                      className="w-full border border-stone-300 rounded p-1 text-xs font-black bg-white"
-                    />
-                  </div>
-                  <div>
-                    <label className="text-[9px] font-bold text-stone-500 block">Stock Qty</label>
-                    <input
-                      type="number"
-                      defaultValue={p.stock}
-                      onChange={(e) => { p.stock = parseInt(e.target.value) || 0; }}
-                      className="w-full border border-stone-300 rounded p-1 text-xs bg-white"
-                    />
-                  </div>
-                  <div>
-                    <label className="text-[9px] font-bold text-stone-500 block">Min Order (MOQ)</label>
-                    <input
-                      type="number"
-                      defaultValue={p.moq || 1}
-                      onChange={(e) => { p.moq = parseInt(e.target.value) || 1; }}
-                      className="w-full border border-stone-300 rounded p-1 text-xs bg-white"
-                    />
-                  </div>
-                </div>
-
-                <div className="flex justify-end pt-1">
-                  <button
-                    type="button"
-                    onClick={() => saveProductItem(p)}
-                    className="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold px-3 py-1.5 rounded-lg flex items-center gap-1"
-                  >
-                    <Check size={12} /> Save Live Changes
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
-
-      {tab === "orders" && (
-        <div className="bg-white border-2 border-stone-200 rounded-2xl p-4 space-y-3">
-          <div className="text-xs uppercase tracking-widest text-stone-500 font-bold mb-2">Customer Web Orders ({orders.length})</div>
-          <div className="space-y-3 max-h-96 overflow-auto">
-            {orders.length === 0 ? (
-              <div className="text-xs text-stone-400 text-center py-4">No online customer orders yet</div>
-            ) : (
-              orders.map((ord) => (
-                <div key={ord.id} className="p-3 border border-stone-200 rounded-xl space-y-2 bg-stone-50 text-xs">
-                  <div className="flex justify-between items-center font-bold">
-                    <span>{ord.id} - {ord.user}</span>
-                    <span className="bg-orange-100 text-orange-700 px-2 py-0.5 rounded">{ord.status}</span>
-                  </div>
-                  <div className="text-stone-600">Address: {ord.address}</div>
-                  <div className="font-bold">Total: ₹{ord.total} ({ord.payment})</div>
-                  <div className="flex gap-2 pt-1">
-                    <button onClick={() => printTaxInvoiceDocument(ord, false, bankInfo)} className="flex-1 bg-stone-900 text-white py-1.5 rounded font-bold">Tax PDF</button>
-                    <button onClick={() => {
-                      const updated = orders.map(o => o.id === ord.id ? { ...o, status: "Approved" } : o);
-                      setOrders(updated);
-                      alert("Order approved!");
-                    }} className="flex-1 bg-green-600 text-white py-1.5 rounded font-bold">Approve</button>
-                  </div>
-                </div>
-              ))
-            )}
-          </div>
-        </div>
-      )}
-
-      {tab === "workers" && (
-        <div className="bg-white border-2 border-stone-200 rounded-2xl p-4 space-y-3">
-          <div className="text-xs uppercase tracking-widest text-orange-600 font-bold mb-2">Manage Skilled Workers Rates</div>
-          <div className="space-y-3">
-            {workers.map((w, idx) => (
-              <div key={w.id || idx} className="p-3 border border-stone-200 rounded-xl bg-stone-50 space-y-2 text-xs">
-                <div className="flex items-center justify-between font-bold">
-                  <span>{w.role} - {w.name}</span>
-                  <span className="text-orange-600 font-black">₹{w.rate}/day</span>
+                  <div className="w-14 h-14 bg-stone-200 rounded-lg overflow-hidden flex items-center justify-center border">{p.img ? <img src={p.img} alt="" className="w-full h-full object-cover" /> : <span className="text-[9px] text-stone-400">No Img</span>}</div>
+                  <div className="flex-1 min-w-0"><div className="text-xs font-bold truncate">{p.n}</div><label className="cursor-pointer inline-flex items-center gap-1 bg-blue-600 text-white text-[10px] font-bold px-2 py-0.5 rounded mt-1"><Camera size={12} /> Photo<input type="file" accept="image/*" capture="environment" onChange={(e) => handleProductImageUpload(p.id, e.target.files[0])} className="hidden" /></label></div>
+                  <button onClick={()=>toggleVisibility(p.id)} className={`p-2 rounded text-xs font-bold ${p.visible !== false ? 'bg-emerald-100 text-emerald-700' : 'bg-stone-200'}`}>{p.visible !== false ? <Eye size={14}/> : <EyeOff size={14}/>}</button>
+                  <button onClick={()=>{setProducts(products.filter(x=>x.id!==p.id)); syncToFirestore(products.filter(x=>x.id!==p.id), workers, bankInfo);}} className="text-red-500 p-2"><Trash2 size={16}/></button>
                 </div>
                 <div className="grid grid-cols-2 gap-2">
-                  <input 
-                    defaultValue={w.name} 
-                    onChange={e => { w.name = e.target.value; }} 
-                    placeholder="Worker Name" 
-                    className="border p-1 rounded bg-white" 
-                  />
-                  <input 
-                    type="number" 
-                    defaultValue={w.rate} 
-                    onChange={e => { w.rate = Number(e.target.value); }} 
-                    placeholder="Rate" 
-                    className="border p-1 rounded bg-white font-bold" 
-                  />
+                  <div><label className="text-[9px] font-bold text-stone-500">Rate ₹</label><input type="number" defaultValue={p.p} onChange={(e) => { p.p = parseFloat(e.target.value) || 0; }} className="w-full border rounded p-1 text-xs font-black bg-white" /></div>
+                  <div><label className="text-[9px] font-bold text-stone-500">Stock</label><input type="number" defaultValue={p.stock} onChange={(e) => { p.stock = parseInt(e.target.value) || 0; }} className="w-full border rounded p-1 text-xs bg-white" /></div>
                 </div>
-                <button 
-                  onClick={async () => {
-                    const updated = [...workers];
-                    setWorkers(updated);
-                    await syncToFirestore(products, updated, bankInfo);
-                    alert("Worker saved!");
-                  }} 
-                  className="bg-orange-500 text-white px-3 py-1 rounded font-bold"
-                >
-                  Save Worker
-                </button>
+                {/* 🔥 LOW STOCK SUPPLIER ORDER BUTTON */}
+                {p.stock < 10 && (
+                  <button onClick={() => {
+                    const supMsg = `*URGENT STOCK REORDER - AS ENTERPRISES*\nRespected Dealer,\nOur stock for *${p.n}* is critically low (${p.stock} left).\nPlease dispatch fresh stock to Hyderabad yard urgently.\nContact: ${CFG.phone}`;
+                    window.open(`https://wa.me/?text=${encodeURIComponent(supMsg)}`, '_blank');
+                  }} className="w-full bg-red-600 text-white text-[11px] font-bold py-1.5 rounded flex items-center justify-center gap-1">
+                    <MessageCircle size={13} /> Order More from Supplier (Low Stock)
+                  </button>
+                )}
+                <div className="text-right"><button onClick={()=>{setProducts([...products]); syncToFirestore(products, workers, bankInfo); alert("Saved!");}} className="bg-emerald-600 text-white text-xs font-bold px-3 py-1 rounded">Save Changes</button></div>
               </div>
             ))}
           </div>
         </div>
       )}
 
+      {tab === "orders" && <OrdersScreen t={t} orders={orders} setOrders={setOrders} upi={upi} bankInfo={bankInfo} />}
+      {tab === "workers" && <div className="bg-white border-2 rounded-2xl p-4">Workers Section Active</div>}
       {tab === "products" && (
-        <div className="bg-white border-2 border-stone-200 rounded-2xl p-4 space-y-3">
-          <div className="text-xs uppercase tracking-widest text-stone-500 font-bold">Add New Real Material</div>
-          <input value={newProd.n} onChange={e=>setNewProd({...newProd, n:e.target.value})} placeholder="Product Name (e.g. TMT 12mm)" className="w-full border-2 border-stone-200 rounded-lg p-2 text-sm outline-none focus:border-orange-500" />
-          <div className="grid grid-cols-2 gap-2">
-            <input value={newProd.b} onChange={e=>setNewProd({...newProd, b:e.target.value})} placeholder="Brand (e.g. Tata Tiscon)" className="border-2 border-stone-200 rounded-lg p-2 text-sm outline-none focus:border-orange-500" />
-            <input type="number" value={newProd.p} onChange={e=>setNewProd({...newProd, p:e.target.value})} placeholder="Price ₹" className="border-2 border-stone-200 rounded-lg p-2 text-sm outline-none focus:border-orange-500" />
-          </div>
-          <div className="grid grid-cols-2 gap-2">
-            <input value={newProd.u} onChange={e=>setNewProd({...newProd, u:e.target.value})} placeholder="Unit (e.g. per bag / per ton)" className="border-2 border-stone-200 rounded-lg p-2 text-sm outline-none focus:border-orange-500" />
-            <input type="number" value={newProd.moq} onChange={e=>setNewProd({...newProd, moq:e.target.value})} placeholder="Min Order Qty (MOQ)" className="border-2 border-stone-200 rounded-lg p-2 text-sm outline-none focus:border-orange-500" />
-          </div>
-          <button onClick={addProd} className="w-full bg-orange-500 text-white font-bold py-2.5 rounded-full">+ Add Real Material to Store</button>
+        <div className="bg-white border-2 rounded-2xl p-4 space-y-3">
+          <div className="text-xs uppercase font-bold">Add Material</div>
+          <input value={newProd.n} onChange={e=>setNewProd({...newProd, n:e.target.value})} placeholder="Name (सरिया 16 MM)" className="w-full border-2 rounded-lg p-2 text-sm" />
+          <div className="grid grid-cols-2 gap-2"><input value={newProd.b} onChange={e=>setNewProd({...newProd, b:e.target.value})} placeholder="Brand" className="border-2 rounded-lg p-2 text-sm" /><input type="number" value={newProd.p} onChange={e=>setNewProd({...newProd, p:e.target.value})} placeholder="Price ₹" className="border-2 rounded-lg p-2 text-sm" /></div>
+          <button onClick={()=>{if(newProd.n && newProd.p){setProducts([{...newProd, id:Date.now(), p:parseFloat(newProd.p), stock:500, visible:true}, ...products]); syncToFirestore([{...newProd, id:Date.now(), p:parseFloat(newProd.p), stock:500, visible:true}, ...products], workers, bankInfo); alert("Added!");}}} className="w-full bg-orange-500 text-white font-bold py-2.5 rounded-full">+ Add</button>
         </div>
       )}
-
       {tab === "settings" && (
         <div className="space-y-4">
-          <div className="bg-white border-2 border-orange-500 rounded-2xl p-5 space-y-3">
-            <div className="flex items-center gap-2 text-orange-600 font-black text-sm uppercase tracking-wide">
-              <Building size={18} />
-              <span>Live Bank Account Manager (For Invoices & NEFT)</span>
-            </div>
-            <p className="text-xs text-stone-500">Whatever bank details you save here will be printed on all official Tax Invoices & WhatsApp messages.</p>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <div>
-                <label className="text-xs font-bold text-stone-600 block mb-1">Bank Name</label>
-                <input 
-                  type="text" 
-                  value={editBank.bankName} 
-                  onChange={e => setEditBank({ ...editBank, bankName: e.target.value })} 
-                  className="w-full border border-stone-300 rounded p-2 text-xs font-bold" 
-                />
-              </div>
-              <div>
-                <label className="text-xs font-bold text-stone-600 block mb-1">Account Number</label>
-                <input 
-                  type="text" 
-                  value={editBank.accNo} 
-                  onChange={e => setEditBank({ ...editBank, accNo: e.target.value })} 
-                  className="w-full border border-stone-300 rounded p-2 text-xs font-bold" 
-                />
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <div>
-                <label className="text-xs font-bold text-stone-600 block mb-1">IFSC Code</label>
-                <input 
-                  type="text" 
-                  value={editBank.ifsc} 
-                  onChange={e => setEditBank({ ...editBank, ifsc: e.target.value })} 
-                  className="w-full border border-stone-300 rounded p-2 text-xs font-bold" 
-                />
-              </div>
-              <div>
-                <label className="text-xs font-bold text-stone-600 block mb-1">Branch Name</label>
-                <input 
-                  type="text" 
-                  value={editBank.branch} 
-                  onChange={e => setEditBank({ ...editBank, branch: e.target.value })} 
-                  className="w-full border border-stone-300 rounded p-2 text-xs font-bold" 
-                />
-              </div>
-            </div>
-
-            <button 
-              onClick={handleSaveBankInfo}
-              className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 rounded-xl text-xs flex items-center justify-center gap-1 shadow"
-            >
-              <Check size={14} /> Save Bank Details
-            </button>
+          <div className="bg-white border-2 rounded-2xl p-5 space-y-3">
+            <div className="text-xs font-black uppercase">Bank Account Manager</div>
+            <div className="grid grid-cols-2 gap-2"><input value={editBank.bankName} onChange={e=>setEditBank({...editBank, bankName:e.target.value})} placeholder="Bank Name" className="border rounded p-2 text-xs" /><input value={editBank.accNo} onChange={e=>setEditBank({...editBank, accNo:e.target.value})} placeholder="A/c No" className="border rounded p-2 text-xs" /></div>
+            <button onClick={()=>{setBankInfo(editBank); syncToFirestore(products, workers, editBank); alert("Saved!");}} className="w-full bg-emerald-600 text-white font-bold py-2 rounded text-xs">Save Bank</button>
           </div>
-
-          <div className="bg-white border-2 border-stone-200 rounded-2xl p-5 space-y-3">
-            <div className="text-xs font-bold uppercase tracking-widest text-stone-500">{t.changeUpi}</div>
-            <div className="text-sm">{t.currentUpi}: <span className="font-bold text-orange-600">{upi}</span></div>
-            <div className="flex gap-2">
-              <input value={newUpi} onChange={e=>setNewUpi(e.target.value)} className="flex-1 border-2 border-stone-200 rounded-lg p-2 outline-none focus:border-orange-500 text-xs" placeholder="yourname@upi" />
-              <button onClick={()=>saveUpi(newUpi)} className="bg-stone-900 text-white font-bold px-4 py-2 rounded-lg text-xs">{t.saveUpi}</button>
-            </div>
+          <div className="bg-emerald-50 border-2 border-emerald-500 rounded-2xl p-5 space-y-2">
+            <div className="text-xs font-black text-emerald-800 uppercase">Excel Reports (.CSV)</div>
+            <div className="grid grid-cols-2 gap-2"><button onClick={()=>{
+              if(invoices.length===0){alert("No invoices"); return;}
+              downloadCSV(`Sales.csv`, [["ID","Date","Customer","Grand Total"], ...invoices.map(i=>[i.id,i.date,i.customer,i.grand])]);
+            }} className="bg-emerald-700 text-white font-bold py-2 rounded text-xs">Export Sales</button>
+            <button onClick={()=>{
+              if(ledger.length===0){alert("No khata"); return;}
+              downloadCSV(`Khata.csv`, [["ID","Date","Customer","Amount","Type"], ...ledger.map(l=>[l.id,l.date,l.customer,l.amt,l.type])]);
+            }} className="bg-amber-700 text-white font-bold py-2 rounded text-xs">Export Khata</button></div>
           </div>
-
-          <div className="bg-gradient-to-r from-orange-500 to-red-600 text-white rounded-2xl p-5 space-y-3">
-            <div className="text-xs font-bold uppercase tracking-widest opacity-90">Backup & Deploy</div>
-            <button onClick={downloadZip} className="w-full bg-white text-stone-900 font-bold py-3 rounded-full flex items-center justify-center gap-2 hover:bg-stone-100 text-xs"><Download size={18} /> {t.zip}</button>
-          </div>
+          <div className="bg-red-50 border-2 border-red-500 rounded-2xl p-5"><button onClick={()=>{if(prompt("Enter PIN (6301) to reset:")==="6301"){setOrders([]); setInvoices([]); setLedger([]); alert("Reset done!");}}} className="w-full bg-red-600 text-white font-black py-2.5 rounded text-xs">Factory Reset Test Data</button></div>
         </div>
       )}
     </div>
   );
 }
 
-// ============= GALLERY =============
 function GalleryScreen({ gallery, setGallery }) {
-  const fileRef = useRef();
-  const addImgs = async (files) => {
-    const arr = Array.from(files).slice(0, 50);
-    const dataUrls = await Promise.all(arr.map(f => fileToDataURL(f)));
-    const newItems = dataUrls.map((d, i) => ({ id: Date.now() + i, img: d, caption: "", date: new Date().toISOString() }));
-    setGallery([...newItems, ...gallery]);
-  };
-  const del = (id) => setGallery(gallery.filter(g => g.id !== id));
-
-  return (
-    <div className="space-y-4">
-      <h2 className="font-display font-black text-3xl">Project Gallery</h2>
-      <div className="bg-white border-2 border-orange-500 rounded-2xl p-4 space-y-3">
-        <input ref={fileRef} type="file" accept="image/*" multiple onChange={e => e.target.files.length && addImgs(e.target.files)} className="hidden" />
-        <button onClick={() => fileRef.current?.click()} className="w-full flex items-center justify-center gap-1 bg-orange-500 hover:bg-orange-600 text-white font-bold py-2.5 rounded-full"><Camera size={14} /> Upload Site Photos</button>
-      </div>
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-        {gallery.map(g => (
-          <div key={g.id} className="bg-white border rounded-xl overflow-hidden relative">
-            <img src={g.img} alt="" className="w-full aspect-square object-cover" />
-            <button onClick={()=>del(g.id)} className="absolute top-2 right-2 p-1.5 bg-red-600 text-white rounded-full"><Trash2 size={12}/></button>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
+  return (<div className="space-y-4"><h2 className="font-display font-black text-3xl">Gallery</h2><input type="file" accept="image/*" multiple onChange={async(e)=>{if(e.target.files.length){const d=await Promise.all(Array.from(e.target.files).map(f=>fileToDataURL(f))); setGallery([...d.map((x,i)=>({id:Date.now()+i, img:x})), ...gallery]);}}} className="w-full border-2 p-2 rounded" /><div className="grid grid-cols-3 gap-2">{gallery.map(g=>(<div key={g.id} className="relative aspect-square border rounded"><img src={g.img} alt="" className="w-full h-full object-cover" /><button onClick={()=>setGallery(gallery.filter(x=>x.id!==g.id))} className="absolute top-1 right-1 bg-red-600 text-white p-1 rounded-full"><Trash2 size={10}/></button></div>))}</div></div>);
 }
-
-// ============= MISTRI LOYALTY =============
-function LoyaltyScreen({ orders, user }) {
-  const points = orders.reduce((s, o) => s + (o.loyalty || 0), 0);
-  const tier = points > 500 ? "Gold" : points > 100 ? "Silver" : "Bronze";
-  const tierColor = tier==="Gold"?"from-amber-400 to-yellow-600":tier==="Silver"?"from-slate-300 to-slate-500":"from-orange-700 to-amber-900";
-  return (
-    <div className="space-y-4">
-      <h2 className="font-display font-black text-3xl">Mistri Loyalty Program</h2>
-      <div className={`bg-gradient-to-br ${tierColor} text-white rounded-2xl p-6 shadow-xl relative overflow-hidden`}>
-        <Award size={100} className="absolute -right-4 -top-4 opacity-20" />
-        <div className="text-xs uppercase tracking-widest opacity-80">Total Points</div>
-        <div className="font-display font-black text-5xl mt-1">{points}</div>
-        <div className="text-sm mt-1 opacity-90">Tier: <b>{tier}</b></div>
-      </div>
-    </div>
-  );
+function LoyaltyScreen({ orders }) {
+  const pts = orders.reduce((s,o)=>s+(o.loyalty||0),0);
+  return (<div className="space-y-4"><h2 className="font-display font-black text-3xl">Mistri Loyalty</h2><div className="bg-gradient-to-br from-amber-400 to-yellow-600 text-white rounded-2xl p-6 shadow"><div className="text-xs uppercase opacity-80">Total Points</div><div className="font-display font-black text-5xl mt-1">{pts}</div></div></div>);
 }
-
-// ============= EMI CALCULATOR =============
 function EmiScreen() {
-  const [amt, setAmt] = useState("100000");
-  const [rate, setRate] = useState("12");
-  const [months, setMonths] = useState("6");
-  const P = parseFloat(amt) || 0;
-  const r = (parseFloat(rate) || 0) / 12 / 100;
-  const n = parseInt(months) || 1;
-  const emi = r > 0 ? Math.round((P * r * Math.pow(1+r, n)) / (Math.pow(1+r, n) - 1)) : Math.round(P / n);
-  const total = emi * n;
-  return (
-    <div className="space-y-4">
-      <h2 className="font-display font-black text-3xl">Material EMI Calculator</h2>
-      <div className="bg-white border-2 border-orange-500 rounded-2xl p-5 space-y-3">
-        <label className="block text-xs font-bold">Material Loan Amount ₹<input type="number" value={amt} onChange={e=>setAmt(e.target.value)} className="w-full mt-1 border-2 border-stone-200 rounded-lg p-3 outline-none focus:border-orange-500 text-lg font-bold" /></label>
-        <label className="block text-xs font-bold">Tenure (months)<input type="number" value={months} onChange={e=>setMonths(e.target.value)} className="w-full mt-1 border-2 border-stone-200 rounded-lg p-3 outline-none focus:border-orange-500" /></label>
-      </div>
-      <div className="bg-gradient-to-br from-emerald-600 to-emerald-800 text-white rounded-2xl p-6">
-        <div className="text-xs uppercase tracking-widest opacity-80">Monthly EMI</div>
-        <div className="font-display font-black text-5xl mt-1">₹{emi.toLocaleString()}</div>
-      </div>
-      <a href={`https://wa.me/${CFG.wa}?text=EMI%20Quote:%20Rs.${P}%20for%20${n}m%20=%20Rs.${emi}/mo`} target="_blank" rel="noreferrer" className="block bg-green-600 hover:bg-green-700 text-white text-center font-bold py-3 rounded-full">Apply for Wholesale Credit on WhatsApp</a>
-    </div>
-  );
+  const [amt, setAmt] = useState("100000"); const [m, setM] = useState("6");
+  const emi = Math.round((parseFloat(amt)||0) / (parseInt(m)||1));
+  return (<div className="space-y-4"><h2 className="font-display font-black text-3xl">EMI Calculator</h2><div className="bg-white border-2 rounded-2xl p-5 space-y-3"><input type="number" value={amt} onChange={e=>setAmt(e.target.value)} placeholder="Amount" className="w-full border-2 rounded p-3 font-bold text-lg" /><input type="number" value={m} onChange={e=>setM(e.target.value)} placeholder="Months" className="w-full border-2 rounded p-3" /></div><div className="bg-emerald-700 text-white rounded-2xl p-6"><div className="text-xs uppercase">Monthly EMI</div><div className="font-black text-4xl mt-1">₹{emi.toLocaleString()}</div></div></div>);
 }
