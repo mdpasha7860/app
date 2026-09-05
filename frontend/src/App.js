@@ -74,8 +74,15 @@ const DEFAULT_WORKERS = [
   { id: 1, role: "Rajmistri (Mason)", name: "Ramesh Kumar", rate: 850, phone: "916301456725", icon: "🧱", exp: "12 yrs", area: "Hyderabad" },
   { id: 2, role: "Electrician", name: "Suresh Reddy", rate: 700, phone: "916301456725", icon: "⚡", exp: "8 yrs", area: "Secunderabad" },
   { id: 3, role: "Plumber", name: "Mahesh Yadav", rate: 650, phone: "916301456725", icon: "🔧", exp: "10 yrs", area: "Hyderabad" },
-  { id: 4, role: "Contractor / Builder", name: "Anil Sharma", rate: 1500, phone: "916301456725", icon: "👷", exp: "18 yrs", area: "Telangana" }
+  { id: 4, role: "Contractor / Builder", name: "Anil Sharma", rate: 1500, phone: "916301456725", icon: "👷", exp: "18 yrs", area: "Telangana" },
+  { id: 5, role: "Painter", name: "Santosh Verma", rate: 600, phone: "916301456725", icon: "🎨", exp: "7 yrs", area: "Hyderabad" },
+  { id: 6, role: "Carpenter", name: "Mohan Rao", rate: 750, phone: "916301456725", icon: "🪚", exp: "10 yrs", area: "Secunderabad" },
+  { id: 7, role: "Welder / Fabricator", name: "Sheikh Ali", rate: 800, phone: "916301456725", icon: "🛠️", exp: "9 yrs", area: "Hyderabad" },
+  { id: 8, role: "Tiles Mistri", name: "Laxman Kumar", rate: 900, phone: "916301456725", icon: "🔲", exp: "11 yrs", area: "Secunderabad" },
+  { id: 9, role: "General Helper / Mazdoor", name: "Shankar Lal", rate: 500, phone: "916301456725", icon: "💪", exp: "5 yrs", area: "Hyderabad" },
+  { id: 10, role: "Boring / Borewell Tech", name: "Venkatesh G.", rate: 1200, phone: "916301456725", icon: "💧", exp: "15 yrs", area: "Telangana" }
 ];
+
 
 const fileToDataURL = (file) => new Promise((res, rej) => {
   const r = new FileReader();
