@@ -59,15 +59,15 @@ const T = {
 const MAP = { sariya:'tmt', saria:'tmt', steel:'tmt', rod:'tmt', tmt:'tmt', cement:'cement', simenti:'cement', ppc:'cement', opc:'cement', ret:'sand', balu:'sand', sand:'sand', isuka:'sand', metal:'sand', aggregate:'sand', gitti:'sand', brick:'brick', eent:'brick', itukalu:'brick', block:'brick', wire:'tools', tool:'tools' };
 
 const CLEAN_FRESH_PRODUCTS = [
-  { id: 601, n: "सरिया 8 MM (Tata Tiscon)", b: "Tata Tiscon", p: 62, u: "प्रति किलो (per kg)", cat: "tmt", stock: 500, rating: 4.8, visible: true, img: "", moq: 10 },
-  { id: 602, n: "सरिया 10 MM (JSW Neosteel)", b: "JSW Neosteel", p: 61, u: "प्रति किलो (per kg)", cat: "tmt", stock: 500, rating: 4.7, visible: true, img: "", moq: 10 },
-  { id: 603, n: "सरिया 12 MM (SAIL)", b: "SAIL", p: 60, u: "प्रति किलो (per kg)", cat: "tmt", stock: 500, rating: 4.6, visible: true, img: "", moq: 10 },
-  { id: 604, n: "सरिया 16 MM (Kamdhenu)", b: "Kamdhenu", p: 59, u: "प्रति किलो (per kg)", cat: "tmt", stock: 500, rating: 4.5, visible: true, img: "", moq: 10 },
-  { id: 605, n: "सीमेंट UltraTech OPC 53 Grade", b: "UltraTech", p: 410, u: "प्रति बैग (50kg bag)", cat: "cement", stock: 300, rating: 4.9, visible: true, img: "", moq: 10 },
-  { id: 606, n: "सीमेंट Ambuja PPC", b: "Ambuja", p: 380, u: "प्रति बैग (50kg bag)", cat: "cement", stock: 200, rating: 4.8, visible: true, img: "", moq: 10 },
-  { id: 607, n: "रेत River Sand (बालू)", b: "Local River", p: 1800, u: "प्रति टन (per ton)", cat: "sand", stock: 50, rating: 4.5, visible: true, img: "", moq: 1 },
-  { id: 608, n: "गिट्टी 20 MM Aggregate", b: "Local Quarry", p: 1200, u: "प्रति टन (per ton)", cat: "sand", stock: 80, rating: 4.4, visible: true, img: "", moq: 1 },
-  { id: 609, n: "लाल ईंट Red Bricks Class A", b: "Kiln Standard", p: 9, u: "प्रति पीस (per piece)", cat: "brick", stock: 5000, rating: 4.6, visible: true, img: "", moq: 200 }
+  { id: 701, n: "सरिया 8 MM (Tata Tiscon)", b: "Tata Tiscon", p: 62, u: "प्रति किलो (per kg)", cat: "tmt", stock: 500, rating: 4.8, visible: true, img: "", moq: 10 },
+  { id: 702, n: "सरिया 10 MM (JSW Neosteel)", b: "JSW Neosteel", p: 61, u: "प्रति किलो (per kg)", cat: "tmt", stock: 500, rating: 4.7, visible: true, img: "", moq: 10 },
+  { id: 703, n: "सरिया 12 MM (SAIL)", b: "SAIL", p: 60, u: "प्रति किलो (per kg)", cat: "tmt", stock: 500, rating: 4.6, visible: true, img: "", moq: 10 },
+  { id: 704, n: "सरिया 16 MM (Kamdhenu)", b: "Kamdhenu", p: 59, u: "प्रति किलो (per kg)", cat: "tmt", stock: 500, rating: 4.5, visible: true, img: "", moq: 10 },
+  { id: 705, n: "सीमेंट UltraTech OPC 53 Grade", b: "UltraTech", p: 410, u: "प्रति बैग (50kg bag)", cat: "cement", stock: 300, rating: 4.9, visible: true, img: "", moq: 10 },
+  { id: 706, n: "सीमेंट Ambuja PPC", b: "Ambuja", p: 380, u: "प्रति बैग (50kg bag)", cat: "cement", stock: 200, rating: 4.8, visible: true, img: "", moq: 10 },
+  { id: 707, n: "रेत River Sand (बालू)", b: "Local River", p: 1800, u: "प्रति टन (per ton)", cat: "sand", stock: 50, rating: 4.5, visible: true, img: "", moq: 1 },
+  { id: 708, n: "गिट्टी 20 MM Aggregate", b: "Local Quarry", p: 1200, u: "प्रति टन (per ton)", cat: "sand", stock: 80, rating: 4.4, visible: true, img: "", moq: 1 },
+  { id: 709, n: "लाल ईंट Red Bricks Class A", b: "Kiln Standard", p: 9, u: "प्रति पीस (per piece)", cat: "brick", stock: 5000, rating: 4.6, visible: true, img: "", moq: 200 }
 ];
 
 const DEFAULT_WORKERS = [
@@ -96,7 +96,6 @@ const downloadCSV = (filename, rows) => {
   document.body.removeChild(link);
 };
 
-// ============= MAIN APP =============
 export default function App() {
   const [screen, setScreen] = useState("home");
   const [lang, setLang] = useState(ls.get("lang", "EN"));
@@ -106,8 +105,8 @@ export default function App() {
   const [ledger, setLedger] = useState(ls.get("ledger", []));
   const [invoices, setInvoices] = useState(ls.get("saved_invoices", []));
   
-  const [products, setProducts] = useState(ls.get("as_prod_master_v9", CLEAN_FRESH_PRODUCTS));
-  const [workers, setWorkers] = useState(ls.get("as_wrk_master_v9", DEFAULT_WORKERS));
+  const [products, setProducts] = useState(ls.get("as_prod_master_v10", CLEAN_FRESH_PRODUCTS));
+  const [workers, setWorkers] = useState(ls.get("as_wrk_master_v10", DEFAULT_WORKERS));
   const [bankInfo, setBankInfo] = useState(ls.get("bank_info", DEFAULT_BANK));
   const [gallery, setGallery] = useState(ls.get("gallery", []));
   const [query, setQuery] = useState("");
@@ -120,7 +119,6 @@ export default function App() {
   const [dark, setDark] = useState(ls.get("dark", false));
   const t = T[lang];
 
-  // 🔥 ALL HOOKS ARE AT TOP LEVEL NOW (FIXED)
   const cartTotal = useMemo(() => cart.reduce((s, x) => s + x.p * x.q, 0), [cart]);
 
   const filtered = useMemo(() => {
@@ -138,7 +136,7 @@ export default function App() {
 
   useEffect(() => {
     try {
-      const unsub = onSnapshot(doc(db, "app_data", "main_store_v9"), (snap) => {
+      const unsub = onSnapshot(doc(db, "app_data", "main_store_v10"), (snap) => {
         if (snap.exists()) {
           const data = snap.data();
           if (data.products && Array.isArray(data.products) && data.products.length > 0) {
@@ -163,8 +161,8 @@ export default function App() {
   useEffect(() => ls.set("myOrders", orders), [orders]);
   useEffect(() => ls.set("ledger", ledger), [ledger]);
   useEffect(() => ls.set("saved_invoices", invoices), [invoices]);
-  useEffect(() => ls.set("as_prod_master_v9", products), [products]);
-  useEffect(() => ls.set("as_wrk_master_v9", workers), [workers]);
+  useEffect(() => ls.set("as_prod_master_v10", products), [products]);
+  useEffect(() => ls.set("as_wrk_master_v10", workers), [workers]);
   useEffect(() => ls.set("bank_info", bankInfo), [bankInfo]);
   useEffect(() => ls.set("gallery", gallery), [gallery]);
   useEffect(() => { ls.set("dark", dark); document.documentElement.classList.toggle("dark-mode", dark); }, [dark]);
@@ -751,7 +749,7 @@ function SignaturePad({ onSave }) {
 
 function DayCloseReport({ invoices }) {
   const today = new Date().toLocaleDateString('en-IN');
-  const todayInv = invoices.filter(i => new Date(i.date).toLocaleDateString('en-IN'] === today);
+  const todayInv = invoices.filter(i => new Date(i.date).toLocaleDateString('en-IN') === today);
   const sales = todayInv.reduce((s,x)=>s+(x.grand||0),0);
   const cash = todayInv.reduce((s,x)=>s+(x.paid||0),0);
   const due = todayInv.reduce((s,x)=>s+(x.due||0),0);
@@ -796,7 +794,7 @@ function AdminScreen({
   );
 
   const syncToFirestore = async (newProds, newWrks, newBank) => {
-    try { await setDoc(doc(db, "app_data", "main_store_v9"), { products: newProds || products, workers: newWrks || workers, bankInfo: newBank || bankInfo }, { merge: true }); } catch (e) {}
+    try { await setDoc(doc(db, "app_data", "main_store_v10"), { products: newProds || products, workers: newWrks || workers, bankInfo: newBank || bankInfo }, { merge: true }); } catch (e) {}
   };
 
   const handleProductImageUpload = async (productId, file) => {
