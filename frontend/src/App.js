@@ -788,6 +788,11 @@ function AdminScreen({
   const [billItems, setBillItems] = useState([
     { n: products[0]?.n || "सरिया 12 MM (SAIL)", b: products[0]?.b || "SAIL", q: 50, p: products[0]?.p || 60, u: "किलो" }
   ]);
+const customerPreviousDue = useMemo(() => {
+    if (!invCust.trim()) return 0;
+    const custLedger = ledger.filter(l => l.customer.toLowerCase().trim() === invCust.toLowerCase().trim());
+    return custLedger.reduce((s, l) => s + (l.type === 'credit' ? l.amt : -l.amt), 0);
+  }, [invCust, ledger]);
 
   if (!unlocked) return (
     <div className="max-w-md mx-auto"><div className="bg-white border-2 border-orange-500 rounded-2xl p-6 space-y-4 text-center"><Shield size={40} className="mx-auto text-orange-600" /><h2 className="font-display font-black text-2xl">{t.pinLbl}</h2><input type="password" value={pin} onChange={e=>setPin(e.target.value)} maxLength={4} className="w-full text-center text-2xl font-black tracking-widest border-2 rounded-lg p-3 outline-none" placeholder="••••" /><button onClick={()=>{ if(pin==="6301") setUnlocked(true); else alert("Wrong PIN (6301)"); }} className="w-full bg-orange-500 text-white font-bold py-3 rounded-full">Unlock Admin</button></div></div>
@@ -808,12 +813,6 @@ function AdminScreen({
 
   const addBillItem = () => setBillItems([...billItems, { n: products[0]?.n || "", b: products[0]?.b || "", q: 10, p: products[0]?.p || 0, u: "किलो" }]);
   const removeBillItem = (idx) => setBillItems(billItems.filter((_, i) => i !== idx));
-
-  const customerPreviousDue = useMemo(() => {
-    if (!invCust.trim()) return 0;
-    const custLedger = ledger.filter(l => l.customer.toLowerCase().trim() === invCust.toLowerCase().trim());
-    return custLedger.reduce((s, l) => s + (l.type === 'credit' ? l.amt : -l.amt), 0);
-  }, [invCust, ledger]);
 
   const handleCreateInvoice = (actionType) => {
     if (!invCust.trim()) { alert("Enter customer name"); return; }
