@@ -1,10 +1,9 @@
 import React, { useState, useEffect, useMemo, useRef } from "react";
 import "@/App.css";
 import { QRCodeSVG } from "qrcode.react";
-import { Phone, MessageCircle, Search, ShoppingCart, ArrowLeft, User, Truck, BookOpen, Sparkles, Calculator, Download, Shield, LogOut, Trash2, Plus, Minus, ClipboardList, Menu, RefreshCw, Settings, Headphones, X, Moon, Sun, Mic, Star, Camera, Upload, FileSpreadsheet, TrendingUp, Award, CreditCard, Edit3, Image as ImageIcon, FileText, MapPin, AlertTriangle, KeyRound, Percent, Database } from "lucide-react";
+import { Phone, MessageCircle, Search, ShoppingCart, ArrowLeft, User, Truck, BookOpen, Sparkles, Calculator, Download, Shield, LogOut, Trash2, Plus, Minus, ClipboardList, Menu, RefreshCw, Settings, Headphones, X, Moon, Sun, Mic, Star, Camera, Upload, TrendingUp, Award, CreditCard, Edit3, Image as ImageIcon, FileText, MapPin, AlertTriangle, KeyRound, Database, Eye, EyeOff, Check } from "lucide-react";
 import { initializeApp } from "firebase/app";
-import { getFirestore, doc, updateDoc, setDoc, onSnapshot, collection } from "firebase/firestore";
-
+import { getFirestore, doc, setDoc, onSnapshot } from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCEtTaCAhkGUKGfWUQRTCj1xujnidgk2vI",
@@ -18,7 +17,6 @@ const firebaseConfig = {
 const firebaseApp = initializeApp(firebaseConfig);
 const db = getFirestore(firebaseApp);
 
-
 // ============= CONFIG =============
 const CFG = {
   phone: "+91 6301456725",
@@ -31,7 +29,7 @@ const getUPI = () => localStorage.getItem("customUpi") || "9030574216@upi";
 const getHero = () => localStorage.getItem("bannerImg") || CFG.defaultHero;
 const getHeadline = () => localStorage.getItem("bannerText") || "";
 
-// ============= TRANSLATIONS (unchanged) =============
+// ============= TRANSLATIONS =============
 const T = {
   EN: { b:"Build Stronger. Order Smarter.", c:"Cart", s:"Same-Day Delivery", w:"Wholesale Khata", g:"Genuine Brands", f:"Free Estimate", zip:"Download ZIP Backup", home:"Home", search:"Search TMT, Cement, Sand, Bricks...", login:"Login", logout:"Logout", orders:"My Orders", admin:"Admin", call:"Call Now", wa:"WhatsApp", cart:"Cart", buy:"Add to Cart", total:"Total", checkout:"Place Order", address:"Delivery Address", cod:"Cash on Delivery", upi:"Pay via UPI", confirm:"Confirm Order", noResults:"No products found. Call 6301456725 for custom order.", tracker:"Live Order Tracker", khata:"Wholesale Khata", catalog:"Brand Catalog", estimator:"Estimate Calculator", welcome:"Welcome", mobile:"Mobile Number", otp:"Enter OTP", sendOtp:"Send OTP", verify:"Verify & Login", pinLbl:"Enter Admin PIN", changeUpi:"Change UPI ID", currentUpi:"Current UPI", saveUpi:"Save UPI", zipInfo:"If publish fails, upload this ZIP to netlify.com/drop", qty:"Qty", stock:"In Stock", cat:"Category", all:"All", tmt:"TMT Bars", cement:"Cement", sand:"Sand & Aggregate", brick:"Bricks", tools:"Tools", empty:"Cart is empty", noord:"No orders yet", ordid:"Order", status:"Status", pending:"Pending", scan:"Scan QR to Pay", payto:"Pay to", est:"Enter dimensions to estimate", len:"Length (ft)", wid:"Width (ft)", ht:"Height (ft)", need:"You need approx", bags:"bags of Cement", tons:"tons of TMT", cft:"cft of Sand", bricks:"Bricks (approx)", calc:"Calculate", ledger:"Ledger", customer:"Customer", amt:"Amount", add:"Add Entry", credit:"Credit", debit:"Debit", note:"Note", del:"Delete", eta:"ETA Today", driver:"Driver", low:"LOW STOCK", tick:"⚡ Same-Day Delivery · Wholesale Rates · Genuine Brands · Free Estimate · Call 6301456725" },
   HI: { b:"मजबूत बनाएं। स्मार्ट ऑर्डर करें।", c:"टोकरी", s:"आज डिलीवरी", w:"थोक खाता", g:"असली ब्रांड", f:"फ्री एस्टीमेट", zip:"ZIP डाउनलोड", home:"होम", search:"सरिया, सीमेंट, रेत, ईंट खोजें...", login:"लॉगिन", logout:"लॉगआउट", orders:"मेरे ऑर्डर", admin:"एडमिन", call:"कॉल करें", wa:"व्हाट्सएप", cart:"टोकरी", buy:"जोड़ें", total:"कुल", checkout:"ऑर्डर करें", address:"पता", cod:"कैश ऑन डिलीवरी", upi:"UPI से भुगतान", confirm:"पुष्टि करें", noResults:"कोई सामान नहीं मिला। 6301456725 पर कॉल करें।", tracker:"लाइव ऑर्डर ट्रैकर", khata:"थोक खाता", catalog:"ब्रांड कैटलॉग", estimator:"अनुमान कैलकुलेटर", welcome:"स्वागत है", mobile:"मोबाइल नंबर", otp:"OTP दर्ज करें", sendOtp:"OTP भेजें", verify:"वेरीफाई करें", pinLbl:"एडमिन PIN डालें", changeUpi:"UPI बदलें", currentUpi:"मौजूदा UPI", saveUpi:"UPI सेव करें", zipInfo:"पब्लिश फेल हो तो ZIP netlify.com/drop पर अपलोड करें", qty:"मात्रा", stock:"स्टॉक में", cat:"श्रेणी", all:"सभी", tmt:"सरिया", cement:"सीमेंट", sand:"रेत/गिट्टी", brick:"ईंट", tools:"औजार", empty:"टोकरी खाली", noord:"कोई ऑर्डर नहीं", ordid:"ऑर्डर", status:"स्थिति", pending:"लंबित", scan:"QR स्कैन करें", payto:"भुगतान", est:"माप डालें", len:"लंबाई (फीट)", wid:"चौड़ाई (फीट)", ht:"ऊंचाई (फीट)", need:"आपको चाहिए", bags:"सीमेंट बैग", tons:"टन सरिया", cft:"cft रेत", bricks:"ईंटें", calc:"गणना करें", ledger:"बही", customer:"ग्राहक", amt:"राशि", add:"जोड़ें", credit:"जमा", debit:"नाम", note:"नोट", del:"हटाएं", eta:"आज पहुंचेगा", driver:"ड्राइवर", low:"स्टॉक कम", tick:"⚡ आज डिलीवरी · थोक रेट · असली ब्रांड · फ्री एस्टीमेट · कॉल 6301456725" },
@@ -41,24 +39,33 @@ const T = {
 const MAP = { sariya:'tmt', saria:'tmt', steel:'tmt', rod:'tmt', tmt:'tmt', cement:'cement', simenti:'cement', ppc:'cement', opc:'cement', ret:'sand', balu:'sand', sand:'sand', isuka:'sand', metal:'sand', aggregate:'sand', gitti:'sand', brick:'brick', eent:'brick', itukalu:'brick', block:'brick', wire:'tools', tool:'tools' };
 
 const DEFAULT_PRODUCTS = [
-  { id:1, n:"TMT Bar Fe500 8mm", b:"Tata Tiscon", p:62, u:"per kg", cat:"tmt", stock:250, rating:4.7, img:"https://images.unsplash.com/photo-1590247813693-5541d1c609fd?auto=format&fit=crop&w=400&q=70" },
-  { id:2, n:"TMT Bar Fe500 10mm", b:"JSW Neosteel", p:61, u:"per kg", cat:"tmt", stock:180, rating:4.6, img:"https://images.unsplash.com/photo-1590247813693-5541d1c609fd?auto=format&fit=crop&w=400&q=70" },
-  { id:3, n:"TMT Bar Fe500 12mm", b:"SAIL", p:60, u:"per kg", cat:"tmt", stock:8, rating:4.5, img:"https://images.unsplash.com/photo-1590247813693-5541d1c609fd?auto=format&fit=crop&w=400&q=70" },
-  { id:4, n:"TMT Bar Fe500 16mm", b:"Kamdhenu", p:59, u:"per kg", cat:"tmt", stock:120, rating:4.4, img:"https://images.unsplash.com/photo-1590247813693-5541d1c609fd?auto=format&fit=crop&w=400&q=70" },
-  { id:5, n:"TMT Bar Fe550 20mm", b:"Tata Tiscon", p:63, u:"per kg", cat:"tmt", stock:90, rating:4.8, img:"https://images.unsplash.com/photo-1590247813693-5541d1c609fd?auto=format&fit=crop&w=400&q=70" },
-  { id:6, n:"OPC 53 Grade Cement", b:"UltraTech", p:410, u:"per bag (50kg)", cat:"cement", stock:320, rating:4.9, img:"https://images.unsplash.com/photo-1518709414768-a88981a4515d?auto=format&fit=crop&w=400&q=70" },
-  { id:7, n:"PPC Cement", b:"Ambuja", p:380, u:"per bag (50kg)", cat:"cement", stock:210, rating:4.7, img:"https://images.unsplash.com/photo-1518709414768-a88981a4515d?auto=format&fit=crop&w=400&q=70" },
-  { id:8, n:"PPC Cement", b:"ACC Gold", p:385, u:"per bag (50kg)", cat:"cement", stock:6, rating:4.6, img:"https://images.unsplash.com/photo-1518709414768-a88981a4515d?auto=format&fit=crop&w=400&q=70" },
-  { id:9, n:"White Cement", b:"JK White", p:850, u:"per bag (25kg)", cat:"cement", stock:45, rating:4.5, img:"https://images.unsplash.com/photo-1518709414768-a88981a4515d?auto=format&fit=crop&w=400&q=70" },
-  { id:10, n:"River Sand (Ret / Balu)", b:"Local", p:1800, u:"per ton", cat:"sand", stock:60, rating:4.3, img:"https://images.unsplash.com/photo-1578662996442-48f60103fc96?auto=format&fit=crop&w=400&q=70" },
-  { id:11, n:"M-Sand (Manufactured)", b:"Robo Silicon", p:1400, u:"per ton", cat:"sand", stock:80, rating:4.4, img:"https://images.unsplash.com/photo-1578662996442-48f60103fc96?auto=format&fit=crop&w=400&q=70" },
-  { id:12, n:"20mm Aggregate (Metal)", b:"Local", p:1200, u:"per ton", cat:"sand", stock:100, rating:4.2, img:"https://images.unsplash.com/photo-1615529162924-f8605388461d?auto=format&fit=crop&w=400&q=70" },
-  { id:13, n:"12mm Aggregate", b:"Local", p:1250, u:"per ton", cat:"sand", stock:75, rating:4.3, img:"https://images.unsplash.com/photo-1615529162924-f8605388461d?auto=format&fit=crop&w=400&q=70" },
-  { id:14, n:"Red Bricks Class A", b:"Local Kiln", p:9, u:"per piece", cat:"brick", stock:5000, rating:4.5, img:"https://images.unsplash.com/photo-1595515106969-1ce29566ff1c?auto=format&fit=crop&w=400&q=70" },
-  { id:15, n:"Fly Ash Bricks", b:"EcoBrick", p:7, u:"per piece", cat:"brick", stock:3200, rating:4.4, img:"https://images.unsplash.com/photo-1595515106969-1ce29566ff1c?auto=format&fit=crop&w=400&q=70" },
-  { id:16, n:"AAC Blocks 600x200x100", b:"Magicrete", p:65, u:"per piece", cat:"brick", stock:900, rating:4.7, img:"https://images.unsplash.com/photo-1595515106969-1ce29566ff1c?auto=format&fit=crop&w=400&q=70" },
-  { id:17, n:"Steel Binding Wire", b:"Tata Wiron", p:85, u:"per kg", cat:"tools", stock:150, rating:4.6, img:"https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=400&q=70" },
-  { id:18, n:"GI Wire 8 Gauge", b:"Bansal", p:95, u:"per kg", cat:"tools", stock:110, rating:4.5, img:"https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=400&q=70" }
+  { id:1, n:"TMT Bar Fe500 8mm", b:"Tata Tiscon", p:62, u:"per kg", cat:"tmt", stock:250, rating:4.7, visible:true, img:"https://images.unsplash.com/photo-1590247813693-5541d1c609fd?auto=format&fit=crop&w=400&q=70" },
+  { id:2, n:"TMT Bar Fe500 10mm", b:"JSW Neosteel", p:61, u:"per kg", cat:"tmt", stock:180, rating:4.6, visible:true, img:"https://images.unsplash.com/photo-1590247813693-5541d1c609fd?auto=format&fit=crop&w=400&q=70" },
+  { id:3, n:"TMT Bar Fe500 12mm", b:"SAIL", p:60, u:"per kg", cat:"tmt", stock:8, rating:4.5, visible:true, img:"https://images.unsplash.com/photo-1590247813693-5541d1c609fd?auto=format&fit=crop&w=400&q=70" },
+  { id:4, n:"TMT Bar Fe500 16mm", b:"Kamdhenu", p:59, u:"per kg", cat:"tmt", stock:120, rating:4.4, visible:true, img:"https://images.unsplash.com/photo-1590247813693-5541d1c609fd?auto=format&fit=crop&w=400&q=70" },
+  { id:5, n:"TMT Bar Fe550 20mm", b:"Tata Tiscon", p:63, u:"per kg", cat:"tmt", stock:90, rating:4.8, visible:true, img:"https://images.unsplash.com/photo-1590247813693-5541d1c609fd?auto=format&fit=crop&w=400&q=70" },
+  { id:6, n:"OPC 53 Grade Cement", b:"UltraTech", p:410, u:"per bag (50kg)", cat:"cement", stock:320, rating:4.9, visible:true, img:"https://images.unsplash.com/photo-1518709414768-a88981a4515d?auto=format&fit=crop&w=400&q=70" },
+  { id:7, n:"PPC Cement", b:"Ambuja", p:380, u:"per bag (50kg)", cat:"cement", stock:210, rating:4.7, visible:true, img:"https://images.unsplash.com/photo-1518709414768-a88981a4515d?auto=format&fit=crop&w=400&q=70" },
+  { id:8, n:"PPC Cement", b:"ACC Gold", p:385, u:"per bag (50kg)", cat:"cement", stock:6, rating:4.6, visible:true, img:"https://images.unsplash.com/photo-1518709414768-a88981a4515d?auto=format&fit=crop&w=400&q=70" },
+  { id:9, n:"White Cement", b:"JK White", p:850, u:"per bag (25kg)", cat:"cement", stock:45, rating:4.5, visible:true, img:"https://images.unsplash.com/photo-1518709414768-a88981a4515d?auto=format&fit=crop&w=400&q=70" },
+  { id:10, n:"River Sand (Ret / Balu)", b:"Local", p:1800, u:"per ton", cat:"sand", stock:60, rating:4.3, visible:true, img:"https://images.unsplash.com/photo-1578662996442-48f60103fc96?auto=format&fit=crop&w=400&q=70" },
+  { id:11, n:"M-Sand (Manufactured)", b:"Robo Silicon", p:1400, u:"per ton", cat:"sand", stock:80, rating:4.4, visible:true, img:"https://images.unsplash.com/photo-1578662996442-48f60103fc96?auto=format&fit=crop&w=400&q=70" },
+  { id:12, n:"20mm Aggregate (Metal)", b:"Local", p:1200, u:"per ton", cat:"sand", stock:100, rating:4.2, visible:true, img:"https://images.unsplash.com/photo-1615529162924-f8605388461d?auto=format&fit=crop&w=400&q=70" },
+  { id:13, n:"12mm Aggregate", b:"Local", p:1250, u:"per ton", cat:"sand", stock:75, rating:4.3, visible:true, img:"https://images.unsplash.com/photo-1615529162924-f8605388461d?auto=format&fit=crop&w=400&q=70" },
+  { id:14, n:"Red Bricks Class A", b:"Local Kiln", p:9, u:"per piece", cat:"brick", stock:5000, rating:4.5, visible:true, img:"https://images.unsplash.com/photo-1595515106969-1ce29566ff1c?auto=format&fit=crop&w=400&q=70" },
+  { id:15, n:"Fly Ash Bricks", b:"EcoBrick", p:7, u:"per piece", cat:"brick", stock:3200, rating:4.4, visible:true, img:"https://images.unsplash.com/photo-1595515106969-1ce29566ff1c?auto=format&fit=crop&w=400&q=70" },
+  { id:16, n:"AAC Blocks 600x200x100", b:"Magicrete", p:65, u:"per piece", cat:"brick", stock:900, rating:4.7, visible:true, img:"https://images.unsplash.com/photo-1595515106969-1ce29566ff1c?auto=format&fit=crop&w=400&q=70" },
+  { id:17, n:"Steel Binding Wire", b:"Tata Wiron", p:85, u:"per kg", cat:"tools", stock:150, rating:4.6, visible:true, img:"https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=400&q=70" },
+  { id:18, n:"GI Wire 8 Gauge", b:"Bansal", p:95, u:"per kg", cat:"tools", stock:110, rating:4.5, visible:true, img:"https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=400&q=70" }
+];
+
+const DEFAULT_WORKERS = [
+  { id:1, role:"Rajmistri (Mason)", name:"Ramesh Kumar", rate:850, phone:"916301456725", icon:"🧱", exp:"12 yrs", area:"Hyderabad" },
+  { id:2, role:"Electrician", name:"Suresh Reddy", rate:700, phone:"916301456725", icon:"⚡", exp:"8 yrs", area:"Secunderabad" },
+  { id:3, role:"Plumber", name:"Mahesh Yadav", rate:650, phone:"916301456725", icon:"🔧", exp:"10 yrs", area:"Hyderabad" },
+  { id:4, role:"Builder / Contractor", name:"Anil Sharma", rate:1500, phone:"916301456725", icon:"👷", exp:"18 yrs", area:"Telangana" },
+  { id:5, role:"Welder", name:"Prakash Verma", rate:800, phone:"916301456725", icon:"🔥", exp:"7 yrs", area:"Hyderabad" },
+  { id:6, role:"Painter", name:"Naresh Goud", rate:700, phone:"916301456725", icon:"🎨", exp:"9 yrs", area:"Secunderabad" }
 ];
 
 const ls = {
@@ -66,17 +73,7 @@ const ls = {
   set: (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) { console.error(e); } }
 };
 
-// ============= WORKERS (edit name/rate/phone here) =============
-const WORKERS = [
-  { id:1, role:"Rajmistri (Mason)", name:"Ramesh Kumar", rate:850, phone:"916301456725", icon:"🧱", exp:"12 yrs" },
-  { id:2, role:"Electrician", name:"Suresh Reddy", rate:700, phone:"916301456725", icon:"⚡", exp:"8 yrs" },
-  { id:3, role:"Plumber", name:"Mahesh Yadav", rate:650, phone:"916301456725", icon:"🔧", exp:"10 yrs" },
-  { id:4, role:"Builder / Contractor", name:"Anil Sharma", rate:1500, phone:"916301456725", icon:"👷", exp:"18 yrs" },
-  { id:5, role:"Welder", name:"Prakash Verma", rate:800, phone:"916301456725", icon:"🔥", exp:"7 yrs" },
-  { id:6, role:"Painter", name:"Naresh Goud", rate:700, phone:"916301456725", icon:"🎨", exp:"9 yrs" }
-];
-
-// ============= FLOAT BUTTONS (LOCKED) =============
+// ============= FLOAT BUTTONS =============
 const FloatButtons = () => (
   <div className="fixed bottom-4 right-4 flex flex-col gap-3 z-50 wa-call-lock">
     <a data-testid="whatsapp-fixed-btn" href={`https://wa.me/${CFG.wa}`} target="_blank" rel="noreferrer" className="wa-btn-lock flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-4 py-3 rounded-full shadow-lg font-bold transition-transform hover:scale-105">
@@ -88,7 +85,7 @@ const FloatButtons = () => (
   </div>
 );
 
-// ============= APP =============
+// ============= MAIN APP =============
 export default function App() {
   const [screen, setScreen] = useState("home");
   const [lang, setLang] = useState(ls.get("lang", "EN"));
@@ -97,6 +94,7 @@ export default function App() {
   const [orders, setOrders] = useState(ls.get("myOrders", []));
   const [ledger, setLedger] = useState(ls.get("ledger", []));
   const [products, setProducts] = useState(ls.get("products", DEFAULT_PRODUCTS));
+  const [workers, setWorkers] = useState(ls.get("workers", DEFAULT_WORKERS));
   const [gallery, setGallery] = useState(ls.get("gallery", []));
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState("ALL");
@@ -108,11 +106,32 @@ export default function App() {
   const [dark, setDark] = useState(ls.get("dark", false));
   const t = T[lang];
 
+  // 🔥 Real-time Firestore Sync (Products + Workers)
+  useEffect(() => {
+    try {
+      const unsub = onSnapshot(doc(db, "app_data", "main_store"), (snap) => {
+        if (snap.exists()) {
+          const data = snap.data();
+          if (data.products && Array.isArray(data.products) && data.products.length > 0) {
+            setProducts(data.products);
+          }
+          if (data.workers && Array.isArray(data.workers) && data.workers.length > 0) {
+            setWorkers(data.workers);
+          }
+        }
+      });
+      return () => unsub();
+    } catch (err) {
+      console.error("Firestore sync error:", err);
+    }
+  }, []);
+
   useEffect(() => ls.set("lang", lang), [lang]);
   useEffect(() => ls.set("cart", cart), [cart]);
   useEffect(() => ls.set("myOrders", orders), [orders]);
   useEffect(() => ls.set("ledger", ledger), [ledger]);
   useEffect(() => ls.set("products", products), [products]);
+  useEffect(() => ls.set("workers", workers), [workers]);
   useEffect(() => ls.set("gallery", gallery), [gallery]);
   useEffect(() => { ls.set("dark", dark); document.documentElement.classList.toggle("dark-mode", dark); }, [dark]);
 
@@ -137,8 +156,9 @@ export default function App() {
     { t: t.f, go: "estimator", icon: Calculator, color: "bg-stone-700" }
   ];
 
+  // Sirf woh product dikhayenge jo visible hain (Show)
   const filtered = useMemo(() => {
-    let list = products;
+    let list = products.filter(p => p.visible !== false);
     if (category !== "ALL") list = list.filter(p => p.cat === category);
     if (query.trim()) {
       const q = query.toLowerCase().trim();
@@ -148,8 +168,7 @@ export default function App() {
     return list;
   }, [query, category, products]);
 
-  const lowStock = useMemo(() => products.filter(p => p.stock < 10), [products]);
-
+  const lowStock = useMemo(() => products.filter(p => p.stock < 10 && p.visible !== false), [products]);
   const doSearch = (v) => { setQuery(v); if (v.trim()) setCategory("ALL"); };
 
   const placeOrder = (payment, address) => {
@@ -164,8 +183,7 @@ export default function App() {
       };
       setOrders([order, ...orders]);
       setCart([]);
-      // Feature 20: Auto WhatsApp Update
-      const msg = `New Order ${order.id}%0A${cart.map(x => `${x.n} x ${x.q} = ₹${x.p*x.q}`).join('%0A')}%0ATotal: ₹${cartTotal}%0APay: ${payment}%0AAddress: ${address}%0A+${order.loyalty} Mistri Points`;
+      const msg = `New Order ${order.id}%0A${cart.map(x => `${x.n} x ${x.q} = Rs.${x.p*x.q}`).join('%0A')}%0ATotal: Rs.${cartTotal}%0APay: ${payment}%0AAddress: ${address}%0A+${order.loyalty} Mistri Points`;
       window.open(`https://wa.me/${CFG.wa}?text=${msg}`, "_blank");
       go("orders");
     } catch (e) { console.error(e); alert("Order failed. Call " + CFG.phone); }
@@ -183,7 +201,6 @@ export default function App() {
 
   return (
     <div className={`min-h-screen font-body ${dark ? 'bg-stone-900 text-stone-100' : 'bg-stone-50 text-stone-900'}`}>
-      {/* HEADER NAVY */}
       <header className="sticky top-0 z-40 border-b-4 border-orange-500 shadow-lg" style={{ backgroundColor: "#0A1931" }}>
         <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between gap-3">
           <button data-testid="home-btn" onClick={() => go("home")} className="flex items-center gap-2 group">
@@ -240,7 +257,8 @@ export default function App() {
           </div>
         </div>
       </header>
-      {/* Golden Metallic Ticker Strip */}
+
+      {/* Gold Ticker */}
       <div style={{
         background: 'linear-gradient(90deg, #b8860b 0%, #ffd700 25%, #fff1a8 50%, #ffd700 75%, #b8860b 100%)',
         color: '#071126',
@@ -259,8 +277,6 @@ export default function App() {
         </marquee>
       </div>
 
-
-      {/* Feature 14: LOW STOCK ALERT */}
       {lowStock.length > 0 && screen === "home" && (
         <div data-testid="low-stock-alert" className="bg-red-50 border-b-2 border-red-500 py-2">
           <div className="max-w-6xl mx-auto px-4 flex items-center gap-2 text-xs sm:text-sm font-bold text-red-700">
@@ -279,7 +295,7 @@ export default function App() {
       )}
 
       <main className="max-w-6xl mx-auto px-4 pb-24 pt-4">
-        {screen === "home" && <HomeScreen t={t} lang={lang} setScreen={go} CARDS={CARDS} query={query} doSearch={doSearch} category={category} setCategory={setCategory} filtered={filtered} addToCart={addToCart} heroImg={heroImg} heroTxt={heroTxt} />}
+        {screen === "home" && <HomeScreen t={t} lang={lang} setScreen={go} CARDS={CARDS} query={query} doSearch={doSearch} category={category} setCategory={setCategory} filtered={filtered} addToCart={addToCart} heroImg={heroImg} heroTxt={heroTxt} workers={workers} />}
         {screen === "catalog" && <CatalogScreen t={t} query={query} doSearch={doSearch} category={category} setCategory={setCategory} filtered={filtered} addToCart={addToCart} />}
         {screen === "cart" && <CartScreen t={t} cart={cart} updateQty={updateQty} removeItem={removeItem} total={cartTotal} onCheckout={placeOrder} upi={upi} user={user} />}
         {screen === "orders" && <OrdersScreen t={t} orders={orders} setOrders={setOrders} upi={upi} />}
@@ -287,7 +303,7 @@ export default function App() {
         {screen === "khata" && <KhataScreen t={t} ledger={ledger} setLedger={setLedger} upi={upi} />}
         {screen === "estimator" && <EstimatorScreen t={t} />}
         {screen === "login" && <LoginScreen t={t} onLogin={(u)=>{setUser(u); ls.set("userProfile", u); go("home");}} />}
-        {screen === "admin" && <AdminScreen t={t} unlocked={adminUnlocked} setUnlocked={setAdminUnlocked} upi={upi} saveUpi={saveUpi} downloadZip={downloadZip} orders={orders} products={products} setProducts={setProducts} setHeroImg={setHeroImg} setHeroTxt={setHeroTxt} heroImg={heroImg} heroTxt={heroTxt} />}
+        {screen === "admin" && <AdminScreen t={t} unlocked={adminUnlocked} setUnlocked={setAdminUnlocked} upi={upi} saveUpi={saveUpi} downloadZip={downloadZip} orders={orders} setOrders={setOrders} products={products} setProducts={setProducts} workers={workers} setWorkers={setWorkers} setHeroImg={setHeroImg} setHeroTxt={setHeroTxt} heroImg={heroImg} heroTxt={heroTxt} />}
         {screen === "gallery" && <GalleryScreen gallery={gallery} setGallery={setGallery} />}
         {screen === "loyalty" && <LoyaltyScreen orders={orders} user={user} />}
         {screen === "emi" && <EmiScreen />}
@@ -317,7 +333,6 @@ const MenuItem = ({ tid, icon: Icon, color, label, badge, onClick }) => (
   </button>
 );
 
-// ============= Feature 19: VOICE SEARCH =============
 function VoiceMic({ onResult, lang }) {
   const [listening, setListening] = useState(false);
   const start = () => {
@@ -339,147 +354,130 @@ function VoiceMic({ onResult, lang }) {
   );
 }
 
-// ============= HOME =============
-function HomeScreen({ t, lang, setScreen, CARDS, query, doSearch, category, setCategory, filtered, addToCart, heroImg, heroTxt }) {
+// ============= HOME SCREEN =============
+function HomeScreen({ t, lang, setScreen, CARDS, query, doSearch, category, setCategory, filtered, addToCart, heroImg, heroTxt, workers }) {
   const CATS = [{k:"ALL",n:t.all},{k:"tmt",n:t.tmt},{k:"cement",n:t.cement},{k:"sand",n:t.sand},{k:"brick",n:t.brick},{k:"tools",n:t.tools}];
   return (
     <div className="space-y-4">
-                       {/* HERO SECTION - FULL WIDTH */}
-        <section 
-          data-testid="hero-banner"
-                   style={{
-            position: 'relative',
-            marginLeft: '-16px',
-            marginRight: '-16px',
-            width: 'calc(100% + 32px)',
-            backgroundColor: '#020617',
-            padding: '24px 16px 20px 16px',
-            boxSizing: 'border-box',
-            overflow: 'hidden'
+      <section 
+        data-testid="hero-banner"
+        style={{
+          position: 'relative',
+          marginLeft: '-16px',
+          marginRight: '-16px',
+          width: 'calc(100% + 32px)',
+          backgroundColor: '#020617',
+          padding: '24px 16px 20px 16px',
+          boxSizing: 'border-box',
+          overflow: 'hidden'
+        }}
+      >
+        <div 
+          style={{
+            position: 'absolute',
+            inset: 0,
+            backgroundImage: `url('${heroImg || "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1200&q=80"}')`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            opacity: 0.22,
+            filter: 'grayscale(60%)',
+            pointerEvents: 'none'
           }}
-        >
+        />
+        <div 
+          style={{
+            position: 'absolute',
+            inset: 0,
+            background: 'linear-gradient(to bottom, rgba(2,6,23,0.8) 0%, rgba(2,6,23,0.95) 100%)',
+            pointerEvents: 'none'
+          }}
+        />
 
-          {/* Background Image with Dark Overlay */}
-          <div 
-            style={{
-              position: 'absolute',
-              inset: 0,
-              backgroundImage: `url('https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1200&q=80')`,
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-              opacity: 0.22,
-              filter: 'grayscale(60%)',
-              pointerEvents: 'none'
-            }}
-          />
-          <div 
-            style={{
-              position: 'absolute',
-              inset: 0,
-              background: 'linear-gradient(to bottom, rgba(2,6,23,0.8) 0%, rgba(2,6,23,0.95) 100%)',
-              pointerEvents: 'none'
-            }}
-          />
+        <div style={{ position: 'relative', zIndex: 2, maxWidth: '500px', margin: '0 auto' }}>
+          <div style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '6px',
+            padding: '3px 10px',
+            backgroundColor: 'rgba(245, 158, 11, 0.12)',
+            border: '1px solid rgba(245, 158, 11, 0.4)',
+            borderRadius: '999px',
+            color: '#fbbf24',
+            fontSize: '11px',
+            fontWeight: '600',
+            marginBottom: '10px'
+          }}>
+            <span>⚡</span> Live daily rates • Hyderabad & Secunderabad
+          </div>
 
-          <div style={{ position: 'relative', zIndex: 2, maxWidth: '500px', margin: '0 auto' }}>
-            {/* Live Daily Rates Tag */}
-            <div style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '6px',
-              padding: '3px 10px',
-              backgroundColor: 'rgba(245, 158, 11, 0.12)',
-              border: '1px solid rgba(245, 158, 11, 0.4)',
-              borderRadius: '999px',
-              color: '#fbbf24',
-              fontSize: '11px',
-              fontWeight: '600',
-              marginBottom: '10px'
-            }}>
-              <span>⚡</span> Live daily rates • Hyderabad & Secunderabad
+          <div style={{ lineHeight: '1', marginBottom: '4px' }}>
+            <div style={{ fontSize: '36px', fontWeight: '900', color: '#f59e0b', letterSpacing: '-0.5px' }}>AS</div>
+            <div style={{ fontSize: '36px', fontWeight: '900', color: '#ffffff', letterSpacing: '1px', textTransform: 'uppercase' }}>BUILDMART</div>
+          </div>
+
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', margin: '6px 0 10px 0' }}>
+            <div style={{ width: '28px', height: '3px', backgroundColor: '#f59e0b', borderRadius: '2px' }} />
+            <span style={{ fontSize: '11px', fontWeight: '700', letterSpacing: '1px', color: '#94a3b8', textTransform: 'uppercase' }}>
+              BUILDING MATERIALS MARKETPLACE
+            </span>
+          </div>
+
+          <div style={{ margin: '6px 0 8px 0' }}>
+            <div style={{ fontFamily: 'serif', fontStyle: 'italic', fontSize: '28px', color: '#ffffff', lineHeight: '1.2' }}>
+              {heroTxt ? heroTxt.split(".")[0] : "Build Stronger."}
             </div>
-
-            {/* AS BUILDMART Headings */}
-            <div style={{ lineHeight: '1', marginBottom: '4px' }}>
-              <div style={{ fontSize: '36px', fontWeight: '900', color: '#f59e0b', letterSpacing: '-0.5px' }}>AS</div>
-              <div style={{ fontSize: '36px', fontWeight: '900', color: '#ffffff', letterSpacing: '1px', textTransform: 'uppercase' }}>BUILDMART</div>
-            </div>
-
-            {/* Sub-tagline */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', margin: '6px 0 10px 0' }}>
-              <div style={{ width: '28px', height: '3px', backgroundColor: '#f59e0b', borderRadius: '2px' }} />
-              <span style={{ fontSize: '11px', fontWeight: '700', letterSpacing: '1px', color: '#94a3b8', textTransform: 'uppercase' }}>
-                BUILDING MATERIALS MARKETPLACE
-              </span>
-            </div>
-
-            {/* Script Text */}
-            <div style={{ margin: '6px 0 8px 0' }}>
-              <div style={{ fontFamily: 'serif', fontStyle: 'italic', fontSize: '28px', color: '#ffffff', lineHeight: '1.2' }}>
-                Build Stronger.
-              </div>
-              <div style={{ fontFamily: 'serif', fontStyle: 'italic', fontSize: '28px', color: '#ffffff', lineHeight: '1.2' }}>
-                Order Smarter.
-              </div>
-            </div>
-
-            {/* Details */}
-            <p style={{
-              color: '#94a3b8',
-              fontSize: '12px',
-              lineHeight: '1.4',
-              margin: '0 0 12px 0'
-            }}>
-              Cement, TMT steel, sand & 10+ categories delivered across Greater Hyderabad. Live rates, wholesale pricing & instant WhatsApp estimates.
-            </p>
-
-            {/* Buttons */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-              <button
-                data-testid="hero-shop-btn"
-                onClick={() => setScreen("catalog")}
-                style={{
-                  width: '100%',
-                  padding: '12px',
-                  backgroundColor: '#f59e0b',
-                  color: '#0f172a',
-                  fontWeight: '800',
-                  fontSize: '14px',
-                  borderRadius: '8px',
-                  border: 'none',
-                  cursor: 'pointer',
-                  boxShadow: '0 4px 12px rgba(245, 158, 11, 0.25)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  gap: '6px'
-                }}
-              >
-                Browse Catalog →
-              </button>
-
-              <button
-                onClick={() => setScreen("estimator")}
-                style={{
-                  width: '100%',
-                  padding: '11px',
-                  backgroundColor: 'rgba(15, 23, 42, 0.85)',
-                  color: '#f8fafc',
-                  border: '1px solid #334155',
-                  fontWeight: '600',
-                  fontSize: '13px',
-                  borderRadius: '8px',
-                  cursor: 'pointer'
-                }}
-              >
-                Get Free Estimate
-              </button>
+            <div style={{ fontFamily: 'serif', fontStyle: 'italic', fontSize: '28px', color: '#ffffff', lineHeight: '1.2' }}>
+              {heroTxt && heroTxt.split(".")[1] ? heroTxt.split(".")[1] : "Order Smarter."}
             </div>
           </div>
-        </section>
 
+          <p style={{ color: '#94a3b8', fontSize: '12px', lineHeight: '1.4', margin: '0 0 12px 0' }}>
+            Cement, TMT steel, sand & 10+ categories delivered across Greater Hyderabad. Live rates, wholesale pricing & instant WhatsApp estimates.
+          </p>
 
-      {/* Feature 19: SEARCH + VOICE - compact */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+            <button
+              data-testid="hero-shop-btn"
+              onClick={() => setScreen("catalog")}
+              style={{
+                width: '100%',
+                padding: '12px',
+                backgroundColor: '#f59e0b',
+                color: '#0f172a',
+                fontWeight: '800',
+                fontSize: '14px',
+                borderRadius: '8px',
+                border: 'none',
+                cursor: 'pointer',
+                boxShadow: '0 4px 12px rgba(245, 158, 11, 0.25)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '6px'
+              }}
+            >
+              Browse Catalog →
+            </button>
+            <button
+              onClick={() => setScreen("estimator")}
+              style={{
+                width: '100%',
+                padding: '11px',
+                backgroundColor: 'rgba(15, 23, 42, 0.85)',
+                color: '#f8fafc',
+                border: '1px solid #334155',
+                fontWeight: '600',
+                fontSize: '13px',
+                borderRadius: '8px',
+                cursor: 'pointer'
+              }}
+            >
+              Get Free Estimate
+            </button>
+          </div>
+        </div>
+      </section>
+
       <section className="bg-white border-2 border-stone-900 rounded-full py-1.5 px-3 shadow-sm dark-card">
         <div className="flex items-center gap-2">
           <Search size={16} className="text-stone-500 flex-shrink-0" />
@@ -489,7 +487,6 @@ function HomeScreen({ t, lang, setScreen, CARDS, query, doSearch, category, setC
         </div>
       </section>
 
-      {/* Feature 17: 4 SERVICE CARDS - compact */}
       <section className="grid grid-cols-4 gap-2">
         {CARDS.map((c) => {
           const Icon = c.icon;
@@ -508,16 +505,14 @@ function HomeScreen({ t, lang, setScreen, CARDS, query, doSearch, category, setC
         ))}
       </section>
 
-      {/* WORKERS SECTION - Hire skilled workers */}
-      <WorkersSection wa={CFG.wa} />
-
+      <WorkersSection workers={workers} />
       <ProductGrid t={t} filtered={filtered} addToCart={addToCart} />
     </div>
   );
 }
 
 // ============= WORKERS SECTION =============
-function WorkersSection({ wa }) {
+function WorkersSection({ workers }) {
   return (
     <section data-testid="workers-section" className="space-y-2 pt-2">
       <div className="flex items-center justify-between">
@@ -525,11 +520,11 @@ function WorkersSection({ wa }) {
         <span className="text-[10px] uppercase tracking-widest text-orange-600 font-bold">Book Direct · No Commission</span>
       </div>
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2">
-        {WORKERS.map(w => (
+        {workers.map(w => (
           <div key={w.id} data-testid={`worker-${w.id}`} className="bg-white border-2 border-stone-200 hover:border-orange-500 rounded-xl p-2.5 shadow-sm hover:shadow-md transition group dark-card">
             <div className="flex items-center gap-2">
               <div className="w-9 h-9 rounded-full flex items-center justify-center text-lg flex-shrink-0" style={{ backgroundColor: "#0A1931" }}>
-                <span>{w.icon}</span>
+                <span>{w.icon || "👷"}</span>
               </div>
               <div className="min-w-0 flex-1">
                 <div className="text-[10px] uppercase tracking-widest text-orange-600 font-bold truncate">{w.role}</div>
@@ -538,12 +533,13 @@ function WorkersSection({ wa }) {
             </div>
             <div className="flex items-baseline gap-1 mt-2">
               <span className="font-display font-black text-base">₹{w.rate}</span>
-              <span className="text-[10px] text-stone-500">/day · {w.exp}</span>
+              <span className="text-[10px] text-stone-500">/day · {w.exp || "Verified"}</span>
             </div>
-            <a data-testid={`worker-call-${w.id}`} href={`tel:+${w.phone}`} className="mt-2 w-full bg-orange-500 hover:bg-orange-600 text-white text-[11px] font-bold py-1.5 rounded-full transition flex items-center justify-center gap-1">
+            {w.area && <div className="text-[9px] text-stone-400 truncate">📍 {w.area}</div>}
+            <a data-testid={`worker-call-${w.id}`} href={`tel:+${w.phone || CFG.wa}`} className="mt-2 w-full bg-orange-500 hover:bg-orange-600 text-white text-[11px] font-bold py-1.5 rounded-full transition flex items-center justify-center gap-1">
               <Phone size={11} /> Call
             </a>
-            <a data-testid={`worker-wa-${w.id}`} href={`https://wa.me/${w.phone}?text=Hi%20${encodeURIComponent(w.name)}%2C%20need%20${encodeURIComponent(w.role)}`} target="_blank" rel="noreferrer" className="mt-1 w-full bg-green-600 hover:bg-green-700 text-white text-[11px] font-bold py-1.5 rounded-full transition flex items-center justify-center gap-1">
+            <a data-testid={`worker-wa-${w.id}`} href={`https://wa.me/${w.phone || CFG.wa}?text=Hi%20${encodeURIComponent(w.name)}%2C%20need%20${encodeURIComponent(w.role)}`} target="_blank" rel="noreferrer" className="mt-1 w-full bg-green-600 hover:bg-green-700 text-white text-[11px] font-bold py-1.5 rounded-full transition flex items-center justify-center gap-1">
               <MessageCircle size={11} /> WA
             </a>
           </div>
@@ -553,8 +549,6 @@ function WorkersSection({ wa }) {
   );
 }
 
-
-// ============= Feature 15: STAR RATING =============
 const Stars = ({ n }) => (
   <div className="flex gap-0.5">
     {[1,2,3,4,5].map(i => <Star key={i} size={11} className={i<=Math.round(n)?"fill-amber-400 text-amber-400":"text-stone-300"} />)}
@@ -660,21 +654,21 @@ function CartScreen({ t, cart, updateQty, removeItem, total, onCheckout, upi, us
           <span className="font-bold text-lg">{t.total}</span>
           <span className="font-display font-black text-2xl">₹{total}</span>
         </div>
-<div style={{margin:"12px 0",padding:"10px",background:"#fff8f0",borderRadius:"8px",border:"1px solid #fed7aa",fontSize:"12px"}}><label style={{display:"flex",gap:"8px",cursor:"pointer",color:"#333"}}><input type="checkbox" required defaultChecked={true} style={{marginTop:"2px",accentColor:"#f97316"}}/><span>Main <b>Terms & Conditions</b> se sahmat hoon: Unloading customer ki zimmedari hogi, cement aur saria wapas nahi hoga.</span></label></div>
-
-
+        <div style={{margin:"12px 0",padding:"10px",background:"#fff8f0",borderRadius:"8px",border:"1px solid #fed7aa",fontSize:"12px"}}>
+          <label style={{display:"flex",gap:"8px",cursor:"pointer",color:"#333"}}><input type="checkbox" required defaultChecked={true} style={{marginTop:"2px",accentColor:"#f97316"}}/><span>Main <b>Terms & Conditions</b> se sahmat hoon: Unloading customer ki zimmedari hogi, cement aur saria wapas nahi hoga.</span></label>
+        </div>
         <button data-testid="confirm-order-btn" onClick={()=>{ if(!address.trim()){alert("Enter address"); return;} onCheckout(payment, address); }} className="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 rounded-full text-base transition">{t.confirm} · ₹{total}</button>
       </div>
     </div>
   );
 }
 
-// ============= Feature 12: GST BILL PDF + WhatsApp =============
+// ============= GST BILL PDF =============
 function generateGstBill(order) {
   const gst = Math.round(order.total * 0.18);
   const grand = order.total + gst;
-  const html = `<!doctype html><html><head><title>GST Bill ${order.id}</title><style>body{font-family:Arial;padding:24px;color:#111}h1{color:#ea580c;margin:0}table{width:100%;border-collapse:collapse;margin-top:16px}th,td{border:1px solid #ddd;padding:8px;text-align:left}th{background:#0A1931;color:#fff}.tot{text-align:right;font-weight:bold}</style></head><body><h1>AS Enterprises</h1><div>GSTIN: 36ABCDE1234F1Z5 · Ph +91 6301456725</div><hr/><h2>Tax Invoice: ${order.id}</h2><div>Date: ${new Date(order.date).toLocaleString()}</div><div>Customer: ${order.user}</div><div>Address: ${order.address}</div><table><tr><th>Item</th><th>Qty</th><th>Rate</th><th>Amount</th></tr>${order.items.map(i=>`<tr><td>${i.n} - ${i.b}</td><td>${i.q}</td><td>₹${i.p}</td><td>₹${i.p*i.q}</td></tr>`).join('')}<tr><td colspan="3" class="tot">Subtotal</td><td>₹${order.total}</td></tr><tr><td colspan="3" class="tot">GST (18%)</td><td>₹${gst}</td></tr><tr><td colspan="3" class="tot">Grand Total</td><td>₹${grand}</td></tr></table><p>Payment: ${order.payment}</p><p>Thank you for your business!</p></body></html>`;
-  const blob = new Blob([html], { type: 'text/html' });
+  const html = `<!doctype html><html><head><meta charset="utf-8"/><title>GST Bill ${order.id}</title><style>body{font-family:Arial,sans-serif;padding:24px;color:#111}h1{color:#ea580c;margin:0}table{width:100%;border-collapse:collapse;margin-top:16px}th,td{border:1px solid #ddd;padding:8px;text-align:left}th{background:#0A1931;color:#fff}.tot{text-align:right;font-weight:bold}</style></head><body><h1>AS Enterprises</h1><div>GSTIN: 36ABCDE1234F1Z5 · Ph +91 6301456725</div><hr/><h2>Tax Invoice: ${order.id}</h2><div>Date: ${new Date(order.date).toLocaleString()}</div><div>Customer: ${order.user}</div><div>Address: ${order.address}</div><table><tr><th>Item</th><th>Qty</th><th>Rate</th><th>Amount</th></tr>${order.items.map(i=>`<tr><td>${i.n} - ${i.b}</td><td>${i.q}</td><td>Rs. ${i.p}</td><td>Rs. ${i.p*i.q}</td></tr>`).join('')}<tr><td colspan="3" class="tot">Subtotal</td><td>Rs. ${order.total}</td></tr><tr><td colspan="3" class="tot">GST (18%)</td><td>Rs. ${gst}</td></tr><tr><td colspan="3" class="tot">Grand Total</td><td>Rs. ${grand}</td></tr></table><p>Payment: ${order.payment}</p><p>Thank you for your business!</p></body></html>`;
+  const blob = new Blob([html], { type: 'text/html;charset=utf-8' });
   const url = URL.createObjectURL(blob);
   window.open(url, '_blank');
   return grand;
@@ -685,7 +679,7 @@ function OrdersScreen({ t, orders, setOrders, upi }) {
   const shareWA = (o) => {
     const gst = Math.round(o.total * 0.18);
     const grand = o.total + gst;
-    const msg = `GST Bill ${o.id}%0A${o.items.map(i=>`${i.n} x${i.q} = ₹${i.p*i.q}`).join('%0A')}%0ASubtotal: ₹${o.total}%0AGST 18%25: ₹${gst}%0ATotal: ₹${grand}`;
+    const msg = `GST Bill ${o.id}%0A${o.items.map(i=>`${i.n} x${i.q} = Rs.${i.p*i.q}`).join('%0A')}%0ASubtotal: Rs.${o.total}%0AGST 18%25: Rs.${gst}%0ATotal: Rs.${grand}`;
     window.open(`https://wa.me/${CFG.wa}?text=${msg}`, "_blank");
   };
   return (
@@ -719,7 +713,6 @@ function OrdersScreen({ t, orders, setOrders, upi }) {
   );
 }
 
-// ============= Feature 13: LIVE TRUCK MAP =============
 function TrackerScreen({ t, orders }) {
   const [pos, setPos] = useState(0);
   useEffect(() => {
@@ -734,7 +727,6 @@ function TrackerScreen({ t, orders }) {
         <div className="text-2xl font-black">{t.eta}: 4-6 hours</div>
         <div className="text-sm opacity-90 mt-1">Free delivery within 10km · ₹200 beyond</div>
       </div>
-      {/* Live Map */}
       <div data-testid="live-map" className="bg-emerald-50 border-2 border-emerald-500 rounded-2xl p-4 overflow-hidden relative" style={{ minHeight: 180 }}>
         <div className="absolute inset-0 opacity-30" style={{ backgroundImage: 'repeating-linear-gradient(0deg, #10b981 0 1px, transparent 1px 40px), repeating-linear-gradient(90deg, #10b981 0 1px, transparent 1px 40px)' }} />
         <div className="relative flex items-center justify-between text-emerald-800 font-bold text-xs mb-2 z-10">
@@ -765,7 +757,6 @@ function TrackerScreen({ t, orders }) {
   );
 }
 
-// ============= KHATA + UPI QR (Feature 11) =============
 function KhataScreen({ t, ledger, setLedger, upi }) {
   const [customer, setCustomer] = useState("");
   const [amt, setAmt] = useState("");
@@ -829,7 +820,6 @@ function KhataScreen({ t, ledger, setLedger, upi }) {
   );
 }
 
-// ============= ESTIMATOR =============
 function EstimatorScreen({ t }) {
   const [len, setLen] = useState(""); const [wid, setWid] = useState(""); const [ht, setHt] = useState("");
   const [result, setResult] = useState(null);
@@ -870,9 +860,8 @@ const Stat = ({ label, val }) => (
   </div>
 );
 
-// ============= Feature 4 & 6: LOGIN (Mobile OTP + Forgot Reset) =============
 function LoginScreen({ t, onLogin }) {
-  const [step, setStep] = useState("mobile"); // mobile | otp | forgot
+  const [step, setStep] = useState("mobile");
   const [mobile, setMobile] = useState("");
   const [otp, setOtp] = useState("");
   const [name, setName] = useState("");
@@ -882,7 +871,7 @@ function LoginScreen({ t, onLogin }) {
     if (mobile.length < 10) { alert("Enter 10-digit mobile"); return; }
     const code = String(Math.floor(1000 + Math.random() * 9000));
     setSentOtp(code);
-    alert(`OTP sent to ${mobile}: ${code}\n(Demo mode — real SMS via provider)`);
+    alert(`OTP sent to ${mobile}: ${code}`);
     setStep("otp");
   };
   const verify = () => {
@@ -927,8 +916,8 @@ function LoginScreen({ t, onLogin }) {
   );
 }
 
-// ============= Feature 5,7,8,9,15,18: ADMIN with tabs =============
-function AdminScreen({ t, unlocked, setUnlocked, upi, saveUpi, downloadZip, orders, products, setProducts, setHeroImg, setHeroTxt, heroImg, heroTxt }) {
+// ============= ADMIN PANEL WITH SAVE / SHOW / HIDE BUTTONS =============
+function AdminScreen({ t, unlocked, setUnlocked, upi, saveUpi, downloadZip, orders, setOrders, products, setProducts, workers, setWorkers, setHeroImg, setHeroTxt, heroImg, heroTxt }) {
   const [pin, setPin] = useState("");
   const [tab, setTab] = useState("rates");
   const [newUpi, setNewUpi] = useState(upi);
@@ -947,23 +936,59 @@ function AdminScreen({ t, unlocked, setUnlocked, upi, saveUpi, downloadZip, orde
     </div>
   );
 
-  const updatePrice = (id, p) => setProducts(products.map(x => x.id===id?{...x, p:parseFloat(p)||0}:x));
-  const updateStock = (id, s) => setProducts(products.map(x => x.id===id?{...x, stock:parseInt(s)||0}:x));
-  const delProd = (id) => setProducts(products.filter(x => x.id !== id));
-  const addProd = () => {
-    if (!newProd.n || !newProd.p) { alert("Name & Price required"); return; }
-    setProducts([{ ...newProd, id:Date.now(), p:parseFloat(newProd.p), stock:parseInt(newProd.stock)||100, rating:4.5, img:newProd.img||"https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=400&q=70" }, ...products]);
-    setNewProd({ n:"", b:"", p:"", u:"per unit", cat:"tmt", stock:100, img:"" });
+  const syncToFirestore = async (newProds, newWrks) => {
+    try {
+      await setDoc(doc(db, "app_data", "main_store"), {
+        products: newProds || products,
+        workers: newWrks || workers
+      }, { merge: true });
+    } catch (e) {
+      console.error("Firestore sync error:", e);
+    }
   };
+
+  // Dedicated Save for a specific Material
+  const saveProductItem = async (p) => {
+    const updated = products.map(x => x.id === p.id ? p : x);
+    setProducts(updated);
+    await syncToFirestore(updated, workers);
+    alert(`${p.n} ka rate, stock aur photo live save ho gaya!`);
+  };
+
+  // Toggle Show / Hide for Material
+  const toggleVisibility = async (id) => {
+    const updated = products.map(x => x.id === id ? { ...x, visible: x.visible === false ? true : false } : x);
+    setProducts(updated);
+    await syncToFirestore(updated, workers);
+  };
+
+  const delProd = async (id) => {
+    if (confirm("Kya aap sach me is material ko delete karna chahte hain?")) {
+      const updated = products.filter(x => x.id !== id);
+      setProducts(updated);
+      await syncToFirestore(updated, workers);
+    }
+  };
+
+  const addProd = async () => {
+    if (!newProd.n || !newProd.p) { alert("Name & Price required"); return; }
+    const updated = [{ ...newProd, id:Date.now(), p:parseFloat(newProd.p), stock:parseInt(newProd.stock)||100, rating:4.5, visible:true, img:newProd.img||"https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=400&q=70" }, ...products];
+    setProducts(updated);
+    await syncToFirestore(updated, workers);
+    setNewProd({ n:"", b:"", p:"", u:"per unit", cat:"tmt", stock:100, img:"" });
+    alert("Naya product save ho gaya!");
+  };
+
   const exportCsv = () => {
     const csv = "id,name,brand,price,unit,category,stock,rating\n" + products.map(p => `${p.id},"${p.n}","${p.b}",${p.p},"${p.u}",${p.cat},${p.stock},${p.rating||4.5}`).join("\n");
     const blob = new Blob([csv], { type:'text/csv' });
     const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'as-prices.csv'; a.click();
   };
+
   const importCsv = (e) => {
     const f = e.target.files[0]; if (!f) return;
     const r = new FileReader();
-    r.onload = () => {
+    r.onload = async () => {
       try {
         const lines = r.result.split(/\r?\n/).slice(1).filter(Boolean);
         const updated = [...products];
@@ -972,6 +997,7 @@ function AdminScreen({ t, unlocked, setUnlocked, upi, saveUpi, downloadZip, orde
           if (m) { const id = parseInt(m[1]), price = parseFloat(m[4]); const idx = updated.findIndex(p => p.id === id); if (idx >= 0) updated[idx] = { ...updated[idx], p: price }; }
         });
         setProducts(updated);
+        await syncToFirestore(updated, workers);
         alert(`Imported ${lines.length} rows`);
       } catch (err) { alert("Bad CSV format"); }
     };
@@ -979,182 +1005,235 @@ function AdminScreen({ t, unlocked, setUnlocked, upi, saveUpi, downloadZip, orde
   };
   const readFile = (file, cb) => { const r = new FileReader(); r.onload = () => cb(r.result); r.readAsDataURL(file); };
 
-  const TABS = [{k:"rates",n:"Rate Edit"},{k:"banner",n:"Banner Edit"},{k:"products",n:"Products"},{k:"bulk",n:"Bulk CSV"},{k:"settings",n:"Settings"}];
+  const updateOrderStatus = (id, newStatus) => {
+    const updated = orders.map(o => o.id === id ? { ...o, status: newStatus } : o);
+    setOrders(updated);
+    alert(`Order #${id} status: ${newStatus}`);
+  };
+
+  const TABS = [
+    { k:"rates", n:"Rate Edit" },
+    { k:"orders", n:"Customer Orders" },
+    { k:"banner", n:"Banner Edit" },
+    { k:"products", n:"Products" },
+    { k:"bulk", n:"Bulk CSV" },
+    { k:"settings", n:"Settings" }
+  ];
+
   return (
     <div className="space-y-4">
       <h2 className="font-display font-black text-3xl">{t.admin} Panel</h2>
       <div className="flex flex-wrap gap-2">
         {TABS.map(x => <button key={x.k} data-testid={`admin-tab-${x.k}`} onClick={() => setTab(x.k)} className={`text-xs font-bold px-3 py-2 rounded-full transition ${tab===x.k?'bg-orange-500 text-white':'bg-white border-2 border-stone-300 text-stone-700 hover:border-orange-500'}`}>{x.n}</button>)}
       </div>
-<div className="mb-3"><button onClick={() => setTab("orders")} className={`px-4 py-1.5 rounded-full text-xs font-bold ${tab === "orders" ? "bg-orange-500 text-white" : "bg-stone-200 text-stone-700"}`}>📦 View Orders</button></div>
 
-{/* Feature: Orders Management with Approve/Reject */}
-{tab === "orders" && (
-  <div className="bg-white border-2 border-stone-200 rounded-2xl p-4 dark-card">
-    <div className="text-xs uppercase tracking-widest text-stone-500 font-bold mb-3">Customer Orders</div>
-    <div className="space-y-3 max-h-96 overflow-auto">
-      {(!orders || orders.length === 0) ? (
-        <div className="text-xs text-stone-400 text-center py-4">No orders yet</div>
-      ) : (
-        orders.map((ord, idx) => (
-          <div key={ord.order_id || idx} className="p-3 border border-stone-200 rounded-xl space-y-2">
-            <div className="flex justify-between items-center text-xs">
-              <span className="font-bold">Order #{ord.order_id || idx + 1}</span>
-              <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${ord.status === "Approved" ? "bg-green-100 text-green-700" : ord.status === "Rejected" ? "bg-red-100 text-red-700" : "bg-orange-100 text-orange-700"}`}>{ord.status || "Pending"}</span>
-            </div>
-            <div className="text-xs text-stone-600"><strong>Address:</strong> {ord.delivery_address || ord.address || "N/A"}</div>
-            <div className="text-xs font-bold text-stone-800">Total: ₹{ord.total_amount || ord.total}</div>
-            <div className="flex gap-2 pt-1">
-              <button onClick={() => { ord.status = "Approved"; alert("Order Approved!"); }} className="flex-1 bg-green-600 text-white text-xs font-bold py-1.5 rounded-lg hover:bg-green-700">Approve</button>
-              <button onClick={() => { ord.status = "Rejected"; alert("Order Rejected!"); }} className="flex-1 bg-red-600 text-white text-xs font-bold py-1.5 rounded-lg hover:bg-red-700">Reject</button>
-            </div>
+      {/* Orders Tab */}
+      {tab === "orders" && (
+        <div className="bg-white border-2 border-stone-200 rounded-2xl p-4 dark-card">
+          <div className="text-xs uppercase tracking-widest text-stone-500 font-bold mb-3">Customer Orders ({orders.length})</div>
+          <div className="space-y-3 max-h-96 overflow-auto">
+            {(!orders || orders.length === 0) ? (
+              <div className="text-xs text-stone-400 text-center py-4">No orders yet</div>
+            ) : (
+              orders.map((ord) => (
+                <div key={ord.id} className="p-3 border border-stone-200 rounded-xl space-y-2 bg-stone-50">
+                  <div className="flex justify-between items-center text-xs">
+                    <span className="font-bold">{ord.id} ({ord.user})</span>
+                    <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${ord.status === "Approved" ? "bg-green-100 text-green-700" : ord.status === "Rejected" ? "bg-red-100 text-red-700" : "bg-orange-100 text-orange-700"}`}>{ord.status}</span>
+                  </div>
+                  <div className="text-xs text-stone-600"><strong>Address:</strong> {ord.address || "N/A"}</div>
+                  <div className="text-xs font-bold text-stone-800">Total: ₹{ord.total} ({ord.payment})</div>
+                  <div className="flex gap-2 pt-1">
+                    <button onClick={() => updateOrderStatus(ord.id, "Approved")} className="flex-1 bg-green-600 text-white text-xs font-bold py-1.5 rounded-lg hover:bg-green-700">Approve</button>
+                    <button onClick={() => updateOrderStatus(ord.id, "Rejected")} className="flex-1 bg-red-600 text-white text-xs font-bold py-1.5 rounded-lg hover:bg-red-700">Reject</button>
+                  </div>
+                </div>
+              ))
+            )}
           </div>
-        ))
+        </div>
       )}
-    </div>
-  </div>
-)}
 
-
-      {/* Feature 7: Rate Edit */}
+      {/* Rate Edit Tab */}
       {tab === "rates" && (
         <div className="bg-white border-2 border-stone-200 rounded-2xl p-4 dark-card">
-          <div className="text-xs uppercase tracking-widest text-stone-500 font-bold mb-3">Edit Prices & Stock</div>
-          <div className="space-y-2 max-h-96 overflow-auto">
+          <div className="text-xs uppercase tracking-widest text-stone-500 font-bold mb-3">Edit Materials Price, Stock, Photo & Visibility</div>
+          <div className="space-y-3 max-h-96 overflow-auto">
             {products.map(p => (
-              <div key={p.id} className="flex items-center gap-2 p-2 border border-stone-200 rounded-lg">
-                <img src={p.img} alt="" className="w-10 h-10 object-cover rounded" />
-                <div className="flex-1 min-w-0">
-                  <div className="text-xs font-bold truncate">{p.n}</div>
-                  <div className="text-[10px] text-stone-500">{p.b}</div>
+              <div key={p.id} className="p-3 border border-stone-200 rounded-xl space-y-2.5 bg-stone-50">
+                <div className="flex items-center gap-2">
+                  <img src={p.img} alt="" className="w-12 h-12 object-cover rounded-lg flex-shrink-0" />
+                  <div className="flex-1 min-w-0">
+                    <div className="text-xs font-bold truncate">{p.n}</div>
+                    <div className="text-[10px] text-stone-500">{p.b} ({p.u})</div>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => toggleVisibility(p.id)}
+                    className={`p-1.5 rounded-lg text-xs font-bold flex items-center gap-1 ${p.visible !== false ? 'bg-emerald-100 text-emerald-700' : 'bg-stone-200 text-stone-500'}`}
+                    title={p.visible !== false ? "Visible to customers" : "Hidden from customers"}
+                  >
+                    {p.visible !== false ? <Eye size={14}/> : <EyeOff size={14}/>}
+                  </button>
+                  <button onClick={()=>delProd(p.id)} className="p-1.5 text-red-500 hover:bg-red-50 rounded-lg" title="Delete Material">
+                    <Trash2 size={14} />
+                  </button>
                 </div>
-                <input data-testid={`rate-${p.id}`} type="number" defaultValue={p.p} onBlur={e=>updatePrice(p.id, e.target.value)} className="w-20 border-2 border-stone-200 rounded p-1 text-sm text-right" />
-                <input data-testid={`stock-${p.id}`} type="number" defaultValue={p.stock} onBlur={e=>updateStock(p.id, e.target.value)} className="w-16 border-2 border-stone-200 rounded p-1 text-sm text-right" />
-                <button onClick={()=>delProd(p.id)} className="p-1.5 text-red-500 hover:bg-red-50 rounded-full"><Trash2 size={12} /></button>
+
+                <div className="grid grid-cols-2 gap-2">
+                  <div>
+                    <label className="text-[9px] font-bold text-stone-500 block">Rate (₹)</label>
+                    <input
+                      type="number"
+                      defaultValue={p.p}
+                      onChange={(e) => { p.p = parseFloat(e.target.value) || 0; }}
+                      className="w-full border border-stone-300 rounded p-1 text-xs font-black bg-white"
+                    />
+                  </div>
+                  <div>
+                    <label className="text-[9px] font-bold text-stone-500 block">Stock</label>
+                    <input
+                      type="number"
+                      defaultValue={p.stock}
+                      onChange={(e) => { p.stock = parseInt(e.target.value) || 0; }}
+                      className="w-full border border-stone-300 rounded p-1 text-xs bg-white"
+                    />
+                  </div>
                 </div>
-              ))}
-            </div>
 
-            <div className="mt-4 pt-4 border-t border-stone-200">
-              <div className="text-xs uppercase tracking-widest text-orange-600 font-bold mb-2">Edit Worker Daily Rates (₹/day)</div>
-              
-                        {/* Add New Worker Button */}
-              <button
-                type="button"
-                onClick={async () => {
-                  const role = prompt("Worker Role (jaise: Rajmistri, Painter, Welder):");
-                  if (!role) return;
-                  const name = prompt("Worker ka Naam:");
-                  const rate = prompt("Daily Rate (₹):");
-                  const area = prompt("Area / Address:");
-                  const newW = {
-                    id: Date.now(),
-                    icon: "👷",
-                    role: role,
-                    name: name || "New Worker",
-                    rate: Number(rate) || 500,
-                    area: area || ""
-                  };
-                  WORKERS.push(newW);
-                  try {
-                    await setDoc(doc(db, "app_data", "workers"), { list: WORKERS });
-                    alert("Naya Worker database me save ho gaya!");
-                  } catch (e) {
-                    alert("Worker add ho gaya!");
-                  }
-                }}
-                className="w-full mb-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2 px-4 rounded-xl text-xs flex items-center justify-center gap-2 shadow-sm transition"
-              >
-                <Plus size={16} /> + Add New Worker
-              </button>
+                <div>
+                  <label className="text-[9px] font-bold text-stone-500 block">Material Photo URL</label>
+                  <input
+                    type="text"
+                    defaultValue={p.img}
+                    onChange={(e) => { p.img = e.target.value; }}
+                    placeholder="Photo Link (URL) badlein..."
+                    className="w-full text-[10px] border border-stone-300 rounded p-1 bg-white"
+                  />
+                </div>
 
-              <div className="space-y-3">
-                {WORKERS.map((w, idx) => (
-                  <div key={w.id || idx} className="p-3 border border-stone-200 rounded-xl bg-stone-50 space-y-2">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-2">
-                        <span className="text-lg">{w.icon || "👷"}</span>
-                        <span className="text-xs font-bold text-stone-800">{w.role}</span>
-                      </div>
-                      <button
-                        type="button"
-                        onClick={async () => {
-                          if (confirm(`${w.role} (${w.name}) ko delete karna chahte hain?`)) {
-                            WORKERS.splice(idx, 1);
-                            try {
-                              await setDoc(doc(db, "app_data", "workers"), { list: WORKERS });
-                              alert("Worker delete ho gaya!");
-                            } catch (e) {
-                              alert("Worker delete ho gaya!");
-                            }
-                          }
-                        }}
-                        className="text-red-500 hover:bg-red-50 p-1.5 rounded-full"
-                        title="Delete Worker"
-                      >
-                        <Trash2 size={15} />
-                      </button>
+                <div className="flex justify-end pt-1">
+                  <button
+                    type="button"
+                    onClick={() => saveProductItem(p)}
+                    className="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold px-3 py-1.5 rounded-lg flex items-center gap-1 shadow-sm"
+                  >
+                    <Check size={12} /> Save Changes
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-6 pt-4 border-t-2 border-stone-200">
+            <div className="text-xs uppercase tracking-widest text-orange-600 font-bold mb-2">Edit Worker Daily Rates (₹/day)</div>
+            
+            <button
+              type="button"
+              onClick={async () => {
+                const role = prompt("Worker Role (jaise: Rajmistri, Painter, Welder):");
+                if (!role) return;
+                const name = prompt("Worker ka Naam:");
+                const rate = prompt("Daily Rate (₹):");
+                const area = prompt("Area / Address:");
+                const newW = {
+                  id: Date.now(),
+                  icon: "👷",
+                  role: role,
+                  name: name || "New Worker",
+                  rate: Number(rate) || 500,
+                  area: area || ""
+                };
+                const updated = [...workers, newW];
+                setWorkers(updated);
+                await syncToFirestore(products, updated);
+                alert("Naya Worker database mein save ho gaya!");
+              }}
+              className="w-full mb-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2 px-4 rounded-xl text-xs flex items-center justify-center gap-2 shadow-sm transition"
+            >
+              <Plus size={16} /> + Add New Worker
+            </button>
+
+            <div className="space-y-3">
+              {workers.map((w, idx) => (
+                <div key={w.id || idx} className="p-3 border border-stone-200 rounded-xl bg-stone-50 space-y-2">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <span className="text-lg">{w.icon || "👷"}</span>
+                      <span className="text-xs font-bold text-stone-800">{w.role}</span>
                     </div>
+                    <button
+                      type="button"
+                      onClick={async () => {
+                        if (confirm(`${w.role} (${w.name}) ko delete karna chahte hain?`)) {
+                          const updated = workers.filter(item => item.id !== w.id);
+                          setWorkers(updated);
+                          await syncToFirestore(products, updated);
+                          alert("Worker delete ho gaya!");
+                        }
+                      }}
+                      className="text-red-500 hover:bg-red-50 p-1.5 rounded-full"
+                    >
+                      <Trash2 size={15} />
+                    </button>
+                  </div>
 
-                    <div className="grid grid-cols-2 gap-2">
-                      <div>
-                        <label className="text-[10px] font-bold text-stone-500 block">Name</label>
-                        <input
-                          type="text"
-                          defaultValue={w.name}
-                          onChange={(e) => { w.name = e.target.value; }}
-                          placeholder="Worker Name"
-                          className="w-full border border-stone-300 rounded px-2 py-1 text-xs bg-white focus:border-orange-500 outline-none"
-                        />
-                      </div>
-                      <div>
-                        <label className="text-[10px] font-bold text-stone-500 block">Rate (₹/day)</label>
-                        <input
-                          type="number"
-                          defaultValue={w.rate}
-                          onChange={(e) => { w.rate = Number(e.target.value); }}
-                          placeholder="Daily Rate"
-                          className="w-full border border-stone-300 rounded px-2 py-1 text-xs font-bold bg-white focus:border-orange-500 outline-none"
-                        />
-                      </div>
-                    </div>
-
+                  <div className="grid grid-cols-2 gap-2">
                     <div>
-                      <label className="text-[10px] font-bold text-stone-500 block">Area / Address</label>
+                      <label className="text-[10px] font-bold text-stone-500 block">Name</label>
                       <input
                         type="text"
-                        defaultValue={w.area || w.loc || ""}
-                        onChange={(e) => { w.area = e.target.value; }}
-                        placeholder="e.g. Hyderabad, Secunderabad, etc."
+                        defaultValue={w.name}
+                        onChange={(e) => { w.name = e.target.value; }}
+                        placeholder="Worker Name"
                         className="w-full border border-stone-300 rounded px-2 py-1 text-xs bg-white focus:border-orange-500 outline-none"
                       />
                     </div>
-
-                    <div className="pt-1 flex justify-end">
-                      <button
-                        type="button"
-                        onClick={async () => {
-                          try {
-                            await setDoc(doc(db, "app_data", "workers"), { list: WORKERS });
-                            alert(`${w.role} (${w.name}) details database me save ho gayi!`);
-                          } catch (e) {
-                            alert("Details save ho gayi!");
-                          }
-                        }}
-                        className="bg-orange-500 hover:bg-orange-600 text-white text-xs font-bold px-3 py-1 rounded-lg shadow-sm"
-                      >
-                        Save Details
-                      </button>
+                    <div>
+                      <label className="text-[10px] font-bold text-stone-500 block">Rate (₹/day)</label>
+                      <input
+                        type="number"
+                        defaultValue={w.rate}
+                        onChange={(e) => { w.rate = Number(e.target.value); }}
+                        placeholder="Daily Rate"
+                        className="w-full border border-stone-300 rounded px-2 py-1 text-xs font-bold bg-white focus:border-orange-500 outline-none"
+                      />
                     </div>
                   </div>
-                ))}
-              </div>
+
+                  <div>
+                    <label className="text-[10px] font-bold text-stone-500 block">Area / Address</label>
+                    <input
+                      type="text"
+                      defaultValue={w.area || ""}
+                      onChange={(e) => { w.area = e.target.value; }}
+                      placeholder="e.g. Hyderabad, Secunderabad, etc."
+                      className="w-full border border-stone-300 rounded px-2 py-1 text-xs bg-white focus:border-orange-500 outline-none"
+                    />
+                  </div>
+
+                  <div className="pt-1 flex justify-end">
+                    <button
+                      type="button"
+                      onClick={async () => {
+                        const updated = [...workers];
+                        setWorkers(updated);
+                        await syncToFirestore(products, updated);
+                        alert(`${w.role} (${w.name}) live database mein save ho gaya!`);
+                      }}
+                      className="bg-orange-500 hover:bg-orange-600 text-white text-xs font-bold px-3 py-1.5 rounded-lg shadow-sm flex items-center gap-1"
+                    >
+                      <Check size={12} /> Save Details
+                    </button>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
-        )}
+        </div>
+      )}
 
-
-      {/* Feature 8: Banner Edit */}
+      {/* Banner Tab */}
       {tab === "banner" && (
         <div className="bg-white border-2 border-stone-200 rounded-2xl p-4 space-y-3 dark-card">
           <div className="text-xs uppercase tracking-widest text-stone-500 font-bold">Edit Banner</div>
@@ -1166,7 +1245,7 @@ function AdminScreen({ t, unlocked, setUnlocked, upi, saveUpi, downloadZip, orde
         </div>
       )}
 
-      {/* Feature 9: Add Product with Photo */}
+      {/* Products Tab */}
       {tab === "products" && (
         <div className="bg-white border-2 border-stone-200 rounded-2xl p-4 space-y-3 dark-card">
           <div className="text-xs uppercase tracking-widest text-stone-500 font-bold">Add New Product</div>
@@ -1182,13 +1261,14 @@ function AdminScreen({ t, unlocked, setUnlocked, upi, saveUpi, downloadZip, orde
             <input data-testid="prod-stock" type="number" value={newProd.stock} onChange={e=>setNewProd({...newProd, stock:e.target.value})} placeholder="Stock" className="border-2 border-stone-200 rounded-lg p-2 outline-none focus:border-orange-500" />
           </div>
           <input data-testid="prod-unit" value={newProd.u} onChange={e=>setNewProd({...newProd, u:e.target.value})} placeholder="Unit (per bag, per kg)" className="w-full border-2 border-stone-200 rounded-lg p-2 outline-none focus:border-orange-500" />
-          <label className="block text-xs font-bold">Product Photo<input data-testid="prod-photo" type="file" accept="image/*,capture=camera" onChange={e => e.target.files[0] && readFile(e.target.files[0], d=>setNewProd({...newProd, img:d}))} className="w-full mt-1" /></label>
+          <label className="block text-xs font-bold">Product Photo URL or File<input data-testid="prod-photo" type="file" accept="image/*,capture=camera" onChange={e => e.target.files[0] && readFile(e.target.files[0], d=>setNewProd({...newProd, img:d}))} className="w-full mt-1" /></label>
+          <input type="text" value={newProd.img} onChange={e=>setNewProd({...newProd, img:e.target.value})} placeholder="Direct Image URL (Optional)" className="w-full border border-stone-200 rounded p-1 text-xs" />
           {newProd.img && <img src={newProd.img} alt="" className="w-24 h-24 object-cover rounded-lg border-2 border-stone-200" />}
           <button data-testid="prod-add-btn" onClick={addProd} className="w-full bg-orange-500 text-white font-bold py-2.5 rounded-full">+ Add Product</button>
         </div>
       )}
 
-      {/* Feature 15 & 18: Bulk CSV */}
+      {/* Bulk CSV Tab */}
       {tab === "bulk" && (
         <div className="bg-white border-2 border-stone-200 rounded-2xl p-4 space-y-3 dark-card">
           <div className="text-xs uppercase tracking-widest text-stone-500 font-bold">Bulk Price Excel/CSV</div>
@@ -1197,11 +1277,10 @@ function AdminScreen({ t, unlocked, setUnlocked, upi, saveUpi, downloadZip, orde
             <span className="text-xs font-bold uppercase text-stone-500">Import Prices CSV</span>
             <input data-testid="csv-import-input" type="file" accept=".csv" onChange={importCsv} className="w-full mt-1 border-2 border-stone-200 rounded-lg p-2 text-sm" />
           </label>
-          <div className="text-[11px] text-stone-500 bg-stone-100 p-2 rounded">CSV format: id,name,brand,price,unit,category,stock,rating</div>
         </div>
       )}
 
-      {/* Settings tab: UPI + ZIP + Stats */}
+      {/* Settings Tab */}
       {tab === "settings" && (
         <div className="space-y-4">
           <div className="bg-white border-2 border-stone-200 rounded-2xl p-5 space-y-3 dark-card">
@@ -1217,36 +1296,6 @@ function AdminScreen({ t, unlocked, setUnlocked, upi, saveUpi, downloadZip, orde
             <button data-testid="admin-zip-btn" onClick={downloadZip} className="w-full bg-white text-stone-900 font-bold py-3 rounded-full flex items-center justify-center gap-2 hover:bg-stone-100"><Download size={18} /> {t.zip}</button>
             <div className="text-xs opacity-90 text-center">{t.zipInfo}</div>
           </div>
-          {/* Feature 8: SYNC (Export/Import All Data) */}
-          <div className="bg-white border-2 border-emerald-500 rounded-2xl p-5 space-y-3 dark-card">
-            <div className="text-xs font-bold uppercase tracking-widest text-emerald-600 flex items-center gap-2"><Database size={14} /> Data Sync (Backup / Restore)</div>
-            <div className="text-xs text-stone-500">Export all app data (orders, khata, products, gallery, UPI, banner) as one JSON file. Import on any device to restore.</div>
-            <div className="grid grid-cols-2 gap-2">
-              <button data-testid="sync-export-btn" onClick={() => {
-                try {
-                  const data = { customUpi: localStorage.getItem("customUpi"), products: localStorage.getItem("products"), myOrders: localStorage.getItem("myOrders"), ledger: localStorage.getItem("ledger"), gallery: localStorage.getItem("gallery"), bannerImg: localStorage.getItem("bannerImg"), bannerText: localStorage.getItem("bannerText"), lang: localStorage.getItem("lang"), userProfile: localStorage.getItem("userProfile"), _v: 1, _date: new Date().toISOString() };
-                  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
-                  const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = `as-buildmart-sync-${Date.now()}.json`; a.click();
-                } catch (e) { alert("Export failed"); }
-              }} className="flex items-center justify-center gap-1 bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 rounded-full text-sm"><Download size={14} /> Export All</button>
-              <label className="flex items-center justify-center gap-1 bg-stone-900 hover:bg-stone-800 text-white font-bold py-2.5 rounded-full text-sm cursor-pointer">
-                <Upload size={14} /> Import All
-                <input data-testid="sync-import-input" type="file" accept=".json,application/json" className="hidden" onChange={(e) => {
-                  const f = e.target.files[0]; if (!f) return;
-                  const r = new FileReader();
-                  r.onload = () => {
-                    try {
-                      const d = JSON.parse(r.result);
-                      Object.entries(d).forEach(([k, v]) => { if (v !== null && !k.startsWith('_')) localStorage.setItem(k, v); });
-                      alert("Data restored. Reloading...");
-                      window.location.reload();
-                    } catch (err) { alert("Bad JSON file"); }
-                  };
-                  r.readAsText(f);
-                }} />
-              </label>
-            </div>
-          </div>
           <div className="bg-white border-2 border-stone-200 rounded-2xl p-5 dark-card">
             <div className="text-xs font-bold uppercase tracking-widest text-stone-500 mb-2">Total Orders</div>
             <div className="font-display font-black text-4xl">{orders.length}</div>
@@ -1258,7 +1307,7 @@ function AdminScreen({ t, unlocked, setUnlocked, upi, saveUpi, downloadZip, orde
   );
 }
 
-// ============= Feature 10: GALLERY (unlimited, camera, add/delete/edit) =============
+// ============= GALLERY =============
 function GalleryScreen({ gallery, setGallery }) {
   const fileRef = useRef();
   const [editing, setEditing] = useState(null);
@@ -1320,7 +1369,7 @@ function GalleryScreen({ gallery, setGallery }) {
   );
 }
 
-// ============= Feature 22: MISTRI LOYALTY =============
+// ============= MISTRI LOYALTY =============
 function LoyaltyScreen({ orders, user }) {
   const points = orders.reduce((s, o) => s + (o.loyalty || 0), 0);
   const tier = points > 500 ? "Gold" : points > 100 ? "Silver" : "Bronze";
@@ -1356,7 +1405,7 @@ function LoyaltyScreen({ orders, user }) {
   );
 }
 
-// ============= Feature 22: EMI CALCULATOR =============
+// ============= EMI CALCULATOR =============
 function EmiScreen() {
   const [amt, setAmt] = useState("100000");
   const [rate, setRate] = useState("12");
@@ -1382,12 +1431,12 @@ function EmiScreen() {
           <div><div className="text-[10px] uppercase opacity-70">Total Interest</div><div className="font-bold text-lg">₹{(total-P).toLocaleString()}</div></div>
         </div>
       </div>
-      <a href={`https://wa.me/${CFG.wa}?text=EMI%20Quote:%20%E2%82%B9${P}%20@${rate}%25%20for%20${n}m%20=%20%E2%82%B9${emi}/mo`} target="_blank" rel="noreferrer" className="block bg-green-600 hover:bg-green-700 text-white text-center font-bold py-3 rounded-full">Apply on WhatsApp</a>
+      <a href={`https://wa.me/${CFG.wa}?text=EMI%20Quote:%20Rs.${P}%20@${rate}%25%20for%20${n}m%20=%20Rs.${emi}/mo`} target="_blank" rel="noreferrer" className="block bg-green-600 hover:bg-green-700 text-white text-center font-bold py-3 rounded-full">Apply on WhatsApp</a>
     </div>
   );
 }
 
-// ============= Feature 21: AI RATE PREDICTOR =============
+// ============= AI RATE PREDICTOR =============
 function PredictorScreen({ products }) {
   const [selected, setSelected] = useState(products[0]?.id || 1);
   const p = products.find(x => x.id === Number(selected)) || products[0];
@@ -1431,7 +1480,7 @@ function PredictorScreen({ products }) {
         <div className="flex items-end gap-1 h-40">
           {history.map((h, i) => {
             const range = max - min || 1;
-            const height = 25 + ((h.val - min) / range) * 70; // 25% baseline min, 95% max
+            const height = 25 + ((h.val - min) / range) * 70;
             return (
               <div key={i} className="flex-1 flex flex-col items-center gap-1 h-full justify-end">
                 <div className="text-[9px] font-bold">{h.val}</div>
