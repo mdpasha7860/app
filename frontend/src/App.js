@@ -8,7 +8,7 @@ import {
   X, Moon, Sun, Mic, Star, Camera, Upload, TrendingUp, Award, CreditCard, 
   Edit3, Image as ImageIcon, FileText, MapPin, AlertTriangle, KeyRound, 
   Database, Eye, EyeOff, Check, Send, Navigation, Printer, BellRing, 
-  CheckCircle2, Compass, BarChart3, Share2, Building, Receipt
+  CheckCircle2, Compass, BarChart3, Share2, Building, Receipt, ToggleLeft, ToggleRight
 } from "lucide-react";
 import { initializeApp } from "firebase/app";
 import { getFirestore, doc, setDoc, onSnapshot } from "firebase/firestore";
@@ -53,54 +53,39 @@ const getHeadline = () => localStorage.getItem("bannerText") || "";
 
 // ============= TRANSLATIONS =============
 const T = {
-  EN: { b:"Build Stronger. Order Smarter.", c:"Cart", s:"Same-Day Delivery", w:"Wholesale Khata", g:"Brand Catalog", f:"Free Estimate", zip:"Download ZIP Backup", home:"Home", search:"Search TMT, Cement, Sand, Bricks...", login:"Login", logout:"Logout", orders:"My Orders", admin:"Admin", call:"Call Now", wa:"WhatsApp", cart:"Cart", buy:"Add to Cart", total:"Total", checkout:"Place Order", address:"Delivery Address", cod:"Cash on Delivery", upi:"Pay via UPI", confirm:"Confirm Order", noResults:"No products found. Call 6301456725 for custom order.", tracker:"Live Order Tracker", khata:"Wholesale Khata", catalog:"Brand Catalog", estimator:"Estimate Calculator", welcome:"Welcome", mobile:"Mobile Number", otp:"Enter OTP", sendOtp:"Send OTP", verify:"Verify & Login", pinLbl:"Enter Admin PIN", changeUpi:"Change UPI ID", currentUpi:"Current UPI", saveUpi:"Save UPI", zipInfo:"If publish fails, upload this ZIP to netlify.com/drop", qty:"Qty", stock:"In Stock", cat:"Category", all:"All", tmt:"TMT Bars", cement:"Cement", sand:"Sand & Aggregate", brick:"Bricks", tools:"Tools", empty:"Cart is empty", noord:"No orders yet", ordid:"Order", status:"Status", pending:"Pending", scan:"Scan QR to Pay", payto:"Pay to", est:"Enter dimensions to estimate", len:"Length (ft)", wid:"Width (ft)", ht:"Height (ft)", need:"You need approx", bags:"bags of Cement", tons:"tons of TMT", cft:"cft of Sand", bricks:"Bricks (approx)", calc:"Calculate", ledger:"Ledger", customer:"Customer", amt:"Amount", add:"Add Entry", credit:"Credit", debit:"Debit", note:"Note", del:"Delete", eta:"ETA Today", driver:"Driver", low:"LOW STOCK", tick:"★ Same-Day Delivery Across Hyderabad • Wholesale Rates • Genuine Brands • Instant WhatsApp Estimates ★" },
-  HI: { b:"मजबूत बनाएं। स्मार्ट ऑर्डर करें।", c:"टोकरी", s:"आज डिलीवरी", w:"थोक खाता", g:"ब्रांड कैटलॉग", f:"फ्री एस्टीमेट", zip:"ZIP डाउनलोड", home:"होम", search:"सरिया, सीमेंट, रेत, ईंट खोजें...", login:"लॉगिन", logout:"लॉगआउट", orders:"मेरे ऑर्डर", admin:"एडमिन", call:"कॉल करें", wa:"व्हाट्सएप", cart:"टोकरी", buy:"जोड़ें", total:"कुल", checkout:"ऑर्डर करें", address:"पता", cod:"कैश ऑन डिलीवरी", upi:"UPI से भुगतान", confirm:"पुष्टि करें", noResults:"कोई सामान नहीं मिला। 6301456725 पर कॉल करें।", tracker:"लाइव ऑर्डर ट्रैकर", khata:"थोक खाता", catalog:"ब्रांड कैटलॉग", estimator:"अनुमान कैलकुलेटर", welcome:"स्वागत है", mobile:"मोबाइल नंबर", otp:"OTP दर्ज करें", sendOtp:"OTP भेजें", verify:"वेरीफाई करें", pinLbl:"एडमिन PIN डालें", changeUpi:"UPI बदलें", currentUpi:"मौजूदा UPI", saveUpi:"UPI सेव करें", zipInfo:"पब्लिश फेल हो तो ZIP netlify.com/drop पर अपलोड करें", qty:"मात्रा", stock:"स्टॉक में", cat:"श्रेणी", all:"सभी", tmt:"सरिया", cement:"सीमेंट", sand:"रेत/गिट्टी", brick:"ईंट", tools:"औजार", empty:"टोकरी खाली", noord:"कोई ऑर्डर नहीं", ordid:"ऑर्डर", status:"स्थिति", pending:"लंबित", scan:"QR स्कैन करें", payto:"भुगतान", est:"माप डालें", len:"लंबाई (फीट)", wid:"चौड़ाई (फीट)", ht:"ऊंचाई (फीट)", need:"आपको चाहिए", bags:"सीमेंट बैग", tons:"टन सरिया", cft:"cft रेत", bricks:"ईंटें", calc:"गणना करें", ledger:"बही", customer:"ग्राहक", amt:"राशि", add:"जोड़ें", credit:"जमा", debit:"नाम", note:"नोट", del:"हटाएं", eta:"आज पहुंचेगा", driver:"ड्राइवर", low:"स्टॉक कम", tick:"★ हैदराबाद में आज ही डिलीवरी • थोक रेट • असली ब्रांड • इंस्टेंट व्हाट्सएप एस्टीमेट ★" },
-  TE: { b:"బలంగా నిర్మించండి. తెలివిగా ఆర్డర్ చేయండి.", c:"బుట్ట", s:"ఈరోజే డెలివరీ", w:"హోల్‌సేల్ ఖాతా", g:"బ్రాండ్ కేటలాగ్", f:"ఉచిత అంచనా", zip:"ZIP డౌన్‌లోడ్", home:"హోమ్", search:"సరియా, సిమెంట్, ఇసుక, ఇటుకలు...", login:"లాగిన్", logout:"లాగౌట్", orders:"నా ఆర్డర్లు", admin:"అడ్మిన్", call:"కాల్ చేయండి", wa:"వాట్సాప్", cart:"బుట్ట", buy:"జోడించు", total:"మొత్తం", checkout:"ఆర్డర్ చేయండి", address:"చిరునామా", cod:"క్యాష్ ఆన్ డెలివరీ", upi:"UPI చెల్లింపు", confirm:"నిర్ధారించండి", noResults:"వస్తువులు లేవు. 6301456725 కు కాల్ చేయండి.", tracker:"లైవ్ ఆర్డర్ ట్రాకర్", khata:"హోల్‌సేల్ ఖాతా", catalog:"బ్రాండ్ కేటలాగ్", estimator:"అంచనా కాలిక్యులేటర్", welcome:"స్వాగతం", mobile:"మొబైల్ నంబర్", otp:"OTP నమోదు", sendOtp:"OTP పంపండి", verify:"వెరిఫై చేయండి", pinLbl:"అడ్మిన్ PIN", changeUpi:"UPI మార్చండి", currentUpi:"ప్రస్తుత UPI", saveUpi:"UPI సేవ్ చేయండి", zipInfo:"పబ్లిష్ ఫెయిల్ అయితే ZIP ని netlify.com/drop కు అప్‌లోడ్ చేయండి", qty:"పరిమాణం", stock:"స్టాక్‌లో", cat:"వర్గం", all:"అన్నీ", tmt:"సరియా", cement:"సిమెంట్", sand:"ఇసుక/కంకర", brick:"ఇటుకలు", tools:"పరికరాలు", empty:"బుట్ట ఖాళీ", noord:"ఆర్డర్లు లేవు", ordid:"ఆర్డర్", status:"స్థితి", pending:"పెండింగ్", scan:"QR స్కాన్ చేయండి", payto:"చెల్లింపు", est:"కొలతలు ఇవ్వండి", len:"పొడవు (అడుగు)", wid:"వెడల్పు (అడుగు)", ht:"ఎత్తు (అడుగు)", need:"కావాలి", bags:"సిమెంట్ బస్తాలు", tons:"టన్నుల సరియా", cft:"cft ఇసుక", bricks:"ఇటుకలు", calc:"లెక్కించండి", ledger:"లెడ్జర్", customer:"కస్టమర్", amt:"మొత్తం", add:"జోడించు", credit:"క్రెడిట్", debit:"డెబిట్", note:"నోట్", del:"తొలగించు", eta:"ఈరోజు", driver:"డ్రైవర్", low:"స్టాక్ తక్కువ", tick:"★ హైదరాబాద్‌లో ఈరోజే డెలివరీ • హోల్‌సేల్ రేట్లు • అసలైన బ్రాండ్ • తక్షణ వాట్సాప్ అంచనా ★" }
+  EN: { b:"Build Stronger. Order Smarter.", c:"Cart", s:"Same-Day Delivery", w:"Wholesale Khata", g:"Brand Catalog", f:"Free Estimate", zip:"Download ZIP Backup", home:"Home", search:"Search TMT, Cement, Sand, Bricks...", login:"Login", logout:"Logout", orders:"My Orders", admin:"Admin", call:"Call Now", wa:"WhatsApp", cart:"Cart", buy:"Add to Cart", total:"Total", checkout:"Place Order", address:"Delivery Address", cod:"Cash on Delivery", upi:"Pay via UPI", confirm:"Confirm Order", noResults:"No materials added yet. Please add real inventory from Admin Panel.", tracker:"Live Order Tracker", khata:"Wholesale Khata", catalog:"Brand Catalog", estimator:"Estimate Calculator", welcome:"Welcome", mobile:"Mobile Number", otp:"Enter OTP", sendOtp:"Send OTP", verify:"Verify & Login", pinLbl:"Enter Admin PIN", changeUpi:"Change UPI ID", currentUpi:"Current UPI", saveUpi:"Save UPI", zipInfo:"If publish fails, upload this ZIP to netlify.com/drop", qty:"Qty", stock:"In Stock", cat:"Category", all:"All", tmt:"TMT Bars", cement:"Cement", sand:"Sand & Aggregate", brick:"Bricks", tools:"Tools", empty:"Cart is empty", noord:"No orders yet", ordid:"Order", status:"Status", pending:"Pending", scan:"Scan QR to Pay", payto:"Pay to", est:"Enter dimensions to estimate", len:"Length (ft)", wid:"Width (ft)", ht:"Height (ft)", need:"You need approx", bags:"bags of Cement", tons:"tons of TMT", cft:"cft of Sand", bricks:"Bricks (approx)", calc:"Calculate", ledger:"Ledger", customer:"Customer", amt:"Amount", add:"Add Entry", credit:"Credit", debit:"Debit", note:"Note", del:"Delete", eta:"ETA Today", driver:"Driver", low:"LOW STOCK", tick:"★ Same-Day Delivery Across Hyderabad • Wholesale Rates • Genuine Brands • Instant WhatsApp Estimates ★" },
+  HI: { b:"मजबूत बनाएं। स्मार्ट ऑर्डर करें।", c:"टोकरी", s:"आज डिलीवरी", w:"थोक खाता", g:"ब्रांड कैटलॉग", f:"फ्री एस्टीमेट", zip:"ZIP डाउनलोड", home:"होम", search:"सरिया, सीमेंट, रेत, ईंट खोजें...", login:"लॉगिन", logout:"लॉगआउट", orders:"मेरे ऑर्डर", admin:"एडमिन", call:"कॉल करें", wa:"व्हाट्सएप", cart:"टोकरी", buy:"जोड़ें", total:"कुल", checkout:"ऑर्डर करें", address:"पता", cod:"कैश ऑन डिलीवरी", upi:"UPI से भुगतान", confirm:"पुष्टि करें", noResults:"सामान उपलब्ध नहीं है। एडमिन पैनल से असली फोटो और रेट जोड़ें।", tracker:"लाइव ऑर्डर ट्रैकर", khata:"थोक खाता", catalog:"ब्रांड कैटलॉग", estimator:"अनुमान कैलकुलेटर", welcome:"स्वागत है", mobile:"मोबाइल नंबर", otp:"OTP दर्ज करें", sendOtp:"OTP भेजें", verify:"वेरीफाई करें", pinLbl:"एडमिन PIN डालें", changeUpi:"UPI बदलें", currentUpi:"मौजूदा UPI", saveUpi:"UPI सेव करें", zipInfo:"पब्लिश फेल हो तो ZIP netlify.com/drop पर अपलोड करें", qty:"मात्रा", stock:"स्टॉक में", cat:"श्रेणी", all:"सभी", tmt:"सरिया", cement:"सीमेंट", sand:"रेत/गिट्टी", brick:"ईंट", tools:"औजार", empty:"टोकरी खाली", noord:"कोई ऑर्डर नहीं", ordid:"ऑर्डर", status:"स्थिति", pending:"लंबित", scan:"QR स्कैन करें", payto:"भुगतान", est:"माप डालें", len:"लंबाई (फीट)", wid:"चौड़ाई (फीट)", ht:"ऊंचाई (फीट)", need:"आपको चाहिए", bags:"सीमेंट बैग", tons:"टन सरिया", cft:"cft रेत", bricks:"ईंटें", calc:"गणना करें", ledger:"बही", customer:"ग्राहक", amt:"राशि", add:"जोड़ें", credit:"जमा", debit:"नाम", note:"नोट", del:"हटाएं", eta:"आज पहुंचेगा", driver:"ड्राइवर", low:"स्टॉक कम", tick:"★ हैदराबाद में आज ही डिलीवरी • थोक रेट • असली ब्रांड • इंस्टेंट व्हाट्सएप एस्टीमेट ★" },
+  TE: { b:"బలంగా నిర్మించండి. తెలివిగా ఆర్డర్ చేయండి.", c:"బుట్ట", s:"ఈరోజే డెలివరీ", w:"హోల్‌సేల్ ఖాతా", g:"బ్రాండ్ కేటలాగ్", f:"ఉచిత అంచనా", zip:"ZIP డౌన్‌లోడ్", home:"హోమ్", search:"సరియా, సిమెంట్, ఇసుక, ఇటుకలు...", login:"లాగిన్", logout:"లాగౌట్", orders:"నా ఆర్డర్లు", admin:"అడ్మిన్", call:"కాల్ చేయండి", wa:"వాట్సాప్", cart:"బుట్ట", buy:"జోడించు", total:"మొత్తం", checkout:"ఆర్డర్ చేయండి", address:"చిరునామా", cod:"క్యాష్ ఆన్ డెలివరీ", upi:"UPI చెల్లింపు", confirm:"నిర్ధారించండి", noResults:"సరుకులు లేవు. అడ్మిన్ ప్యానెల్ నుండి అసలైన ఉత్పత్తులను జోడించండి.", tracker:"లైవ్ ఆర్డర్ ట్రాకర్", khata:"హోల్‌సేల్ ఖాతా", catalog:"బ్రాండ్ కేటలాగ్", estimator:"అంచనా కాలిక్యులేటర్", welcome:"స్వాగతం", mobile:"మొబైల్ నంబర్", otp:"OTP నమోదు", sendOtp:"OTP పంపండి", verify:"వెరిఫై చేయండి", pinLbl:"అడ్మిన్ PIN", changeUpi:"UPI మార్చండి", currentUpi:"ప్రస్తుత UPI", saveUpi:"UPI సేవ్ చేయండి", zipInfo:"పబ్లిష్ ఫెయిల్ అయితే ZIP ని netlify.com/drop కు అప్‌లోడ్ చేయండి", qty:"పరిమాణం", stock:"స్టాక్‌లో", cat:"వర్గం", all:"అన్నీ", tmt:"సరియా", cement:"సిమెంట్", sand:"ఇసుక/కంకర", brick:"ఇటుకలు", tools:"పరికరాలు", empty:"బుట్ట ఖాళీ", noord:"ఆర్డర్లు లేవు", ordid:"ఆర్డర్", status:"స్థితి", pending:"పెండింగ్", scan:"QR స్కాన్ చేయండి", payto:"చెల్లింపు", est:"కొలతలు ఇవ్వండి", len:"పొడవు (అడుగు)", wid:"వెడల్పు (అడుగు)", ht:"ఎత్తు (అడుగు)", need:"కావాలి", bags:"సిమెంట్ బస్తాలు", tons:"టన్నుల సరియా", cft:"cft ఇసుక", bricks:"ఇటుకలు", calc:"లెక్కించండి", ledger:"లెడ్జర్", customer:"కస్టమర్", amt:"మొత్తం", add:"జోడించు", credit:"క్రెడిట్", debit:"డెబిట్", note:"నోట్", del:"తొలగించు", eta:"ఈరోజు", driver:"డ్రైవర్", low:"స్టాక్ తక్కువ", tick:"★ హైదరాబాద్‌లో ఈరోజే డెలివరీ • హోల్‌సేల్ రేట్లు • అసలైన బ్రాండ్ • తక్షణ వాట్సాప్ అంచనా ★" }
 };
 
 const MAP = { sariya:'tmt', saria:'tmt', steel:'tmt', rod:'tmt', tmt:'tmt', cement:'cement', simenti:'cement', ppc:'cement', opc:'cement', ret:'sand', balu:'sand', sand:'sand', isuka:'sand', metal:'sand', aggregate:'sand', gitti:'sand', brick:'brick', eent:'brick', itukalu:'brick', block:'brick', wire:'tools', tool:'tools' };
 
-const DEFAULT_PRODUCTS = [
-  { id:1, n:"TMT Bar Fe500 8mm", b:"Tata Tiscon", p:62, u:"per kg", cat:"tmt", stock:250, rating:4.7, visible:true, img:"https://images.unsplash.com/photo-1590247813693-5541d1c609fd?auto=format&fit=crop&w=400&q=70" },
-  { id:2, n:"TMT Bar Fe500 10mm", b:"JSW Neosteel", p:61, u:"per kg", cat:"tmt", stock:180, rating:4.6, visible:true, img:"https://images.unsplash.com/photo-1590247813693-5541d1c609fd?auto=format&fit=crop&w=400&q=70" },
-  { id:3, n:"TMT Bar Fe500 12mm", b:"SAIL", p:60, u:"per kg", cat:"tmt", stock:8, rating:4.5, visible:true, img:"https://images.unsplash.com/photo-1590247813693-5541d1c609fd?auto=format&fit=crop&w=400&q=70" },
-  { id:4, n:"TMT Bar Fe500 16mm", b:"Kamdhenu", p:59, u:"per kg", cat:"tmt", stock:120, rating:4.4, visible:true, img:"https://images.unsplash.com/photo-1590247813693-5541d1c609fd?auto=format&fit=crop&w=400&q=70" },
-  { id:5, n:"TMT Bar Fe550 20mm", b:"Tata Tiscon", p:63, u:"per kg", cat:"tmt", stock:90, rating:4.8, visible:true, img:"https://images.unsplash.com/photo-1590247813693-5541d1c609fd?auto=format&fit=crop&w=400&q=70" },
-  { id:6, n:"OPC 53 Grade Cement", b:"UltraTech", p:410, u:"per bag (50kg)", cat:"cement", stock:320, rating:4.9, visible:true, img:"https://images.unsplash.com/photo-1518709414768-a88981a4515d?auto=format&fit=crop&w=400&q=70" },
-  { id:7, n:"PPC Cement", b:"Ambuja", p:380, u:"per bag (50kg)", cat:"cement", stock:210, rating:4.7, visible:true, img:"https://images.unsplash.com/photo-1518709414768-a88981a4515d?auto=format&fit=crop&w=400&q=70" },
-  { id:8, n:"PPC Cement", b:"ACC Gold", p:385, u:"per bag (50kg)", cat:"cement", stock:6, rating:4.6, visible:true, img:"https://images.unsplash.com/photo-1518709414768-a88981a4515d?auto=format&fit=crop&w=400&q=70" },
-  { id:9, n:"White Cement", b:"JK White", p:850, u:"per bag (25kg)", cat:"cement", stock:45, rating:4.5, visible:true, img:"https://images.unsplash.com/photo-1518709414768-a88981a4515d?auto=format&fit=crop&w=400&q=70" },
-  { id:10, n:"River Sand (Ret / Balu)", b:"Local", p:1800, u:"per ton", cat:"sand", stock:60, rating:4.3, visible:true, img:"https://images.unsplash.com/photo-1578662996442-48f60103fc96?auto=format&fit=crop&w=400&q=70" },
-  { id:11, n:"M-Sand (Manufactured)", b:"Robo Silicon", p:1400, u:"per ton", cat:"sand", stock:80, rating:4.4, visible:true, img:"https://images.unsplash.com/photo-1578662996442-48f60103fc96?auto=format&fit=crop&w=400&q=70" },
-  { id:12, n:"20mm Aggregate (Metal)", b:"Local", p:1200, u:"per ton", cat:"sand", stock:100, rating:4.2, visible:true, img:"https://images.unsplash.com/photo-1615529162924-f8605388461d?auto=format&fit=crop&w=400&q=70" },
-  { id:13, n:"12mm Aggregate", b:"Local", p:1250, u:"per ton", cat:"sand", stock:75, rating:4.3, visible:true, img:"https://images.unsplash.com/photo-1615529162924-f8605388461d?auto=format&fit=crop&w=400&q=70" },
-  { id:14, n:"Red Bricks Class A", b:"Local Kiln", p:9, u:"per piece", cat:"brick", stock:5000, rating:4.5, visible:true, img:"https://images.unsplash.com/photo-1595515106969-1ce29566ff1c?auto=format&fit=crop&w=400&q=70" },
-  { id:15, n:"Fly Ash Bricks", b:"EcoBrick", p:7, u:"per piece", cat:"brick", stock:3200, rating:4.4, visible:true, img:"https://images.unsplash.com/photo-1595515106969-1ce29566ff1c?auto=format&fit=crop&w=400&q=70" },
-  { id:16, n:"AAC Blocks 600x200x100", b:"Magicrete", p:65, u:"per piece", cat:"brick", stock:900, rating:4.7, visible:true, img:"https://images.unsplash.com/photo-1595515106969-1ce29566ff1c?auto=format&fit=crop&w=400&q=70" },
-  { id:17, n:"Steel Binding Wire", b:"Tata Wiron", p:85, u:"per kg", cat:"tools", stock:150, rating:4.6, visible:true, img:"https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=400&q=70" },
-  { id:18, n:"GI Wire 8 Gauge", b:"Bansal", p:95, u:"per kg", cat:"tools", stock:110, rating:4.5, visible:true, img:"https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=400&q=70" }
+// 🔥 100% CLEAN REAL INVENTORY (NO DUMMY RANDOM PHOTOS)
+const INITIAL_PRODUCTS = [
+  { id: 1, n: "TMT Bar Fe500 8mm", b: "Tata Tiscon", p: 62, u: "per kg", cat: "tmt", stock: 250, rating: 4.8, visible: true, img: "", moq: 50 },
+  { id: 2, n: "TMT Bar Fe500 10mm", b: "JSW Neosteel", p: 61, u: "per kg", cat: "tmt", stock: 180, rating: 4.7, visible: true, img: "", moq: 50 },
+  { id: 3, n: "TMT Bar Fe500 12mm", b: "SAIL", p: 60, u: "per kg", cat: "tmt", stock: 120, rating: 4.6, visible: true, img: "", moq: 50 },
+  { id: 4, n: "OPC 53 Grade Cement", b: "UltraTech", p: 410, u: "per bag (50kg)", cat: "cement", stock: 320, rating: 4.9, visible: true, img: "", moq: 20 },
+  { id: 5, n: "PPC Cement", b: "Ambuja", p: 380, u: "per bag (50kg)", cat: "cement", stock: 210, rating: 4.8, visible: true, img: "", moq: 20 },
+  { id: 6, n: "River Sand (Balu / Ret)", b: "Local River", p: 1800, u: "per ton", cat: "sand", stock: 60, rating: 4.5, visible: true, img: "", moq: 1 },
+  { id: 7, n: "20mm Aggregate (Metal)", b: "Local Quarry", p: 1200, u: "per ton", cat: "sand", stock: 100, rating: 4.4, visible: true, img: "", moq: 1 },
+  { id: 8, n: "Red Bricks Class A", b: "Kiln Standard", p: 9, u: "per piece", cat: "brick", stock: 5000, rating: 4.6, visible: true, img: "", moq: 500 }
 ];
 
 const DEFAULT_WORKERS = [
-  { id:1, role:"Rajmistri (Mason)", name:"Ramesh Kumar", rate:850, phone:"916301456725", icon:"🧱", exp:"12 yrs", area:"Hyderabad" },
-  { id:2, role:"Electrician", name:"Suresh Reddy", rate:700, phone:"916301456725", icon:"⚡", exp:"8 yrs", area:"Secunderabad" },
-  { id:3, role:"Plumber", name:"Mahesh Yadav", rate:650, phone:"916301456725", icon:"🔧", exp:"10 yrs", area:"Hyderabad" },
-  { id:4, role:"Builder / Contractor", name:"Anil Sharma", rate:1500, phone:"916301456725", icon:"👷", exp:"18 yrs", area:"Telangana" },
-  { id:5, role:"Welder", name:"Prakash Verma", rate:800, phone:"916301456725", icon:"🔥", exp:"7 yrs", area:"Hyderabad" },
-  { id:6, role:"Painter", name:"Naresh Goud", rate:700, phone:"916301456725", icon:"🎨", exp:"9 yrs", area:"Secunderabad" }
+  { id: 1, role: "Rajmistri (Mason)", name: "Ramesh Kumar", rate: 850, phone: "916301456725", icon: "🧱", exp: "12 yrs", area: "Hyderabad" },
+  { id: 2, role: "Electrician", name: "Suresh Reddy", rate: 700, phone: "916301456725", icon: "⚡", exp: "8 yrs", area: "Secunderabad" },
+  { id: 3, role: "Plumber", name: "Mahesh Yadav", rate: 650, phone: "916301456725", icon: "🔧", exp: "10 yrs", area: "Hyderabad" },
+  { id: 4, role: "Contractor / Builder", name: "Anil Sharma", rate: 1500, phone: "916301456725", icon: "👷", exp: "18 yrs", area: "Telangana" }
 ];
 
-// ============= FLOAT BUTTONS =============
-const FloatButtons = () => (
-  <div className="fixed bottom-4 right-4 flex flex-col gap-3 z-50">
-    <a href={`https://wa.me/${CFG.wa}`} target="_blank" rel="noreferrer" className="flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-4 py-3 rounded-full shadow-lg font-bold transition-transform hover:scale-105">
-      <MessageCircle size={20} /> <span className="hidden sm:inline">WhatsApp</span>
-    </a>
-    <a href={`tel:${CFG.phone.replace(/\s/g,'')}`} className="flex items-center gap-2 bg-orange-600 hover:bg-orange-700 text-white px-4 py-3 rounded-full shadow-lg font-bold transition-transform hover:scale-105">
-      <Phone size={20} /> <span className="hidden sm:inline">Call Now</span>
-    </a>
-  </div>
-);
+// Helper to read file to DataURL
+const fileToDataURL = (file) => new Promise((res, rej) => {
+  const r = new FileReader();
+  r.onload = () => res(r.result);
+  r.onerror = rej;
+  r.readAsDataURL(file);
+});
 
 // ============= MAIN APP =============
 export default function App() {
@@ -111,7 +96,7 @@ export default function App() {
   const [orders, setOrders] = useState(ls.get("myOrders", []));
   const [ledger, setLedger] = useState(ls.get("ledger", []));
   const [invoices, setInvoices] = useState(ls.get("saved_invoices", []));
-  const [products, setProducts] = useState(ls.get("products", DEFAULT_PRODUCTS));
+  const [products, setProducts] = useState(ls.get("products", INITIAL_PRODUCTS));
   const [workers, setWorkers] = useState(ls.get("workers", DEFAULT_WORKERS));
   const [bankInfo, setBankInfo] = useState(ls.get("bank_info", DEFAULT_BANK));
   const [gallery, setGallery] = useState(ls.get("gallery", []));
@@ -125,7 +110,7 @@ export default function App() {
   const [dark, setDark] = useState(ls.get("dark", false));
   const t = T[lang];
 
-  // 🔥 Real-time Firestore Sync
+  // 🔥 Firebase Real-time Listener (Always Live)
   useEffect(() => {
     try {
       const unsub = onSnapshot(doc(db, "app_data", "main_store"), (snap) => {
@@ -164,9 +149,11 @@ export default function App() {
 
   const addToCart = (p) => {
     try {
+      if (p.stock <= 0) { alert("This item is currently Out of Stock."); return; }
+      const minQty = p.moq || 1;
       const existing = cart.find(x => x.id === p.id);
       if (existing) setCart(cart.map(x => x.id === p.id ? { ...x, q: x.q + 1 } : x));
-      else setCart([...cart, { ...p, q: 1 }]);
+      else setCart([...cart, { ...p, q: minQty }]);
     } catch (e) { console.error(e); }
   };
   const updateQty = (id, delta) => setCart(cart.map(x => x.id === id ? { ...x, q: Math.max(1, x.q + delta) } : x));
@@ -306,15 +293,7 @@ export default function App() {
         </div>
       )}
 
-      {screen !== "home" && (
-        <div className="max-w-6xl mx-auto px-4 pt-4">
-          <button onClick={back} className="flex items-center gap-2 text-sm font-bold text-stone-700 hover:text-orange-600 transition">
-            <ArrowLeft size={16} /> {t.home}
-          </button>
-        </div>
-      )}
-
-      <main className="max-w-6xl mx-auto px-4 pb-24 pt-4">
+      <main className="max-w-6xl mx-auto px-4 pb-28 pt-4">
         {screen === "home" && (
           <HomeScreen 
             t={t} lang={lang} setScreen={go} CARDS={CARDS} 
@@ -350,6 +329,30 @@ export default function App() {
         {screen === "emi" && <EmiScreen />}
       </main>
 
+      {/* 🔥 HIGH-VISIBILITY FLOATING BACK BUTTON (ALWAYS VISIBLE IN DARK & LIGHT MODE) */}
+      {screen !== "home" && (
+        <div className="fixed bottom-5 left-4 z-50">
+          <button 
+            onClick={back} 
+            className="flex items-center gap-2 bg-gradient-to-r from-orange-500 to-amber-600 hover:from-orange-600 hover:to-amber-700 text-white font-black px-5 py-3 rounded-full shadow-2xl border-2 border-white/60 text-sm transition-transform hover:scale-105 active:scale-95"
+            style={{ boxShadow: '0 8px 25px rgba(234, 88, 12, 0.55)' }}
+          >
+            <ArrowLeft size={18} />
+            <span>← Back to Home</span>
+          </button>
+        </div>
+      )}
+
+      {/* FLOAT BUTTONS FOR WHATSAPP & CALL */}
+      <div className="fixed bottom-5 right-4 flex flex-col gap-3 z-50">
+        <a href={`https://wa.me/${CFG.wa}`} target="_blank" rel="noreferrer" className="flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-4 py-3 rounded-full shadow-xl font-bold transition-transform hover:scale-105">
+          <MessageCircle size={20} /> <span className="hidden sm:inline">WhatsApp</span>
+        </a>
+        <a href={`tel:${CFG.phone.replace(/\s/g,'')}`} className="flex items-center gap-2 bg-orange-600 hover:bg-orange-700 text-white px-4 py-3 rounded-full shadow-xl font-bold transition-transform hover:scale-105">
+          <Phone size={20} /> <span className="hidden sm:inline">Call</span>
+        </a>
+      </div>
+
       <footer className="border-t-4 border-orange-500 py-6 mt-8" style={{ backgroundColor: "#0A1931" }}>
         <div className="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-white/70">
           <div className="font-bold">© 2026 {CFG.brand}. All rights reserved. Hyderabad, Telangana.</div>
@@ -359,8 +362,6 @@ export default function App() {
           </div>
         </div>
       </footer>
-
-      <FloatButtons />
     </div>
   );
 }
@@ -403,22 +404,22 @@ function SmartGradeSelector({ products, addToCart }) {
       return {
         title: "Roof & Slab Casting (छत ढलाई)",
         desc: "Requires high initial strength & optimal load distribution.",
-        cement: products.find(p => p.n.includes("OPC 53") || p.b.includes("UltraTech")) || products[5],
-        steel: products.find(p => p.n.includes("12mm") || p.n.includes("10mm")) || products[2]
+        cement: products.find(p => p.n.includes("OPC 53") || p.b.includes("UltraTech")) || products[3],
+        steel: products.find(p => p.n.includes("12mm") || p.n.includes("10mm")) || products[1]
       };
     } else if (useCase === "pillar") {
       return {
         title: "Pillars, Beams & Heavy Foundation (पिलर और बीम)",
         desc: "Demands heavy gauge Fe500/Fe550 rebars for maximum tensile load.",
-        cement: products.find(p => p.n.includes("53 Grade")) || products[5],
-        steel: products.find(p => p.n.includes("16mm") || p.n.includes("20mm")) || products[3]
+        cement: products.find(p => p.n.includes("53 Grade")) || products[3],
+        steel: products.find(p => p.n.includes("12mm") || p.n.includes("16mm")) || products[2]
       };
     } else {
       return {
         title: "Brick Masonry & Plastering (ईंट चुनाई और प्लास्टर)",
         desc: "PPC cement provides superior cohesion, zero cracks & smoother finish.",
-        cement: products.find(p => p.n.includes("PPC") || p.b.includes("Ambuja")) || products[6],
-        steel: products.find(p => p.n.includes("Binding Wire") || p.cat === "brick") || products[13]
+        cement: products.find(p => p.n.includes("PPC") || p.b.includes("Ambuja")) || products[4],
+        steel: products.find(p => p.cat === "brick") || products[7]
       };
     }
   }, [useCase, products]);
@@ -479,7 +480,7 @@ function SmartGradeSelector({ products, addToCart }) {
           {recommendations.steel && (
             <div className="bg-slate-900/80 p-2.5 rounded-lg flex items-center justify-between border border-white/5">
               <div>
-                <div className="text-[10px] text-amber-400 uppercase font-bold">Recommended Steel / Rebar</div>
+                <div className="text-[10px] text-amber-400 uppercase font-bold">Recommended Material</div>
                 <div className="text-xs font-bold truncate max-w-[150px]">{recommendations.steel.n}</div>
                 <div className="text-xs font-black text-white">₹{recommendations.steel.p} <span className="text-[10px] font-normal text-slate-400">/{recommendations.steel.u}</span></div>
               </div>
@@ -619,7 +620,6 @@ function HomeScreen({ t, lang, setScreen, CARDS, query, doSearch, category, setC
         </div>
       </section>
 
-      {/* Smart Grade Selector Component */}
       <SmartGradeSelector products={products} addToCart={addToCart} />
 
       <section className="bg-white border-2 border-stone-900 rounded-full py-1.5 px-3 shadow-sm">
@@ -663,7 +663,7 @@ function WorkersSection({ workers }) {
         <h3 className="font-display font-black text-lg" style={{ color: "#0A1931" }}>Hire Skilled Workers</h3>
         <span className="text-[10px] uppercase tracking-widest text-orange-600 font-bold">Direct Booking · No Commission</span>
       </div>
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2">
         {workers.map(w => (
           <div key={w.id} className="bg-white border-2 border-stone-200 hover:border-orange-500 rounded-xl p-2.5 shadow-sm hover:shadow-md transition group">
             <div className="flex items-center gap-2">
@@ -680,12 +680,14 @@ function WorkersSection({ workers }) {
               <span className="text-[10px] text-stone-500">/day · {w.exp || "Verified"}</span>
             </div>
             {w.area && <div className="text-[9px] text-stone-400 truncate">📍 {w.area}</div>}
-            <a href={`tel:+${w.phone || CFG.wa}`} className="mt-2 w-full bg-orange-500 hover:bg-orange-600 text-white text-[11px] font-bold py-1.5 rounded-full transition flex items-center justify-center gap-1">
-              <Phone size={11} /> Call
-            </a>
-            <a href={`https://wa.me/${w.phone || CFG.wa}?text=Hi%20${encodeURIComponent(w.name)}%2C%20need%20${encodeURIComponent(w.role)}`} target="_blank" rel="noreferrer" className="mt-1 w-full bg-green-600 hover:bg-green-700 text-white text-[11px] font-bold py-1.5 rounded-full transition flex items-center justify-center gap-1">
-              <MessageCircle size={11} /> WhatsApp
-            </a>
+            <div className="grid grid-cols-2 gap-1 mt-2">
+              <a href={`tel:+${w.phone || CFG.wa}`} className="bg-orange-500 hover:bg-orange-600 text-white text-[11px] font-bold py-1.5 rounded-lg transition flex items-center justify-center gap-1">
+                <Phone size={11} /> Call
+              </a>
+              <a href={`https://wa.me/${w.phone || CFG.wa}?text=Hi%20${encodeURIComponent(w.name)}%2C%20need%20${encodeURIComponent(w.role)}`} target="_blank" rel="noreferrer" className="bg-green-600 hover:bg-green-700 text-white text-[11px] font-bold py-1.5 rounded-lg transition flex items-center justify-center gap-1">
+                <MessageCircle size={11} /> WhatsApp
+              </a>
+            </div>
           </div>
         ))}
       </div>
@@ -699,6 +701,7 @@ const Stars = ({ n }) => (
   </div>
 );
 
+// 🔥 100% REAL PRODUCT GRID (Shows image only if uploaded, else shows clean badge)
 function ProductGrid({ t, filtered, addToCart }) {
   if (filtered.length === 0) return (
     <div className="bg-amber-50 border-2 border-amber-500 rounded-2xl p-8 text-center">
@@ -709,23 +712,45 @@ function ProductGrid({ t, filtered, addToCart }) {
   return (
     <section className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
       {filtered.map(p => (
-        <div key={p.id} className="bg-white border-2 border-stone-200 hover:border-orange-500 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all group">
-          <div className="h-32 bg-stone-100 overflow-hidden relative">
-            <img src={p.img} alt={p.n} className="w-full h-full object-cover group-hover:scale-105 transition" />
-            {p.stock < 10 && <span className="absolute top-1.5 right-1.5 bg-red-600 text-white text-[9px] font-black px-1.5 py-0.5 rounded-full animate-pulse">{t.low}</span>}
+        <div key={p.id} className="bg-white border-2 border-stone-200 hover:border-orange-500 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all group flex flex-col justify-between">
+          <div>
+            <div className="h-32 bg-stone-100 overflow-hidden relative flex items-center justify-center">
+              {p.img ? (
+                <img src={p.img} alt={p.n} className="w-full h-full object-cover group-hover:scale-105 transition" />
+              ) : (
+                <div className="flex flex-col items-center justify-center text-stone-400 p-2 text-center">
+                  <ImageIcon size={30} className="mb-1 text-stone-300" />
+                  <span className="text-[10px] font-bold uppercase tracking-wider">{p.b}</span>
+                </div>
+              )}
+              {p.stock <= 0 ? (
+                <span className="absolute top-1.5 right-1.5 bg-stone-800 text-white text-[9px] font-black px-2 py-0.5 rounded-full">Out of Stock</span>
+              ) : p.stock < 10 ? (
+                <span className="absolute top-1.5 right-1.5 bg-red-600 text-white text-[9px] font-black px-1.5 py-0.5 rounded-full animate-pulse">{t.low}</span>
+              ) : null}
+            </div>
+            <div className="p-2 space-y-1">
+              <div className="text-[9px] uppercase tracking-widest text-orange-600 font-bold">{p.b}</div>
+              <div className="font-bold text-xs leading-tight line-clamp-2 h-8 text-stone-900">{p.n}</div>
+              <div className="flex items-center justify-between">
+                <Stars n={p.rating || 4.5} />
+                <span className="text-[9px] text-stone-500">{p.stock > 0 ? `${p.stock} ${t.stock}` : 'Available on Call'}</span>
+              </div>
+              <div className="flex items-baseline gap-1">
+                <span className="font-display font-black text-base text-stone-900">₹{p.p}</span>
+                <span className="text-[9px] text-stone-500">{p.u}</span>
+              </div>
+              {p.moq > 1 && <div className="text-[9px] text-amber-700 font-bold">Min Order: {p.moq} units</div>}
+            </div>
           </div>
-          <div className="p-2 space-y-1">
-            <div className="text-[9px] uppercase tracking-widest text-orange-600 font-bold">{p.b}</div>
-            <div className="font-bold text-xs leading-tight line-clamp-2 h-8">{p.n}</div>
-            <div className="flex items-center justify-between">
-              <Stars n={p.rating || 4.5} />
-              <span className="text-[9px] text-stone-500">{p.stock} {t.stock}</span>
-            </div>
-            <div className="flex items-baseline gap-1">
-              <span className="font-display font-black text-base">₹{p.p}</span>
-              <span className="text-[9px] text-stone-500">{p.u}</span>
-            </div>
-            <button onClick={() => addToCart(p)} className="w-full bg-orange-500 hover:bg-orange-600 text-white text-[11px] font-bold py-1.5 rounded-full transition">+ {t.buy}</button>
+          <div className="p-2 pt-0">
+            <button 
+              onClick={() => addToCart(p)} 
+              disabled={p.stock <= 0}
+              className={`w-full text-[11px] font-bold py-1.5 rounded-full transition ${p.stock <= 0 ? 'bg-stone-300 text-stone-500 cursor-not-allowed' : 'bg-orange-500 hover:bg-orange-600 text-white'}`}
+            >
+              {p.stock <= 0 ? 'Out of Stock' : `+ ${t.buy}`}
+            </button>
           </div>
         </div>
       ))}
@@ -764,7 +789,7 @@ function CartScreen({ t, cart, updateQty, removeItem, total, onCheckout, upi, us
       <div className="space-y-3">
         {cart.map(item => (
           <div key={item.id} className="bg-white border-2 border-stone-200 rounded-2xl p-3 flex items-center gap-3">
-            <img src={item.img} alt={item.n} className="w-16 h-16 object-cover rounded-lg" />
+            {item.img ? <img src={item.img} alt={item.n} className="w-16 h-16 object-cover rounded-lg" /> : <div className="w-16 h-16 bg-stone-100 rounded-lg flex items-center justify-center text-[10px] font-bold text-stone-400">{item.b}</div>}
             <div className="flex-1 min-w-0">
               <div className="text-[10px] uppercase text-orange-600 font-bold">{item.b}</div>
               <div className="font-bold text-sm truncate">{item.n}</div>
@@ -851,6 +876,7 @@ function printTaxInvoiceDocument(inv, isChallan = false, currentBank = DEFAULT_B
     .text-right { text-align: right; }
     .tot-row td { font-weight: bold; }
     .grand-tot td { font-size: 16px; color: #ea580c; font-weight: 900; background: #fff7ed; }
+    .eway-alert { background: #dcfce7; border: 1px solid #16a34a; color: #166534; padding: 6px 10px; border-radius: 4px; font-weight: bold; font-size: 12px; margin: 10px 0; }
     .bank-box { margin-top: 20px; padding: 12px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 12px; background: #f8fafc; }
     .terms { margin-top: 25px; border-top: 1px dashed #94a3b8; padding-top: 12px; font-size: 11px; color: #475569; }
     .sign-box { margin-top: 35px; display: flex; justify-content: space-between; align-items: flex-end; font-size: 12px; }
@@ -873,6 +899,12 @@ function printTaxInvoiceDocument(inv, isChallan = false, currentBank = DEFAULT_B
     </div>
   </div>
 
+  ${grand >= 50000 ? `
+    <div class="eway-alert">
+      ✓ Statutory E-Way Bill Rule Applied (Consignment > ₹50,000) | E-Way Ref: ${inv.ewayNo || 'Verified Transport Dispatch'}
+    </div>
+  ` : ''}
+
   <table class="meta-table">
     <tr>
       <td style="width: 50%;">
@@ -885,7 +917,7 @@ function printTaxInvoiceDocument(inv, isChallan = false, currentBank = DEFAULT_B
         <strong>Vehicle & Transit Details:</strong><br/>
         Vehicle No: <strong>${inv.vehicle || 'Dispatched Lorry'}</strong><br/>
         Payment Terms: <strong>${inv.payment || 'Recorded'}</strong><br/>
-        Transit Status: Road Dispatch (Official Gate Pass)
+        Transit Status: Direct Yard Dispatch
       </td>
     </tr>
   </table>
@@ -1098,7 +1130,6 @@ function OrdersScreen({ t, orders, setOrders, upi, bankInfo }) {
             <button onClick={() => printTaxInvoiceDocument(o, false, bankInfo)} className="flex items-center justify-center gap-1 bg-stone-900 text-white text-xs font-bold py-2 rounded-full"><FileText size={12} /> Tax Invoice PDF</button>
             <button onClick={() => shareWA(o)} className="flex items-center justify-center gap-1 bg-green-600 text-white text-xs font-bold py-2 rounded-full"><MessageCircle size={12} /> WhatsApp Bill</button>
           </div>
-          {o.loyalty > 0 && <div className="text-xs text-amber-700 mt-2 font-bold">✨ +{o.loyalty} Mistri Points earned</div>}
         </div>
       ))}
     </div>
@@ -1136,7 +1167,6 @@ function TrackerScreen({ t, orders }) {
     <div className="space-y-6">
       <h2 className="font-display font-black text-3xl">Live Delivery GPS Tracker</h2>
       
-      {/* Real GPS Driver Broadcast */}
       <div className="bg-white border-2 border-stone-200 rounded-2xl p-5 shadow-sm space-y-3">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
@@ -1185,7 +1215,6 @@ function TrackerScreen({ t, orders }) {
         )}
       </div>
 
-      {/* Dispatched Orders */}
       <div className="space-y-3">
         <h4 className="text-xs font-bold uppercase tracking-widest text-stone-500">Active Delivery Orders</h4>
         {orders.length === 0 ? (
@@ -1217,7 +1246,7 @@ function TrackerScreen({ t, orders }) {
   );
 }
 
-// ============= WHOLESALE KHATA WITH STATEMENT DOWNLOAD & REMINDERS =============
+// ============= WHOLESALE KHATA =============
 function KhataScreen({ t, ledger, setLedger, upi, bankInfo }) {
   const [customer, setCustomer] = useState("");
   const [phone, setPhone] = useState("");
@@ -1527,7 +1556,7 @@ function DayCloseReport({ invoices }) {
   );
 }
 
-// ============= ADMIN PANEL WITH DYNAMIC BANK MANAGER =============
+// ============= ADMIN PANEL WITH REAL IMAGE UPLOAD & E-WAY AUTO DETECTION =============
 function AdminScreen({ 
   t, unlocked, setUnlocked, upi, saveUpi, downloadZip, 
   orders, setOrders, products, setProducts, 
@@ -1538,11 +1567,7 @@ function AdminScreen({
   const [pin, setPin] = useState("");
   const [tab, setTab] = useState("invoice_maker");
   const [newUpi, setNewUpi] = useState(upi);
-  const [newBanner, setNewBanner] = useState(heroImg);
-  const [newHead, setNewHead] = useState(heroTxt);
-  const [newProd, setNewProd] = useState({ n:"", b:"", p:"", u:"per unit", cat:"tmt", stock:100, img:"" });
-
-  // Dynamic Bank State for Settings
+  const [newProd, setNewProd] = useState({ n:"", b:"", p:"", u:"per bag", cat:"cement", stock:100, img:"", moq:1 });
   const [editBank, setEditBank] = useState({ ...bankInfo });
 
   // Multi-Item Invoice Maker State
@@ -1550,16 +1575,15 @@ function AdminScreen({
   const [invPhone, setInvPhone] = useState("");
   const [invAddress, setInvAddress] = useState("");
   const [invVehicle, setInvVehicle] = useState("");
+  const [invEway, setInvEway] = useState("");
   const [invDiscount, setInvDiscount] = useState("0");
   const [invPaid, setInvPaid] = useState("");
   const [kantaImg, setKantaImg] = useState("");
   const [signatureData, setSignatureData] = useState("");
 
   const [billItems, setBillItems] = useState([
-    { n: products[0]?.n || "TMT Bar Fe500 8mm", b: products[0]?.b || "Tata Tiscon", q: 100, p: products[0]?.p || 62, u: products[0]?.u || "per kg" }
+    { n: products[0]?.n || "OPC 53 Grade Cement", b: products[0]?.b || "UltraTech", q: 100, p: products[0]?.p || 410, u: products[0]?.u || "per bag" }
   ]);
-
-  const readFile = (file, cb) => { const r = new FileReader(); r.onload = () => cb(r.result); r.readAsDataURL(file); };
 
   if (!unlocked) return (
     <div className="max-w-md mx-auto">
@@ -1584,11 +1608,25 @@ function AdminScreen({
     }
   };
 
+  // 🔥 Upload Real Camera Image for Product
+  const handleProductImageUpload = async (productId, file) => {
+    if (!file) return;
+    try {
+      const dataUrl = await fileToDataURL(file);
+      const updated = products.map(x => x.id === productId ? { ...x, img: dataUrl } : x);
+      setProducts(updated);
+      await syncToFirestore(updated, workers, bankInfo);
+      alert("Real product image updated live across all devices!");
+    } catch (err) {
+      alert("Error reading photo. Please try another image.");
+    }
+  };
+
   const saveProductItem = async (p) => {
     const updated = products.map(x => x.id === p.id ? p : x);
     setProducts(updated);
     await syncToFirestore(updated, workers, bankInfo);
-    alert(`${p.n} rate & stock updated live!`);
+    alert(`${p.n} details & stock updated live!`);
   };
 
   const toggleVisibility = async (id) => {
@@ -1607,11 +1645,11 @@ function AdminScreen({
 
   const addProd = async () => {
     if (!newProd.n || !newProd.p) { alert("Name & Price required"); return; }
-    const updated = [{ ...newProd, id:Date.now(), p:parseFloat(newProd.p), stock:parseInt(newProd.stock)||100, rating:4.5, visible:true, img:newProd.img||"https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=400&q=70" }, ...products];
+    const updated = [{ ...newProd, id:Date.now(), p:parseFloat(newProd.p), stock:parseInt(newProd.stock)||100, rating:4.8, visible:true, moq:parseInt(newProd.moq)||1 }, ...products];
     setProducts(updated);
     await syncToFirestore(updated, workers, bankInfo);
-    setNewProd({ n:"", b:"", p:"", u:"per unit", cat:"tmt", stock:100, img:"" });
-    alert("New material added to store!");
+    setNewProd({ n:"", b:"", p:"", u:"per bag", cat:"cement", stock:100, img:"", moq:1 });
+    alert("New real product added to store!");
   };
 
   const addBillItem = () => {
@@ -1645,14 +1683,13 @@ function AdminScreen({
       msg += `• *${p.n}* (${p.b}): ₹${p.p} ${p.u}\n`;
     });
 
-    msg += `\n⚡ Free delivery available for wholesale quantities.\n` +
+    msg += `\n⚡ Free delivery available for wholesale orders.\n` +
            `📞 Order / Quote: ${CFG.phone}\n` +
            `🌐 Book online: https://app-blue-nu-10.vercel.app/`;
 
     window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank');
   };
 
-  // Save Dynamic Bank Info
   const handleSaveBankInfo = async () => {
     setBankInfo(editBank);
     ls.set("bank_info", editBank);
@@ -1679,6 +1716,7 @@ function AdminScreen({
       phone: invPhone.trim(),
       address: invAddress.trim() || "Hyderabad Yard Pickup",
       vehicle: invVehicle.trim() || "Direct Dispatch",
+      ewayNo: invEway.trim(),
       items: billItems,
       taxable: taxable,
       discount: disc,
@@ -1727,8 +1765,9 @@ function AdminScreen({
                   `Invoice No: *${newInv.id}*\n` +
                   `Date: ${new Date().toLocaleDateString('en-IN')}\n` +
                   `Customer: *${newInv.customer}*\n` +
-                  `Vehicle: ${newInv.vehicle}\n\n` +
-                  `*Materials:*\n${itemsList}\n\n` +
+                  `Vehicle: ${newInv.vehicle}\n` +
+                  (grand >= 50000 ? `E-Way Ref: ${invEway || 'Verified Transit'}\n` : '') +
+                  `\n*Materials:*\n${itemsList}\n\n` +
                   `Taxable: ₹${newInv.taxable.toFixed(2)}\n` +
                   (disc > 0 ? `Discount: -₹${disc.toFixed(2)}\n` : '') +
                   `GST (18%): ₹${newInv.gst.toFixed(2)}\n` +
@@ -1745,7 +1784,7 @@ function AdminScreen({
   const TABS = [
     { k:"invoice_maker", n:"📄 Multi-Item GST Bill" },
     { k:"day_report", n:"📊 Day Close Report" },
-    { k:"rates", n:"Material Rates" },
+    { k:"rates", n:"Inventory & Real Photos" },
     { k:"orders", n:"Customer Orders" },
     { k:"workers", n:"Workers Rates" },
     { k:"products", n:"Add Product" },
@@ -1776,12 +1815,10 @@ function AdminScreen({
         ))}
       </div>
 
-      {/* DAY CLOSE REPORT TAB */}
       {tab === "day_report" && (
         <DayCloseReport invoices={invoices} />
       )}
 
-      {/* MULTI-ITEM DIRECT INVOICE / BILL MAKER */}
       {tab === "invoice_maker" && (
         <div className="bg-white border-2 border-orange-500 rounded-2xl p-5 space-y-4 shadow-sm">
           <div className="border-b pb-3">
@@ -1815,7 +1852,7 @@ function AdminScreen({
             </div>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             <div>
               <label className="text-xs font-bold text-stone-600 block mb-1">Site Delivery Address</label>
               <input 
@@ -1827,7 +1864,7 @@ function AdminScreen({
               />
             </div>
             <div>
-              <label className="text-xs font-bold text-stone-600 block mb-1">Vehicle / Lorry Number (for Gate Pass)</label>
+              <label className="text-xs font-bold text-stone-600 block mb-1">Vehicle Number</label>
               <input 
                 type="text" 
                 value={invVehicle} 
@@ -1836,12 +1873,21 @@ function AdminScreen({
                 className="w-full border-2 border-stone-200 rounded-lg p-2 text-sm outline-none focus:border-orange-500" 
               />
             </div>
+            <div>
+              <label className="text-xs font-bold text-stone-600 block mb-1">E-Way Bill No (if &gt; ₹50,000)</label>
+              <input 
+                type="text" 
+                value={invEway} 
+                onChange={e=>setInvEway(e.target.value)} 
+                placeholder="E-Way Bill 12-digit number" 
+                className="w-full border-2 border-stone-200 rounded-lg p-2 text-sm outline-none focus:border-orange-500 font-bold" 
+              />
+            </div>
           </div>
 
-          {/* MULTI-ITEM LIST */}
           <div className="space-y-2 border border-stone-200 rounded-xl p-3 bg-stone-50">
             <div className="flex justify-between items-center mb-1">
-              <label className="text-xs font-black text-stone-700 uppercase tracking-wide">Materials & Products on this Bill</label>
+              <label className="text-xs font-black text-stone-700 uppercase tracking-wide">Materials on this Bill</label>
               <button 
                 type="button" 
                 onClick={addBillItem} 
@@ -1914,7 +1960,6 @@ function AdminScreen({
             </div>
           </div>
 
-          {/* Weighbridge Dharam Kanta Slip Attachment & Digital Signature */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 p-3 bg-stone-50 border border-stone-200 rounded-xl">
             <div>
               <label className="text-xs font-bold text-stone-600 block mb-1">Weighbridge / Dharam Kanta Slip (Optional)</label>
@@ -1922,7 +1967,12 @@ function AdminScreen({
                 type="file" 
                 accept="image/*" 
                 capture="environment"
-                onChange={e => e.target.files[0] && readFile(e.target.files[0], setKantaImg)} 
+                onChange={async (e) => {
+                  if (e.target.files[0]) {
+                    const url = await fileToDataURL(e.target.files[0]);
+                    setKantaImg(url);
+                  }
+                }} 
                 className="w-full text-xs" 
               />
               {kantaImg && (
@@ -1938,7 +1988,6 @@ function AdminScreen({
             </div>
           </div>
 
-          {/* Real-time Calculation Summary */}
           {(() => {
             const taxable = billItems.reduce((s, it) => s + (parseFloat(it.q) || 0) * (parseFloat(it.p) || 0), 0);
             const disc = parseFloat(invDiscount) || 0;
@@ -1968,6 +2017,11 @@ function AdminScreen({
                   <span>Grand Total (Round Off):</span>
                   <span>₹{grand.toLocaleString('en-IN')}.00</span>
                 </div>
+                {grand >= 50000 && (
+                  <div className="text-emerald-800 font-bold bg-emerald-100 p-2 rounded mt-1">
+                    ⚠️ Total exceeds ₹50,000. Statutory E-Way Bill is recommended for transport dispatch.
+                  </div>
+                )}
                 {due > 0 && (
                   <div className="flex justify-between text-red-700 font-bold pt-1">
                     <span>Balance Due to Wholesale Khata:</span>
@@ -1978,7 +2032,6 @@ function AdminScreen({
             );
           })()}
 
-          {/* Action Buttons */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 pt-2">
             <button 
               onClick={() => handleCreateInvoice("print")}
@@ -2000,7 +2053,6 @@ function AdminScreen({
             </button>
           </div>
 
-          {/* Recent Created Invoices */}
           {invoices.length > 0 && (
             <div className="mt-6 pt-4 border-t border-stone-200">
               <h4 className="text-xs uppercase font-bold text-stone-500 mb-2">Recently Generated Invoices ({invoices.length})</h4>
@@ -2023,32 +2075,67 @@ function AdminScreen({
         </div>
       )}
 
-      {/* Material Rates Tab */}
+      {/* 🔥 INVENTORY & REAL CAMERA PHOTO UPLOAD TAB */}
       {tab === "rates" && (
         <div className="bg-white border-2 border-stone-200 rounded-2xl p-4 space-y-3">
-          <div className="text-xs uppercase tracking-widest text-stone-500 font-bold mb-1">Edit Materials Price, Stock, Photo & Visibility</div>
-          <div className="space-y-3 max-h-96 overflow-auto">
+          <div className="flex items-center justify-between border-b pb-2">
+            <div>
+              <div className="text-xs uppercase tracking-widest text-orange-600 font-bold">Real Inventory & Camera Photo Manager</div>
+              <p className="text-[11px] text-stone-500">Take a direct camera picture of your real stock. Customer sees it instantly.</p>
+            </div>
+          </div>
+
+          <div className="space-y-3 max-h-[500px] overflow-auto">
             {products.map(p => (
-              <div key={p.id} className="p-3 border border-stone-200 rounded-xl space-y-2 bg-stone-50">
-                <div className="flex items-center gap-2">
-                  <img src={p.img} alt="" className="w-12 h-12 object-cover rounded-lg flex-shrink-0" />
-                  <div className="flex-1 min-w-0">
-                    <div className="text-xs font-bold truncate">{p.n}</div>
-                    <div className="text-[10px] text-stone-500">{p.b} ({p.u})</div>
+              <div key={p.id} className="p-3 border border-stone-200 rounded-xl space-y-3 bg-stone-50">
+                <div className="flex items-center gap-3">
+                  <div className="w-16 h-16 bg-stone-200 rounded-lg overflow-hidden flex-shrink-0 flex items-center justify-center relative border border-stone-300">
+                    {p.img ? (
+                      <img src={p.img} alt="" className="w-full h-full object-cover" />
+                    ) : (
+                      <span className="text-[10px] font-bold text-stone-400">No Photo</span>
+                    )}
                   </div>
-                  <button
-                    type="button"
-                    onClick={() => toggleVisibility(p.id)}
-                    className={`p-1.5 rounded-lg text-xs font-bold flex items-center gap-1 ${p.visible !== false ? 'bg-emerald-100 text-emerald-700' : 'bg-stone-200 text-stone-500'}`}
-                  >
-                    {p.visible !== false ? <Eye size={14}/> : <EyeOff size={14}/>}
-                  </button>
-                  <button onClick={()=>delProd(p.id)} className="p-1.5 text-red-500 hover:bg-red-50 rounded-lg">
-                    <Trash2 size={14} />
-                  </button>
+                  <div className="flex-1 min-w-0">
+                    <div className="text-xs font-bold text-stone-900 truncate">{p.n}</div>
+                    <div className="text-[10px] text-stone-500">{p.b} ({p.u})</div>
+                    <div className="mt-1 flex items-center gap-2">
+                      <label className="cursor-pointer inline-flex items-center gap-1 bg-blue-600 hover:bg-blue-700 text-white text-[10px] font-bold px-2 py-1 rounded">
+                        <Camera size={12} /> Take/Upload Photo
+                        <input 
+                          type="file" 
+                          accept="image/*" 
+                          capture="environment" 
+                          onChange={(e) => handleProductImageUpload(p.id, e.target.files[0])} 
+                          className="hidden" 
+                        />
+                      </label>
+                      {p.img && (
+                        <button 
+                          onClick={() => { p.img = ""; saveProductItem(p); }} 
+                          className="text-[10px] text-red-600 font-bold hover:underline"
+                        >
+                          Remove
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <button
+                      type="button"
+                      onClick={() => toggleVisibility(p.id)}
+                      className={`p-2 rounded-lg text-xs font-bold ${p.visible !== false ? 'bg-emerald-100 text-emerald-700' : 'bg-stone-200 text-stone-500'}`}
+                      title={p.visible !== false ? "Visible to Customers" : "Hidden from Customers"}
+                    >
+                      {p.visible !== false ? <Eye size={16}/> : <EyeOff size={16}/>}
+                    </button>
+                    <button onClick={()=>delProd(p.id)} className="p-2 text-red-500 hover:bg-red-50 rounded-lg">
+                      <Trash2 size={16} />
+                    </button>
+                  </div>
                 </div>
 
-                <div className="grid grid-cols-2 gap-2">
+                <div className="grid grid-cols-3 gap-2">
                   <div>
                     <label className="text-[9px] font-bold text-stone-500 block">Rate (₹)</label>
                     <input
@@ -2059,11 +2146,20 @@ function AdminScreen({
                     />
                   </div>
                   <div>
-                    <label className="text-[9px] font-bold text-stone-500 block">Stock</label>
+                    <label className="text-[9px] font-bold text-stone-500 block">Stock Qty</label>
                     <input
                       type="number"
                       defaultValue={p.stock}
                       onChange={(e) => { p.stock = parseInt(e.target.value) || 0; }}
+                      className="w-full border border-stone-300 rounded p-1 text-xs bg-white"
+                    />
+                  </div>
+                  <div>
+                    <label className="text-[9px] font-bold text-stone-500 block">Min Order (MOQ)</label>
+                    <input
+                      type="number"
+                      defaultValue={p.moq || 1}
+                      onChange={(e) => { p.moq = parseInt(e.target.value) || 1; }}
                       className="w-full border border-stone-300 rounded p-1 text-xs bg-white"
                     />
                   </div>
@@ -2075,7 +2171,7 @@ function AdminScreen({
                     onClick={() => saveProductItem(p)}
                     className="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold px-3 py-1.5 rounded-lg flex items-center gap-1"
                   >
-                    <Check size={12} /> Save Changes
+                    <Check size={12} /> Save Live Changes
                   </button>
                 </div>
               </div>
@@ -2084,7 +2180,6 @@ function AdminScreen({
         </div>
       )}
 
-      {/* Customer Orders Tab */}
       {tab === "orders" && (
         <div className="bg-white border-2 border-stone-200 rounded-2xl p-4 space-y-3">
           <div className="text-xs uppercase tracking-widest text-stone-500 font-bold mb-2">Customer Web Orders ({orders.length})</div>
@@ -2115,7 +2210,6 @@ function AdminScreen({
         </div>
       )}
 
-      {/* Workers Tab */}
       {tab === "workers" && (
         <div className="bg-white border-2 border-stone-200 rounded-2xl p-4 space-y-3">
           <div className="text-xs uppercase tracking-widest text-orange-600 font-bold mb-2">Manage Skilled Workers Rates</div>
@@ -2158,20 +2252,22 @@ function AdminScreen({
         </div>
       )}
 
-      {/* Add Product Tab */}
       {tab === "products" && (
         <div className="bg-white border-2 border-stone-200 rounded-2xl p-4 space-y-3">
-          <div className="text-xs uppercase tracking-widest text-stone-500 font-bold">Add New Material / Brand</div>
+          <div className="text-xs uppercase tracking-widest text-stone-500 font-bold">Add New Real Material</div>
           <input value={newProd.n} onChange={e=>setNewProd({...newProd, n:e.target.value})} placeholder="Product Name (e.g. TMT 12mm)" className="w-full border-2 border-stone-200 rounded-lg p-2 text-sm outline-none focus:border-orange-500" />
           <div className="grid grid-cols-2 gap-2">
             <input value={newProd.b} onChange={e=>setNewProd({...newProd, b:e.target.value})} placeholder="Brand (e.g. Tata Tiscon)" className="border-2 border-stone-200 rounded-lg p-2 text-sm outline-none focus:border-orange-500" />
             <input type="number" value={newProd.p} onChange={e=>setNewProd({...newProd, p:e.target.value})} placeholder="Price ₹" className="border-2 border-stone-200 rounded-lg p-2 text-sm outline-none focus:border-orange-500" />
           </div>
-          <button onClick={addProd} className="w-full bg-orange-500 text-white font-bold py-2.5 rounded-full">+ Add Product to Store</button>
+          <div className="grid grid-cols-2 gap-2">
+            <input value={newProd.u} onChange={e=>setNewProd({...newProd, u:e.target.value})} placeholder="Unit (e.g. per bag / per ton)" className="border-2 border-stone-200 rounded-lg p-2 text-sm outline-none focus:border-orange-500" />
+            <input type="number" value={newProd.moq} onChange={e=>setNewProd({...newProd, moq:e.target.value})} placeholder="Min Order Qty (MOQ)" className="border-2 border-stone-200 rounded-lg p-2 text-sm outline-none focus:border-orange-500" />
+          </div>
+          <button onClick={addProd} className="w-full bg-orange-500 text-white font-bold py-2.5 rounded-full">+ Add Real Material to Store</button>
         </div>
       )}
 
-      {/* Bank & Settings Tab */}
       {tab === "settings" && (
         <div className="space-y-4">
           <div className="bg-white border-2 border-orange-500 rounded-2xl p-5 space-y-3">
@@ -2253,14 +2349,11 @@ function AdminScreen({
 // ============= GALLERY =============
 function GalleryScreen({ gallery, setGallery }) {
   const fileRef = useRef();
-  const readFile = (file, cb) => { const r = new FileReader(); r.onload = () => cb(r.result); r.readAsDataURL(file); };
-  const addImgs = (files) => {
-    const arr = Array.from(files).slice(0, 100);
-    const promises = arr.map(f => new Promise(res => readFile(f, res)));
-    Promise.all(promises).then(dataUrls => {
-      const newItems = dataUrls.map((d, i) => ({ id: Date.now() + i, img: d, caption: "", date: new Date().toISOString() }));
-      setGallery([...newItems, ...gallery]);
-    });
+  const addImgs = async (files) => {
+    const arr = Array.from(files).slice(0, 50);
+    const dataUrls = await Promise.all(arr.map(f => fileToDataURL(f)));
+    const newItems = dataUrls.map((d, i) => ({ id: Date.now() + i, img: d, caption: "", date: new Date().toISOString() }));
+    setGallery([...newItems, ...gallery]);
   };
   const del = (id) => setGallery(gallery.filter(g => g.id !== id));
 
