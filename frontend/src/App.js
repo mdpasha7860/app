@@ -69,9 +69,9 @@ const getHero = () => localStorage.getItem("bannerImg") || CFG.defaultHero;
 const getHeadline = () => localStorage.getItem("bannerText") || "";
 
 const T = {
-  EN: { b:"Build Stronger. Order Smarter.", c:"Cart", s:"Same-Day Delivery", w:"Wholesale Khata", g:"Brand Catalog", f:"Free Estimate", zip:"Download Full Site Backup", home:"Home", search:"Search Sariya, Cement, Sand, Bricks...", login:"Login", logout:"Logout", orders:"My Orders", admin:"Admin", call:"Call Now", wa:"WhatsApp", cart:"Cart", buy:"Add to Cart", total:"Total", checkout:"Place Order", address:"Delivery Address", cod:"Cash on Delivery", upi:"Pay via UPI", confirm:"Confirm Order", noResults:"No materials found. Add inventory from Admin Panel.", tracker:"Live Order Tracker", khata:"Wholesale Khata", catalog:"Brand Catalog", estimator:"Estimate Calculator", welcome:"Welcome", mobile:"Mobile Number", otp:"Enter OTP", sendOtp:"Send OTP", verify:"Verify & Login", pinLbl:"Enter Admin PIN or Google Auth", changeUpi:"Change UPI ID", currentUpi:"Current UPI", saveUpi:"Save UPI", zipInfo:"Full backup file", qty:"Qty (Weight)", stock:"In Stock", cat:"Category", all:"All", tmt:"Sariya (TMT)", cement:"Cement", sand:"Sand & Aggregate", brick:"Bricks", tools:"Tools", empty:"Cart is empty", noord:"No orders yet", ordid:"Order", status:"Status", pending:"Pending", scan:"Scan QR to Pay", payto:"Pay to", est:"Enter dimensions to estimate", len:"Length (ft)", wid:"Width (ft)", ht:"Height (ft)", need:"You need approx", bags:"bags of Cement", tons:"tons of Sariya", cft:"cft of Sand", bricks:"Bricks (approx)", calc:"Calculate", ledger:"Ledger", customer:"Customer", amt:"Amount", add:"Add Entry", credit:"Credit", debit:"Debit", note:"Note", del:"Delete", eta:"ETA Today", driver:"Driver", low:"LOW STOCK", tick:"★ Same-Day Delivery Across Hyderabad • Wholesale Rates • Genuine Brands • Instant WhatsApp Estimates ★" },
-  HI: { b:"मजबूत बनाएं। स्मार्ट ऑर्डर करें।", c:"टोकरी", s:"आज डिलीवरी", w:"थोक खाता", g:"ब्रांड कैटलॉग", f:"फ्री एस्टीमेट", zip:"साइट बैकअप डाउनलोड करें", home:"होम", search:"सरिया, सीमेंट, रेत, ईंट खोजें...", login:"लॉगिन", logout:"लॉगआउट", orders:"मेरे ऑर्डर", admin:"एडमिन", call:"कॉल करें", wa:"व्हाट्सएप", cart:"टोकरी", buy:"जोड़ें", total:"कुल", checkout:"ऑर्डर करें", address:"पता", cod:"कैश ऑन डिलीवरी", upi:"UPI से भुगतान", confirm:"पुष्टि करें", noResults:"सामान नहीं मिला। एडमिन पैनल से स्टॉक जोड़ें।", tracker:"लाइव ऑर्डर ट्रैकर", khata:"थोक खाता", catalog:"ब्रांड कैटलॉग", estimator:"अनुमान कैलकुलेटर", welcome:"स्वागत है", mobile:"मोबाइल नंबर", otp:"OTP दर्ज करें", sendOtp:"OTP भेजें", verify:"वेरीफाई करें", pinLbl:"एडमिन PIN या Google लॉगिन", changeUpi:"UPI बदलें", currentUpi:"मौजूदा UPI", saveUpi:"UPI सेव करें", zipInfo:"पूरा बैकअप", qty:"वज़न (किलो / बैग)", stock:"स्टॉक में", cat:"श्रेणी", all:"सभी", tmt:"सरिया (TMT)", cement:"सीमेंट", sand:"रेत/गिट्टी", brick:"ईंट", tools:"औजार", empty:"टोकरी खाली", noord:"कोई ऑर्डर नहीं", ordid:"ऑर्डर", status:"स्थिति", pending:"लंबित", scan:"QR स्कैन करें", payto:"भुगतान", est:"माप डालें", len:"लंबाई (फीट)", wid:"चौड़ाई (फीट)", ht:"ऊंचाई (फीट)", need:"आपको चाहिए", bags:"सीमेंट बैग", tons:"टन सरिया", cft:"cft रेत", bricks:"ईंटें", calc:"गणना करें", ledger:"बही", customer:"ग्राहक", amt:"राशि", add:"जोड़ें", credit:"जमा", debit:"नाम", note:"नोट", del:"हटाएं", eta:"आज पहुंचेगा", driver:"ड्राइवर", low:"स्टॉक कम", tick:"★ हैदराबाद में आज ही डिलीवरी • थोक रेट • असली ब्रांड • इंस्टेंट व्हाट्सएप एस्टीमेट ★" },
-  TE: { b:"బలంగా నిర్మించండి. తెలివిగా ఆర్డర్ చేయండి.", c:"బుట్ట", s:"ఈరోజే డెలివరీ", w:"హోల్‌సేల్ ఖాతా", g:"బ్రాండ్ కేటలాగ్", f:"ఉచిత అంచనా", zip:"బ్యాకప్ డౌన్‌లోడ్", home:"హోమ్", search:"సరియా, సిమెంట్, ఇసుక, ఇటుకలు...", login:"లాగిన్", logout:"లాగౌట్", orders:"నా ఆర్డర్లు", admin:"అడ్మిన్", call:"కాల్ చేయండి", wa:"వాట్సాప్", cart:"బుట్ట", buy:"జోడించు", మొత్తం:"మొత్తం", checkout:"ఆర్డర్ చేయండి", address:"చిరునామా", cod:"క్యాష్ ఆన్ డెలివరీ", upi:"UPI చెల్లింపు", confirm:"నిర్ధారించండి", noResults:"సరుకులు లేవు. అడ్మిన్ ప్యానెల్ నుండి జోడించండి.", tracker:"లైవ్ ఆర్డర్ ట్రాకర్", khata:"హోల్‌సేల్ ఖాతా", catalog:"బ్రాండ్ కేటలాగ్", estimator:"అంచనా కాలిక్యులేటర్", welcome:"స్వాగతం", mobile:"మొబైల్ నంబర్", otp:"OTP నమోదు", sendOtp:"OTP పంపండి", verify:"వెరిఫై చేయండి", pinLbl:"అడ్మిన్ PIN", changeUpi:"UPI మార్చండి", currentUpi:"ప్రస్తుత UPI", saveUpi:"UPI సేవ్ చేయండి", zipInfo:"పూర్తి బ్యాకప్", qty:"పరిమాణం (కిలోలు)", stock:"స్టాక్‌లో", cat:"వర్గం", all:"అన్నీ", tmt:"సరియా (TMT)", cement:"సిమెంట్", sand:"ఇసుక/కంకర", brick:"ఇటుకలు", tools:"పరికరాలు", empty:"బుట్ట ఖాళీ", noord:"ఆర్డర్లు లేవు", ordid:"ఆర్డర్", status:"స్థితి", pending:"పెండింగ్", scan:"QR స్కాన్ చేయండి", payto:"చెల్లింపు", est:"కొలతలు ఇవ్వండి", len:"పొడవు (అడుగు)", wid:"వెడల్పు (అడుగు)", ht:"ఎత్తు (అడుగు)", need:"కావాలి", bags:"సిమెంట్ బస్తాలు", tons:"టన్నుల సరియా", cft:"cft ఇసుక", bricks:"ఇటుకలు", calc:"లెక్కించండి", ledger:"లెడ్జర్", customer:"కస్టమర్", amt:"మొత్తం", add:"జోడించు", credit:"క్రెడిట్", debit:"డెబిట్", note:"నోట్", del:"తొలగించు", eta:"ఈరోజు", driver:"డ్రाइवर", low:"స్టాక్ తక్కువ", tick:"★ హైదరాబాద్‌లో ఈరోజే డెలివరీ • హోల్‌సేల్ రేట్లు • అసలైన బ్రాండ్ • తక్షణ వాట్సాప్ అంచనా ★" }
+  EN: { b:"Build Stronger. Order Smarter.", c:"Cart", s:"Same-Day Delivery", w:"Wholesale Khata", g:"Brand Catalog", f:"Free Estimate", zip:"Download Full Site Backup", home:"Home", search:"Search Sariya, Cement, Sand, Bricks...", login:"Login", logout:"Logout", orders:"My Orders", admin:"Admin", call:"Call Now", wa:"WhatsApp", cart:"Cart", buy:"Add to Cart", total:"Total", checkout:"Place Order", address:"Delivery Address", cod:"Cash on Delivery", upi:"Pay via UPI", confirm:"Confirm Order", noResults:"No materials found. Add inventory from Admin Panel.", tracker:"Live Order Tracker", khata:"Wholesale Khata", catalog:"Brand Catalog", estimator:"Estimate Calculator", welcome:"Welcome", mobile:"Mobile Number", otp:"Enter OTP", sendOtp:"Send OTP", verify:"Verify & Login", pinLbl:"Admin Access", changeUpi:"Change UPI ID", currentUpi:"Current UPI", saveUpi:"Save UPI", zipInfo:"Full backup file", qty:"Qty (Weight)", stock:"In Stock", cat:"Category", all:"All", tmt:"Sariya (TMT)", cement:"Cement", sand:"Sand & Aggregate", brick:"Bricks", tools:"Tools", empty:"Cart is empty", noord:"No orders yet", ordid:"Order", status:"Status", pending:"Pending", scan:"Scan QR to Pay", payto:"Pay to", est:"Enter dimensions to estimate", len:"Length (ft)", wid:"Width (ft)", ht:"Height (ft)", need:"You need approx", bags:"bags of Cement", tons:"tons of Sariya", cft:"cft of Sand", bricks:"Bricks (approx)", calc:"Calculate", ledger:"Ledger", customer:"Customer", amt:"Amount", add:"Add Entry", credit:"Credit", debit:"Debit", note:"Note", del:"Delete", eta:"ETA Today", driver:"Driver", low:"LOW STOCK", tick:"★ Same-Day Delivery Across Hyderabad • Wholesale Rates • Genuine Brands • Instant WhatsApp Estimates ★" },
+  HI: { b:"मजबूत बनाएं। स्मार्ट ऑर्डर करें।", c:"टोकरी", s:"आज डिलीवरी", w:"थोक खाता", g:"ब्रांड कैटलॉग", f:"फ्री एस्टीमेट", zip:"साइट बैकअप डाउनलोड करें", home:"होम", search:"सरिया, सीमेंट, रेत, ईंट खोजें...", login:"लॉगिन", logout:"लॉगआउट", orders:"मेरे ऑर्डर", admin:"एडमिन", call:"कॉल करें", wa:"व्हाट्सएप", cart:"टोकरी", buy:"जोड़ें", total:"कुल", checkout:"ऑर्डर करें", address:"पता", cod:"कैश ऑन डिलीवरी", upi:"UPI से भुगतान", confirm:"पुष्टि करें", noResults:"सामान नहीं मिला। एडमिन पैनल से स्टॉक जोड़ें।", tracker:"लाइव ऑर्डर ट्रैकर", khata:"थोक खाता", catalog:"ब्रांड कैटलॉग", estimator:"अनुमान कैलकुलेटर", welcome:"स्वागत है", mobile:"मोबाइल नंबर", otp:"OTP दर्ज करें", sendOtp:"OTP भेजें", verify:"वेरीफाई करें", pinLbl:"एडमिन एक्सेस", changeUpi:"UPI बदलें", currentUpi:"मौजूदा UPI", saveUpi:"UPI सेव करें", zipInfo:"पूरा बैकअप", qty:"वज़न (किलो / बैग)", stock:"स्टॉक में", cat:"श्रेणी", all:"सभी", tmt:"सरिया (TMT)", cement:"सीमेंट", sand:"रेत/गिट्टी", brick:"ईंट", tools:"औजार", empty:"टोकरी खाली", noord:"कोई ऑर्डर नहीं", ordid:"ऑर्डर", status:"स्थिति", pending:"लंबित", scan:"QR स्कैन करें", payto:"भुगतान", est:"माप डालें", len:"लंबाई (फीट)", wid:"चौड़ाई (फीट)", ht:"ऊंचाई (फीट)", need:"आपको चाहिए", bags:"सीमेंट बैग", tons:"टन सरिया", cft:"cft रेत", bricks:"ईंटें", calc:"गणना करें", ledger:"बही", customer:"ग्राहक", amt:"राशि", add:"जोड़ें", credit:"जमा", debit:"नाम", note:"नोट", del:"हटाएं", eta:"आज पहुंचेगा", driver:"ड्राइवर", low:"स्टॉक कम", tick:"★ हैदराबाद में आज ही डिलीवरी • थोक रेट • असली ब्रांड • इंस्टेंट व्हाट्सएप एस्टीमेट ★" },
+  TE: { b:"బలంగా నిర్మించండి. తెలివిగా ఆర్డర్ చేయండి.", c:"బుట్ట", s:"ఈరోజే డెలివరీ", w:"హోల్‌సేల్ ఖాతా", g:"బ్రాండ్ కేటలాగ్", f:"ఉచిత అంచనా", zip:"బ్యాకప్ డౌన్‌లోడ్", home:"హోమ్", search:"సరియా, సిమెంట్, ఇసుక, ఇటుకలు...", login:"లాగిన్", logout:"లాగౌట్", orders:"నా ఆర్డర్లు", admin:"అడ్మిన్", call:"కాల్ చేయండి", wa:"వాట్సాప్", cart:"బుట్ట", buy:"జోడించు", మొత్తం:"మొత్తం", checkout:"ఆర్డర్ చేయండి", address:"చిరునామా", cod:"క్యాష్ ఆన్ డెలివరీ", upi:"UPI చెల్లింపు", confirm:"నిర్ధారించండి", noResults:"సరుకులు లేవు. అడ్మిన్ ప్యానెల్ నుండి జోడించండి.", tracker:"లైవ్ ఆర్డర్ ట్రాకర్", khata:"హోల్‌సేల్ ఖాతా", catalog:"బ్రాండ్ కేటలాగ్", estimator:"అంచనా కాలిక్యులేటర్", welcome:"స్వాగతం", mobile:"మొబైల్ నంబర్", otp:"OTP నమోదు", sendOtp:"OTP పంపండి", verify:"వెరిఫై చేయండి", pinLbl:"అడ్మిన్ యాక్సెస్", changeUpi:"UPI మార్చండి", currentUpi:"ప్రస్తుత UPI", saveUpi:"UPI సేవ్ చేయండి", zipInfo:"పూర్తి బ్యాకప్", qty:"పరిమాణం (కిలోలు)", stock:"స్టాక్‌లో", cat:"వర్గం", all:"అన్నీ", tmt:"సరియా (TMT)", cement:"సిమెంట్", sand:"ఇసుక/కంకర", brick:"ఇటుకలు", tools:"పరికరాలు", empty:"బుట్ట ఖాళీ", noord:"ఆర్డర్లు లేవు", ordid:"ఆర్డర్", status:"స్థితి", pending:"పెండింగ్", scan:"QR స్కాన్ చేయండి", payto:"చెల్లింపు", est:"కొలతలు ఇవ్వండి", len:"పొడవు (అడుగు)", wid:"వెడల్పు (అడుగు)", ht:"ఎత్తు (అడుగు)", need:"కావాలి", bags:"సిమెంట్ బస్తాలు", tons:"టన్నుల సరియా", cft:"cft ఇసుక", bricks:"ఇటుకలు", calc:"లెక్కించండి", ledger:"లెడ్జర్", customer:"కస్టమర్", amt:"మొత్తం", add:"జోడించు", credit:"క్రెడిట్", debit:"డెబిట్", note:"నోట్", del:"తొలగించు", eta:"ఈరోజు", driver:"డ్రाइवर", low:"స్టాక్ తక్కువ", tick:"★ హైదరాబాద్‌లో ఈరోజే డెలివరీ • హోల్‌సేల్ రేట్లు • అసలైన బ్రాండ్ • తక్షణ వాట్సాప్ అంచనా ★" }
 };
 
 const MAP = { sariya:'tmt', saria:'tmt', steel:'tmt', rod:'tmt', tmt:'tmt', cement:'cement', simenti:'cement', ppc:'cement', opc:'cement', ret:'sand', balu:'sand', sand:'sand', isuka:'sand', metal:'sand', aggregate:'sand', gitti:'sand', brick:'brick', eent:'brick', itukalu:'brick', block:'brick', wire:'tools', tool:'tools' };
@@ -755,12 +755,41 @@ function OrdersScreen({ t, orders, setOrders, upi, bankInfo, lang }) {
   if (orders.length === 0) return <div className="bg-white border-2 border-stone-200 rounded-2xl p-12 text-center text-stone-500 font-bold">{t.noord}</div>;
   return (
     <div className="space-y-4">
-      <h2 className="font-display font-black text-3xl">{t.orders}</h2>
+      <div className="flex items-center justify-between">
+        <h2 className="font-display font-black text-3xl">{t.orders}</h2>
+        <span className="text-xs bg-orange-100 text-orange-800 font-bold px-3 py-1 rounded-full">Manage & Complete Orders</span>
+      </div>
       {orders.map(o => (
-        <div key={o.id} className="bg-white border-2 border-stone-200 rounded-2xl p-4">
-          <div className="flex justify-between font-bold text-sm"><span>{o.id} - {o.user}</span><span>₹{o.total}</span></div>
-          <div className="text-xs text-stone-600 mt-1">{o.address}</div>
-          <button onClick={() => printTaxInvoiceDocument(o, false, bankInfo, lang)} className="mt-3 bg-stone-900 text-white text-xs font-bold py-2 px-4 rounded-full">Print Tax Invoice</button>
+        <div key={o.id} className="bg-white border-2 border-stone-200 rounded-2xl p-4 space-y-3 shadow-sm">
+          <div className="flex justify-between items-center font-bold text-sm">
+            <div>
+              <span className="text-orange-600 font-black">{o.id}</span> - <span>{o.user}</span>
+              <span className={`ml-2 text-[10px] px-2 py-0.5 rounded-full font-bold ${o.completed ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'}`}>
+                {o.completed ? '✓ Completed / Delivered' : 'Pending Delivery'}
+              </span>
+            </div>
+            <span className="font-black text-base">₹{o.total}</span>
+          </div>
+          <div className="text-xs text-stone-600">{o.address}</div>
+          <div className="flex flex-wrap items-center gap-2 pt-2 border-t">
+            <button onClick={() => printTaxInvoiceDocument(o, false, bankInfo, lang)} className="bg-stone-900 text-white text-xs font-bold py-2 px-4 rounded-xl flex items-center gap-1">
+              <Printer size={13} /> Print Tax Invoice
+            </button>
+            <button onClick={() => {
+              const updated = orders.map(x => x.id === o.id ? { ...x, completed: !x.completed } : x);
+              setOrders(updated);
+            }} className={`text-xs font-bold py-2 px-4 rounded-xl flex items-center gap-1 ${o.completed ? 'bg-stone-200 text-stone-800' : 'bg-emerald-600 text-white'}`}>
+              <CheckCircle2 size={13} /> {o.completed ? 'Mark Pending' : 'Mark Completed'}
+            </button>
+            <button onClick={() => {
+              if(confirm("Delete this order record?")) {
+                const filtered = orders.filter(x => x.id !== o.id);
+                setOrders(filtered);
+              }
+            }} className="text-red-500 hover:bg-red-50 p-2 rounded-xl ml-auto" title="Delete Order">
+              <Trash2 size={16} />
+            </button>
+          </div>
         </div>
       ))}
     </div>
@@ -922,24 +951,25 @@ function AdminScreen({
   const customerPreviousDue = useMemo(() => {
     if (!invCust.trim()) return 0;
     const custLedger = ledger.filter(l => l.customer.toLowerCase().trim() === invCust.toLowerCase().trim());
-    return custLedger.reduce((s, l) => s + (l.type === 'credit' ? l.amt : -l.amt), 0);
+    const netBal = custLedger.reduce((s, l) => s + (l.type === 'credit' ? l.amt : -l.amt), 0);
+    return netBal > 0 ? netBal : 0;
   }, [invCust, ledger]);
 
   if (!unlocked) return (
     <div className="max-w-md mx-auto">
       <div className="bg-white border-2 border-orange-500 rounded-2xl p-6 space-y-4 text-center shadow-lg">
         <Shield size={40} className="mx-auto text-orange-600" />
-        <h2 className="font-display font-black text-2xl">{t.pinLbl}</h2>
+        <h2 className="font-display font-black text-2xl">Admin Access</h2>
         
         <div className="space-y-3 text-left">
           <div>
-            <label className="text-xs font-bold text-stone-600">Option 1: Admin PIN (6301)</label>
+            <label className="text-xs font-bold text-stone-600">Enter Admin PIN</label>
             <input type="password" value={pin} onChange={e=>setPin(e.target.value)} maxLength={4} className="w-full text-center text-2xl font-black tracking-widest border-2 rounded-lg p-3 outline-none mt-1" placeholder="••••" />
-            <button onClick={()=>{ if(pin==="6301") setUnlocked(true); else alert("Wrong PIN (6301)"); }} className="w-full bg-stone-900 text-white font-bold py-2.5 rounded-lg mt-2 text-xs">Unlock with PIN</button>
+            <button onClick={()=>{ if(pin==="6301") setUnlocked(true); else alert("Wrong PIN"); }} className="w-full bg-stone-900 text-white font-bold py-2.5 rounded-lg mt-2 text-xs">Unlock with PIN</button>
           </div>
 
           <div className="border-t pt-3">
-            <label className="text-xs font-bold text-stone-600">Option 2: Secure Google Mail Login</label>
+            <label className="text-xs font-bold text-stone-600">Secure Google Mail Login</label>
             <input type="email" value={adminEmailInput} onChange={e=>setAdminEmailInput(e.target.value)} placeholder="Enter authorized Gmail ID" className="w-full border-2 rounded-lg p-2.5 text-xs outline-none mt-1" />
             <button onClick={()=>{
               if(AUTHORIZED_ADMIN_EMAILS.includes(adminEmailInput.trim().toLowerCase())) {
@@ -990,7 +1020,7 @@ function AdminScreen({
     const currentBillGrand = Math.round(adjTaxable + gst + freight);
     const paidAmt = parseFloat(invPaid) || 0;
     const newDueThisBill = currentBillGrand - paidAmt;
-    const totalPayableWithPrevious = currentBillGrand + (customerPreviousDue > 0 ? customerPreviousDue : 0);
+    const totalPayableWithPrevious = currentBillGrand + customerPreviousDue;
     const activeProfile = MULTI_GST_PROFILES.find(p => p.id === selectedProfileId) || MULTI_GST_PROFILES[0];
 
     const newInv = {
@@ -1016,7 +1046,10 @@ function AdminScreen({
     else if (actionType === "challan") printTaxInvoiceDocument(newInv, true, bankInfo, lang);
     else if (actionType === "wa") {
       if (!invPhone.trim()) { alert("Enter mobile number"); return; }
-      const msg = `*${activeProfile.name.toUpperCase()} - TAX INVOICE*\nGSTIN: ${activeProfile.gstin}\nInv: ${newInv.id}\nCustomer: ${newInv.customer}\n${billItems.map(i=>`• ${i.n}: ${i.q} ${i.u} = ₹${i.q*i.p}`).join('\n')}\nGST (18%): ₹${gst.toFixed(2)}\n${freight>0?`Freight: ₹${freight}\n`:''}Current Bill: ₹${currentBillGrand}\n${customerPreviousDue > 0 ? `Previous Due: ₹${customerPreviousDue}\n*Total Payable: ₹${totalPayableWithPrevious}*\n` : ''}`;
+      let msg = `*${activeProfile.name.toUpperCase()} - TAX INVOICE*\nGSTIN: ${activeProfile.gstin}\nInv: ${newInv.id}\nCustomer: ${newInv.customer}\n${billItems.map(i=>`• ${i.n}: ${i.q} ${i.u} = ₹${i.q*i.p}`).join('\n')}\nGST (18%): ₹${gst.toFixed(2)}\n${freight>0?`Freight: ₹${freight}\n`:''}Current Bill: ₹${currentBillGrand}`;
+      if (customerPreviousDue > 0) {
+        msg += `\nPrevious Due: ₹${customerPreviousDue}\n*Total Payable: ₹${totalPayableWithPrevious}*`;
+      }
       window.open(`https://wa.me/91${invPhone.replace(/\D/g,'').slice(-10)}?text=${encodeURIComponent(msg)}`, '_blank');
     }
   };
@@ -1061,10 +1094,15 @@ function AdminScreen({
             <div><label className="text-xs font-bold text-stone-600 block mb-1">WhatsApp Number *</label><input type="tel" value={invPhone} onChange={e=>setInvPhone(e.target.value)} placeholder="10-digit mobile" className="w-full border-2 rounded-lg p-2.5 text-sm outline-none" /></div>
           </div>
 
-          {customerPreviousDue !== 0 && (
-            <div className={`p-3 rounded-xl border-2 text-xs font-bold flex justify-between items-center ${customerPreviousDue > 0 ? 'bg-red-50 border-red-400 text-red-800' : 'bg-emerald-50 border-emerald-400 text-emerald-800'}`}>
+          {customerPreviousDue > 0 ? (
+            <div className="p-3 rounded-xl border-2 text-xs font-bold bg-red-50 border-red-400 text-red-800 flex justify-between items-center">
               <span>⚠️ Party Khata Status for "{invCust}":</span>
-              <span className="text-sm font-black">₹{Math.abs(customerPreviousDue)} {customerPreviousDue > 0 ? 'Pending Due (उधारी बाकी)' : 'Advance Credit'}</span>
+              <span className="text-sm font-black">₹{customerPreviousDue} Pending Due (उधारी बाकी)</span>
+            </div>
+          ) : (
+            <div className="p-3 rounded-xl border-2 text-xs font-bold bg-emerald-50 border-emerald-400 text-emerald-800 flex justify-between items-center">
+              <span>✓ Party Khata Status for "{invCust}":</span>
+              <span className="text-sm font-black">Zero Due (No Previous Balance)</span>
             </div>
           )}
 
@@ -1125,7 +1163,7 @@ function AdminScreen({
             const gst = adjTaxable * 0.18;
             const grand = Math.round(adjTaxable + gst + freight);
             const paid = parseFloat(invPaid) || 0;
-            const totalPayableAll = grand + (customerPreviousDue > 0 ? customerPreviousDue : 0);
+            const totalPayableAll = grand + customerPreviousDue;
 
             return (
               <div className="bg-orange-50 border-2 border-orange-200 rounded-xl p-3.5 text-xs space-y-1.5">
@@ -1133,16 +1171,21 @@ function AdminScreen({
                 <div className="flex justify-between text-stone-700"><span>GST Total (18%):</span><span className="font-bold">₹{gst.toFixed(2)}</span></div>
                 {freight > 0 && <div className="flex justify-between text-orange-800 font-bold"><span>Freight:</span><span>+₹{freight.toFixed(2)}</span></div>}
                 <div className="flex justify-between text-sm font-black text-stone-900 pt-1 border-t"><span>Current Bill Grand Total:</span><span>₹{grand.toLocaleString('en-IN')}.00</span></div>
-                {customerPreviousDue > 0 && (
-                  <div className="flex justify-between text-red-700 font-bold bg-red-100 p-1.5 rounded">
-                    <span>+ Previous Khata Due:</span>
-                    <span>₹{customerPreviousDue.toLocaleString('en-IN')}</span>
-                  </div>
-                )}
-                {customerPreviousDue > 0 && (
-                  <div className="flex justify-between text-base font-black text-red-900 pt-1 border-t border-red-200">
-                    <span>TOTAL PAYABLE (Current + Old Due):</span>
-                    <span>₹{totalPayableAll.toLocaleString('en-IN')}.00</span>
+                {customerPreviousDue > 0 ? (
+                  <>
+                    <div className="flex justify-between text-red-700 font-bold bg-red-100 p-1.5 rounded">
+                      <span>+ Previous Khata Due:</span>
+                      <span>₹{customerPreviousDue.toLocaleString('en-IN')}</span>
+                    </div>
+                    <div className="flex justify-between text-base font-black text-red-900 pt-1 border-t border-red-200">
+                      <span>TOTAL PAYABLE (Current + Old Due):</span>
+                      <span>₹{totalPayableAll.toLocaleString('en-IN')}.00</span>
+                    </div>
+                  </>
+                ) : (
+                  <div className="flex justify-between text-emerald-700 font-bold pt-1 border-t">
+                    <span>No Previous Due:</span>
+                    <span>Only Current Bill Total Applies</span>
                   </div>
                 )}
               </div>
@@ -1346,7 +1389,7 @@ function AdminScreen({
               downloadCSV(`Sales.csv`, [["ID","Date","Customer","Grand Total"], ...invoices.map(i=>[i.id,i.date,i.customer,i.grand])]);
             }} className="bg-emerald-700 text-white font-bold py-2 rounded text-xs">Export Sales</button>
             <button onClick={()=>{
-              if(ledger.length === 0){alert("No khata"); return;}
+              if(invoices.length===0){alert("No khata"); return;}
               downloadCSV(`Khata.csv`, [["ID","Date","Customer","Amount","Type"], ...ledger.map(l=>[l.id,l.date,l.customer,l.amt,l.type])]);
             }} className="bg-amber-700 text-white font-bold py-2 rounded text-xs">Export Khata</button></div>
           </div>
