@@ -113,6 +113,8 @@ export default function App() {
   const [orders, setOrders] = useState(ls.get("myOrders", []));
   const [ledger, setLedger] = useState(ls.get("ledger", []));
   const [invoices, setInvoices] = useState(ls.get("saved_invoices", []));
+  const [customers, setCustomers] = useState(ls.get("as_customers_v15", []));
+  const [expenses, setExpenses] = useState(ls.get("as_expenses_v15", []));
   
   const [products, setProducts] = useState(ls.get("as_prod_master_v15", CLEAN_FRESH_PRODUCTS));
   const [workers, setWorkers] = useState(ls.get("as_wrk_master_v15", DEFAULT_WORKERS));
@@ -144,28 +146,34 @@ export default function App() {
   const lowStock = useMemo(() => products.filter(p => p.stock < 10 && p.visible !== false), [products]);
 
   useEffect(() => {
-  try {
-    const unsub = onSnapshot(doc(db, "app_data", "main_store_v15"), (snap) => {
-      if (snap.exists()) {
-        const data = snap.data();
-        if (data.products && Array.isArray(data.products) && data.products.length > 0) {
-          setProducts(data.products);
+    try {
+      const unsub = onSnapshot(doc(db, "app_data", "main_store_v15"), (snap) => {
+        if (snap.exists()) {
+          const data = snap.data();
+          if (data.products && Array.isArray(data.products) && data.products.length > 0) {
+            setProducts(data.products);
+          }
+          if (data.bankInfo) {
+            setBankInfo(data.bankInfo);
+          }
+          if (data.workers && Array.isArray(data.workers)) {
+            setWorkers(data.workers);
+          }
+          if (data.customers && Array.isArray(data.customers)) {
+            setCustomers(data.customers);
+          }
+          if (data.expenses && Array.isArray(data.expenses)) {
+            setExpenses(data.expenses);
+          }
         }
-        if (data.bankInfo) {
-          setBankInfo(data.bankInfo);
-        }
-      }
-    });
-    
-    return () => unsub();
-  } catch (err) {
-    console.error("Firestore sync error:", err);
-  }
-}, []);
-
+      });
+      return () => unsub();
+    } catch (err) {
+      console.error("Firestore sync error:", err);
+    }
+  }, []);
 
   useEffect(() => ls.set("lang", lang), [lang]);
-
   useEffect(() => ls.set("cart", cart), [cart]);
   useEffect(() => ls.set("myOrders", orders), [orders]);
   useEffect(() => ls.set("ledger", ledger), [ledger]);
@@ -174,6 +182,8 @@ export default function App() {
   useEffect(() => ls.set("as_wrk_master_v15", workers), [workers]);
   useEffect(() => ls.set("bank_info", bankInfo), [bankInfo]);
   useEffect(() => ls.set("gallery", gallery), [gallery]);
+  useEffect(() => ls.set("as_customers_v15", customers), [customers]);
+  useEffect(() => ls.set("as_expenses_v15", expenses), [expenses]);
   useEffect(() => { ls.set("dark", dark); document.documentElement.classList.toggle("dark-mode", dark); }, [dark]);
 
   const go = (s) => { setScreen(s); window.scrollTo(0,0); };
@@ -336,6 +346,8 @@ export default function App() {
             orders={orders} setOrders={setOrders} 
             products={products} setProducts={setProducts} 
             workers={workers} setWorkers={setWorkers} 
+            customers={customers} setCustomers={setCustomers}
+            expenses={expenses} setExpenses={setExpenses}
             setHeroImg={setHeroImg} setHeroTxt={setHeroTxt} 
             heroImg={heroImg} heroTxt={heroTxt}
             invoices={invoices} setInvoices={setInvoices}
@@ -632,8 +644,6 @@ function printTaxInvoiceDocument(inv, isChallan = false, currentBank = DEFAULT_B
   const adjustedTaxable = Math.max(0, taxable - discount);
   const gst = parseFloat(inv.gst || (adjustedTaxable * 0.18));
   const grand = Math.round(adjustedTaxable + gst + freight);
-  const cgst = (gst / 2).toFixed(2);
-  const sgst = (gst / 2).toFixed(2);
   const bank = inv.bankSnapshot || currentBank;
 
   const html = `<!doctype html><html><head><meta charset="utf-8"/><title>${isChallan ? 'Challan' : 'Invoice'} - ${inv.id}</title><style>body { font-family: Arial, sans-serif; padding: 20px; color: #111; max-width: 800px; margin: auto; } .header { border-bottom: 3px solid #ea580c; padding-bottom: 10px; display: flex; justify-content: space-between; } table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 13px; } th, td { border: 1px solid #cbd5e1; padding: 8px; text-align: left; } th { background: #0A1931; color: #fff; } .text-right { text-align: right; }</style></head><body>
@@ -667,12 +677,6 @@ function printCustomerStatement(customerName, entries) {
 
 function OrdersScreen({ t, orders, setOrders, upi, bankInfo }) {
   if (orders.length === 0) return <div className="bg-white border-2 border-stone-200 rounded-2xl p-12 text-center text-stone-500 font-bold">{t.noord}</div>;
-  const shareWA = (o) => {
-    const gst = Math.round(o.total * 0.18);
-    const grand = o.total + gst;
-    const msg = `*AS ENTERPRISES - TAX INVOICE*%0AInvoice: ${o.id}%0ACustomer: ${o.user}%0A${o.items.map(i=>`• ${i.n} x ${i.q} = Rs.${i.p*i.q}`).join('%0A')}%0ASubtotal: Rs.${o.total}%0AGST (18%): Rs.${gst}%0A*Grand Total: Rs.${grand}*`;
-    window.open(`https://wa.me/${CFG.wa}?text=${msg}`, "_blank");
-  };
   return (
     <div className="space-y-4">
       <h2 className="font-display font-black text-3xl">{t.orders}</h2>
@@ -704,8 +708,25 @@ function KhataScreen({ t, ledger, setLedger, upi, bankInfo }) {
   const [amt, setAmt] = useState("");
   const [type, setType] = useState("credit");
   const [note, setNote] = useState("");
-  const add = () => { if(!customer || !amt) return; setLedger([{ id: Date.now(), customer, phone, amt: parseFloat(amt), type, note, date: new Date().toISOString() }, ...ledger]); setCustomer(""); setPhone(""); setAmt(""); setNote(""); };
+
+  const add = () => { 
+    if(!customer || !amt) return; 
+    const newEntry = { id: Date.now(), customer, phone, amt: parseFloat(amt), type, note, date: new Date().toISOString() };
+    const updated = [newEntry, ...ledger];
+    setLedger(updated); 
+    setCustomer(""); setPhone(""); setAmt(""); setNote(""); 
+  };
+
+  const sendWhatsAppReminder = (l) => {
+    const custEntries = ledger.filter(e => e.customer.toLowerCase().trim() === l.customer.toLowerCase().trim());
+    const balance = custEntries.reduce((s, x) => s + (x.type === 'credit' ? x.amt : -x.amt), 0);
+    if(balance <= 0) { alert("No pending due for this customer."); return; }
+    const msg = `*AS ENTERPRISES - PAYMENT REMINDER*\nRespected ${l.customer} ji,\nYour pending balance due is *₹${balance}*.\nPlease clear the dues via UPI: ${upi}\nThank you!`;
+    window.open(`https://wa.me/91${(l.phone||'').replace(/\D/g,'').slice(-10)}?text=${encodeURIComponent(msg)}`, '_blank');
+  };
+
   const balance = ledger.reduce((s, l) => s + (l.type === 'credit' ? l.amt : -l.amt), 0);
+
   return (
     <div className="space-y-6">
       <h2 className="font-display font-black text-3xl">{t.khata}</h2>
@@ -716,7 +737,22 @@ function KhataScreen({ t, ledger, setLedger, upi, bankInfo }) {
         <input value={note} onChange={e=>setNote(e.target.value)} placeholder="Note / Material" className="w-full border-2 rounded-lg p-2 text-sm outline-none" />
         <button onClick={add} className="w-full bg-orange-500 text-white font-bold py-2.5 rounded-full">+ Add Entry</button>
       </div>
-      <div className="space-y-2">{ledger.map(l => (<div key={l.id} className="bg-white border-2 rounded-xl p-3 flex justify-between items-center"><div><div className="font-bold text-sm">{l.customer}</div><div className="text-xs text-stone-500">{l.note}</div></div><div className="flex items-center gap-2"><span className={`font-black ${l.type==='credit'?'text-emerald-700':'text-red-700'}`}>{l.type==='credit'?'+':'-'}₹{l.amt}</span><button onClick={()=>printCustomerStatement(l.customer, ledger)} className="px-2 py-1 bg-stone-100 rounded text-xs font-bold">Statement</button><button onClick={()=>setLedger(ledger.filter(x=>x.id!==l.id))} className="text-red-500"><Trash2 size={14}/></button></div></div>))}</div>
+      <div className="space-y-2">
+        {ledger.map(l => (
+          <div key={l.id} className="bg-white border-2 rounded-xl p-3 flex justify-between items-center">
+            <div>
+              <div className="font-bold text-sm">{l.customer}</div>
+              <div className="text-xs text-stone-500">{l.note}</div>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className={`font-black ${l.type==='credit'?'text-emerald-700':'text-red-700'}`}>{l.type==='credit'?'+':'-'}₹{l.amt}</span>
+              <button onClick={()=>sendWhatsAppReminder(l)} className="px-2.5 py-1 bg-green-600 text-white rounded text-xs font-bold flex items-center gap-1"><MessageCircle size={12}/> Remind</button>
+              <button onClick={()=>printCustomerStatement(l.customer, ledger)} className="px-2 py-1 bg-stone-100 rounded text-xs font-bold">Statement</button>
+              <button onClick={()=>setLedger(ledger.filter(x=>x.id!==l.id))} className="text-red-500"><Trash2 size={14}/></button>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
@@ -756,16 +792,22 @@ function SignaturePad({ onSave }) {
   );
 }
 
-function DayCloseReport({ invoices }) {
+function DayCloseReport({ invoices, expenses }) {
   const today = new Date().toLocaleDateString('en-IN');
   const todayInv = invoices.filter(i => new Date(i.date).toLocaleDateString('en-IN') === today);
   const sales = todayInv.reduce((s,x)=>s+(x.grand||0),0);
   const cash = todayInv.reduce((s,x)=>s+(x.paid||0),0);
   const due = todayInv.reduce((s,x)=>s+(x.due||0),0);
+  const totalExp = expenses.reduce((s,x)=>s+(x.amt||0),0);
   return (
     <div className="bg-slate-900 text-white p-5 rounded-2xl space-y-4 shadow-xl">
       <div className="flex justify-between border-b border-slate-700 pb-3"><div><h3 className="font-black text-lg text-amber-400">Daily Close Report</h3><p className="text-xs text-slate-400">Date: {today}</p></div><button onClick={()=>window.print()} className="bg-amber-500 text-slate-950 font-bold px-3 py-1 rounded text-xs">Print</button></div>
-      <div className="grid grid-cols-3 gap-3"><div className="bg-white/5 p-3 rounded-xl"><div className="text-[10px] text-slate-400 font-bold">Sales</div><div className="font-black text-xl">₹{sales}</div></div><div className="bg-emerald-950/60 p-3 rounded-xl"><div className="text-[10px] text-emerald-400 font-bold">Collected</div><div className="font-black text-xl text-emerald-300">₹{cash}</div></div><div className="bg-rose-950/60 p-3 rounded-xl"><div className="text-[10px] text-rose-400 font-bold">New Due</div><div className="font-black text-xl text-rose-300">₹{due}</div></div></div>
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+        <div className="bg-white/5 p-3 rounded-xl"><div className="text-[10px] text-slate-400 font-bold">Sales</div><div className="font-black text-xl">₹{sales}</div></div>
+        <div className="bg-emerald-950/60 p-3 rounded-xl"><div className="text-[10px] text-emerald-400 font-bold">Collected</div><div className="font-black text-xl text-emerald-300">₹{cash}</div></div>
+        <div className="bg-rose-950/60 p-3 rounded-xl"><div className="text-[10px] text-rose-400 font-bold">New Due</div><div className="font-black text-xl text-rose-300">₹{due}</div></div>
+        <div className="bg-amber-950/60 p-3 rounded-xl"><div className="text-[10px] text-amber-400 font-bold">Expenses</div><div className="font-black text-xl text-amber-300">₹{totalExp}</div></div>
+      </div>
     </div>
   );
 }
@@ -773,7 +815,8 @@ function DayCloseReport({ invoices }) {
 function AdminScreen({ 
   t, unlocked, setUnlocked, upi, saveUpi, downloadZip, 
   orders, setOrders, products, setProducts, 
-  workers, setWorkers, setHeroImg, setHeroTxt, heroImg, heroTxt,
+  workers, setWorkers, customers, setCustomers,
+  expenses, setExpenses, setHeroImg, setHeroTxt, heroImg, heroTxt,
   invoices, setInvoices, ledger, setLedger,
   bankInfo, setBankInfo
 }) {
@@ -797,7 +840,8 @@ function AdminScreen({
   const [billItems, setBillItems] = useState([
     { n: products[0]?.n || "सरिया 12 MM (SAIL)", b: products[0]?.b || "SAIL", q: 50, p: products[0]?.p || 60, u: "किलो" }
   ]);
-const customerPreviousDue = useMemo(() => {
+
+  const customerPreviousDue = useMemo(() => {
     if (!invCust.trim()) return 0;
     const custLedger = ledger.filter(l => l.customer.toLowerCase().trim() === invCust.toLowerCase().trim());
     return custLedger.reduce((s, l) => s + (l.type === 'credit' ? l.amt : -l.amt), 0);
@@ -807,8 +851,16 @@ const customerPreviousDue = useMemo(() => {
     <div className="max-w-md mx-auto"><div className="bg-white border-2 border-orange-500 rounded-2xl p-6 space-y-4 text-center"><Shield size={40} className="mx-auto text-orange-600" /><h2 className="font-display font-black text-2xl">{t.pinLbl}</h2><input type="password" value={pin} onChange={e=>setPin(e.target.value)} maxLength={4} className="w-full text-center text-2xl font-black tracking-widest border-2 rounded-lg p-3 outline-none" placeholder="••••" /><button onClick={()=>{ if(pin==="6301") setUnlocked(true); else alert("Wrong PIN (6301)"); }} className="w-full bg-orange-500 text-white font-bold py-3 rounded-full">Unlock Admin</button></div></div>
   );
 
-  const syncToFirestore = async (newProds, newWrks, newBank) => {
-    try { await setDoc(doc(db, "app_data", "main_store_v15"), { products: newProds || products, workers: newWrks || workers, bankInfo: newBank || bankInfo }, { merge: true }); } catch (e) {}
+  const syncToFirestore = async (newProds, newWrks, newBank, newCusts, newExps) => {
+    try { 
+      await setDoc(doc(db, "app_data", "main_store_v15"), { 
+        products: newProds || products, 
+        workers: newWrks || workers, 
+        bankInfo: newBank || bankInfo,
+        customers: newCusts || customers,
+        expenses: newExps || expenses
+      }, { merge: true }); 
+    } catch (e) {}
   };
 
   const handleProductImageUpload = async (productId, file) => {
@@ -816,7 +868,7 @@ const customerPreviousDue = useMemo(() => {
     const dataUrl = await fileToDataURL(file);
     const updated = products.map(x => x.id === productId ? { ...x, img: dataUrl } : x);
     setProducts(updated);
-    await syncToFirestore(updated, workers, bankInfo);
+    await syncToFirestore(updated, workers, bankInfo, customers, expenses);
     alert("Image updated!");
   };
 
@@ -868,6 +920,8 @@ const customerPreviousDue = useMemo(() => {
     { k:"rates", n:"Inventory & Photos" },
     { k:"orders", n:"Orders" },
     { k:"workers", n:"Workers" },
+    { k:"customers", n:"Customers" },
+    { k:"expenses", n:"Expenses" },
     { k:"products", n:"Add Item" },
     { k:"settings", n:"Bank & Settings" }
   ];
@@ -881,7 +935,7 @@ const customerPreviousDue = useMemo(() => {
 
       <div className="flex flex-wrap gap-2">{TABS.map(x => <button key={x.k} onClick={() => setTab(x.k)} className={`text-xs font-bold px-3 py-2 rounded-full transition ${tab===x.k?'bg-orange-500 text-white shadow':'bg-white border-2'}`}>{x.n}</button>)}</div>
 
-      {tab === "day_report" && <DayCloseReport invoices={invoices} />}
+      {tab === "day_report" && <DayCloseReport invoices={invoices} expenses={expenses} />}
 
       {tab === "invoice_maker" && (
         <div className="bg-white border-2 border-orange-500 rounded-2xl p-5 space-y-4 shadow-sm">
@@ -985,8 +1039,8 @@ const customerPreviousDue = useMemo(() => {
                 <div className="flex items-center gap-3">
                   <div className="w-14 h-14 bg-stone-200 rounded-lg overflow-hidden flex items-center justify-center border">{p.img ? <img src={p.img} alt="" className="w-full h-full object-cover" /> : <span className="text-[9px] text-stone-400">No Img</span>}</div>
                   <div className="flex-1 min-w-0"><div className="text-xs font-bold truncate">{p.n}</div><label className="cursor-pointer inline-flex items-center gap-1 bg-blue-600 text-white text-[10px] font-bold px-2 py-0.5 rounded mt-1"><Camera size={12} /> Photo<input type="file" accept="image/*" capture="environment" onChange={(e) => handleProductImageUpload(p.id, e.target.files[0])} className="hidden" /></label></div>
-                  <button onClick={()=>toggleVisibility(p.id)} className={`p-2 rounded text-xs font-bold ${p.visible !== false ? 'bg-emerald-100 text-emerald-700' : 'bg-stone-200'}`}>{p.visible !== false ? <Eye size={14}/> : <EyeOff size={14}/>}</button>
-                  <button onClick={()=>{setProducts(products.filter(x=>x.id!==p.id)); syncToFirestore(products.filter(x=>x.id!==p.id), workers, bankInfo);}} className="text-red-500 p-2"><Trash2 size={16}/></button>
+                  <button onClick={()=>{const updated = products.map(x => x.id === p.id ? { ...x, visible: x.visible === false ? true : false } : x); setProducts(updated); syncToFirestore(updated, workers, bankInfo, customers, expenses);}} className={`p-2 rounded text-xs font-bold ${p.visible !== false ? 'bg-emerald-100 text-emerald-700' : 'bg-stone-200'}`}>{p.visible !== false ? <Eye size={14}/> : <EyeOff size={14}/>}</button>
+                  <button onClick={()=>{const filtered = products.filter(x=>x.id!==p.id); setProducts(filtered); syncToFirestore(filtered, workers, bankInfo, customers, expenses);}} className="text-red-500 p-2"><Trash2 size={16}/></button>
                 </div>
                 <div className="grid grid-cols-2 gap-2">
                   <div><label className="text-[9px] font-bold text-stone-500">Rate ₹</label><input type="number" defaultValue={p.p} onChange={(e) => { p.p = parseFloat(e.target.value) || 0; }} className="w-full border rounded p-1 text-xs font-black bg-white" /></div>
@@ -1000,7 +1054,7 @@ const customerPreviousDue = useMemo(() => {
                     <MessageCircle size={13} /> Order More from Supplier (Low Stock)
                   </button>
                 )}
-                <div className="text-right"><button onClick={()=>{setProducts([...products]); syncToFirestore(products, workers, bankInfo); alert("Saved!");}} className="bg-emerald-600 text-white text-xs font-bold px-3 py-1 rounded">Save Changes</button></div>
+                <div className="text-right"><button onClick={()=>{setProducts([...products]); syncToFirestore(products, workers, bankInfo, customers, expenses); alert("Saved!");}} className="bg-emerald-600 text-white text-xs font-bold px-3 py-1 rounded">Save Changes</button></div>
               </div>
             ))}
           </div>
@@ -1008,13 +1062,147 @@ const customerPreviousDue = useMemo(() => {
       )}
 
       {tab === "orders" && <OrdersScreen t={t} orders={orders} setOrders={setOrders} upi={upi} bankInfo={bankInfo} />}
-      {tab === "workers" && <div className="bg-white border-2 rounded-2xl p-4">Workers Section Active</div>}
+      
+      {tab === "workers" && (
+        <div className="bg-white border-2 border-stone-200 rounded-2xl p-4 space-y-4 shadow-sm">
+          <div className="flex justify-between items-center border-b pb-2">
+            <h3 className="font-display font-black text-lg text-stone-900">Mistri & Labour Manager</h3>
+            <span className="text-[10px] font-bold bg-orange-100 text-orange-700 px-2 py-0.5 rounded-full">Live Firebase Sync</span>
+          </div>
+
+          <div className="bg-stone-50 border p-3 rounded-xl space-y-2">
+            <div className="text-xs font-bold text-stone-700 uppercase">Naya Worker Jodein</div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+              <input id="newWName" placeholder="Worker Name (Ramesh)" className="border rounded p-2 text-xs bg-white" />
+              <input id="newWRole" placeholder="Role (Rajmistri / Electrician)" className="border rounded p-2 text-xs bg-white" />
+              <input id="newWRate" type="number" placeholder="Daily Rate ₹ (850)" className="border rounded p-2 text-xs bg-white" />
+              <input id="newWPhone" placeholder="Phone (916301456725)" className="border rounded p-2 text-xs bg-white" />
+            </div>
+            <button onClick={() => {
+              const name = document.getElementById("newWName").value;
+              const role = document.getElementById("newWRole").value;
+              const rate = parseFloat(document.getElementById("newWRate").value) || 500;
+              const phone = document.getElementById("newWPhone").value || CFG.phone.replace(/\D/g,'');
+              if(!name || !role) { alert("Naam aur role bhariye"); return; }
+              const updatedWorkers = [{ id: Date.now(), name, role, rate, phone, icon: "👷", exp: "5 yrs", area: "Hyderabad" }, ...workers];
+              setWorkers(updatedWorkers);
+              syncToFirestore(products, updatedWorkers, bankInfo, customers, expenses);
+              alert("Worker successfully add ho gaya!");
+            }} className="w-full bg-orange-500 text-white font-bold py-2 rounded-lg text-xs">+ Add Worker to Database</button>
+          </div>
+
+          <div className="space-y-2 max-h-[400px] overflow-auto">
+            {workers.map(w => (
+              <div key={w.id} className="p-3 border rounded-xl flex items-center justify-between bg-stone-50">
+                <div className="flex items-center gap-2">
+                  <span className="text-xl">{w.icon || "👷"}</span>
+                  <div>
+                    <div className="text-xs font-bold text-stone-900">{w.name} ({w.role})</div>
+                    <div className="text-[11px] font-black text-orange-600">₹{w.rate}/day • Ph: {w.phone}</div>
+                  </div>
+                </div>
+                <button onClick={() => {
+                  const filtered = workers.filter(x => x.id !== w.id);
+                  setWorkers(filtered);
+                  syncToFirestore(products, filtered, bankInfo, customers, expenses);
+                }} className="text-red-500 p-1.5 hover:bg-red-50 rounded"><Trash2 size={16} /></button>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {tab === "customers" && (
+        <div className="bg-white border-2 border-stone-200 rounded-2xl p-4 space-y-4 shadow-sm">
+          <div className="flex justify-between items-center border-b pb-2">
+            <h3 className="font-display font-black text-lg text-stone-900">Customer Directory (ग्राहक सूची)</h3>
+            <span className="text-[10px] font-bold bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full">Saved Parties</span>
+          </div>
+          <div className="bg-stone-50 border p-3 rounded-xl space-y-2">
+            <div className="text-xs font-bold text-stone-700 uppercase">Naya Customer Jodein</div>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+              <input id="newCustName" placeholder="Name (Ramesh Builders)" className="border rounded p-2 text-xs bg-white" />
+              <input id="newCustPhone" placeholder="Phone" className="border rounded p-2 text-xs bg-white" />
+              <input id="newCustSite" placeholder="Site / Address" className="border rounded p-2 text-xs bg-white" />
+            </div>
+            <button onClick={() => {
+              const name = document.getElementById("newCustName").value;
+              const phone = document.getElementById("newCustPhone").value;
+              const site = document.getElementById("newCustSite").value;
+              if(!name) { alert("Customer name zaroori hai"); return; }
+              const updated = [{ id: Date.now(), name, phone, site, type: "Regular" }, ...customers];
+              setCustomers(updated);
+              syncToFirestore(products, workers, bankInfo, updated, expenses);
+              alert("Customer added!");
+            }} className="w-full bg-emerald-600 text-white font-bold py-2 rounded-lg text-xs">+ Save Customer</button>
+          </div>
+          <div className="space-y-2 max-h-[400px] overflow-auto">
+            {customers.map(c => (
+              <div key={c.id} className="p-3 border rounded-xl flex items-center justify-between bg-stone-50">
+                <div>
+                  <div className="text-xs font-bold text-stone-900">{c.name} ({c.type})</div>
+                  <div className="text-[11px] text-stone-600">Ph: {c.phone} | Site: {c.site}</div>
+                </div>
+                <button onClick={() => {
+                  const filtered = customers.filter(x => x.id !== c.id);
+                  setCustomers(filtered);
+                  syncToFirestore(products, workers, bankInfo, filtered, expenses);
+                }} className="text-red-500 p-1.5"><Trash2 size={16}/></button>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {tab === "expenses" && (
+        <div className="bg-white border-2 border-stone-200 rounded-2xl p-4 space-y-4 shadow-sm">
+          <div className="flex justify-between items-center border-b pb-2">
+            <h3 className="font-display font-black text-lg text-stone-900">Daily Expense Tracker (दुकान का खर्चा)</h3>
+            <span className="text-[10px] font-bold bg-amber-100 text-amber-800 px-2 py-0.5 rounded-full">Cash Outflow</span>
+          </div>
+          <div className="bg-stone-50 border p-3 rounded-xl space-y-2">
+            <div className="text-xs font-bold text-stone-700 uppercase">Kharcha Likhein</div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+              <input id="expTitle" placeholder="Reason (Diesel, Chai, Loading)" className="border rounded p-2 text-xs bg-white" />
+              <input id="expAmt" type="number" placeholder="Amount ₹" className="border rounded p-2 text-xs bg-white" />
+            </div>
+            <button onClick={() => {
+              const title = document.getElementById("expTitle").value;
+              const amt = parseFloat(document.getElementById("expAmt").value);
+              if(!title || !amt) { alert("Details bhariye"); return; }
+              const updated = [{ id: Date.now(), title, amt, date: new Date().toLocaleDateString() }, ...expenses];
+              setExpenses(updated);
+              syncToFirestore(products, workers, bankInfo, customers, updated);
+              alert("Expense recorded!");
+            }} className="w-full bg-amber-600 text-white font-bold py-2 rounded-lg text-xs">+ Add Expense</button>
+          </div>
+          <div className="space-y-2 max-h-[400px] overflow-auto">
+            {expenses.map(e => (
+              <div key={e.id} className="p-3 border rounded-xl flex items-center justify-between bg-stone-50">
+                <div>
+                  <div className="text-xs font-bold text-stone-900">{e.title}</div>
+                  <div className="text-[10px] text-stone-500">{e.date}</div>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="text-xs font-black text-red-600">-₹{e.amt}</span>
+                  <button onClick={() => {
+                    const filtered = expenses.filter(x => x.id !== e.id);
+                    setExpenses(filtered);
+                    syncToFirestore(products, workers, bankInfo, customers, filtered);
+                  }} className="text-red-500 p-1.5"><Trash2 size={16}/></button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
       {tab === "products" && (
         <div className="bg-white border-2 rounded-2xl p-4 space-y-3">
           <div className="text-xs uppercase font-bold">Add Material</div>
           <input value={newProd.n} onChange={e=>setNewProd({...newProd, n:e.target.value})} placeholder="Name (सरिया 16 MM)" className="w-full border-2 rounded-lg p-2 text-sm" />
           <div className="grid grid-cols-2 gap-2"><input value={newProd.b} onChange={e=>setNewProd({...newProd, b:e.target.value})} placeholder="Brand" className="border-2 rounded-lg p-2 text-sm" /><input type="number" value={newProd.p} onChange={e=>setNewProd({...newProd, p:e.target.value})} placeholder="Price ₹" className="border-2 rounded-lg p-2 text-sm" /></div>
-          <button onClick={()=>{if(newProd.n && newProd.p){setProducts([{...newProd, id:Date.now(), p:parseFloat(newProd.p), stock:500, visible:true}, ...products]); syncToFirestore([{...newProd, id:Date.now(), p:parseFloat(newProd.p), stock:500, visible:true}, ...products], workers, bankInfo); alert("Added!");}}} className="w-full bg-orange-500 text-white font-bold py-2.5 rounded-full">+ Add</button>
+          <button onClick={()=>{if(newProd.n && newProd.p){setProducts([{...newProd, id:Date.now(), p:parseFloat(newProd.p), stock:500, visible:true}, ...products]); syncToFirestore([{...newProd, id:Date.now(), p:parseFloat(newProd.p), stock:500, visible:true}, ...products], workers, bankInfo, customers, expenses); alert("Added!");}}} className="w-full bg-orange-500 text-white font-bold py-2.5 rounded-full">+ Add</button>
         </div>
       )}
       {tab === "settings" && (
@@ -1022,7 +1210,7 @@ const customerPreviousDue = useMemo(() => {
           <div className="bg-white border-2 rounded-2xl p-5 space-y-3">
             <div className="text-xs font-black uppercase">Bank Account Manager</div>
             <div className="grid grid-cols-2 gap-2"><input value={editBank.bankName} onChange={e=>setEditBank({...editBank, bankName:e.target.value})} placeholder="Bank Name" className="border rounded p-2 text-xs" /><input value={editBank.accNo} onChange={e=>setEditBank({...editBank, accNo:e.target.value})} placeholder="A/c No" className="border rounded p-2 text-xs" /></div>
-            <button onClick={()=>{setBankInfo(editBank); syncToFirestore(products, workers, editBank); alert("Saved!");}} className="w-full bg-emerald-600 text-white font-bold py-2 rounded text-xs">Save Bank</button>
+            <button onClick={()=>{setBankInfo(editBank); syncToFirestore(products, workers, editBank, customers, expenses); alert("Saved!");}} className="w-full bg-emerald-600 text-white font-bold py-2 rounded text-xs">Save Bank</button>
           </div>
           <div className="bg-emerald-50 border-2 border-emerald-500 rounded-2xl p-5 space-y-2">
             <div className="text-xs font-black text-emerald-800 uppercase">Excel Reports (.CSV)</div>
@@ -1035,7 +1223,7 @@ const customerPreviousDue = useMemo(() => {
               downloadCSV(`Khata.csv`, [["ID","Date","Customer","Amount","Type"], ...ledger.map(l=>[l.id,l.date,l.customer,l.amt,l.type])]);
             }} className="bg-amber-700 text-white font-bold py-2 rounded text-xs">Export Khata</button></div>
           </div>
-          <div className="bg-red-50 border-2 border-red-500 rounded-2xl p-5"><button onClick={()=>{if(prompt("Enter PIN (6301) to reset:")==="6301"){setOrders([]); setInvoices([]); setLedger([]); alert("Reset done!");}}} className="w-full bg-red-600 text-white font-black py-2.5 rounded text-xs">Factory Reset Test Data</button></div>
+          <div className="bg-red-50 border-2 border-red-500 rounded-2xl p-5"><button onClick={()=>{if(prompt("Enter PIN (6301) to reset:")==="6301"){setOrders([]); setInvoices([]); setLedger([]); setCustomers([]); setExpenses([]); alert("Reset done!");}}} className="w-full bg-red-600 text-white font-black py-2.5 rounded text-xs">Factory Reset Test Data</button></div>
         </div>
       )}
     </div>
