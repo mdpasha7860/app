@@ -34,6 +34,24 @@ const CFG = {
   defaultHeadline: "Build Stronger. Order Smarter.",
 };
 
+const MULTI_GST_PROFILES = [
+  { id: "as_main", name: "AS Enterprises (Pasha)", gstin: "36ABCDE1234F1Z5", address: "Hyderabad Yard" },
+  { id: "son_1", name: "AS BuildMart (Son 1)", gstin: "36XYZAB5678C2Z1", address: "Secunderabad Branch" },
+  { id: "son_2", name: "AS Materials (Son 2)", gstin: "36LMNOP9012D3Z2", address: "Kukatpally Branch" }
+];
+
+const DISTANCE_FREIGHT_RATES = [
+  { area: "Local (0-10 km)", rate: 500 },
+  { area: "Secunderabad / City (10-20 km)", rate: 900 },
+  { area: "Kukatpally / Miyapur (20-30 km)", rate: 1400 },
+  { area: "Shamshabad / Outer Ring (30+ km)", rate: 2200 }
+];
+
+const AUTHORIZED_ADMIN_EMAILS = [
+  "asenterprises6301@gmail.com",
+  "md.pasha@gmail.com"
+];
+
 const ls = {
   get: (k, d) => { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch { return d; } },
   set: (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) { console.error(e); } }
@@ -51,23 +69,23 @@ const getHero = () => localStorage.getItem("bannerImg") || CFG.defaultHero;
 const getHeadline = () => localStorage.getItem("bannerText") || "";
 
 const T = {
-  EN: { b:"Build Stronger. Order Smarter.", c:"Cart", s:"Same-Day Delivery", w:"Wholesale Khata", g:"Brand Catalog", f:"Free Estimate", zip:"Download Full Site Backup", home:"Home", search:"Search Sariya, Cement, Sand, Bricks...", login:"Login", logout:"Logout", orders:"My Orders", admin:"Admin", call:"Call Now", wa:"WhatsApp", cart:"Cart", buy:"Add to Cart", total:"Total", checkout:"Place Order", address:"Delivery Address", cod:"Cash on Delivery", upi:"Pay via UPI", confirm:"Confirm Order", noResults:"No materials found. Add inventory from Admin Panel.", tracker:"Live Order Tracker", khata:"Wholesale Khata", catalog:"Brand Catalog", estimator:"Estimate Calculator", welcome:"Welcome", mobile:"Mobile Number", otp:"Enter OTP", sendOtp:"Send OTP", verify:"Verify & Login", pinLbl:"Enter Admin PIN", changeUpi:"Change UPI ID", currentUpi:"Current UPI", saveUpi:"Save UPI", zipInfo:"Full backup file", qty:"Qty (Weight)", stock:"In Stock", cat:"Category", all:"All", tmt:"Sariya (TMT)", cement:"Cement", sand:"Sand & Aggregate", brick:"Bricks", tools:"Tools", empty:"Cart is empty", noord:"No orders yet", ordid:"Order", status:"Status", pending:"Pending", scan:"Scan QR to Pay", payto:"Pay to", est:"Enter dimensions to estimate", len:"Length (ft)", wid:"Width (ft)", ht:"Height (ft)", need:"You need approx", bags:"bags of Cement", tons:"tons of Sariya", cft:"cft of Sand", bricks:"Bricks (approx)", calc:"Calculate", ledger:"Ledger", customer:"Customer", amt:"Amount", add:"Add Entry", credit:"Credit", debit:"Debit", note:"Note", del:"Delete", eta:"ETA Today", driver:"Driver", low:"LOW STOCK", tick:"★ Same-Day Delivery Across Hyderabad • Wholesale Rates • Genuine Brands • Instant WhatsApp Estimates ★" },
-  HI: { b:"मजबूत बनाएं। स्मार्ट ऑर्डर करें।", c:"टोकरी", s:"आज डिलीवरी", w:"थोक खाता", g:"ब्रांड कैटलॉग", f:"फ्री एस्टीमेट", zip:"साइट बैकअप डाउनलोड करें", home:"होम", search:"सरिया, सीमेंट, रेत, ईंट खोजें...", login:"लॉगिन", logout:"लॉगआउट", orders:"मेरे ऑर्डर", admin:"एडमिन", call:"कॉल करें", wa:"व्हाट्सएप", cart:"टोकरी", buy:"जोड़ें", total:"कुल", checkout:"ऑर्डर करें", address:"पता", cod:"कैश ऑन डिलीवरी", upi:"UPI से भुगतान", confirm:"पुष्टि करें", noResults:"सामान नहीं मिला। एडमिन पैनल से स्टॉक जोड़ें।", tracker:"लाइव ऑर्डर ट्रैकर", khata:"थोक खाता", catalog:"ब्रांड कैटलॉग", estimator:"अनुमान कैलकुलेटर", welcome:"स्वागत है", mobile:"मोबाइल नंबर", otp:"OTP दर्ज करें", sendOtp:"OTP भेजें", verify:"वेरीफाई करें", pinLbl:"एडमिन PIN डालें", changeUpi:"UPI बदलें", currentUpi:"मौजूदा UPI", saveUpi:"UPI सेव करें", zipInfo:"पूरा बैकअप", qty:"वज़न (किलो / बैग)", stock:"स्टॉक में", cat:"श्रेणी", all:"सभी", tmt:"सरिया (TMT)", cement:"सीमेंट", sand:"रेत/गिट्टी", brick:"ईंट", tools:"औजार", empty:"टोकरी खाली", noord:"कोई ऑर्डर नहीं", ordid:"ऑर्डर", status:"स्थिति", pending:"लंबित", scan:"QR स्कैन करें", payto:"भुगतान", est:"माप डालें", len:"लंबाई (फीट)", wid:"चौड़ाई (फीट)", ht:"ऊंचाई (फीट)", need:"आपको चाहिए", bags:"सीमेंट बैग", tons:"टन सरिया", cft:"cft रेत", bricks:"ईंटें", calc:"गणना करें", ledger:"बही", customer:"ग्राहक", amt:"राशि", add:"जोड़ें", credit:"जमा", debit:"नाम", note:"नोट", del:"हटाएं", eta:"आज पहुंचेगा", driver:"ड्राइवर", low:"स्टॉक कम", tick:"★ हैदराबाद में आज ही डिलीवरी • थोक रेट • असली ब्रांड • इंस्टेंट व्हाट्सएप एस्टीमेट ★" },
-  TE: { b:"బలంగా నిర్మించండి. తెలివిగా ఆర్డర్ చేయండి.", c:"బుట్ట", s:"ఈరోజే డెలివరీ", w:"హోల్‌సేల్ ఖాతా", g:"బ్రాండ్ కేటలాగ్", f:"ఉచిత అంచనా", zip:"బ్యాకప్ డౌన్‌లోడ్", home:"హోమ్", search:"సరియా, సిమెంట్, ఇసుక, ఇటుకలు...", login:"లాగిన్", logout:"లాగౌట్", orders:"నా ఆర్డర్లు", admin:"అడ్మిన్", call:"కాల్ చేయండి", wa:"వాట్సాప్", cart:"బుట్ట", buy:"జోడించు", total:"మొత్తం", checkout:"ఆర్డర్ చేయండి", address:"చిరునామా", cod:"క్యాష్ ఆన్ డెలివరీ", upi:"UPI చెల్లింపు", confirm:"నిర్ధారించండి", noResults:"సరుకులు లేవు. అడ్మిన్ ప్యానెల్ నుండి జోడించండి.", tracker:"లైవ్ ఆర్డర్ ట్రాకర్", khata:"హోల్‌సేల్ ఖాతా", catalog:"బ్రాండ్ కేటలాగ్", estimator:"అంచనా కాలిక్యులేటర్", welcome:"స్వాగతం", mobile:"మొబైల్ నంబర్", otp:"OTP నమోదు", sendOtp:"OTP పంపండి", verify:"వెరిఫై చేయండి", pinLbl:"అడ్మిన్ PIN", changeUpi:"UPI మార్చండి", currentUpi:"ప్రస్తుత UPI", saveUpi:"UPI సేవ్ చేయండి", zipInfo:"పూర్తి బ్యాకప్", qty:"పరిమాణం (కిలోలు)", stock:"స్టాక్‌లో", cat:"వర్గం", all:"అన్నీ", tmt:"సరియా (TMT)", cement:"సిమెంట్", sand:"ఇసుక/కంకర", brick:"ఇటుకలు", tools:"పరికరాలు", empty:"బుట్ట ఖాళీ", noord:"ఆర్డర్లు లేవు", ordid:"ఆర్డర్", status:"స్థితి", pending:"పెండింగ్", scan:"QR స్కాన్ చేయండి", payto:"చెల్లింపు", est:"కొలతలు ఇవ్వండి", len:"పొడవు (అడుగు)", wid:"వెడల్పు (అడుగు)", ht:"ఎత్తు (అడుగు)", need:"కావాలి", bags:"సిమెంట్ బస్తాలు", tons:"టన్నుల సరియా", cft:"cft ఇసుక", bricks:"ఇటుకలు", calc:"లెక్కించండి", ledger:"లెడ్జర్", customer:"కస్టమర్", amt:"మొత్తం", add:"జోడించు", credit:"క్రెడిట్", debit:"డెబిట్", note:"నోట్", del:"తొలగించు", eta:"ఈరోజు", driver:"డ్రైవర్", low:"స్టాక్ తక్కువ", tick:"★ హైదరాబాద్‌లో ఈరోజే డెలివరీ • హోల్‌సేల్ రేట్లు • అసలైన బ్రాండ్ • తక్షణ వాట్సాప్ అంచనా ★" }
+  EN: { b:"Build Stronger. Order Smarter.", c:"Cart", s:"Same-Day Delivery", w:"Wholesale Khata", g:"Brand Catalog", f:"Free Estimate", zip:"Download Full Site Backup", home:"Home", search:"Search Sariya, Cement, Sand, Bricks...", login:"Login", logout:"Logout", orders:"My Orders", admin:"Admin", call:"Call Now", wa:"WhatsApp", cart:"Cart", buy:"Add to Cart", total:"Total", checkout:"Place Order", address:"Delivery Address", cod:"Cash on Delivery", upi:"Pay via UPI", confirm:"Confirm Order", noResults:"No materials found. Add inventory from Admin Panel.", tracker:"Live Order Tracker", khata:"Wholesale Khata", catalog:"Brand Catalog", estimator:"Estimate Calculator", welcome:"Welcome", mobile:"Mobile Number", otp:"Enter OTP", sendOtp:"Send OTP", verify:"Verify & Login", pinLbl:"Enter Admin PIN or Google Auth", changeUpi:"Change UPI ID", currentUpi:"Current UPI", saveUpi:"Save UPI", zipInfo:"Full backup file", qty:"Qty (Weight)", stock:"In Stock", cat:"Category", all:"All", tmt:"Sariya (TMT)", cement:"Cement", sand:"Sand & Aggregate", brick:"Bricks", tools:"Tools", empty:"Cart is empty", noord:"No orders yet", ordid:"Order", status:"Status", pending:"Pending", scan:"Scan QR to Pay", payto:"Pay to", est:"Enter dimensions to estimate", len:"Length (ft)", wid:"Width (ft)", ht:"Height (ft)", need:"You need approx", bags:"bags of Cement", tons:"tons of Sariya", cft:"cft of Sand", bricks:"Bricks (approx)", calc:"Calculate", ledger:"Ledger", customer:"Customer", amt:"Amount", add:"Add Entry", credit:"Credit", debit:"Debit", note:"Note", del:"Delete", eta:"ETA Today", driver:"Driver", low:"LOW STOCK", tick:"★ Same-Day Delivery Across Hyderabad • Wholesale Rates • Genuine Brands • Instant WhatsApp Estimates ★" },
+  HI: { b:"मजबूत बनाएं। स्मार्ट ऑर्डर करें।", c:"टोकरी", s:"आज डिलीवरी", w:"थोक खाता", g:"ब्रांड कैटलॉग", f:"फ्री एस्टीमेट", zip:"साइट बैकअप डाउनलोड करें", home:"होम", search:"सरिया, सीमेंट, रेत, ईंट खोजें...", login:"लॉगिन", logout:"लॉगआउट", orders:"मेरे ऑर्डर", admin:"एडमिन", call:"कॉल करें", wa:"व्हाट्सएप", cart:"टोकरी", buy:"जोड़ें", total:"कुल", checkout:"ऑर्डर करें", address:"पता", cod:"कैश ऑन डिलीवरी", upi:"UPI से भुगतान", confirm:"पुष्टि करें", noResults:"सामान नहीं मिला। एडमिन पैनल से स्टॉक जोड़ें।", tracker:"लाइव ऑर्डर ट्रैकर", khata:"थोक खाता", catalog:"ब्रांड कैटलॉग", estimator:"अनुमान कैलकुलेटर", welcome:"स्वागत है", mobile:"मोबाइल नंबर", otp:"OTP दर्ज करें", sendOtp:"OTP भेजें", verify:"वेरीफाई करें", pinLbl:"एडमिन PIN या Google लॉगिन", changeUpi:"UPI बदलें", currentUpi:"मौजूदा UPI", saveUpi:"UPI सेव करें", zipInfo:"पूरा बैकअप", qty:"वज़न (किलो / बैग)", stock:"स्टॉक में", cat:"श्रेणी", all:"सभी", tmt:"सरिया (TMT)", cement:"सीमेंट", sand:"रेत/गिट्टी", brick:"ईंट", tools:"औजार", empty:"टोकरी खाली", noord:"कोई ऑर्डर नहीं", ordid:"ऑर्डर", status:"स्थिति", pending:"लंबित", scan:"QR स्कैन करें", payto:"भुगतान", est:"माप डालें", len:"लंबाई (फीट)", wid:"चौड़ाई (फीट)", ht:"ऊंचाई (फीट)", need:"आपको चाहिए", bags:"सीमेंट बैग", tons:"टन सरिया", cft:"cft रेत", bricks:"ईंटें", calc:"गणना करें", ledger:"बही", customer:"ग्राहक", amt:"राशि", add:"जोड़ें", credit:"जमा", debit:"नाम", note:"नोट", del:"हटाएं", eta:"आज पहुंचेगा", driver:"ड्राइवर", low:"स्टॉक कम", tick:"★ हैदराबाद में आज ही डिलीवरी • थोक रेट • असली ब्रांड • इंस्टेंट व्हाट्सएप एस्टीमेट ★" },
+  TE: { b:"బలంగా నిర్మించండి. తెలివిగా ఆర్డర్ చేయండి.", c:"బుట్ట", s:"ఈరోజే డెలివరీ", w:"హోల్‌సేల్ ఖాతా", g:"బ్రాండ్ కేటలాగ్", f:"ఉచిత అంచనా", zip:"బ్యాకప్ డౌన్‌లోడ్", home:"హోమ్", search:"సరియా, సిమెంట్, ఇసుక, ఇటుకలు...", login:"లాగిన్", logout:"లాగౌట్", orders:"నా ఆర్డర్లు", admin:"అడ్మిన్", call:"కాల్ చేయండి", wa:"వాట్సాప్", cart:"బుట్ట", buy:"జోడించు", మొత్తం:"మొత్తం", checkout:"ఆర్డర్ చేయండి", address:"చిరునామా", cod:"క్యాష్ ఆన్ డెలివరీ", upi:"UPI చెల్లింపు", confirm:"నిర్ధారించండి", noResults:"సరుకులు లేవు. అడ్మిన్ ప్యానెల్ నుండి జోడించండి.", tracker:"లైవ్ ఆర్డర్ ట్రాకర్", khata:"హోల్‌సేల్ ఖాతా", catalog:"బ్రాండ్ కేటలాగ్", estimator:"అంచనా కాలిక్యులేటర్", welcome:"స్వాగతం", mobile:"మొబైల్ నంబర్", otp:"OTP నమోదు", sendOtp:"OTP పంపండి", verify:"వెరిఫై చేయండి", pinLbl:"అడ్మిన్ PIN", changeUpi:"UPI మార్చండి", currentUpi:"ప్రస్తుత UPI", saveUpi:"UPI సేవ్ చేయండి", zipInfo:"పూర్తి బ్యాకప్", qty:"పరిమాణం (కిలోలు)", stock:"స్టాక్‌లో", cat:"వర్గం", all:"అన్నీ", tmt:"సరియా (TMT)", cement:"సిమెంట్", sand:"ఇసుక/కంకర", brick:"ఇటుకలు", tools:"పరికరాలు", empty:"బుట్ట ఖాళీ", noord:"ఆర్డర్లు లేవు", ordid:"ఆర్డర్", status:"స్థితి", pending:"పెండింగ్", scan:"QR స్కాన్ చేయండి", payto:"చెల్లింపు", est:"కొలతలు ఇవ్వండి", len:"పొడవు (అడుగు)", wid:"వెడల్పు (అడుగు)", ht:"ఎత్తు (అడుగు)", need:"కావాలి", bags:"సిమెంట్ బస్తాలు", tons:"టన్నుల సరియా", cft:"cft ఇసుక", bricks:"ఇటుకలు", calc:"లెక్కించండి", ledger:"లెడ్జర్", customer:"కస్టమర్", amt:"మొత్తం", add:"జోడించు", credit:"క్రెడిట్", debit:"డెబిట్", note:"నోట్", del:"తొలగించు", eta:"ఈరోజు", driver:"డ్రाइवर", low:"స్టాక్ తక్కువ", tick:"★ హైదరాబాద్‌లో ఈరోజే డెలివరీ • హోల్‌సేల్ రేట్లు • అసలైన బ్రాండ్ • తక్షణ వాట్సాప్ అంచనా ★" }
 };
 
 const MAP = { sariya:'tmt', saria:'tmt', steel:'tmt', rod:'tmt', tmt:'tmt', cement:'cement', simenti:'cement', ppc:'cement', opc:'cement', ret:'sand', balu:'sand', sand:'sand', isuka:'sand', metal:'sand', aggregate:'sand', gitti:'sand', brick:'brick', eent:'brick', itukalu:'brick', block:'brick', wire:'tools', tool:'tools' };
 
 const CLEAN_FRESH_PRODUCTS = [
-  { id: 1201, n: "सरिया 8 MM (Tata Tiscon)", b: "Tata Tiscon", p: 62, u: "प्रति किलो (per kg)", cat: "tmt", stock: 500, rating: 4.8, visible: true, img: "", moq: 10 },
-  { id: 1202, n: "सरिया 10 MM (JSW Neosteel)", b: "JSW Neosteel", p: 61, u: "प्रति किलो (per kg)", cat: "tmt", stock: 500, rating: 4.7, visible: true, img: "", moq: 10 },
-  { id: 1203, n: "सरिया 12 MM (SAIL)", b: "SAIL", p: 60, u: "प्रति किलो (per kg)", cat: "tmt", stock: 500, rating: 4.6, visible: true, img: "", moq: 10 },
-  { id: 1204, n: "सरिया 16 MM (Kamdhenu)", b: "Kamdhenu", p: 59, u: "प्रति किलो (per kg)", cat: "tmt", stock: 500, rating: 4.5, visible: true, img: "", moq: 10 },
-  { id: 1205, n: "सीमेंट UltraTech OPC 53 Grade", b: "UltraTech", p: 410, u: "प्रति बैग (50kg bag)", cat: "cement", stock: 300, rating: 4.9, visible: true, img: "", moq: 10 },
-  { id: 1206, n: "सीमेंट Ambuja PPC", b: "Ambuja", p: 380, u: "प्रति बैग (50kg bag)", cat: "cement", stock: 200, rating: 4.8, visible: true, img: "", moq: 10 },
-  { id: 1207, n: "रेत River Sand (बालू)", b: "Local River", p: 1800, u: "प्रति टन (per ton)", cat: "sand", stock: 50, rating: 4.5, visible: true, img: "", moq: 1 },
-  { id: 1208, n: "गिट्टी 20 MM Aggregate", b: "Local Quarry", p: 1200, u: "प्रति टन (per ton)", cat: "sand", stock: 80, rating: 4.4, visible: true, img: "", moq: 1 },
-  { id: 1209, n: "लाल ईंट Red Bricks Class A", b: "Kiln Standard", p: 9, u: "प्रति पीस (per piece)", cat: "brick", stock: 5000, rating: 4.6, visible: true, img: "", moq: 200 }
+  { id: 1201, n: "Sariya 8 MM (Tata Tiscon)", b: "Tata Tiscon", p: 62, u: "per kg", cat: "tmt", stock: 500, rating: 4.8, visible: true, img: "", moq: 10 },
+  { id: 1202, n: "Sariya 10 MM (JSW Neosteel)", b: "JSW Neosteel", p: 61, u: "per kg", cat: "tmt", stock: 500, rating: 4.7, visible: true, img: "", moq: 10 },
+  { id: 1203, n: "Sariya 12 MM (SAIL)", b: "SAIL", p: 60, u: "per kg", cat: "tmt", stock: 500, rating: 4.6, visible: true, img: "", moq: 10 },
+  { id: 1204, n: "Sariya 16 MM (Kamdhenu)", b: "Kamdhenu", p: 59, u: "per kg", cat: "tmt", stock: 500, rating: 4.5, visible: true, img: "", moq: 10 },
+  { id: 1205, n: "Cement UltraTech OPC 53 Grade", b: "UltraTech", p: 410, u: "per bag (50kg)", cat: "cement", stock: 300, rating: 4.9, visible: true, img: "", moq: 10 },
+  { id: 1206, n: "Cement Ambuja PPC", b: "Ambuja", p: 380, u: "per bag (50kg)", cat: "cement", stock: 200, rating: 4.8, visible: true, img: "", moq: 10 },
+  { id: 1207, n: "River Sand (बालू)", b: "Local River", p: 1800, u: "per ton", cat: "sand", stock: 50, rating: 4.5, visible: true, img: "", moq: 1 },
+  { id: 1208, n: "Aggregate 20 MM", b: "Local Quarry", p: 1200, u: "per ton", cat: "sand", stock: 80, rating: 4.4, visible: true, img: "", moq: 1 },
+  { id: 1209, n: "Red Bricks Class A", b: "Kiln Standard", p: 9, u: "per piece", cat: "brick", stock: 5000, rating: 4.6, visible: true, img: "", moq: 200 }
 ];
 
 const DEFAULT_WORKERS = [
@@ -272,13 +290,13 @@ export default function App() {
                   <div className="fixed inset-0 z-30" onClick={() => setMenuOpen(false)} />
                   <div className="absolute right-0 mt-2 w-64 bg-white rounded-2xl shadow-2xl border-2 border-stone-200 overflow-hidden z-50">
                     <MenuItem icon={RefreshCw} color="text-blue-600" label="Refresh App" onClick={() => { setMenuOpen(false); window.location.reload(); }} />
-                    <MenuItem icon={FileText} color="text-emerald-600" label="GST Bill / Invoice Maker" badge="Multi-Item" onClick={() => { setMenuOpen(false); go("admin"); }} />
+                    <MenuItem icon={FileText} color="text-emerald-600" label="GST Bill / Invoice Maker" badge="Multi-GST" onClick={() => { setMenuOpen(false); go("admin"); }} />
                     {user ? (
                       <MenuItem icon={LogOut} color="text-red-600" label={`Logout (${user.name?.split(' ')[0] || user.mobile})`} onClick={() => { setMenuOpen(false); logout(); }} />
                     ) : (
                       <MenuItem icon={User} color="text-orange-600" label="Login (Mobile OTP)" onClick={() => { setMenuOpen(false); go("login"); }} />
                     )}
-                    <MenuItem icon={Shield} color="text-orange-600" label="Admin Panel" badge="PIN 6301" onClick={() => { setMenuOpen(false); go("admin"); }} />
+                    <MenuItem icon={Shield} color="text-orange-600" label="Admin Panel" badge="Secure" onClick={() => { setMenuOpen(false); go("admin"); }} />
                     <MenuItem icon={Truck} color="text-blue-600" label="Live Delivery Tracking" onClick={() => { setMenuOpen(false); go("tracker"); }} />
                     <MenuItem icon={BookOpen} color="text-amber-600" label="Wholesale Khata & Reminders" onClick={() => { setMenuOpen(false); go("khata"); }} />
                     <MenuItem icon={Award} color="text-amber-600" label="Mistri Loyalty" onClick={() => { setMenuOpen(false); go("loyalty"); }} />
@@ -334,9 +352,9 @@ export default function App() {
         )}
         {screen === "catalog" && <CatalogScreen t={t} query={query} doSearch={doSearch} category={category} setCategory={setCategory} filtered={filtered} addToCart={addToCart} />}
         {screen === "cart" && <CartScreen t={t} cart={cart} updateQty={updateQty} removeItem={removeItem} total={cartTotal} onCheckout={placeOrder} upi={upi} user={user} />}
-        {screen === "orders" && <OrdersScreen t={t} orders={orders} setOrders={setOrders} upi={upi} bankInfo={bankInfo} />}
+        {screen === "orders" && <OrdersScreen t={t} orders={orders} setOrders={setOrders} upi={upi} bankInfo={bankInfo} lang={lang} />}
         {screen === "tracker" && <TrackerScreen t={t} orders={orders} />}
-        {screen === "khata" && <KhataScreen t={t} ledger={ledger} setLedger={setLedger} upi={upi} bankInfo={bankInfo} />}
+        {screen === "khata" && <KhataScreen t={t} ledger={ledger} setLedger={setLedger} upi={upi} bankInfo={bankInfo} lang={lang} />}
         {screen === "estimator" && <EstimatorScreen t={t} />}
         {screen === "login" && <LoginScreen t={t} onLogin={(u)=>{setUser(u); ls.set("userProfile", u); go("home");}} />}
         {screen === "admin" && (
@@ -353,6 +371,7 @@ export default function App() {
             invoices={invoices} setInvoices={setInvoices}
             ledger={ledger} setLedger={setLedger}
             bankInfo={bankInfo} setBankInfo={setBankInfo}
+            lang={lang}
           />
         )}
         {screen === "gallery" && <GalleryScreen gallery={gallery} setGallery={setGallery} />}
@@ -434,14 +453,14 @@ function SmartGradeSelector({ products, addToCart }) {
         title: "छत ढलाई (Roof & Slab Casting)",
         desc: "छत के लिए अल्ट्राटेक 53 ग्रेड और सरिया सबसे सही रहता है।",
         cement: products.find(p => p.n.includes("OPC 53") || p.b.includes("UltraTech")) || products[4],
-        steel: products.find(p => p.n.includes("10 MM") || p.n.includes("12 MM")) || products[1]
+        steel: products.find(p => p.n.includes("10 MM") || p.n.includes("12 MM") || p.n.includes("Sariya 12")) || products[1]
       };
     } else if (useCase === "pillar") {
       return {
         title: "पिलर और बीम (Pillars & Beams)",
         desc: "मजबूत पिलर के लिए 12mm और 16mm का भारी सरिया इस्तेमाल करें।",
         cement: products.find(p => p.n.includes("53 Grade")) || products[4],
-        steel: products.find(p => p.n.includes("16 MM") || p.n.includes("12 MM")) || products[2]
+        steel: products.find(p => p.n.includes("16 MM") || p.n.includes("12 MM") || p.n.includes("Sariya 16")) || products[2]
       };
     } else {
       return {
@@ -637,7 +656,7 @@ function CartScreen({ t, cart, updateQty, removeItem, total, onCheckout, upi, us
   );
 }
 
-function printTaxInvoiceDocument(inv, isChallan = false, currentBank = DEFAULT_BANK) {
+function printTaxInvoiceDocument(inv, isChallan = false, currentBank = DEFAULT_BANK, currentLang = "EN") {
   const taxable = parseFloat(inv.taxable || inv.total || 0);
   const discount = parseFloat(inv.discount || 0);
   const freight = parseFloat(inv.freight || 0);
@@ -645,16 +664,73 @@ function printTaxInvoiceDocument(inv, isChallan = false, currentBank = DEFAULT_B
   const gst = parseFloat(inv.gst || (adjustedTaxable * 0.18));
   const grand = Math.round(adjustedTaxable + gst + freight);
   const bank = inv.bankSnapshot || currentBank;
+  const profile = inv.profileSnapshot || MULTI_GST_PROFILES[0];
 
-  const html = `<!doctype html><html><head><meta charset="utf-8"/><title>${isChallan ? 'Challan' : 'Invoice'} - ${inv.id}</title><style>body { font-family: Arial, sans-serif; padding: 20px; color: #111; max-width: 800px; margin: auto; } .header { border-bottom: 3px solid #ea580c; padding-bottom: 10px; display: flex; justify-content: space-between; } table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 13px; } th, td { border: 1px solid #cbd5e1; padding: 8px; text-align: left; } th { background: #0A1931; color: #fff; } .text-right { text-align: right; }</style></head><body>
-  <div class="header"><div><h1 style="margin:0; color:#0A1931;">AS ENTERPRISES</h1><div>Wholesale Building Materials Supply</div><div>GSTIN: ${CFG.gstin} · Ph: ${CFG.phone}</div></div><div style="text-align:right;"><strong>${isChallan ? 'DELIVERY CHALLAN' : 'TAX INVOICE'}</strong><br/>No: ${inv.id}<br/>Date: ${new Date(inv.date).toLocaleDateString('en-IN')}</div></div>
-  <p><strong>Billed To:</strong> ${inv.customer} (Ph: ${inv.phone})<br/><strong>Site:</strong> ${inv.address} | <strong>Vehicle:</strong> ${inv.vehicle}</p>
-  <table><thead><tr><th>S.No</th><th>Material Description</th><th class="text-right">Qty</th>${!isChallan ? '<th class="text-right">Rate</th><th class="text-right">Amount</th>' : ''}</tr></thead>
+  const labels = currentLang === "HI" ? {
+    titleInv: "कर चालान / टैक्स इनवॉइस",
+    titleChallan: "डिलीवरी चालान",
+    billedTo: "खरीदार (Billed To):",
+    site: "साइट:",
+    vehicle: "गाड़ी:",
+    sno: "क्र.",
+    desc: "सामग्री का विवरण",
+    qty: "मात्रा",
+    rate: "रेट",
+    amt: "राशि",
+    subtotal: "उप-योग",
+    gstLbl: "जीएसटी (18%)",
+    freightLbl: "भाड़ा (Freight)",
+    grandTotal: "कुल योग (Grand Total)",
+    bankLbl: "बैंक खाता:",
+    recvSign: "प्राप्तकर्ता के हस्ताक्षर",
+    authSign: "प्राधिकृत हस्ताक्षरकर्ता"
+  } : currentLang === "TE" ? {
+    titleInv: "టాక్స్ ఇన్వాయిస్",
+    titleChallan: "డెలివరీ చలాన్",
+    billedTo: "కొనుగోలుదారు:",
+    site: "సైట్:",
+    vehicle: "వాహనం:",
+    sno: "వ.సంఖ్య",
+    desc: "సామాగ్రి వివరాలు",
+    qty: "పరిమాణం",
+    rate: "రేట్",
+    amt: "మొత్తం",
+    subtotal: "ఉప మొత్తం",
+    gstLbl: "GST (18%)",
+    freightLbl: "ఫ్రైట్ (రవాణా)",
+    grandTotal: "గ్రాండ్ టోటల్",
+    bankLbl: "బ్యాంక్ ఖాతా:",
+    recvSign: "స్వీకర్త సంతకం",
+    authSign: "అధికారిక సంతకం"
+  } : {
+    titleInv: "TAX INVOICE",
+    titleChallan: "DELIVERY CHALLAN",
+    billedTo: "Billed To:",
+    site: "Site:",
+    vehicle: "Vehicle:",
+    sno: "S.No",
+    desc: "Material Description",
+    qty: "Qty",
+    rate: "Rate",
+    amt: "Amount",
+    subtotal: "Subtotal",
+    gstLbl: "GST (18%)",
+    freightLbl: "Freight",
+    grandTotal: "GRAND TOTAL",
+    bankLbl: "Bank Account:",
+    recvSign: "Receiver Signature",
+    authSign: "Authorized Signatory"
+  };
+
+  const html = `<!doctype html><html><head><meta charset="utf-8"/><title>${isChallan ? labels.titleChallan : labels.titleInv} - ${inv.id}</title><style>body { font-family: Arial, sans-serif; padding: 20px; color: #111; max-width: 800px; margin: auto; } .header { border-bottom: 3px solid #ea580c; padding-bottom: 10px; display: flex; justify-content: space-between; } table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 13px; } th, td { border: 1px solid #cbd5e1; padding: 8px; text-align: left; } th { background: #0A1931; color: #fff; } .text-right { text-align: right; }</style></head><body>
+  <div class="header"><div><h1 style="margin:0; color:#0A1931;">${profile.name}</h1><div>Wholesale Building Materials Supply — ${profile.address}</div><div>GSTIN: <b>${profile.gstin}</b> · Ph: ${CFG.phone}</div></div><div style="text-align:right;"><strong>${isChallan ? labels.titleChallan : labels.titleInv}</strong><br/>No: ${inv.id}<br/>Date: ${new Date(inv.date).toLocaleDateString('en-IN')}</div></div>
+  <p><strong>${labels.billedTo}</strong> ${inv.customer} (Ph: ${inv.phone})<br/><strong>${labels.site}</strong> ${inv.address} | <strong>${labels.vehicle}</strong> ${inv.vehicle}</p>
+  <table><thead><tr><th>${labels.sno}</th><th>${labels.desc}</th><th class="text-right">${labels.qty}</th>${!isChallan ? `<th class="text-right">${labels.rate}</th><th class="text-right">${labels.amt}</th>` : ''}</tr></thead>
   <tbody>${inv.items.map((it, i)=>`<tr><td>${i+1}</td><td>${it.n}</td><td class="text-right"><strong>${it.q} ${it.u}</strong></td>${!isChallan ? `<td class="text-right">₹${it.p}</td><td class="text-right">₹${it.q*it.p}</td>` : ''}</tr>`).join('')}
-  ${!isChallan ? `<tr style="font-weight:bold;"><td colspan="4" class="text-right">Subtotal</td><td class="text-right">₹${taxable.toFixed(2)}</td></tr><tr><td colspan="4" class="text-right">GST (18%)</td><td class="text-right">₹${gst.toFixed(2)}</td></tr>${freight>0?`<tr><td colspan="4" class="text-right" style="color:#ea580c;">Freight (भाड़ा)</td><td class="text-right" style="color:#ea580c;">+₹${freight.toFixed(2)}</td></tr>`:''}<tr style="font-size:15px; color:#ea580c; font-weight:900;"><td colspan="4" class="text-right">GRAND TOTAL</td><td class="text-right">₹${grand}.00</td></tr>` : ''}
+  ${!isChallan ? `<tr style="font-weight:bold;"><td colspan="4" class="text-right">${labels.subtotal}</td><td class="text-right">₹${taxable.toFixed(2)}</td></tr><tr><td colspan="4" class="text-right">${labels.gstLbl}</td><td class="text-right">₹${gst.toFixed(2)}</td></tr>${freight>0?`<tr><td colspan="4" class="text-right" style="color:#ea580c;">${labels.freightLbl}</td><td class="text-right" style="color:#ea580c;">+₹${freight.toFixed(2)}</td></tr>`:''}<tr style="font-size:15px; color:#ea580c; font-weight:900;"><td colspan="4" class="text-right">${labels.grandTotal}</td><td class="text-right">₹${grand}.00</td></tr>` : ''}
   </tbody></table>
-  ${!isChallan ? `<div style="margin-top:15px; font-size:12px; background:#f8fafc; padding:10px; border:1px solid #cbd5e1;">Bank: <b>${bank.bankName}</b> | A/c: <b>${bank.accNo}</b> | IFSC: <b>${bank.ifsc}</b> | UPI: <b>${getUPI()}</b></div>` : ''}
-  <div style="margin-top:30px; display:flex; justify-content:space-between; font-size:12px;"><div>Receiver Sign</div><div style="text-align:right;">For <b>AS ENTERPRISES</b><br/><br/>Authorized Signatory</div></div>
+  ${!isChallan ? `<div style="margin-top:15px; font-size:12px; background:#f8fafc; padding:10px; border:1px solid #cbd5e1;">${labels.bankLbl} <b>${bank.bankName}</b> | A/c: <b>${bank.accNo}</b> | IFSC: <b>${bank.ifsc}</b> | UPI: <b>${getUPI()}</b></div>` : ''}
+  <div style="margin-top:30px; display:flex; justify-content:space-between; font-size:12px;"><div>${labels.recvSign}</div><div style="text-align:right;">For <b>${profile.name}</b><br/><br/>${labels.authSign}</div></div>
   </body></html>`;
 
   const blob = new Blob([html], { type: 'text/html;charset=utf-8' });
@@ -663,11 +739,11 @@ function printTaxInvoiceDocument(inv, isChallan = false, currentBank = DEFAULT_B
   if (win) win.focus();
 }
 
-function printCustomerStatement(customerName, entries) {
+function printCustomerStatement(customerName, entries, currentLang = "EN") {
   const custEntries = entries.filter(e => e.customer.toLowerCase().trim() === customerName.toLowerCase().trim());
   const balance = custEntries.reduce((s, l) => s + (l.type === 'credit' ? l.amt : -l.amt), 0);
-  const html = `<!doctype html><html><head><meta charset="utf-8"/><title>Khata - ${customerName}</title><style>body { font-family: Arial; padding: 20px; max-width:800px; margin:auto; } table { width:100%; border-collapse:collapse; margin-top:15px; font-size:13px; } th,td { border:1px solid #cbd5e1; padding:8px; text-align:left; } th { background:#0A1931; color:#fff; }</style></head><body>
-  <h2>AS ENTERPRISES - Khata Statement: ${customerName}</h2>
+  const html = `<!doctype html><html><head><meta charset="utf-8"/><title>Khata Statement - ${customerName}</title><style>body { font-family: Arial; padding: 20px; max-width:800px; margin:auto; } table { width:100%; border-collapse:collapse; margin-top:15px; font-size:13px; } th,td { border:1px solid #cbd5e1; padding:8px; text-align:left; } th { background:#0A1931; color:#fff; }</style></head><body>
+  <h2>${CFG.brand} - Khata Statement: ${customerName}</h2>
   <table><thead><tr><th>Date</th><th>Note</th><th style="text-align:right;">Debit (जमा)</th><th style="text-align:right;">Credit (उधारी)</th></tr></thead>
   <tbody>${custEntries.map(e=>`<tr><td>${new Date(e.date).toLocaleDateString()}</td><td>${e.note||''}</td><td style="text-align:right; color:#16a34a;">${e.type==='debit'?'₹'+e.amt:'-'}</td><td style="text-align:right; color:#dc2626;">${e.type==='credit'?'₹'+e.amt:'-'}</td></tr>`).join('')}</tbody></table>
   <h3>Closing Balance: ₹${Math.abs(balance)} ${balance>=0?'(Due to Receive)':'(Advance)'}</h3></body></html>`;
@@ -675,7 +751,7 @@ function printCustomerStatement(customerName, entries) {
   if (win) win.focus();
 }
 
-function OrdersScreen({ t, orders, setOrders, upi, bankInfo }) {
+function OrdersScreen({ t, orders, setOrders, upi, bankInfo, lang }) {
   if (orders.length === 0) return <div className="bg-white border-2 border-stone-200 rounded-2xl p-12 text-center text-stone-500 font-bold">{t.noord}</div>;
   return (
     <div className="space-y-4">
@@ -684,7 +760,7 @@ function OrdersScreen({ t, orders, setOrders, upi, bankInfo }) {
         <div key={o.id} className="bg-white border-2 border-stone-200 rounded-2xl p-4">
           <div className="flex justify-between font-bold text-sm"><span>{o.id} - {o.user}</span><span>₹{o.total}</span></div>
           <div className="text-xs text-stone-600 mt-1">{o.address}</div>
-          <button onClick={() => printTaxInvoiceDocument(o, false, bankInfo)} className="mt-3 bg-stone-900 text-white text-xs font-bold py-2 px-4 rounded-full">Print Tax Invoice</button>
+          <button onClick={() => printTaxInvoiceDocument(o, false, bankInfo, lang)} className="mt-3 bg-stone-900 text-white text-xs font-bold py-2 px-4 rounded-full">Print Tax Invoice</button>
         </div>
       ))}
     </div>
@@ -702,7 +778,7 @@ function TrackerScreen({ t }) {
   );
 }
 
-function KhataScreen({ t, ledger, setLedger, upi, bankInfo }) {
+function KhataScreen({ t, ledger, setLedger, upi, bankInfo, lang }) {
   const [customer, setCustomer] = useState("");
   const [phone, setPhone] = useState("");
   const [amt, setAmt] = useState("");
@@ -747,7 +823,7 @@ function KhataScreen({ t, ledger, setLedger, upi, bankInfo }) {
             <div className="flex items-center gap-2">
               <span className={`font-black ${l.type==='credit'?'text-emerald-700':'text-red-700'}`}>{l.type==='credit'?'+':'-'}₹{l.amt}</span>
               <button onClick={()=>sendWhatsAppReminder(l)} className="px-2.5 py-1 bg-green-600 text-white rounded text-xs font-bold flex items-center gap-1"><MessageCircle size={12}/> Remind</button>
-              <button onClick={()=>printCustomerStatement(l.customer, ledger)} className="px-2 py-1 bg-stone-100 rounded text-xs font-bold">Statement</button>
+              <button onClick={()=>printCustomerStatement(l.customer, ledger, lang)} className="px-2 py-1 bg-stone-100 rounded text-xs font-bold">Statement</button>
               <button onClick={()=>setLedger(ledger.filter(x=>x.id!==l.id))} className="text-red-500"><Trash2 size={14}/></button>
             </div>
           </div>
@@ -818,14 +894,16 @@ function AdminScreen({
   workers, setWorkers, customers, setCustomers,
   expenses, setExpenses, setHeroImg, setHeroTxt, heroImg, heroTxt,
   invoices, setInvoices, ledger, setLedger,
-  bankInfo, setBankInfo
+  bankInfo, setBankInfo, lang
 }) {
   const [pin, setPin] = useState("");
+  const [adminEmailInput, setAdminEmailInput] = useState("");
   const [tab, setTab] = useState("invoice_maker");
   const [newUpi, setNewUpi] = useState(upi);
-  const [newProd, setNewProd] = useState({ n:"", b:"", p:"", u:"प्रति किलो", cat:"tmt", stock:500, img:"", moq:10 });
+  const [newProd, setNewProd] = useState({ n:"", b:"", p:"", u:"per kg", cat:"tmt", stock:500, img:"", moq:10 });
   const [editBank, setEditBank] = useState({ ...bankInfo });
 
+  const [selectedProfileId, setSelectedProfileId] = useState(MULTI_GST_PROFILES[0].id);
   const [invCust, setInvCust] = useState("");
   const [invPhone, setInvPhone] = useState("");
   const [invAddress, setInvAddress] = useState("");
@@ -838,7 +916,7 @@ function AdminScreen({
   const [signatureData, setSignatureData] = useState("");
 
   const [billItems, setBillItems] = useState([
-    { n: products[0]?.n || "सरिया 12 MM (SAIL)", b: products[0]?.b || "SAIL", q: 50, p: products[0]?.p || 60, u: "किलो" }
+    { n: products[0]?.n || "Sariya 12 MM (SAIL)", b: products[0]?.b || "SAIL", q: 50, p: products[0]?.p || 60, u: "kg" }
   ]);
 
   const customerPreviousDue = useMemo(() => {
@@ -848,7 +926,34 @@ function AdminScreen({
   }, [invCust, ledger]);
 
   if (!unlocked) return (
-    <div className="max-w-md mx-auto"><div className="bg-white border-2 border-orange-500 rounded-2xl p-6 space-y-4 text-center"><Shield size={40} className="mx-auto text-orange-600" /><h2 className="font-display font-black text-2xl">{t.pinLbl}</h2><input type="password" value={pin} onChange={e=>setPin(e.target.value)} maxLength={4} className="w-full text-center text-2xl font-black tracking-widest border-2 rounded-lg p-3 outline-none" placeholder="••••" /><button onClick={()=>{ if(pin==="6301") setUnlocked(true); else alert("Wrong PIN (6301)"); }} className="w-full bg-orange-500 text-white font-bold py-3 rounded-full">Unlock Admin</button></div></div>
+    <div className="max-w-md mx-auto">
+      <div className="bg-white border-2 border-orange-500 rounded-2xl p-6 space-y-4 text-center shadow-lg">
+        <Shield size={40} className="mx-auto text-orange-600" />
+        <h2 className="font-display font-black text-2xl">{t.pinLbl}</h2>
+        
+        <div className="space-y-3 text-left">
+          <div>
+            <label className="text-xs font-bold text-stone-600">Option 1: Admin PIN (6301)</label>
+            <input type="password" value={pin} onChange={e=>setPin(e.target.value)} maxLength={4} className="w-full text-center text-2xl font-black tracking-widest border-2 rounded-lg p-3 outline-none mt-1" placeholder="••••" />
+            <button onClick={()=>{ if(pin==="6301") setUnlocked(true); else alert("Wrong PIN (6301)"); }} className="w-full bg-stone-900 text-white font-bold py-2.5 rounded-lg mt-2 text-xs">Unlock with PIN</button>
+          </div>
+
+          <div className="border-t pt-3">
+            <label className="text-xs font-bold text-stone-600">Option 2: Secure Google Mail Login</label>
+            <input type="email" value={adminEmailInput} onChange={e=>setAdminEmailInput(e.target.value)} placeholder="Enter authorized Gmail ID" className="w-full border-2 rounded-lg p-2.5 text-xs outline-none mt-1" />
+            <button onClick={()=>{
+              if(AUTHORIZED_ADMIN_EMAILS.includes(adminEmailInput.trim().toLowerCase())) {
+                setUnlocked(true);
+              } else {
+                alert("Unauthorized Email! Only Pasha's trusted Gmail IDs are allowed.");
+              }
+            }} className="w-full bg-orange-500 text-white font-bold py-2.5 rounded-lg mt-2 text-xs flex items-center justify-center gap-1">
+              <MailIcon /> Sign in with Google Email
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 
   const syncToFirestore = async (newProds, newWrks, newBank, newCusts, newExps) => {
@@ -872,7 +977,7 @@ function AdminScreen({
     alert("Image updated!");
   };
 
-  const addBillItem = () => setBillItems([...billItems, { n: products[0]?.n || "", b: products[0]?.b || "", q: 10, p: products[0]?.p || 0, u: "किलो" }]);
+  const addBillItem = () => setBillItems([...billItems, { n: products[0]?.n || "", b: products[0]?.b || "", q: 10, p: products[0]?.p || 0, u: "kg" }]);
   const removeBillItem = (idx) => setBillItems(billItems.filter((_, i) => i !== idx));
 
   const handleCreateInvoice = (actionType) => {
@@ -886,10 +991,12 @@ function AdminScreen({
     const paidAmt = parseFloat(invPaid) || 0;
     const newDueThisBill = currentBillGrand - paidAmt;
     const totalPayableWithPrevious = currentBillGrand + (customerPreviousDue > 0 ? customerPreviousDue : 0);
+    const activeProfile = MULTI_GST_PROFILES.find(p => p.id === selectedProfileId) || MULTI_GST_PROFILES[0];
 
     const newInv = {
       id: "INV-" + Date.now().toString().slice(-6),
       date: new Date().toISOString(),
+      profileSnapshot: activeProfile,
       customer: invCust.trim(),
       phone: invPhone.trim(),
       address: invAddress.trim() || "Hyderabad Yard",
@@ -902,20 +1009,20 @@ function AdminScreen({
 
     setInvoices([newInv, ...invoices]);
     if (newDueThisBill > 0) {
-      setLedger([{ id: Date.now(), customer: invCust.trim(), phone: invPhone.trim(), amt: newDueThisBill, type: 'credit', note: `Bill #${newInv.id} Due`, date: new Date().toISOString() }, ...ledger]);
+      setLedger([{ id: Date.now(), customer: invCust.trim(), phone: invPhone.trim(), amt: newDueThisBill, type: 'credit', note: `Bill #${newInv.id} Due (${activeProfile.name})`, date: new Date().toISOString() }, ...ledger]);
     }
 
-    if (actionType === "print") printTaxInvoiceDocument(newInv, false, bankInfo);
-    else if (actionType === "challan") printTaxInvoiceDocument(newInv, true, bankInfo);
+    if (actionType === "print") printTaxInvoiceDocument(newInv, false, bankInfo, lang);
+    else if (actionType === "challan") printTaxInvoiceDocument(newInv, true, bankInfo, lang);
     else if (actionType === "wa") {
       if (!invPhone.trim()) { alert("Enter mobile number"); return; }
-      const msg = `*AS ENTERPRISES - TAX INVOICE*\nInv: ${newInv.id}\nCustomer: ${newInv.customer}\n${billItems.map(i=>`• ${i.n}: ${i.q} ${i.u} = ₹${i.q*i.p}`).join('\n')}\nGST (18%): ₹${gst.toFixed(2)}\n${freight>0?`Freight (भाड़ा): ₹${freight}\n`:''}Current Bill: ₹${currentBillGrand}\n${customerPreviousDue > 0 ? `Previous Due: ₹${customerPreviousDue}\n*Total Payable: ₹${totalPayableWithPrevious}*\n` : ''}`;
+      const msg = `*${activeProfile.name.toUpperCase()} - TAX INVOICE*\nGSTIN: ${activeProfile.gstin}\nInv: ${newInv.id}\nCustomer: ${newInv.customer}\n${billItems.map(i=>`• ${i.n}: ${i.q} ${i.u} = ₹${i.q*i.p}`).join('\n')}\nGST (18%): ₹${gst.toFixed(2)}\n${freight>0?`Freight: ₹${freight}\n`:''}Current Bill: ₹${currentBillGrand}\n${customerPreviousDue > 0 ? `Previous Due: ₹${customerPreviousDue}\n*Total Payable: ₹${totalPayableWithPrevious}*\n` : ''}`;
       window.open(`https://wa.me/91${invPhone.replace(/\D/g,'').slice(-10)}?text=${encodeURIComponent(msg)}`, '_blank');
     }
   };
 
   const TABS = [
-    { k:"invoice_maker", n:"📄 GST Bill Maker" },
+    { k:"invoice_maker", n:"📄 Multi-GST Bill Maker" },
     { k:"day_report", n:"📊 Day Report" },
     { k:"rates", n:"Inventory & Photos" },
     { k:"orders", n:"Orders" },
@@ -929,7 +1036,7 @@ function AdminScreen({
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
-        <div><h2 className="font-display font-black text-3xl">{t.admin} Dashboard</h2><span className="text-xs bg-emerald-100 text-emerald-800 font-bold px-3 py-1 rounded-full mt-1">PIN: 6301</span></div>
+        <div><h2 className="font-display font-black text-3xl">{t.admin} Dashboard</h2><span className="text-xs bg-emerald-100 text-emerald-800 font-bold px-3 py-1 rounded-full mt-1">Multi-GST Active</span></div>
         <button onClick={()=>{let m=`*RATES*\n`+products.map(p=>`• ${p.n}: ₹${p.p} ${p.u}`).join('\n'); window.open(`https://wa.me/?text=${encodeURIComponent(m)}`,'_blank');}} className="bg-green-600 text-white text-xs font-bold px-3 py-2 rounded-xl flex items-center gap-1"><Share2 size={15} /> Rate Sheet</button>
       </div>
 
@@ -939,7 +1046,15 @@ function AdminScreen({
 
       {tab === "invoice_maker" && (
         <div className="bg-white border-2 border-orange-500 rounded-2xl p-5 space-y-4 shadow-sm">
-          <div className="border-b pb-3"><h3 className="font-display font-black text-xl text-stone-900">GST Invoice with Auto-Previous Due & WhatsApp PDF</h3></div>
+          <div className="border-b pb-3 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
+            <div>
+              <h3 className="font-display font-black text-xl text-stone-900">Multi-GST Invoice Maker</h3>
+              <p className="text-xs text-stone-500">Select which Firm / Son's GST to print on this bill</p>
+            </div>
+            <select value={selectedProfileId} onChange={e => setSelectedProfileId(e.target.value)} className="border-2 border-orange-500 bg-orange-50 font-bold text-xs rounded-lg p-2">
+              {MULTI_GST_PROFILES.map(p => <option key={p.id} value={p.id}>{p.name} ({p.gstin})</option>)}
+            </select>
+          </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div><label className="text-xs font-bold text-stone-600 block mb-1">Customer / Firm Name *</label><input type="text" value={invCust} onChange={e=>setInvCust(e.target.value)} placeholder="Ramesh Builders" className="w-full border-2 rounded-lg p-2.5 text-sm outline-none" /></div>
@@ -968,15 +1083,27 @@ function AdminScreen({
                     const next = [...billItems];
                     next[idx].n = e.target.value;
                     const f = products.find(p => p.n === e.target.value);
-                    if(f){ next[idx].p = f.p; next[idx].b = f.b; next[idx].u = f.u.includes("किलो")?"किलो":"बैग"; }
+                    if(f){ next[idx].p = f.p; next[idx].b = f.b; next[idx].u = f.u.includes("kg")?"kg":"bag"; }
                     setBillItems(next);
                   }} className="w-full border rounded p-2 text-xs font-bold">{products.map(p => <option key={p.id} value={p.n}>{p.n} — ₹{p.p}</option>)}</select></div>
-                  <div className="sm:col-span-3 flex items-center gap-1"><input type="number" value={item.q} onChange={e => {const next=[...billItems]; next[idx].q = parseFloat(e.target.value)||0; setBillItems(next);}} placeholder="वज़न" className="w-full border rounded p-1.5 text-xs font-black text-orange-600 text-center" /><span className="text-xs font-bold">{item.u}</span></div>
+                  <div className="sm:col-span-3 flex items-center gap-1"><input type="number" value={item.q} onChange={e => {const next=[...billItems]; next[idx].q = parseFloat(e.target.value)||0; setBillItems(next);}} placeholder="Qty" className="w-full border rounded p-1.5 text-xs font-black text-orange-600 text-center" /><span className="text-xs font-bold">{item.u}</span></div>
                   <div className="sm:col-span-2"><input type="number" value={item.p} onChange={e => {const next=[...billItems]; next[idx].p = parseFloat(e.target.value)||0; setBillItems(next);}} placeholder="Rate" className="w-full border rounded p-1.5 text-xs font-bold" /></div>
                   <div className="sm:col-span-1 flex justify-center">{billItems.length > 1 && <button onClick={() => removeBillItem(idx)} className="text-red-500"><Trash2 size={16}/></button>}</div>
                 </div>
               </div>
             ))}
+          </div>
+
+          <div className="bg-amber-50 border border-amber-300 rounded-xl p-3 space-y-2">
+            <div className="text-xs font-bold text-amber-900 flex items-center gap-1"><span>📍</span> Distance / Auto Freight Calculator (दूरी के हिसाब से भाड़ा चुनें):</div>
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+              {DISTANCE_FREIGHT_RATES.map((df, i) => (
+                <button key={i} onClick={() => setInvFreight(df.rate.toString())} className="bg-white hover:bg-amber-100 border border-amber-300 p-2 rounded-lg text-left text-xs transition">
+                  <div className="font-bold text-stone-800">{df.area}</div>
+                  <div className="text-orange-600 font-black mt-0.5">₹{df.rate}</div>
+                </button>
+              ))}
+            </div>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
@@ -1004,7 +1131,7 @@ function AdminScreen({
               <div className="bg-orange-50 border-2 border-orange-200 rounded-xl p-3.5 text-xs space-y-1.5">
                 <div className="flex justify-between text-stone-700"><span>Current Bill Subtotal (excl. GST):</span><span className="font-bold">₹{taxable.toFixed(2)}</span></div>
                 <div className="flex justify-between text-stone-700"><span>GST Total (18%):</span><span className="font-bold">₹{gst.toFixed(2)}</span></div>
-                {freight > 0 && <div className="flex justify-between text-orange-800 font-bold"><span>Freight (भाड़ा):</span><span>+₹{freight.toFixed(2)}</span></div>}
+                {freight > 0 && <div className="flex justify-between text-orange-800 font-bold"><span>Freight:</span><span>+₹{freight.toFixed(2)}</span></div>}
                 <div className="flex justify-between text-sm font-black text-stone-900 pt-1 border-t"><span>Current Bill Grand Total:</span><span>₹{grand.toLocaleString('en-IN')}.00</span></div>
                 {customerPreviousDue > 0 && (
                   <div className="flex justify-between text-red-700 font-bold bg-red-100 p-1.5 rounded">
@@ -1061,7 +1188,7 @@ function AdminScreen({
         </div>
       )}
 
-      {tab === "orders" && <OrdersScreen t={t} orders={orders} setOrders={setOrders} upi={upi} bankInfo={bankInfo} />}
+      {tab === "orders" && <OrdersScreen t={t} orders={orders} setOrders={setOrders} upi={upi} bankInfo={bankInfo} lang={lang} />}
       
       {tab === "workers" && (
         <div className="bg-white border-2 border-stone-200 rounded-2xl p-4 space-y-4 shadow-sm">
@@ -1200,7 +1327,7 @@ function AdminScreen({
       {tab === "products" && (
         <div className="bg-white border-2 rounded-2xl p-4 space-y-3">
           <div className="text-xs uppercase font-bold">Add Material</div>
-          <input value={newProd.n} onChange={e=>setNewProd({...newProd, n:e.target.value})} placeholder="Name (सरिया 16 MM)" className="w-full border-2 rounded-lg p-2 text-sm" />
+          <input value={newProd.n} onChange={e=>setNewProd({...newProd, n:e.target.value})} placeholder="Name (Sariya 16 MM)" className="w-full border-2 rounded-lg p-2 text-sm" />
           <div className="grid grid-cols-2 gap-2"><input value={newProd.b} onChange={e=>setNewProd({...newProd, b:e.target.value})} placeholder="Brand" className="border-2 rounded-lg p-2 text-sm" /><input type="number" value={newProd.p} onChange={e=>setNewProd({...newProd, p:e.target.value})} placeholder="Price ₹" className="border-2 rounded-lg p-2 text-sm" /></div>
           <button onClick={()=>{if(newProd.n && newProd.p){setProducts([{...newProd, id:Date.now(), p:parseFloat(newProd.p), stock:500, visible:true}, ...products]); syncToFirestore([{...newProd, id:Date.now(), p:parseFloat(newProd.p), stock:500, visible:true}, ...products], workers, bankInfo, customers, expenses); alert("Added!");}}} className="w-full bg-orange-500 text-white font-bold py-2.5 rounded-full">+ Add</button>
         </div>
@@ -1242,3 +1369,7 @@ function EmiScreen() {
   const emi = Math.round((parseFloat(amt)||0) / (parseInt(m)||1));
   return (<div className="space-y-4"><h2 className="font-display font-black text-3xl">EMI Calculator</h2><div className="bg-white border-2 rounded-2xl p-5 space-y-3"><input type="number" value={amt} onChange={e=>setAmt(e.target.value)} placeholder="Amount" className="w-full border-2 rounded p-3 font-bold text-lg" /><input type="number" value={m} onChange={e=>setM(e.target.value)} placeholder="Months" className="w-full border-2 rounded p-3" /></div><div className="bg-emerald-700 text-white rounded-2xl p-6"><div className="text-xs uppercase">Monthly EMI</div><div className="font-black text-4xl mt-1">₹{emi.toLocaleString()}</div></div></div>);
 }
+
+const MailIcon = () => (
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+);
