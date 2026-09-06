@@ -144,28 +144,28 @@ export default function App() {
   const lowStock = useMemo(() => products.filter(p => p.stock < 10 && p.visible !== false), [products]);
 
   useEffect(() => {
-    try {
-      const unsub = onSnapshot(doc(db, "app_data", "main_store_v15"), (snap) => {
-        if (snap.exists()) {
-          const data = snap.data();
-          if (data.products && Array.isArray(data.products) && data.products.length > 0) {
-            setProducts(data.products);
-          }
-          if (data.workers && Array.isArray(data.workers) && data.workers.length > 0) {
-            setWorkers(data.workers);
-          }
-          if (data.bankInfo) {
-            setBankInfo(data.bankInfo);
-          }
+  try {
+    const unsub = onSnapshot(doc(db, "app_data", "main_store_v15"), (snap) => {
+      if (snap.exists()) {
+        const data = snap.data();
+        if (data.products && Array.isArray(data.products) && data.products.length > 0) {
+          setProducts(data.products);
         }
-      });
-      return () => unsub();
-    } catch (err) {
-      console.error("Firestore sync error:", err);
-    }
-  }, []);
+        if (data.bankInfo) {
+          setBankInfo(data.bankInfo);
+        }
+      }
+    });
+    
+    return () => unsub();
+  } catch (err) {
+    console.error("Firestore sync error:", err);
+  }
+}, []);
+
 
   useEffect(() => ls.set("lang", lang), [lang]);
+
   useEffect(() => ls.set("cart", cart), [cart]);
   useEffect(() => ls.set("myOrders", orders), [orders]);
   useEffect(() => ls.set("ledger", ledger), [ledger]);
