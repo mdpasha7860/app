@@ -80,9 +80,11 @@ const DEFAULT_WORKERS = [
   { id: 7, role: "Welder / Fabricator", name: "Sheikh Ali", rate: 800, phone: "916301456725", icon: "🛠️", exp: "9 yrs", area: "Hyderabad" },
   { id: 8, role: "Tiles Mistri", name: "Laxman Kumar", rate: 900, phone: "916301456725", icon: "🔲", exp: "11 yrs", area: "Secunderabad" },
   { id: 9, role: "General Helper / Mazdoor", name: "Shankar Lal", rate: 500, phone: "916301456725", icon: "💪", exp: "5 yrs", area: "Hyderabad" },
-  { id: 10, role: "Boring / Borewell Tech", name: "Venkatesh G.", rate: 1200, phone: "916301456725", icon: "💧", exp: "15 yrs", area: "Telangana" }
+  { id: 10, role: "Boring / Borewell Tech", name: "Venkatesh G.", rate: 1200, phone: "916301456725", icon: "💧", exp: "15 yrs", area: "Telangana" },
+  { id: 11, role: "Waterproofing Expert", name: "Rasheed Khan", rate: 950, phone: "916301456725", icon: "🛡️", exp: "10 yrs", area: "Hyderabad" },
+  { id: 12, role: "Interior Designer", name: "Pooja Mehta", rate: 1400, phone: "916301456725", icon: "🏠", exp: "8 yrs", area: "Secunderabad" },
+  { id: 13, role: "JCB & Earthmover Rental", name: "Fleet Owner (Friends)", rate: 2200, phone: "916301456725", icon: "🚜", exp: "Available Daily/Shift", area: "Hyderabad & Telangana" }
 ];
-
 
 const fileToDataURL = (file) => new Promise((res, rej) => {
   const r = new FileReader();
