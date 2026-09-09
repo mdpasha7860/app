@@ -22,9 +22,6 @@ const firebaseConfig = {
   appId: "1:667179272592:web:56a95a9dfdb108bdee8b15"
 };
 
-const firebaseApp = initializeApp(firebaseConfig);
-const db = getFirestore(firebaseApp);
-
 const CFG = {
   phone: "+91 6301456725",
   wa: "916301456725",
@@ -147,6 +144,68 @@ export default function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [dark, setDark] = useState(ls.get("dark", false));
   const t = T[lang];
+
+  // 1. Firebase se Items aur Orders ko Live Load karne ke liye
+  useEffect(() => {
+    const unsubItems = onSnapshot(doc(db, "shop_data", "items"), (docSnap) => {
+      if (docSnap.exists()) {
+        setItems(docSnap.data().list || []);
+      }
+    });
+
+    const unsubOrders = onSnapshot(doc(db, "shop_data", "orders"), (docSnap) => {
+      if (docSnap.exists()) {
+        setOrders(docSnap.data().list || []);
+      }
+    });
+
+    return () => {
+      unsubItems();
+      unsubOrders();
+    };
+  }, []);
+
+  // 2. Customer ka Order Firebase par Save karne ka Code
+  const placeOrder = async (payment, address) => {
+    try {
+      const order = {
+        id: "ORD" + Date.now(),
+        items: cart, 
+        total: cartTotal, 
+        payment, 
+        address,
+        date: new Date().toISOString(),
+        status: "Pending",
+        user: user?.name || user?.mobile || "Guest",
+        loyalty: Math.floor(cartTotal / 100)
+      };
+
+      const updatedOrders = [order, ...orders];
+      await setDoc(doc(db, "shop_data", "orders"), { list: updatedOrders });
+
+      setOrders(updatedOrders);
+      setCart([]);
+
+      const msg = `*NEW ORDER - AS ENTERPRISES*%0AOrder ID: ${order.id}%0A${cart.map(x => `• ${x.n} x ${x.q} ${x.u} = Rs.${x.p*x.q}`).join('%0A')}%0A*Total: Rs.${cartTotal}*%0APayment: ${payment}%0AAddress: ${address}%0A%0A_Terms Accepted: Unloading customer side, cement/steel non-returnable._`;
+      window.open(`https://wa.me/${CFG.wa}?text=${msg}`, "_blank");
+      go("orders");
+
+    } catch (e) { 
+      console.error(e); 
+      alert("Order failed. Call " + CFG.phone); 
+    }
+  };
+
+  // 3. Admin jab item ya photo add kare toh Firebase par save karne ka function
+  const saveItemTool = async (updatedItemsList) => {
+    try {
+      await setDoc(doc(db, "shop_data", "items"), { list: updatedItemsList });
+      setItems(updatedItemsList);
+    } catch (e) {
+      console.error("Error saving item:", e);
+    }
+  };
+
 
   const cartTotal = useMemo(() => cart.reduce((s, x) => s + x.p * x.q, 0), [cart]);
 
