@@ -180,7 +180,8 @@ export default function App() {
         loyalty: Math.floor(cartTotal / 100)
       };
 
-      const updatedOrders = [order, ...orders];
+      const updatedOrders = [order, ...(orders || [])];
+
       await setDoc(doc(db, "shop_data", "orders"), { list: updatedOrders });
 
       setOrders(updatedOrders);
