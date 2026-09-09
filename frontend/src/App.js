@@ -238,8 +238,11 @@ export default function App() {
         user: user?.name || user?.mobile || "Guest",
         loyalty: Math.floor(cartTotal / 100)
       };
-      setOrders([order, ...orders]);
+            const updatedOrders = [order, ...orders];
+      setOrders(updatedOrders);
+      localStorage.setItem('as_orders', JSON.stringify(updatedOrders));
       setCart([]);
+
       const msg = `*NEW ORDER - AS ENTERPRISES*%0AOrder ID: ${order.id}%0A${cart.map(x => `• ${x.n} x ${x.q} ${x.u} = Rs.${x.p*x.q}`).join('%0A')}%0A*Total: Rs.${cartTotal}*%0APayment: ${payment}%0AAddress: ${address}%0A%0A_Terms Accepted: Unloading customer side, cement/steel non-returnable._`;
       window.open(`https://wa.me/${CFG.wa}?text=${msg}`, "_blank");
       go("orders");
