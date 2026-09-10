@@ -70,7 +70,7 @@ const getHeadline = () => localStorage.getItem("bannerText") || "";
 const T = {
   EN: { b:"Build Stronger. Order Smarter.", c:"Cart", s:"Same-Day Delivery", w:"Wholesale Khata", g:"Brand Catalog", f:"Free Estimate", zip:"Download Full Site Backup", home:"Home", search:"Search Sariya, Cement, Sand, Bricks...", login:"Login", logout:"Logout", orders:"My Orders", admin:"Admin", call:"Call Now", wa:"WhatsApp", cart:"Cart", buy:"Add to Cart", total:"Total", checkout:"Place Order", address:"Delivery Address", cod:"Cash on Delivery", upi:"Pay via UPI", confirm:"Confirm Order", noResults:"No materials found. Add inventory from Admin Panel.", tracker:"Live Order Tracker", khata:"Wholesale Khata", catalog:"Brand Catalog", estimator:"Estimate Calculator", welcome:"Welcome", mobile:"Mobile Number", otp:"Enter OTP", sendOtp:"Send OTP", verify:"Verify & Login", pinLbl:"Admin Access", changeUpi:"Change UPI ID", currentUpi:"Current UPI", saveUpi:"Save UPI", zipInfo:"Full backup file", qty:"Qty (Weight)", stock:"In Stock", cat:"Category", all:"All", tmt:"Sariya (TMT)", cement:"Cement", sand:"Sand & Aggregate", brick:"Bricks", tools:"Tools", empty:"Cart is empty", noord:"No orders yet", ordid:"Order", status:"Status", pending:"Pending", scan:"Scan QR to Pay", payto:"Pay to", est:"Enter dimensions to estimate", len:"Length (ft)", wid:"Width (ft)", ht:"Height (ft)", need:"You need approx", bags:"bags of Cement", tons:"tons of Sariya", cft:"cft of Sand", bricks:"Bricks (approx)", calc:"Calculate", ledger:"Ledger", customer:"Customer", amt:"Amount", add:"Add Entry", credit:"Credit", debit:"Debit", note:"Note", del:"Delete", eta:"ETA Today", driver:"Driver", low:"LOW STOCK", tick:"★ Same-Day Delivery Across Hyderabad • Wholesale Rates • Genuine Brands • Instant WhatsApp Estimates ★" },
   HI: { b:"मजबूत बनाएं। स्मार्ट ऑर्डर करें।", c:"टोकरी", s:"आज डिलीवरी", w:"थोक खाता", g:"ब्रांड कैटलॉग", f:"फ्री एस्टीमेट", zip:"साइट बैकअप डाउनलोड करें", home:"होम", search:"सरिया, सीमेंट, रेत, ईंट खोजें...", login:"लॉगिन", logout:"लॉगआउट", orders:"मेरे ऑर्डर", admin:"एडमिन", call:"कॉल करें", wa:"व्हाट्सएप", cart:"टोकरी", buy:"जोड़ें", total:"कुल", checkout:"ऑर्डर करें", address:"पता", cod:"कैश ऑन डिलीवरी", upi:"UPI से भुगतान", confirm:"पुष्टि करें", noResults:"सामान नहीं मिला। एडमिन पैनल से स्टॉक जोड़ें।", tracker:"लाइव ऑर्डर ट्रैकर", khata:"थोक खाता", catalog:"ब्रांड कैटलॉग", estimator:"अनुमान कैलकुलेटर", welcome:"स्वागत है", mobile:"मोबाइल नंबर", otp:"OTP दर्ज करें", sendOtp:"OTP भेजें", verify:"वेरीफाई करें", pinLbl:"एडमिन एक्सेस", changeUpi:"UPI बदलें", currentUpi:"मौजूदा UPI", saveUpi:"UPI सेव करें", zipInfo:"पूरा बैकअप", qty:"वज़न (किलो / बैग)", stock:"स्टॉक में", cat:"श्रेणी", all:"सभी", tmt:"सरिया (TMT)", cement:"सीमेंट", sand:"रेत/गिट्टी", brick:"ईंट", tools:"औजार", empty:"टोकरी खाली", noord:"कोई ऑर्डर नहीं", ordid:"ऑर्डर", status:"स्थिति", pending:"लंबित", scan:"QR स्कैन करें", payto:"भुगतान", est:"माप डालें", len:"लंबाई (फीट)", wid:"चौड़ाई (फीट)", ht:"ऊंचाई (फीट)", need:"आपको चाहिए", bags:"सीमेंट बैग", tons:"टन सरिया", cft:"cft रेत", bricks:"ईंटें", calc:"गणना करें", ledger:"बही", customer:"ग्राहक", amt:"राशि", add:"जोड़ें", credit:"जमा", debit:"नाम", note:"नोट", del:"हटाएं", eta:"आज पहुंचेगा", driver:"ड्राइवर", low:"स्टॉक कम", tick:"★ हैदराबाद में आज ही डिलीवरी • थोक रेट • असली ब्रांड • इंस्टेंट व्हाट्सएप एस्टीमेट ★" },
-  TE: { b:"బలంగా నిర్మించండి. తెలివిగా ఆర్డర్ చేయండి.", c:"బుట్ట", s:"ఈరోజే డెలివరీ", w:"హోల్‌సేల్ ఖాతా", g:"బ్రాండ్ కేటలాగ్", f:"ఉచిత అంచనా", zip:"బ్యాకప్ డౌన్‌లోడ్", home:"హోమ్", search:"సరియా, సిమెంట్, ఇసుక, ఇటుకలు...", login:"లాగిన్", logout:"లాగౌట్", orders:"నా ఆర్డర్లు", admin:"అడ్మిన్", call:"కాల్ చేయండి", wa:"వాట్సాప్", cart:"బుట్ట", buy:"జోడించు", మొత్తం:"మొత్తం", checkout:"ఆర్డర్ చేయండి", address:"చిరునామా", cod:"క్యాష్ ఆన్ డెలివరీ", upi:"UPI చెల్లింపు", confirm:"నిర్ధారించండి", noResults:"సరుకులు లేవు. అడ్మిన్ ప్యానెల్ నుండి జోడించండి.", tracker:"లైవ్ ఆర్డర్ ట్రాకర్", khata:"హోల్‌సేల్ ఖాతా", catalog:"బ్రాండ్ కేటలాగ్", estimator:"అంచనా కాలిక్యులేటర్", welcome:"స్వాగతం", mobile:"మొబైల్ నంబర్", otp:"OTP నమోదు", sendOtp:"OTP పంపండి", verify:"వెరిఫై చేయండి", pinLbl:"అడ్మిన్ యాక్సెస్", changeUpi:"UPI మార్చండి", currentUpi:"ప్రస్తుత UPI", saveUpi:"UPI సేవ్ చేయండి", zipInfo:"పూర్తి బ్యాకప్", qty:"పరిమాణం (కిలోలు)", stock:"స్టాక్‌లో", cat:"వర్గం", all:"అన్నీ", tmt:"సరియా (TMT)", cement:"సిమెంట్", sand:"ఇసుక/కంకర", brick:"ఇటుకలు", tools:"పరికరాలు", empty:"బుట్ట ఖాళీ", noord:"ఆర్డర్లు లేవు", ordid:"ఆర్డర్", status:"స్థితి", pending:"పెండింగ్", scan:"QR స్కాన్ చేయండి", payto:"చెల్లింపు", est:"కొలతలు ఇవ్వండి", len:"పొడవు (అడుగు)", wid:"వెడల్పు (అడుగు)", ht:"ఎత్తు (అడుగు)", need:"కావాలి", bags:"సిమెంట్ బస్తాలు", tons:"టన్నుల సరియా", cft:"cft ఇసుక", bricks:"ఇటుకలు", calc:"లెక్కించండి", ledger:"లెడ్జర్", customer:"కస్టమర్", amt:"మొత్తం", add:"జోడించు", credit:"క్రెడిట్", debit:"డెబిట్", note:"నోట్", del:"తొలగించు", eta:"ఈరోజు", driver:"డ్రైवर", low:"స్టాక్ తక్కువ", tick:"★ హైదరాబాద్‌లో ఈరోజే డెలివరీ • హోల్‌సేల్ రేట్లు • అసలైన బ్రాండ్ • తక్షణ వాట్సాప్ అంచనా ★" }
+  TE: { b:"బలంగా నిర్మించండి. తెలివిగా ఆర్డర్ చేయండి.", c:"బుట్ట", s:"ఈరోజే డెలివరీ", w:"హోల్‌సేల్ ఖాతా", g:"బ్రాండ్ కేటలాగ్", f:"ఉచిత అంచనా", zip:"బ్యాకప్ డౌన్‌లోడ్", home:"హోమ్", search:"సరియా, సిమెంట్, ఇసుక, ఇటుకలు...", login:"లాగిన్", logout:"లాగౌట్", orders:"నా ఆర్డర్లు", admin:"అడ్మిన్", call:"కాల్ చేయండి", wa:"వాట్సాప్", cart:"బుట్ట", buy:"జోడించు", మొత్తం:"మొత్తం", checkout:"ఆర్డర్ చేయండి", address:"చిరునామా", cod:"క్యాష్ ఆన్ డెలివరీ", upi:"UPI చెల్లింపు", confirm:"నిర్ధారించండి", noResults:"సరుకులు లేవు. అడ్మిన్ ప్యానెల్ నుండి జోడించండి.", tracker:"లైవ్ ఆర్డర్ ట్రాకర్", khata:"హోల్‌సేల్ ఖాతా", catalog:"బ్రాండ్ కేటలాగ్", estimator:"అంచనా కాలిక్యులేటర్", welcome:"స్వాగతం", mobile:"మొబైల్ నంబర్", otp:"OTP నమోదు", sendOtp:"OTP పంపండి", verify:"వెరిఫై చేయండి", pinLbl:"అడ్మిన్ యాక్సెస్", changeUpi:"UPI మార్చండి", currentUpi:"ప్రస్తుత UPI", saveUpi:"UPI సేవ్ చేయండి", zipInfo:"పూర్తి బ్యాకప్", qty:"పరిమాణం (కిలోలు)", stock:"స్టాక్‌లో", cat:"వర్గం", all:"అన్నీ", tmt:"సరియా (TMT)", cement:"సిమెంట్", sand:"ఇసుక/కంకర", brick:"ఇటుకలు", tools:"పరికరాలు", empty:"బుట్ట ఖాళీ", noord:"ఆర్డర్లు లేవు", ordid:"ఆర్డర్", status:"స్థితి", pending:"పెండింగ్", scan:"QR స్కాన్ చేయండి", payto:"చెల్లింపు", est:"కొలతలు ఇవ్వండి", len:"పొడవు (అడుగు)", wid:"వెడల్పు (అడుగు)", ht:"ఎత్తు (అడుగు)", need:"కావాలి", bags:"సిమెంట్ బస్తాలు", tons:"టన్నుల సరియా", cft:"cft ఇసుక", bricks:"ఇటుకలు", calc:"లెక్కించండి", ledger:"లెడ్జర్", customer:"కస్టమర్", amt:"మొత్తం", add:"జోడించు", credit:"క్రెడిట్", debit:"డెబిట్", note:"నోట్", del:"తొలగించు", eta:"ఈరోజు", driver:"డ్రाइवर", low:"స్టాక్ తక్కువ", tick:"★ హైదరాబాద్‌లో ఈరోజే డెలివరీ • హోల్‌సేల్ రేట్లు • అసలైన బ్రాండ్ • తక్షణ వాట్సాప్ అంచనా ★" }
 };
 
 const MAP = { sariya:'tmt', saria:'tmt', steel:'tmt', rod:'tmt', tmt:'tmt', cement:'cement', simenti:'cement', ppc:'cement', opc:'cement', ret:'sand', balu:'sand', sand:'sand', isuka:'sand', metal:'sand', aggregate:'sand', gitti:'sand', brick:'brick', eent:'brick', itukalu:'brick', block:'brick', wire:'tools', tool:'tools' };
@@ -1039,7 +1039,6 @@ function AdminScreen({
     } catch (e) { console.error("Sync error:", e); }
   };
 
-  // ✅ Fixed Image Compression & Persistent Cloud Upload Function
   const handleProductImageUpload = async (productId, file) => {
     if (!file) return;
     const reader = new FileReader();
@@ -1077,7 +1076,7 @@ function AdminScreen({
     reader.readAsDataURL(file);
   };
 
-  const addBillItem = () => setBillItems([...billItems, { n: products[0]?.n || "Sariya", b: products[0]?.b || "SAIL", q: 10, p: products[0]?.p || 60, u: "kg" }]);
+  const addBillItem = () => setBillItems([...billItems, { n: "", b: "Standard", q: 10, p: 0, u: "kg" }]);
   const removeBillItem = (idx) => setBillItems(billItems.filter((_, i) => i !== idx));
 
   const handleCreateInvoice = (actionType) => {
@@ -1182,21 +1181,65 @@ function AdminScreen({
             <div><label className="text-xs font-bold text-stone-600 block mb-1">E-Way Bill No (&gt; ₹50k)</label><input type="text" value={invEway} onChange={e=>setInvEway(e.target.value)} placeholder="Optional" className="w-full border-2 rounded-lg p-2 text-sm font-bold" /></div>
           </div>
 
+          {/* ✅ FIXED: Manual typing input option added for Sariya, Cement, Bricks or any item */}
           <div className="space-y-2 border rounded-xl p-3 bg-stone-50">
-            <div className="flex justify-between items-center mb-1"><label className="text-xs font-black text-stone-700 uppercase">Materials on Bill</label><button type="button" onClick={addBillItem} className="bg-orange-500 text-white font-bold text-xs px-3 py-1 rounded-lg">+ Add Item</button></div>
+            <div className="flex justify-between items-center mb-1">
+              <label className="text-xs font-black text-stone-700 uppercase">Materials on Bill (टाइप करके या सेलेक्ट करें)</label>
+              <button type="button" onClick={addBillItem} className="bg-orange-500 text-white font-bold text-xs px-3 py-1 rounded-lg">+ Add Item</button>
+            </div>
             {billItems.map((item, idx) => (
-              <div key={idx} className="bg-white p-2.5 rounded-lg border">
+              <div key={idx} className="bg-white p-2.5 rounded-lg border shadow-sm">
                 <div className="grid grid-cols-1 sm:grid-cols-12 gap-2 items-center">
-                  <div className="sm:col-span-6"><select value={item.n} onChange={e => {
-                    const next = [...billItems];
-                    next[idx].n = e.target.value;
-                    const f = products.find(p => p.n === e.target.value);
-                    if(f){ next[idx].p = f.p; next[idx].b = f.b; next[idx].u = f.u.includes("kg")?"kg":"bag"; }
-                    setBillItems(next);
-                  }} className="w-full border rounded p-2 text-xs font-bold">{products.map(p => <option key={p.id} value={p.n}>{p.n} — ₹{p.p}</option>)}</select></div>
-                  <div className="sm:col-span-3 flex items-center gap-1"><input type="number" value={item.q} onChange={e => {const next=[...billItems]; next[idx].q = parseFloat(e.target.value)||0; setBillItems(next);}} placeholder="Qty" className="w-full border rounded p-1.5 text-xs font-black text-orange-600 text-center" /><span className="text-xs font-bold">{item.u}</span></div>
-                  <div className="sm:col-span-2"><input type="number" value={item.p} onChange={e => {const next=[...billItems]; next[idx].p = parseFloat(e.target.value)||0; setBillItems(next);}} placeholder="Rate" className="w-full border rounded p-1.5 text-xs font-bold" /></div>
-                  <div className="sm:col-span-1 flex justify-center">{billItems.length > 1 && <button onClick={() => removeBillItem(idx)} className="text-red-500"><Trash2 size={16}/></button>}</div>
+                  <div className="sm:col-span-5 space-y-1">
+                    <input 
+                      type="text" 
+                      value={item.n} 
+                      onChange={e => {
+                        const next = [...billItems];
+                        next[idx].n = e.target.value;
+                        setBillItems(next);
+                      }} 
+                      placeholder="Item Name (e.g. Sariya, Cement, Bricks)" 
+                      className="w-full border rounded p-1.5 text-xs font-bold bg-white"
+                    />
+                    <select 
+                      onChange={e => {
+                        if(!e.target.value) return;
+                        const next = [...billItems];
+                        next[idx].n = e.target.value;
+                        const f = products.find(p => p.n === e.target.value);
+                        if(f){ 
+                          next[idx].p = f.p; 
+                          next[idx].b = f.b; 
+                          next[idx].u = f.u.includes("kg") ? "kg" : f.u.includes("bag") ? "bag" : "pcs"; 
+                        }
+                        setBillItems(next);
+                      }} 
+                      className="w-full border rounded p-1 text-[11px] bg-stone-100 text-stone-600"
+                    >
+                      <option value="">-- Or pick from stock --</option>
+                      {products.map(p => <option key={p.id} value={p.n}>{p.n} (₹{p.p})</option>)}
+                    </select>
+                  </div>
+                  
+                  <div className="sm:col-span-3 flex items-center gap-1">
+                    <input type="number" value={item.q} onChange={e => {const next=[...billItems]; next[idx].q = parseFloat(e.target.value)||0; setBillItems(next);}} placeholder="Qty" className="w-full border rounded p-1.5 text-xs font-black text-orange-600 text-center" />
+                    <input 
+                      type="text" 
+                      value={item.u} 
+                      onChange={e => {const next=[...billItems]; next[idx].u = e.target.value; setBillItems(next);}} 
+                      placeholder="Unit" 
+                      className="w-16 border rounded p-1.5 text-xs text-center font-bold" 
+                    />
+                  </div>
+
+                  <div className="sm:col-span-3">
+                    <input type="number" value={item.p} onChange={e => {const next=[...billItems]; next[idx].p = parseFloat(e.target.value)||0; setBillItems(next);}} placeholder="Rate ₹" className="w-full border rounded p-1.5 text-xs font-bold" />
+                  </div>
+
+                  <div className="sm:col-span-1 flex justify-center">
+                    {billItems.length > 1 && <button onClick={() => removeBillItem(idx)} className="text-red-500 hover:bg-red-50 p-1 rounded"><Trash2 size={16}/></button>}
+                  </div>
                 </div>
               </div>
             ))}
@@ -1261,7 +1304,7 @@ function AdminScreen({
             );
           })()}
 
-          {/* ✅ Fixed Action Buttons including Direct WhatsApp Send Option */}
+          {/* Action Buttons */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 pt-2">
             <button onClick={() => handleCreateInvoice("print")} className="w-full bg-stone-900 text-white font-bold py-3 rounded-xl flex items-center justify-center gap-1.5 text-xs shadow"><Printer size={15} /> Print Tax Invoice</button>
             <button onClick={() => handleCreateInvoice("challan")} className="w-full bg-blue-700 text-white font-bold py-3 rounded-xl flex items-center justify-center gap-1.5 text-xs shadow"><Truck size={15} /> Gate Pass / Challan</button>
