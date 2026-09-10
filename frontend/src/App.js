@@ -130,6 +130,8 @@ export default function App() {
   const [invoices, setInvoices] = useState(ls.get("saved_invoices", []));
   const [customers, setCustomers] = useState(ls.get("as_customers_v15", []));
   const [expenses, setExpenses] = useState(ls.get("as_expenses_v15", []));
+const [items, setItems] = useState([]);
+
   
   const [products, setProducts] = useState(ls.get("as_prod_master_v15", CLEAN_FRESH_PRODUCTS));
   const [workers, setWorkers] = useState(ls.get("as_wrk_master_v15", DEFAULT_WORKERS));
