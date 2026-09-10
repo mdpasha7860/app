@@ -132,7 +132,6 @@ export default function App() {
   const [expenses, setExpenses] = useState(ls.get("as_expenses_v15", []));
 const [items, setItems] = useState([]);
 
-  
   const [products, setProducts] = useState(ls.get("as_prod_master_v15", CLEAN_FRESH_PRODUCTS));
   const [workers, setWorkers] = useState(ls.get("as_wrk_master_v15", DEFAULT_WORKERS));
   const [bankInfo, setBankInfo] = useState(ls.get("bank_info", DEFAULT_BANK));
@@ -207,7 +206,7 @@ const [items, setItems] = useState([]);
     } catch (e) {
       console.error("Error saving item:", e);
     }
-  }
+  };
   const cartTotal = useMemo(() => cart.reduce((s, x) => s + x.p * x.q, 0), [cart]);
 
   const filtered = useMemo(() => {
