@@ -208,7 +208,6 @@ const [items, setItems] = useState([]);
       console.error("Error saving item:", e);
     }
   }
-
   const cartTotal = useMemo(() => cart.reduce((s, x) => s + x.p * x.q, 0), [cart]);
 
   const filtered = useMemo(() => {
