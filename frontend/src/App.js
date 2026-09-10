@@ -71,7 +71,7 @@ const getHeadline = () => localStorage.getItem("bannerText") || "";
 const T = {
   EN: { b:"Build Stronger. Order Smarter.", c:"Cart", s:"Same-Day Delivery", w:"Wholesale Khata", g:"Brand Catalog", f:"Free Estimate", zip:"Download Full Site Backup", home:"Home", search:"Search Sariya, Cement, Sand, Bricks...", login:"Login", logout:"Logout", orders:"My Orders", admin:"Admin", call:"Call Now", wa:"WhatsApp", cart:"Cart", buy:"Add to Cart", total:"Total", checkout:"Place Order", address:"Delivery Address", cod:"Cash on Delivery", upi:"Pay via UPI", confirm:"Confirm Order", noResults:"No materials found. Add inventory from Admin Panel.", tracker:"Live Order Tracker", khata:"Wholesale Khata", catalog:"Brand Catalog", estimator:"Estimate Calculator", welcome:"Welcome", mobile:"Mobile Number", otp:"Enter OTP", sendOtp:"Send OTP", verify:"Verify & Login", pinLbl:"Admin Access", changeUpi:"Change UPI ID", currentUpi:"Current UPI", saveUpi:"Save UPI", zipInfo:"Full backup file", qty:"Qty (Weight)", stock:"In Stock", cat:"Category", all:"All", tmt:"Sariya (TMT)", cement:"Cement", sand:"Sand & Aggregate", brick:"Bricks", tools:"Tools", empty:"Cart is empty", noord:"No orders yet", ordid:"Order", status:"Status", pending:"Pending", scan:"Scan QR to Pay", payto:"Pay to", est:"Enter dimensions to estimate", len:"Length (ft)", wid:"Width (ft)", ht:"Height (ft)", need:"You need approx", bags:"bags of Cement", tons:"tons of Sariya", cft:"cft of Sand", bricks:"Bricks (approx)", calc:"Calculate", ledger:"Ledger", customer:"Customer", amt:"Amount", add:"Add Entry", credit:"Credit", debit:"Debit", note:"Note", del:"Delete", eta:"ETA Today", driver:"Driver", low:"LOW STOCK", tick:"★ Same-Day Delivery Across Hyderabad • Wholesale Rates • Genuine Brands • Instant WhatsApp Estimates ★" },
   HI: { b:"मजबूत बनाएं। स्मार्ट ऑर्डर करें।", c:"टोकरी", s:"आज डिलीवरी", w:"थोक खाता", g:"ब्रांड कैटलॉग", f:"फ्री एस्टीमेट", zip:"साइट बैकअप डाउनलोड करें", home:"होम", search:"सरिया, सीमेंट, रेत, ईंट खोजें...", login:"लॉगिन", logout:"लॉगआउट", orders:"मेरे ऑर्डर", admin:"एडमिन", call:"कॉल करें", wa:"व्हाट्सएप", cart:"टोकरी", buy:"जोड़ें", total:"कुल", checkout:"ऑर्डर करें", address:"पता", cod:"कैश ऑन डिलीवरी", upi:"UPI से भुगतान", confirm:"पुष्टि करें", noResults:"सामान नहीं मिला। एडमिन पैनल से स्टॉक जोड़ें।", tracker:"लाइव ऑर्डर ट्रैकर", khata:"थोक खाता", catalog:"ब्रांड कैटलॉग", estimator:"अनुमान कैलकुलेटर", welcome:"स्वागत है", mobile:"मोबाइल नंबर", otp:"OTP दर्ज करें", sendOtp:"OTP भेजें", verify:"वेरीफाई करें", pinLbl:"एडमिन एक्सेस", changeUpi:"UPI बदलें", currentUpi:"मौजूदा UPI", saveUpi:"UPI सेव करें", zipInfo:"पूरा बैकअप", qty:"वज़न (किलो / बैग)", stock:"स्टॉक में", cat:"श्रेणी", all:"सभी", tmt:"सरिया (TMT)", cement:"सीमेंट", sand:"रेत/गिट्टी", brick:"ईंट", tools:"औजार", empty:"टोकरी खाली", noord:"कोई ऑर्डर नहीं", ordid:"ऑर्डर", status:"स्थिति", pending:"लंबित", scan:"QR स्कैन करें", payto:"भुगतान", est:"माप डालें", len:"लंबाई (फीट)", wid:"चौड़ाई (फीट)", ht:"ऊंचाई (फीट)", need:"आपको चाहिए", bags:"सीमेंट बैग", tons:"टन सरिया", cft:"cft रेत", bricks:"ईंटें", calc:"गणना करें", ledger:"बही", customer:"ग्राहक", amt:"राशि", add:"जोड़ें", credit:"जमा", debit:"नाम", note:"नोट", del:"हटाएं", eta:"आज पहुंचेगा", driver:"ड्राइवर", low:"स्टॉक कम", tick:"★ हैदराबाद में आज ही डिलीवरी • थोक रेट • असली ब्रांड • इंस्टेंट व्हाट्सएप एस्टीमेट ★" },
-  TE: { b:"బలంగా నిర్మించండి. తెలివిగా ఆర్డర్ చేయండి.", c:"బుట్ట", s:"ఈరోజే డెలివరీ", w:"హోల్‌సేల్ ఖాతా", g:"బ్రాండ్ కేటలాగ్", f:"ఉచిత అంచనా", zip:"బ్యాకప్ డౌన్‌లోడ్", home:"హోమ్", search:"సరియా, సిమెంట్, ఇసుక, ఇటుకలు...", login:"లాగిన్", logout:"లాగౌట్", orders:"నా ఆర్డర్లు", admin:"అడ్మిన్", call:"కాల్ చేయండి", వాట్సాప్:"వాట్సాప్", cart:"బుట్ట", buy:"జోడించు", మొత్తం:"మొత్తం", checkout:"ఆర్డర్ చేయండి", address:"చిరునామా", cod:"క్యాష్ ఆన్ డెలివరీ", upi:"UPI చెల్లింపు", confirm:"నిర్ధారించండి", noResults:"సరుకులు లేవు. అడ్మిన్ ప్యానెల్ నుండి జోడించండి.", tracker:"లైవ్ ఆర్డర్ ట్రాకర్", khata:"హోల్‌సేల్ ఖాతా", catalog:"బ్రాండ్ కేటలాగ్", estimator:"అంచనా కాలిక్యులేటర్", welcome:"స్వాగతం", mobile:"మొబైల్ నంబర్", otp:"OTP నమోదు", sendOtp:"OTP పంపండి", verify:"వెరిఫై చేయండి", pinLbl:"అడ్మిన్ యాక్సెస్", changeUpi:"UPI మార్చండి", currentUpi:"ప్రస్తుత UPI", saveUpi:"UPI సేవ్ చేయండి", zipInfo:"పూర్తి బ్యాకప్", qty:"పరిమాణం (కిలోలు)", stock:"స్టాక్‌లో", cat:"వర్గం", all:"అన్నీ", tmt:"సరియా (TMT)", cement:"సిమెంట్", sand:"ఇసుక/కంకర", brick:"ఇటుకలు", tools:"పరికరాలు", empty:"బుట్ట ఖాళీ", noord:"ఆర్డర్లు లేవు", ordid:"ఆర్డర్", status:"స్థితి", pending:"పెండింగ్", scan:"QR స్కాన్ చేయండి", payto:"చెల్లింపు", est:"కొలతలు ఇవ్వండి", len:"పొడవు (అడుగు)", wid:"వెడల్పు (అడుగు)", ht:"ఎత్తు (అడుగు)", need:"కావాలి", bags:"సిమెంట్ బస్తాలు", tons:"టన్నుల సరియా", cft:"cft ఇసుక", bricks:"ఇటుకలు", calc:"లెక్కించండి", ledger:"లెడ్జర్", customer:"కస్టమర్", amt:"మొత్తం", add:"జోడించు", credit:"క్రెడిట్", debit:"డెబిట్", note:"నోట్", del:"తొలగించు", eta:"ఈరోజు", driver:"డ్రైవర్", low:"స్టాక్ తక్కువ", tick:"★ హైదరాబాద్‌లో ఈరోజే డెలివరీ • హోల్‌సేల్ రేట్లు • అసలైన బ్రాండ్ • తక్షణ వాట్సాప్ అంచనా ★" }
+  TE: { b:"బలంగా నిర్మించండి. తెలివిగా ఆర్డర్ చేయండి.", c:"బుట్ట", s:"ఈరోజే డెలివరీ", w:"హోల్‌సేల్ ఖాతా", g:"బ్రాండ్ కేటలాగ్", f:"ఉచిత అంచనా", zip:"బ్యాకప్ డౌన్‌లోడ్", home:"హోమ్", search:"సరియా, సిమెంట్, ఇసుక, ఇటుకలు...", login:"లాగిన్", logout:"లాగౌట్", orders:"నా ఆర్డర్లు", admin:"అడ్మిన్", call:"కాల్ చేయండి", wa:"వాట్సాప్", cart:"బుట్ట", buy:"జోడించు", మొత్తం:"మొత్తం", checkout:"ఆర్డర్ చేయండి", address:"చిరునామా", cod:"క్యాష్ ఆన్ డెలివరీ", upi:"UPI చెల్లింపు", confirm:"నిర్ధారించండి", noResults:"సరుకులు లేవు. అడ్మిన్ ప్యానెల్ నుండి జోడించండి.", tracker:"లైవ్ ఆర్డర్ ట్రాకర్", khata:"హోల్‌సేల్ ఖాతా", catalog:"బ్రాండ్ కేటలాగ్", estimator:"అంచనా కాలిక్యులేటర్", welcome:"స్వాగతం", mobile:"మొబైల్ నంబర్", otp:"OTP నమోదు", sendOtp:"OTP పంపండి", verify:"వెరిఫై చేయండి", pinLbl:"అడ్మిన్ యాక్సెస్", changeUpi:"UPI మార్చండి", currentUpi:"ప్రస్తుత UPI", saveUpi:"UPI సేవ్ చేయండి", zipInfo:"పూర్తి బ్యాకప్", qty:"పరిమాణం (కిలోలు)", stock:"స్టాక్‌లో", cat:"వర్గం", all:"అన్నీ", tmt:"సరియా (TMT)", cement:"సిమెంట్", sand:"ఇసుక/కంకర", brick:"ఇటుకలు", tools:"పరికరాలు", empty:"బుట్ట ఖాళీ", noord:"ఆర్డర్లు లేవు", ordid:"ఆర్డర్", status:"స్థితి", pending:"పెండింగ్", scan:"QR స్కాన్ చేయండి", payto:"చెల్లింపు", est:"కొలతలు ఇవ్వండి", len:"పొడవు (అడుగు)", wid:"వెడల్పు (అడుగు)", ht:"ఎత్తు (అడుగు)", need:"కావాలి", bags:"సిమెంట్ బస్తాలు", tons:"టన్నుల సరియా", cft:"cft ఇసుక", bricks:"ఇటుకలు", calc:"లెక్కించండి", ledger:"లెడ్జర్", customer:"కస్టమర్", amt:"మొత్తం", add:"జోడించు", credit:"క్రెడిట్", debit:"డెబిట్", note:"నోట్", del:"తొలగించు", eta:"ఈరోజు", driver:"డ్రైవర్", low:"స్టాక్ తక్కువ", tick:"★ హైదరాబాద్‌లో ఈరోజే డెలివరీ • హోల్‌సేల్ రేట్లు • అసలైన బ్రాండ్ • తక్షణ వాట్సాప్ అంచనా ★" }
 };
 
 const MAP = { sariya:'tmt', saria:'tmt', steel:'tmt', rod:'tmt', tmt:'tmt', cement:'cement', simenti:'cement', ppc:'cement', opc:'cement', ret:'sand', balu:'sand', sand:'sand', isuka:'sand', metal:'sand', aggregate:'sand', gitti:'sand', brick:'brick', eent:'brick', itukalu:'brick', block:'brick', wire:'tools', tool:'tools' };
@@ -199,7 +199,7 @@ export default function App() {
       ls.set("myOrders", updatedOrders);
       setCart([]);
 
-      const msg = `*NEW ORDER - AS ENTERPRISES*%0AOrder ID: ${order.id}%0A${cart.map(x => `• ${x.n} x ${x.q} ${x.u} = Rs.${x.p*x.q}`).join('%0A')}%0A*Total: Rs.${cartTotal}*%0APayment: ${payment}%0AAddress: ${address}%0A%0A_Terms Accepted: Unloading customer side, cement/steel non-returnable._`;
+      const msg = `*NEW ORDER - AS ENTERPRISES*%0AOrder ID: ${order.id}%0A${cart.map(x => `• ${x.n} x ${x.q} ${x.u} = Rs.${x.p*x.q}`).join('%0A')}%0A*Total: Rs.${cartTotal}*%0APayment: ${payment}%0AAddress: ${address}%0A%0A_Terms Accepted: Unloading customer side, non-returnable, 2-hr unloading limit, narrow road policy agreed._`;
       window.open(`https://wa.me/${CFG.wa}?text=${msg}`, "_blank");
       
       alert("Order placed successfully! Redirecting to orders.");
@@ -652,8 +652,11 @@ function CatalogScreen({ t, query, doSearch, category, setCategory, filtered, ad
 function CartScreen({ t, cart, updateQty, removeItem, total, onCheckout, upi, user }) {
   const [address, setAddress] = useState(user?.address || "");
   const [payment, setPayment] = useState("COD");
-  const [termsAgreed, setTermsAgreed] = useState(true);
+  const [termsAgreed, setTermsAgreed] = useState(false);
+  const [showTermsModal, setShowTermsModal] = useState(false);
+
   if (cart.length === 0) return <div className="bg-white border-2 border-stone-200 rounded-2xl p-12 text-center text-stone-500 font-bold">{t.empty}</div>;
+  
   return (
     <div className="space-y-6">
       <h2 className="font-display font-black text-3xl">{t.cart}</h2>
@@ -672,10 +675,62 @@ function CartScreen({ t, cart, updateQty, removeItem, total, onCheckout, upi, us
         <div className="grid grid-cols-2 gap-2"><button onClick={()=>setPayment("COD")} className={`p-3 rounded-xl border-2 font-bold text-sm ${payment==="COD"?'border-orange-500 bg-orange-500 text-white':'bg-white'}`}>{t.cod}</button><button onClick={()=>setPayment("UPI")} className={`p-3 rounded-xl border-2 font-bold text-sm ${payment==="UPI"?'border-orange-500 bg-orange-500 text-white':'bg-white'}`}>{t.upi}</button></div>
         {payment === "UPI" && (<div className="bg-stone-50 border-2 border-dashed border-orange-500 rounded-xl p-4 flex flex-col items-center gap-2"><QRCodeSVG value={`upi://pay?pa=${upi}&pn=AS%20Enterprises&am=${total}&cu=INR`} size={180} /><div className="text-sm font-bold mt-1">Pay to: <span className="text-orange-600">{upi}</span></div></div>)}
         <div className="flex justify-between items-center pt-2 border-t"><span className="font-bold text-lg">{t.total}</span><span className="font-display font-black text-2xl">₹{total}</span></div>
-        <button onClick={()=>{if(!address.trim()){alert("Enter address"); return;} if(!termsAgreed){alert("Accept terms"); return;} onCheckout(payment, address);}} className="w-full bg-orange-500 text-white font-bold py-3 rounded-full">
+        
+        {/* Terms & Conditions Checkbox */}
+        <div className="bg-orange-50 border border-orange-300 rounded-xl p-3 space-y-2">
+          <div className="flex items-start gap-2">
+            <input 
+              type="checkbox" 
+              id="terms" 
+              checked={termsAgreed} 
+              onChange={(e) => setTermsAgreed(e.target.checked)} 
+              className="mt-1 w-4 h-4 accent-orange-600 cursor-pointer"
+            />
+            <label htmlFor="terms" className="text-xs text-stone-800 font-medium cursor-pointer leading-relaxed">
+              मैं AS Enterprises के सभी नियम और शर्तें स्वीकार करता हूँ (अनलोडिंग, नॉन-रिटर्न, सकरी गली नियम, 2 घंटे अनलोडिंग समय और भुगतान नियम)।
+            </label>
+          </div>
+          <button 
+            type="button" 
+            onClick={() => setShowTermsModal(true)} 
+            className="text-[11px] text-orange-600 font-bold underline hover:text-orange-800 ml-6 block"
+          >
+            📜 Read Full Terms & Conditions (सभी शर्तें पढ़ें)
+          </button>
+        </div>
+
+        <button 
+          onClick={() => {
+            if(!address.trim()){ alert("Enter address"); return; } 
+            if(!termsAgreed){ alert("कृपया आर्डर करने से पहले नियम और शर्तें (Terms & Conditions) स्वीकार करें।"); return; } 
+            onCheckout(payment, address);
+          }} 
+          className={`w-full font-bold py-3 rounded-full transition ${termsAgreed ? 'bg-orange-500 hover:bg-orange-600 text-white shadow-lg' : 'bg-stone-300 text-stone-500 cursor-not-allowed'}`}
+        >
           {t.confirm} · ₹{total}
         </button>
       </div>
+
+      {/* Terms Modal Popup */}
+      {showTermsModal && (
+        <div className="fixed inset-0 z-50 bg-black/60 flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl max-w-lg w-full p-5 space-y-4 shadow-2xl border-2 border-orange-500 max-h-[90vh] overflow-auto">
+            <div className="flex justify-between items-center border-b pb-3">
+              <h3 className="font-display font-black text-lg text-stone-900">AS Enterprises - Terms & Conditions</h3>
+              <button onClick={() => setShowTermsModal(false)} className="text-stone-500 hover:text-red-600 p-1"><X size={20}/></button>
+            </div>
+            <div className="text-xs text-stone-700 space-y-2 leading-relaxed">
+              <p><b>1. Unloading (अनलोडिंग):</b> साइट पर गाड़ी खाली करने की पूरी जिम्मेदारी और खर्च कस्टमर का होगा।</p>
+              <p><b>2. Non-Returnable (वापसी नीति):</b> सीमेंट, सरिया (TMT) और रेत एक बार डिलीवर होने के बाद वापस या एक्सचेंज नहीं किए जाएंगे।</p>
+              <p><b>3. Narrow Road / Access Policy (सकरी गली और रास्ता):</b> यदि साइट से 500 मीटर या 1 किलोमीटर पहले रास्ता बंद है, भारी वाहन जाना मना है (No Entry), या गाड़ी साइट तक नहीं पहुँच सकती, तो माल उससे पहले जहाँ तक गाड़ी पहुँचेगी वहीं उतरेगा; आगे ले जाने का खर्च कस्टमर का होगा।</p>
+              <p><b>4. Unloading Time Limit (2 घंटे की लिमिट):</b> गाड़ी साइट पर पहुँचने के बाद अधिकतम 2 घंटे के भीतर पूरी तरह खाली होनी चाहिए। ज्यादा देर रुकने या अगले दिन खाली होने पर अतिरिक्त डिटेंशन/डिमुर्ज चार्ज (Demurrage Charges) कस्टमर को देना होगा।</p>
+              <p><b>5. Quantity & Weight:</b> माल प्रेषित करने से पहले वजन और मात्रा की पूर्ण जाँच की जाती है। साइट पर पहुँचने के बाद मात्रा को लेकर कोई विवाद मान्य नहीं होगा।</p>
+              <p><b>6. Payment Terms:</b> COD (कैश ऑन डिलीवरी) मामलों में गाड़ी अनलोड होने से पहले पूर्ण भुगतान करना अनिवार्य है।</p>
+            </div>
+            <button onClick={() => { setTermsAgreed(true); setShowTermsModal(false); }} className="w-full bg-orange-500 text-white font-bold py-2.5 rounded-xl text-xs">I Agree & Accept (नियम स्वीकार करें)</button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
@@ -1629,7 +1684,7 @@ function AdminScreen({
               downloadCSV(`Khata.csv`, [["ID","Date","Customer","Amount","Type"], ...ledger.map(l=>[l.id,l.date,l.customer,l.amt,l.type])]);
             }} className="bg-amber-700 text-white font-bold py-2 rounded text-xs">Export Khata</button></div>
           </div>
-          <div className="bg-red-50 border-2 border-red-500 rounded-2xl p-5"><button onClick={()=>{if(prompt("Enter PIN (6301) to reset:")==="6301"){setOrders([]); setInvoices([]); setLedger([]); setCustomers([]); setExpenses([]); setWorkerLedger([]); localStorage.clear(); alert("Reset done!"); window.location.reload();}}} className="w-full bg-red-600 text-white font-black py-2.5 rounded text-xs">Factory Reset All Old Bills & Data</button></div>
+          <div className="bg-red-50 border-2 border-red-500 rounded-2xl p-5"><button onClick={()=>{if(prompt("Enter PIN (6301) to reset:")==="6301"){setOrders([]); setInvoices([]); setLedger([]); setCustomers([]); setExpenses([]); setWorkerLedger(); localStorage.clear(); alert("Reset done!"); window.location.reload();}}} className="w-full bg-red-600 text-white font-black py-2.5 rounded text-xs">Factory Reset All Old Bills & Data</button></div>
         </div>
       )}
     </div>
