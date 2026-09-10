@@ -80,11 +80,11 @@ const CLEAN_FRESH_PRODUCTS = [
   { id: 1202, n: "Sariya 10 MM (JSW Neosteel)", b: "JSW Neosteel", p: 61, u: "per kg", cat: "tmt", stock: 500, rating: 4.7, visible: true, img: "", moq: 10 },
   { id: 1203, n: "Sariya 12 MM (SAIL)", b: "SAIL", p: 60, u: "per kg", cat: "tmt", stock: 500, rating: 4.6, visible: true, img: "", moq: 10 },
   { id: 1204, n: "Sariya 16 MM (Kamdhenu)", b: "Kamdhenu", p: 59, u: "per kg", cat: "tmt", stock: 500, rating: 4.5, visible: true, img: "", moq: 10 },
-  { id: 1205, n: "Cement UltraTech OPC 53 Grade", b: "UltraTech", p: 410, u: "per bag (50kg)", cat: "cement", stock: 300, rating: 4.9, visible: true, img: "", moq: 10 },
-  { id: 1206, n: "Cement Ambuja PPC", b: "Ambuja", p: 380, u: "per bag (50kg)", cat: "cement", stock: 200, rating: 4.8, visible: true, img: "", moq: 10 },
-  { id: 1207, n: "River Sand (बालू)", b: "Local River", p: 1800, u: "per ton", cat: "sand", stock: 50, rating: 4.5, visible: true, img: "", moq: 1 },
-  { id: 1208, n: "Aggregate 20 MM", b: "Local Quarry", p: 1200, u: "per ton", cat: "sand", stock: 80, rating: 4.4, visible: true, img: "", moq: 1 },
-  { id: 1209, n: "Red Bricks Class A", b: "Kiln Standard", p: 9, u: "per piece", cat: "brick", stock: 5000, rating: 4.6, visible: true, img: "", moq: 200 }
+  { id: 1205, n: "Cement UltraTech OPC 53 Grade", b: "UltraTech", p: 410, u: "bag (50kg)", cat: "cement", stock: 300, rating: 4.9, visible: true, img: "", moq: 10 },
+  { id: 1206, n: "Cement Ambuja PPC", b: "Ambuja", p: 380, u: "bag (50kg)", cat: "cement", stock: 200, rating: 4.8, visible: true, img: "", moq: 10 },
+  { id: 1207, n: "River Sand (बालू)", b: "Local River", p: 1800, u: "ton", cat: "sand", stock: 50, rating: 4.5, visible: true, img: "", moq: 1 },
+  { id: 1208, n: "Aggregate 20 MM", b: "Local Quarry", p: 1200, u: "ton", cat: "sand", stock: 80, rating: 4.4, visible: true, img: "", moq: 1 },
+  { id: 1209, n: "Red Bricks Class A", b: "Kiln Standard", p: 9, u: "pcs", cat: "brick", stock: 5000, rating: 4.6, visible: true, img: "", moq: 200 }
 ];
 
 const DEFAULT_WORKERS = [
@@ -1076,7 +1076,8 @@ function AdminScreen({
     reader.readAsDataURL(file);
   };
 
-  const addBillItem = () => setBillItems([...billItems, { n: "", b: "Standard", q: 10, p: 0, u: "kg" }]);
+  // ✅ FIXED: Add brand-new independent row with default values
+  const addBillItem = () => setBillItems([...billItems, { n: "", b: "Standard", q: 1, p: 0, u: "kg" }]);
   const removeBillItem = (idx) => setBillItems(billItems.filter((_, i) => i !== idx));
 
   const handleCreateInvoice = (actionType) => {
@@ -1181,15 +1182,17 @@ function AdminScreen({
             <div><label className="text-xs font-bold text-stone-600 block mb-1">E-Way Bill No (&gt; ₹50k)</label><input type="text" value={invEway} onChange={e=>setInvEway(e.target.value)} placeholder="Optional" className="w-full border-2 rounded-lg p-2 text-sm font-bold" /></div>
           </div>
 
-          {/* ✅ FIXED: Manual typing input option added for Sariya, Cement, Bricks or any item */}
+          {/* ✅ FIXED: Fully Independent Multiple Items with Smart Unit Selection (Pcs, Bag, Kg, Ton) */}
           <div className="space-y-2 border rounded-xl p-3 bg-stone-50">
             <div className="flex justify-between items-center mb-1">
-              <label className="text-xs font-black text-stone-700 uppercase">Materials on Bill (टाइप करके या सेलेक्ट करें)</label>
-              <button type="button" onClick={addBillItem} className="bg-orange-500 text-white font-bold text-xs px-3 py-1 rounded-lg">+ Add Item</button>
+              <label className="text-xs font-black text-stone-700 uppercase">Materials on Bill (आइटम, यूनिट और रेट)</label>
+              <button type="button" onClick={addBillItem} className="bg-orange-500 hover:bg-orange-600 text-white font-bold text-xs px-3 py-1.5 rounded-lg shadow">+ Add Item</button>
             </div>
             {billItems.map((item, idx) => (
-              <div key={idx} className="bg-white p-2.5 rounded-lg border shadow-sm">
+              <div key={idx} className="bg-white p-3 rounded-xl border-2 border-stone-200 shadow-sm space-y-2">
                 <div className="grid grid-cols-1 sm:grid-cols-12 gap-2 items-center">
+                  
+                  {/* Item Name & Quick Stock Picker */}
                   <div className="sm:col-span-5 space-y-1">
                     <input 
                       type="text" 
@@ -1200,46 +1203,96 @@ function AdminScreen({
                         setBillItems(next);
                       }} 
                       placeholder="Item Name (e.g. Sariya, Cement, Bricks)" 
-                      className="w-full border rounded p-1.5 text-xs font-bold bg-white"
+                      className="w-full border-2 rounded-lg p-2 text-xs font-bold bg-white text-stone-900"
                     />
                     <select 
+                      value=""
                       onChange={e => {
                         if(!e.target.value) return;
-                        const next = [...billItems];
-                        next[idx].n = e.target.value;
-                        const f = products.find(p => p.n === e.target.value);
+                        const selectedProdName = e.target.value;
+                        const f = products.find(p => p.n === selectedProdName);
                         if(f){ 
-                          next[idx].p = f.p; 
-                          next[idx].b = f.b; 
-                          next[idx].u = f.u.includes("kg") ? "kg" : f.u.includes("bag") ? "bag" : "pcs"; 
+                          const next = [...billItems];
+                          next[idx].n = f.n;
+                          next[idx].p = f.p;
+                          next[idx].b = f.b;
+                          // Auto assign proper unit based on item category or text
+                          if (f.cat === 'brick' || f.n.toLowerCase().includes('brick')) next[idx].u = 'pcs';
+                          else if (f.cat === 'cement' || f.n.toLowerCase().includes('cement')) next[idx].u = 'bag';
+                          else if (f.cat === 'sand' || f.n.toLowerCase().includes('sand') || f.n.toLowerCase().includes('aggregate')) next[idx].u = 'ton';
+                          else next[idx].u = 'kg';
+                          setBillItems(next);
                         }
-                        setBillItems(next);
                       }} 
-                      className="w-full border rounded p-1 text-[11px] bg-stone-100 text-stone-600"
+                      className="w-full border rounded p-1 text-[11px] bg-stone-100 text-stone-700 font-semibold"
                     >
-                      <option value="">-- Or pick from stock --</option>
+                      <option value="">-- Quick Pick from Stock --</option>
                       {products.map(p => <option key={p.id} value={p.n}>{p.n} (₹{p.p})</option>)}
                     </select>
                   </div>
                   
+                  {/* Quantity & Unit (Pcs, Bag, Kg, Ton) */}
                   <div className="sm:col-span-3 flex items-center gap-1">
-                    <input type="number" value={item.q} onChange={e => {const next=[...billItems]; next[idx].q = parseFloat(e.target.value)||0; setBillItems(next);}} placeholder="Qty" className="w-full border rounded p-1.5 text-xs font-black text-orange-600 text-center" />
+                    <div className="flex-1">
+                      <label className="text-[9px] text-stone-500 font-bold block">Qty</label>
+                      <input 
+                        type="number" 
+                        value={item.q} 
+                        onChange={e => {
+                          const next = [...billItems];
+                          next[idx].q = parseFloat(e.target.value) || 0;
+                          setBillItems(next);
+                        }} 
+                        placeholder="Qty" 
+                        className="w-full border-2 rounded-lg p-1.5 text-xs font-black text-orange-600 text-center bg-white" 
+                      />
+                    </div>
+                    <div className="w-20">
+                      <label className="text-[9px] text-stone-500 font-bold block">Unit</label>
+                      <select 
+                        value={item.u || "kg"} 
+                        onChange={e => {
+                          const next = [...billItems];
+                          next[idx].u = e.target.value;
+                          setBillItems(next);
+                        }} 
+                        className="w-full border-2 rounded-lg p-1.5 text-xs font-bold bg-white text-stone-800"
+                      >
+                        <option value="kg">kg</option>
+                        <option value="bag">bag</option>
+                        <option value="pcs">pcs</option>
+                        <option value="ton">ton</option>
+                        <option value="cft">cft</option>
+                        <option value="Bundle">Bundle</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  {/* Rate ₹ */}
+                  <div className="sm:col-span-3">
+                    <label className="text-[9px] text-stone-500 font-bold block">Rate (₹)</label>
                     <input 
-                      type="text" 
-                      value={item.u} 
-                      onChange={e => {const next=[...billItems]; next[idx].u = e.target.value; setBillItems(next);}} 
-                      placeholder="Unit" 
-                      className="w-16 border rounded p-1.5 text-xs text-center font-bold" 
+                      type="number" 
+                      value={item.p} 
+                      onChange={e => {
+                        const next = [...billItems];
+                        next[idx].p = parseFloat(e.target.value) || 0;
+                        setBillItems(next);
+                      }} 
+                      placeholder="Rate ₹" 
+                      className="w-full border-2 rounded-lg p-1.5 text-xs font-bold bg-white text-stone-900" 
                     />
                   </div>
 
-                  <div className="sm:col-span-3">
-                    <input type="number" value={item.p} onChange={e => {const next=[...billItems]; next[idx].p = parseFloat(e.target.value)||0; setBillItems(next);}} placeholder="Rate ₹" className="w-full border rounded p-1.5 text-xs font-bold" />
+                  {/* Delete Button */}
+                  <div className="sm:col-span-1 flex justify-center pt-3">
+                    {billItems.length > 1 && (
+                      <button onClick={() => removeBillItem(idx)} className="text-red-500 hover:bg-red-50 p-2 rounded-lg transition" title="Remove Item">
+                        <Trash2 size={16}/>
+                      </button>
+                    )}
                   </div>
 
-                  <div className="sm:col-span-1 flex justify-center">
-                    {billItems.length > 1 && <button onClick={() => removeBillItem(idx)} className="text-red-500 hover:bg-red-50 p-1 rounded"><Trash2 size={16}/></button>}
-                  </div>
                 </div>
               </div>
             ))}
@@ -1378,7 +1431,7 @@ function AdminScreen({
                   const filtered = workers.filter(x => x.id !== w.id);
                   setWorkers(filtered);
                   syncToFirestore(products, filtered, bankInfo, customers, expenses);
-                }} className="text-red-500 p-1.5 hover:bg-red-50 rounded"><Trash2 size={16} /></button>
+                }} className="text-red-500 p-1.5 hover:bg-red-50 rounded"><Trash2 size={16}/></button>
               </div>
             ))}
           </div>
@@ -1505,7 +1558,7 @@ function AdminScreen({
           <div className="bg-emerald-50 border-2 border-emerald-500 rounded-2xl p-5 space-y-2">
             <div className="text-xs font-black text-emerald-800 uppercase">Excel Reports (.CSV)</div>
             <div className="grid grid-cols-2 gap-2"><button onClick={()=>{
-              if(invoices.length===0){alert("No invoices"); return;}
+              if(invoices.label===0){alert("No invoices"); return;}
               downloadCSV(`Sales.csv`, [["ID","Date","Customer","Grand Total"], ...invoices.map(i=>[i.id,i.date,i.customer,i.grand])]);
             }} className="bg-emerald-700 text-white font-bold py-2 rounded text-xs">Export Sales</button>
             <button onClick={()=>{
@@ -1513,7 +1566,7 @@ function AdminScreen({
               downloadCSV(`Khata.csv`, [["ID","Date","Customer","Amount","Type"], ...ledger.map(l=>[l.id,l.date,l.customer,l.amt,l.type])]);
             }} className="bg-amber-700 text-white font-bold py-2 rounded text-xs">Export Khata</button></div>
           </div>
-          <div className="bg-red-50 border-2 border-red-500 rounded-2xl p-5"><button onClick={()=>{if(prompt("Enter PIN (6301) to reset:")==="6301"){setOrders([]); setInvoices([]); setLedger([]); setCustomers([]); setExpenses([]); alert("Reset done!");}}} className="w-full bg-red-600 text-white font-black py-2.5 rounded text-xs">Factory Reset Test Data</button></div>
+          <div className="bg-red-50 border-2 border-red-500 rounded-2xl p-5"><button onClick={()=>{if(prompt("Enter PIN (6301) to reset:")==="6301"){setOrders([]); setInvoices([]); setLedger([]); setCustomers([]); setExpenses([]); localStorage.removeItem("myOrders"); localStorage.removeItem("saved_invoices"); localStorage.removeItem("ledger"); localStorage.removeItem("as_customers_v15"); localStorage.removeItem("as_expenses_v15"); alert("Reset done!"); window.location.reload();}}} className="w-full bg-red-600 text-white font-black py-2.5 rounded text-xs">Factory Reset All Old Bills & Data</button></div>
         </div>
       )}
     </div>
