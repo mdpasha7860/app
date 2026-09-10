@@ -21,6 +21,9 @@ const firebaseConfig = {
   messagingSenderId: "667179272592",
   appId: "1:667179272592:web:56a95a9dfdb108bdee8b15"
 };
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
 
 const CFG = {
   phone: "+91 6301456725",
