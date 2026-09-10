@@ -57,6 +57,7 @@ const ls = {
 };
 
 const DEFAULT_BANK = {
+  accountHolder: "AS Enterprises",
   bankName: "State Bank of India",
   accNo: "38920192831",
   ifsc: "SBIN0020182",
@@ -70,7 +71,7 @@ const getHeadline = () => localStorage.getItem("bannerText") || "";
 const T = {
   EN: { b:"Build Stronger. Order Smarter.", c:"Cart", s:"Same-Day Delivery", w:"Wholesale Khata", g:"Brand Catalog", f:"Free Estimate", zip:"Download Full Site Backup", home:"Home", search:"Search Sariya, Cement, Sand, Bricks...", login:"Login", logout:"Logout", orders:"My Orders", admin:"Admin", call:"Call Now", wa:"WhatsApp", cart:"Cart", buy:"Add to Cart", total:"Total", checkout:"Place Order", address:"Delivery Address", cod:"Cash on Delivery", upi:"Pay via UPI", confirm:"Confirm Order", noResults:"No materials found. Add inventory from Admin Panel.", tracker:"Live Order Tracker", khata:"Wholesale Khata", catalog:"Brand Catalog", estimator:"Estimate Calculator", welcome:"Welcome", mobile:"Mobile Number", otp:"Enter OTP", sendOtp:"Send OTP", verify:"Verify & Login", pinLbl:"Admin Access", changeUpi:"Change UPI ID", currentUpi:"Current UPI", saveUpi:"Save UPI", zipInfo:"Full backup file", qty:"Qty (Weight)", stock:"In Stock", cat:"Category", all:"All", tmt:"Sariya (TMT)", cement:"Cement", sand:"Sand & Aggregate", brick:"Bricks", tools:"Tools", empty:"Cart is empty", noord:"No orders yet", ordid:"Order", status:"Status", pending:"Pending", scan:"Scan QR to Pay", payto:"Pay to", est:"Enter dimensions to estimate", len:"Length (ft)", wid:"Width (ft)", ht:"Height (ft)", need:"You need approx", bags:"bags of Cement", tons:"tons of Sariya", cft:"cft of Sand", bricks:"Bricks (approx)", calc:"Calculate", ledger:"Ledger", customer:"Customer", amt:"Amount", add:"Add Entry", credit:"Credit", debit:"Debit", note:"Note", del:"Delete", eta:"ETA Today", driver:"Driver", low:"LOW STOCK", tick:"★ Same-Day Delivery Across Hyderabad • Wholesale Rates • Genuine Brands • Instant WhatsApp Estimates ★" },
   HI: { b:"मजबूत बनाएं। स्मार्ट ऑर्डर करें।", c:"टोकरी", s:"आज डिलीवरी", w:"थोक खाता", g:"ब्रांड कैटलॉग", f:"फ्री एस्टीमेट", zip:"साइट बैकअप डाउनलोड करें", home:"होम", search:"सरिया, सीमेंट, रेत, ईंट खोजें...", login:"लॉगिन", logout:"लॉगआउट", orders:"मेरे ऑर्डर", admin:"एडमिन", call:"कॉल करें", wa:"व्हाट्सएप", cart:"टोकरी", buy:"जोड़ें", total:"कुल", checkout:"ऑर्डर करें", address:"पता", cod:"कैश ऑन डिलीवरी", upi:"UPI से भुगतान", confirm:"पुष्टि करें", noResults:"सामान नहीं मिला। एडमिन पैनल से स्टॉक जोड़ें।", tracker:"लाइव ऑर्डर ट्रैकर", khata:"थोक खाता", catalog:"ब्रांड कैटलॉग", estimator:"अनुमान कैलकुलेटर", welcome:"स्वागत है", mobile:"मोबाइल नंबर", otp:"OTP दर्ज करें", sendOtp:"OTP भेजें", verify:"वेरीफाई करें", pinLbl:"एडमिन एक्सेस", changeUpi:"UPI बदलें", currentUpi:"मौजूदा UPI", saveUpi:"UPI सेव करें", zipInfo:"पूरा बैकअप", qty:"वज़न (किलो / बैग)", stock:"स्टॉक में", cat:"श्रेणी", all:"सभी", tmt:"सरिया (TMT)", cement:"सीमेंट", sand:"रेत/गिट्टी", brick:"ईंट", tools:"औजार", empty:"टोकरी खाली", noord:"कोई ऑर्डर नहीं", ordid:"ऑर्डर", status:"स्थिति", pending:"लंबित", scan:"QR स्कैन करें", payto:"भुगतान", est:"माप डालें", len:"लंबाई (फीट)", wid:"चौड़ाई (फीट)", ht:"ऊंचाई (फीट)", need:"आपको चाहिए", bags:"सीमेंट बैग", tons:"टन सरिया", cft:"cft रेत", bricks:"ईंटें", calc:"गणना करें", ledger:"बही", customer:"ग्राहक", amt:"राशि", add:"जोड़ें", credit:"जमा", debit:"नाम", note:"नोट", del:"हटाएं", eta:"आज पहुंचेगा", driver:"ड्राइवर", low:"स्टॉक कम", tick:"★ हैदराबाद में आज ही डिलीवरी • थोक रेट • असली ब्रांड • इंस्टेंट व्हाट्सएप एस्टीमेट ★" },
-  TE: { b:"బలంగా నిర్మించండి. తెలివిగా ఆర్డర్ చేయండి.", c:"బుట్ట", s:"ఈరోజే డెలివరీ", w:"హోల్‌సేల్ ఖాతా", g:"బ్రాండ్ కేటలాగ్", f:"ఉచిత అంచనా", zip:"బ్యాకప్ డౌన్‌లోడ్", home:"హోమ్", search:"సరియా, సిమెంట్, ఇసుక, ఇటుకలు...", login:"లాగిన్", logout:"లాగౌట్", orders:"నా ఆర్డర్లు", admin:"అడ్మిన్", call:"కాల్ చేయండి", wa:"వాట్సాప్", cart:"బుట్ట", buy:"జోడించు", మొత్తం:"మొత్తం", checkout:"ఆర్డర్ చేయండి", address:"చిరునామా", cod:"క్యాష్ ఆన్ డెలివరీ", upi:"UPI చెల్లింపు", confirm:"నిర్ధారించండి", noResults:"సరుకులు లేవు. అడ్మిన్ ప్యానెల్ నుండి జోడించండి.", tracker:"లైవ్ ఆర్డర్ ట్రాకర్", khata:"హోల్‌సేల్ ఖాతా", catalog:"బ్రాండ్ కేటలాగ్", estimator:"అంచనా కాలిక్యులేటర్", welcome:"స్వాగతం", mobile:"మొబైల్ నంబర్", otp:"OTP నమోదు", sendOtp:"OTP పంపండి", verify:"వెరిఫై చేయండి", pinLbl:"అడ్మిన్ యాక్సెస్", changeUpi:"UPI మార్చండి", currentUpi:"ప్రస్తుత UPI", saveUpi:"UPI సేవ్ చేయండి", zipInfo:"పూర్తి బ్యాకప్", qty:"పరిమాణం (కిలోలు)", stock:"స్టాక్‌లో", cat:"వర్గం", all:"అన్నీ", tmt:"సరియా (TMT)", cement:"సిమెంట్", sand:"ఇసుక/కంకర", brick:"ఇటుకలు", tools:"పరికరాలు", empty:"బుట్ట ఖాళీ", noord:"ఆర్డర్లు లేవు", ordid:"ఆర్డర్", status:"స్థితి", pending:"పెండింగ్", scan:"QR స్కాన్ చేయండి", payto:"చెల్లింపు", est:"కొలతలు ఇవ్వండి", len:"పొడవు (అడుగు)", wid:"వెడల్పు (అడుగు)", ht:"ఎత్తు (అడుగు)", need:"కావాలి", bags:"సిమెంట్ బస్తాలు", tons:"టన్నుల సరియా", cft:"cft ఇసుక", bricks:"ఇటుకలు", calc:"లెక్కించండి", ledger:"లెడ్జర్", customer:"కస్టమర్", amt:"మొత్తం", add:"జోడించు", credit:"క్రెడిట్", debit:"డెబిట్", note:"నోట్", del:"తొలగించు", eta:"ఈరోజు", driver:"డ్రाइवर", low:"స్టాక్ తక్కువ", tick:"★ హైదరాబాద్‌లో ఈరోజే డెలివరీ • హోల్‌సేల్ రేట్లు • అసలైన బ్రాండ్ • తక్షణ వాట్సాప్ అంచనా ★" }
+  TE: { b:"బలంగా నిర్మించండి. తెలివిగా ఆర్డర్ చేయండి.", c:"బుట్ట", s:"ఈరోజే డెలివరీ", w:"హోల్‌సేల్ ఖాతా", g:"బ్రాండ్ కేటలాగ్", f:"ఉచిత అంచనా", zip:"బ్యాకప్ డౌన్‌లోడ్", home:"హోమ్", search:"సరియా, సిమెంట్, ఇసుక, ఇటుకలు...", login:"లాగిన్", logout:"లాగౌట్", orders:"నా ఆర్డర్లు", admin:"అడ్మిన్", call:"కాల్ చేయండి", వాట్సాప్:"వాట్సాప్", cart:"బుట్ట", buy:"జోడించు", మొత్తం:"మొత్తం", checkout:"ఆర్డర్ చేయండి", address:"చిరునామా", cod:"క్యాష్ ఆన్ డెలివరీ", upi:"UPI చెల్లింపు", confirm:"నిర్ధారించండి", noResults:"సరుకులు లేవు. అడ్మిన్ ప్యానెల్ నుండి జోడించండి.", tracker:"లైవ్ ఆర్డర్ ట్రాకర్", khata:"హోల్‌సేల్ ఖాతా", catalog:"బ్రాండ్ కేటలాగ్", estimator:"అంచనా కాలిక్యులేటర్", welcome:"స్వాగతం", mobile:"మొబైల్ నంబర్", otp:"OTP నమోదు", sendOtp:"OTP పంపండి", verify:"వెరిఫై చేయండి", pinLbl:"అడ్మిన్ యాక్సెస్", changeUpi:"UPI మార్చండి", currentUpi:"ప్రస్తుత UPI", saveUpi:"UPI సేవ్ చేయండి", zipInfo:"పూర్తి బ్యాకప్", qty:"పరిమాణం (కిలోలు)", stock:"స్టాక్‌లో", cat:"వర్గం", all:"అన్నీ", tmt:"సరియా (TMT)", cement:"సిమెంట్", sand:"ఇసుక/కంకర", brick:"ఇటుకలు", tools:"పరికరాలు", empty:"బుట్ట ఖాళీ", noord:"ఆర్డర్లు లేవు", ordid:"ఆర్డర్", status:"స్థితి", pending:"పెండింగ్", scan:"QR స్కాన్ చేయండి", payto:"చెల్లింపు", est:"కొలతలు ఇవ్వండి", len:"పొడవు (అడుగు)", wid:"వెడల్పు (అడుగు)", ht:"ఎత్తు (అడుగు)", need:"కావాలి", bags:"సిమెంట్ బస్తాలు", tons:"టన్నుల సరియా", cft:"cft ఇసుక", bricks:"ఇటుకలు", calc:"లెక్కించండి", ledger:"లెడ్జర్", customer:"కస్టమర్", amt:"మొత్తం", add:"జోడించు", credit:"క్రెడిట్", debit:"డెబిట్", note:"నోట్", del:"తొలగించు", eta:"ఈరోజు", driver:"డ్రైవర్", low:"స్టాక్ తక్కువ", tick:"★ హైదరాబాద్‌లో ఈరోజే డెలివరీ • హోల్‌సేల్ రేట్లు • అసలైన బ్రాండ్ • తక్షణ వాట్సాప్ అంచనా ★" }
 };
 
 const MAP = { sariya:'tmt', saria:'tmt', steel:'tmt', rod:'tmt', tmt:'tmt', cement:'cement', simenti:'cement', ppc:'cement', opc:'cement', ret:'sand', balu:'sand', sand:'sand', isuka:'sand', metal:'sand', aggregate:'sand', gitti:'sand', brick:'brick', eent:'brick', itukalu:'brick', block:'brick', wire:'tools', tool:'tools' };
@@ -91,16 +92,7 @@ const DEFAULT_WORKERS = [
   { id: 1, role: "Rajmistri (Mason)", name: "Ramesh Kumar", rate: 850, phone: "916301456725", icon: "🧱", exp: "12 yrs", area: "Hyderabad" },
   { id: 2, role: "Electrician", name: "Suresh Reddy", rate: 700, phone: "916301456725", icon: "⚡", exp: "8 yrs", area: "Secunderabad" },
   { id: 3, role: "Plumber", name: "Mahesh Yadav", rate: 650, phone: "916301456725", icon: "🔧", exp: "10 yrs", area: "Hyderabad" },
-  { id: 4, role: "Contractor / Builder", name: "Anil Sharma", rate: 1500, phone: "916301456725", icon: "👷", exp: "18 yrs", area: "Telangana" },
-  { id: 5, role: "Painter", name: "Santosh Verma", rate: 600, phone: "916301456725", icon: "🎨", exp: "7 yrs", area: "Hyderabad" },
-  { id: 6, role: "Carpenter", name: "Mohan Rao", rate: 750, phone: "916301456725", icon: "🪚", exp: "10 yrs", area: "Secunderabad" },
-  { id: 7, role: "Welder / Fabricator", name: "Sheikh Ali", rate: 800, phone: "916301456725", icon: "🛠️", exp: "9 yrs", area: "Hyderabad" },
-  { id: 8, role: "Tiles Mistri", name: "Laxman Kumar", rate: 900, phone: "916301456725", icon: "🔲", exp: "11 yrs", area: "Secunderabad" },
-  { id: 9, role: "General Helper / Mazdoor", name: "Shankar Lal", rate: 500, phone: "916301456725", icon: "💪", exp: "5 yrs", area: "Hyderabad" },
-  { id: 10, role: "Boring / Borewell Tech", name: "Venkatesh G.", rate: 1200, phone: "916301456725", icon: "💧", exp: "15 yrs", area: "Telangana" },
-  { id: 11, role: "Waterproofing Expert", name: "Rasheed Khan", rate: 950, phone: "916301456725", icon: "🛡️", exp: "10 yrs", area: "Hyderabad" },
-  { id: 12, role: "Interior Designer", name: "Pooja Mehta", rate: 1400, phone: "916301456725", icon: "🏠", exp: "8 yrs", area: "Secunderabad" },
-  { id: 13, role: "JCB & Earthmover Rental", name: "Fleet Owner (Friends)", rate: 2200, phone: "916301456725", icon: "🚜", exp: "Available Daily/Shift", area: "Hyderabad & Telangana" }
+  { id: 4, role: "Contractor / Builder", name: "Anil Sharma", rate: 1500, phone: "916301456725", icon: "👷", exp: "18 yrs", area: "Telangana" }
 ];
 
 const fileToDataURL = (file) => new Promise((res, rej) => {
@@ -129,6 +121,7 @@ export default function App() {
   const [user, setUser] = useState(ls.get("userProfile", null));
   const [orders, setOrders] = useState(ls.get("myOrders", []));
   const [ledger, setLedger] = useState(ls.get("ledger", []));
+  const [workerLedger, setWorkerLedger] = useState(ls.get("worker_ledger", []));
   const [invoices, setInvoices] = useState(ls.get("saved_invoices", []));
   const [customers, setCustomers] = useState(ls.get("as_customers_v15", []));
   const [expenses, setExpenses] = useState(ls.get("as_expenses_v15", []));
@@ -167,6 +160,7 @@ export default function App() {
         if (data.workers && Array.isArray(data.workers)) setWorkers(data.workers);
         if (data.customers && Array.isArray(data.customers)) setCustomers(data.customers);
         if (data.expenses && Array.isArray(data.expenses)) setExpenses(data.expenses);
+        if (data.workerLedger && Array.isArray(data.workerLedger)) setWorkerLedger(data.workerLedger);
       }
     });
 
@@ -235,6 +229,7 @@ export default function App() {
   useEffect(() => ls.set("lang", lang), [lang]);
   useEffect(() => ls.set("cart", cart), [cart]);
   useEffect(() => ls.set("ledger", ledger), [ledger]);
+  useEffect(() => ls.set("worker_ledger", workerLedger), [workerLedger]);
   useEffect(() => ls.set("saved_invoices", invoices), [invoices]);
   useEffect(() => ls.set("bank_info", bankInfo), [bankInfo]);
   useEffect(() => ls.set("gallery", gallery), [gallery]);
@@ -373,11 +368,11 @@ export default function App() {
         {screen === "orders" && (
           <OrdersScreen 
             t={t} orders={orders} setOrders={setOrders} upi={upi} bankInfo={bankInfo} lang={lang} 
-            setAdminTab={setAdminTab} setInvCust={setInvCust} setInvPhone={setInvPhone} setInvAddress={setInvAddress} setBillItems={setBillItems} go={go} products={products}
+            setAdminTab={setAdminTab} setInvCust={setInvCust} setInvPhone={setInvPhone} setInvAddress={setInvAddress} setBillItems={setBillItems} go={go} products={products} user={user}
           />
         )}
         {screen === "tracker" && <TrackerScreen t={t} orders={orders} />}
-        {screen === "khata" && <KhataScreen t={t} ledger={ledger} setLedger={setLedger} upi={upi} bankInfo={bankInfo} lang={lang} />}
+        {screen === "khata" && <KhataScreen t={t} ledger={ledger} setLedger={setLedger} upi={upi} bankInfo={bankInfo} lang={lang} user={user} />}
         {screen === "estimator" && <EstimatorScreen t={t} />}
         {screen === "login" && <LoginScreen t={t} onLogin={(u)=>{setUser(u); ls.set("userProfile", u); go("home");}} />}
         {screen === "admin" && (
@@ -393,6 +388,7 @@ export default function App() {
             heroImg={heroImg} heroTxt={heroTxt}
             invoices={invoices} setInvoices={setInvoices}
             ledger={ledger} setLedger={setLedger}
+            workerLedger={workerLedger} setWorkerLedger={setWorkerLedger}
             bankInfo={bankInfo} setBankInfo={setBankInfo}
             lang={lang}
             adminTab={adminTab} setAdminTab={setAdminTab}
@@ -757,7 +753,7 @@ function printTaxInvoiceDocument(inv, isChallan = false, currentBank = DEFAULT_B
   <tbody>${inv.items.map((it, i)=>`<tr><td>${i+1}</td><td>${it.n}</td><td class="text-right"><strong>${it.q} ${it.u}</strong></td>${!isChallan ? `<td class="text-right">₹${it.p}</td><td class="text-right">₹${it.q*it.p}</td>` : ''}</tr>`).join('')}
   ${!isChallan ? `<tr style="font-weight:bold;"><td colspan="4" class="text-right">${labels.subtotal}</td><td class="text-right">₹${taxable.toFixed(2)}</td></tr><tr><td colspan="4" class="text-right">${labels.gstLbl}</td><td class="text-right">₹${gst.toFixed(2)}</td></tr>${freight>0?`<tr><td colspan="4" class="text-right" style="color:#ea580c;">${labels.freightLbl}</td><td class="text-right" style="color:#ea580c;">+₹${freight.toFixed(2)}</td></tr>`:''}<tr style="font-size:15px; color:#ea580c; font-weight:900;"><td colspan="4" class="text-right">${labels.grandTotal}</td><td class="text-right">₹${grand}.00</td></tr>` : ''}
   </tbody></table>
-  ${!isChallan ? `<div style="margin-top:15px; font-size:12px; background:#f8fafc; padding:10px; border:1px solid #cbd5e1;">${labels.bankLbl} <b>${bank.bankName}</b> | A/c: <b>${bank.accNo}</b> | IFSC: <b>${bank.ifsc}</b> | UPI: <b>${getUPI()}</b></div>` : ''}
+  ${!isChallan ? `<div style="margin-top:15px; font-size:12px; background:#f8fafc; padding:10px; border:1px solid #cbd5e1; display:flex; justify-content:space-between; align-items:center;"><div>${labels.bankLbl} A/c Holder: <b>${bank.accountHolder || 'AS Enterprises'}</b> | Bank: <b>${bank.bankName}</b> | A/c: <b>${bank.accNo}</b> | IFSC: <b>${bank.ifsc}</b> | UPI: <b>${getUPI()}</b></div><div style="text-align:right;"><img src="https://api.qrserver.com/v1/create-qr-code/?size=80x80&data=upi://pay?pa=${encodeURIComponent(getUPI())}%26pn=${encodeURIComponent(bank.accountHolder || 'AS Enterprises')}%26am=${grand}%26cu=INR" width="70" height="70" alt="QR"/></div></div>` : ''}
   <div style="margin-top:30px; display:flex; justify-content:space-between; font-size:12px;"><div>${labels.recvSign}</div><div style="text-align:right;">For <b>${profile.name}</b><br/><br/>${labels.authSign}</div></div>
   </body></html>`;
 
@@ -779,15 +775,20 @@ function printCustomerStatement(customerName, entries, currentLang = "EN") {
   if (win) win.focus();
 }
 
-function OrdersScreen({ t, orders, setOrders, upi, bankInfo, lang, setAdminTab, setInvCust, setInvPhone, setInvAddress, setBillItems, go, products }) {
-  if (orders.length === 0) return <div className="bg-white border-2 border-stone-200 rounded-2xl p-12 text-center text-stone-500 font-bold">{t.noord}</div>;
+function OrdersScreen({ t, orders, setOrders, upi, bankInfo, lang, setAdminTab, setInvCust, setInvPhone, setInvAddress, setBillItems, go, products, user }) {
+  const myOrders = useMemo(() => {
+    if (!user) return orders;
+    return orders.filter(o => o.user === (user.name || user.mobile));
+  }, [orders, user]);
+
+  if (myOrders.length === 0) return <div className="bg-white border-2 border-stone-200 rounded-2xl p-12 text-center text-stone-500 font-bold">{t.noord}</div>;
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
         <h2 className="font-display font-black text-3xl">{t.orders}</h2>
         <span className="text-xs bg-orange-100 text-orange-800 font-bold px-3 py-1 rounded-full">Manage & Complete Orders</span>
       </div>
-      {orders.map(o => (
+      {myOrders.map(o => (
         <div key={o.id} className="bg-white border-2 border-stone-200 rounded-2xl p-4 space-y-3 shadow-sm">
           <div className="flex justify-between items-center font-bold text-sm">
             <div>
@@ -855,12 +856,18 @@ function TrackerScreen({ t }) {
   );
 }
 
-function KhataScreen({ t, ledger, setLedger, upi, bankInfo, lang }) {
+function KhataScreen({ t, ledger, setLedger, upi, bankInfo, lang, user }) {
   const [customer, setCustomer] = useState("");
   const [phone, setPhone] = useState("");
   const [amt, setAmt] = useState("");
   const [type, setType] = useState("credit");
   const [note, setNote] = useState("");
+
+  const myLedger = useMemo(() => {
+    if (!user) return ledger;
+    const userName = (user.name || user.mobile || "").toLowerCase().trim();
+    return ledger.filter(l => l.customer.toLowerCase().trim() === userName || l.phone === user.mobile);
+  }, [ledger, user]);
 
   const add = () => { 
     if(!customer || !amt) return; 
@@ -878,20 +885,22 @@ function KhataScreen({ t, ledger, setLedger, upi, bankInfo, lang }) {
     window.open(`https://wa.me/91${(l.phone||'').replace(/\D/g,'').slice(-10)}?text=${encodeURIComponent(msg)}`, '_blank');
   };
 
-  const balance = ledger.reduce((s, l) => s + (l.type === 'credit' ? l.amt : -l.amt), 0);
+  const balance = myLedger.reduce((s, l) => s + (l.type === 'credit' ? l.amt : -l.amt), 0);
 
   return (
     <div className="space-y-6">
       <h2 className="font-display font-black text-3xl">{t.khata}</h2>
       <div className={`p-6 rounded-2xl text-white shadow-lg ${balance>=0?'bg-emerald-700':'bg-red-700'}`}><div className="text-xs uppercase opacity-80">Net Balance</div><div className="font-display font-black text-4xl mt-1">₹{Math.abs(balance).toLocaleString()}</div></div>
-      <div className="bg-white border-2 border-orange-500 rounded-2xl p-4 space-y-3">
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-2"><input value={customer} onChange={e=>setCustomer(e.target.value)} placeholder="Customer Name" className="border-2 rounded-lg p-2 text-sm outline-none" /><input value={phone} onChange={e=>setPhone(e.target.value)} placeholder="WhatsApp Phone" className="border-2 rounded-lg p-2 text-sm outline-none" /><input value={amt} onChange={e=>setAmt(e.target.value)} type="number" placeholder="Amount" className="border-2 rounded-lg p-2 text-sm font-bold outline-none" /></div>
-        <div className="grid grid-cols-2 gap-2"><button onClick={()=>setType("credit")} className={`p-2 rounded-lg border-2 font-bold text-sm ${type==="credit"?'bg-emerald-700 text-white':'bg-white'}`}>To Receive (उधारी)</button><button onClick={()=>setType("debit")} className={`p-2 rounded-lg border-2 font-bold text-sm ${type==="debit"?'bg-red-700 text-white':'bg-white'}`}>Received (जमा)</button></div>
-        <input value={note} onChange={e=>setNote(e.target.value)} placeholder="Note / Material" className="w-full border-2 rounded-lg p-2 text-sm outline-none" />
-        <button onClick={add} className="w-full bg-orange-500 text-white font-bold py-2.5 rounded-full">+ Add Entry</button>
-      </div>
+      {!user && (
+        <div className="bg-white border-2 border-orange-500 rounded-2xl p-4 space-y-3">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2"><input value={customer} onChange={e=>setCustomer(e.target.value)} placeholder="Customer Name" className="border-2 rounded-lg p-2 text-sm outline-none" /><input value={phone} onChange={e=>setPhone(e.target.value)} placeholder="WhatsApp Phone" className="border-2 rounded-lg p-2 text-sm outline-none" /><input value={amt} onChange={e=>setAmt(e.target.value)} type="number" placeholder="Amount" className="border-2 rounded-lg p-2 text-sm font-bold outline-none" /></div>
+          <div className="grid grid-cols-2 gap-2"><button onClick={()=>setType("credit")} className={`p-2 rounded-lg border-2 font-bold text-sm ${type==="credit"?'bg-emerald-700 text-white':'bg-white'}`}>To Receive (उधारी)</button><button onClick={()=>setType("debit")} className={`p-2 rounded-lg border-2 font-bold text-sm ${type==="debit"?'bg-red-700 text-white':'bg-white'}`}>Received (जमा)</button></div>
+          <input value={note} onChange={e=>setNote(e.target.value)} placeholder="Note / Material" className="w-full border-2 rounded-lg p-2 text-sm outline-none" />
+          <button onClick={add} className="w-full bg-orange-500 text-white font-bold py-2.5 rounded-full">+ Add Entry</button>
+        </div>
+      )}
       <div className="space-y-2">
-        {ledger.map(l => (
+        {myLedger.map(l => (
           <div key={l.id} className="bg-white border-2 rounded-xl p-3 flex justify-between items-center">
             <div>
               <div className="font-bold text-sm">{l.customer}</div>
@@ -899,9 +908,9 @@ function KhataScreen({ t, ledger, setLedger, upi, bankInfo, lang }) {
             </div>
             <div className="flex items-center gap-2">
               <span className={`font-black ${l.type==='credit'?'text-emerald-700':'text-red-700'}`}>{l.type==='credit'?'+':'-'}₹{l.amt}</span>
-              <button onClick={()=>sendWhatsAppReminder(l)} className="px-2.5 py-1 bg-green-600 text-white rounded text-xs font-bold flex items-center gap-1"><MessageCircle size={12}/> Remind</button>
+              {!user && <button onClick={()=>sendWhatsAppReminder(l)} className="px-2.5 py-1 bg-green-600 text-white rounded text-xs font-bold flex items-center gap-1"><MessageCircle size={12}/> Remind</button>}
               <button onClick={()=>printCustomerStatement(l.customer, ledger, lang)} className="px-2 py-1 bg-stone-100 rounded text-xs font-bold">Statement</button>
-              <button onClick={()=>setLedger(ledger.filter(x=>x.id!==l.id))} className="text-red-500"><Trash2 size={14}/></button>
+              {!user && <button onClick={()=>setLedger(ledger.filter(x=>x.id!==l.id))} className="text-red-500"><Trash2 size={14}/></button>}
             </div>
           </div>
         ))}
@@ -970,7 +979,7 @@ function AdminScreen({
   orders, setOrders, products, setProducts, 
   workers, setWorkers, customers, setCustomers,
   expenses, setExpenses, setHeroImg, setHeroTxt, heroImg, heroTxt,
-  invoices, setInvoices, ledger, setLedger,
+  invoices, setInvoices, ledger, setLedger, workerLedger, setWorkerLedger,
   bankInfo, setBankInfo, lang,
   adminTab, setAdminTab, invCust, setInvCust, invPhone, setInvPhone, invAddress, setInvAddress, billItems, setBillItems
 }) {
@@ -1025,14 +1034,15 @@ function AdminScreen({
     </div>
   );
 
-  const syncToFirestore = async (newProds, newWrks, newBank, newCusts, newExps) => {
+  const syncToFirestore = async (newProds, newWrks, newBank, newCusts, newExps, newWrkLdg) => {
     try { 
       const payload = { 
         products: newProds || products, 
         workers: newWrks || workers, 
         bankInfo: newBank || bankInfo,
         customers: newCusts || customers,
-        expenses: newExps || expenses
+        expenses: newExps || expenses,
+        workerLedger: newWrkLdg || workerLedger
       };
       await setDoc(doc(db, "app_data", "main_store_v15"), payload, { merge: true }); 
       await setDoc(doc(db, "shop_data", "items"), { list: newProds || products }, { merge: true });
@@ -1068,7 +1078,7 @@ function AdminScreen({
         setProducts(updated);
         ls.set("as_prod_master_v15", updated);
         
-        await syncToFirestore(updated, workers, bankInfo, customers, expenses);
+        await syncToFirestore(updated, workers, bankInfo, customers, expenses, workerLedger);
         alert("Image compressed and saved successfully to Cloud!");
       };
       img.src = event.target.result;
@@ -1076,7 +1086,6 @@ function AdminScreen({
     reader.readAsDataURL(file);
   };
 
-  // ✅ FIXED: Add brand-new independent row with default values
   const addBillItem = () => setBillItems([...billItems, { n: "", b: "Standard", q: 1, p: 0, u: "kg" }]);
   const removeBillItem = (idx) => setBillItems(billItems.filter((_, i) => i !== idx));
 
@@ -1130,6 +1139,7 @@ function AdminScreen({
     { k:"rates", n:"Inventory & Photos" },
     { k:"orders", n:"Orders" },
     { k:"workers", n:"Workers" },
+    { k:"worker_ledger", n:"👷 Worker Khata" },
     { k:"customers", n:"Customers" },
     { k:"expenses", n:"Expenses" },
     { k:"products", n:"Add Item" },
@@ -1182,7 +1192,6 @@ function AdminScreen({
             <div><label className="text-xs font-bold text-stone-600 block mb-1">E-Way Bill No (&gt; ₹50k)</label><input type="text" value={invEway} onChange={e=>setInvEway(e.target.value)} placeholder="Optional" className="w-full border-2 rounded-lg p-2 text-sm font-bold" /></div>
           </div>
 
-          {/* ✅ FIXED: Fully Independent Multiple Items with Smart Unit Selection (Pcs, Bag, Kg, Ton) */}
           <div className="space-y-2 border rounded-xl p-3 bg-stone-50">
             <div className="flex justify-between items-center mb-1">
               <label className="text-xs font-black text-stone-700 uppercase">Materials on Bill (आइटम, यूनिट और रेट)</label>
@@ -1191,8 +1200,6 @@ function AdminScreen({
             {billItems.map((item, idx) => (
               <div key={idx} className="bg-white p-3 rounded-xl border-2 border-stone-200 shadow-sm space-y-2">
                 <div className="grid grid-cols-1 sm:grid-cols-12 gap-2 items-center">
-                  
-                  {/* Item Name & Quick Stock Picker */}
                   <div className="sm:col-span-5 space-y-1">
                     <input 
                       type="text" 
@@ -1216,7 +1223,6 @@ function AdminScreen({
                           next[idx].n = f.n;
                           next[idx].p = f.p;
                           next[idx].b = f.b;
-                          // Auto assign proper unit based on item category or text
                           if (f.cat === 'brick' || f.n.toLowerCase().includes('brick')) next[idx].u = 'pcs';
                           else if (f.cat === 'cement' || f.n.toLowerCase().includes('cement')) next[idx].u = 'bag';
                           else if (f.cat === 'sand' || f.n.toLowerCase().includes('sand') || f.n.toLowerCase().includes('aggregate')) next[idx].u = 'ton';
@@ -1231,7 +1237,6 @@ function AdminScreen({
                     </select>
                   </div>
                   
-                  {/* Quantity & Unit (Pcs, Bag, Kg, Ton) */}
                   <div className="sm:col-span-3 flex items-center gap-1">
                     <div className="flex-1">
                       <label className="text-[9px] text-stone-500 font-bold block">Qty</label>
@@ -1268,7 +1273,6 @@ function AdminScreen({
                     </div>
                   </div>
 
-                  {/* Rate ₹ */}
                   <div className="sm:col-span-3">
                     <label className="text-[9px] text-stone-500 font-bold block">Rate (₹)</label>
                     <input 
@@ -1284,7 +1288,6 @@ function AdminScreen({
                     />
                   </div>
 
-                  {/* Delete Button */}
                   <div className="sm:col-span-1 flex justify-center pt-3">
                     {billItems.length > 1 && (
                       <button onClick={() => removeBillItem(idx)} className="text-red-500 hover:bg-red-50 p-2 rounded-lg transition" title="Remove Item">
@@ -1292,7 +1295,6 @@ function AdminScreen({
                       </button>
                     )}
                   </div>
-
                 </div>
               </div>
             ))}
@@ -1357,7 +1359,6 @@ function AdminScreen({
             );
           })()}
 
-          {/* Action Buttons */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 pt-2">
             <button onClick={() => handleCreateInvoice("print")} className="w-full bg-stone-900 text-white font-bold py-3 rounded-xl flex items-center justify-center gap-1.5 text-xs shadow"><Printer size={15} /> Print Tax Invoice</button>
             <button onClick={() => handleCreateInvoice("challan")} className="w-full bg-blue-700 text-white font-bold py-3 rounded-xl flex items-center justify-center gap-1.5 text-xs shadow"><Truck size={15} /> Gate Pass / Challan</button>
@@ -1375,21 +1376,21 @@ function AdminScreen({
                 <div className="flex items-center gap-3">
                   <div className="w-14 h-14 bg-stone-200 rounded-lg overflow-hidden flex items-center justify-center border">{p.img ? <img src={p.img} alt="" className="w-full h-full object-cover" /> : <span className="text-[9px] text-stone-400">No Img</span>}</div>
                   <div className="flex-1 min-w-0"><div className="text-xs font-bold truncate">{p.n}</div><label className="cursor-pointer inline-flex items-center gap-1 bg-blue-600 text-white text-[10px] font-bold px-2 py-0.5 rounded mt-1"><Camera size={12} /> Photo<input type="file" accept="image/*" capture="environment" onChange={(e) => handleProductImageUpload(p.id, e.target.files[0])} className="hidden" /></label></div>
-                  <button onClick={()=>{const updated = products.map(x => x.id === p.id ? { ...x, visible: x.visible === false ? true : false } : x); setProducts(updated); syncToFirestore(updated, workers, bankInfo, customers, expenses);}} className={`p-2 rounded text-xs font-bold ${p.visible !== false ? 'bg-emerald-100 text-emerald-700' : 'bg-stone-200'}`}>{p.visible !== false ? <Eye size={14}/> : <EyeOff size={14}/>}</button>
-                  <button onClick={()=>{const filtered = products.filter(x=>x.id!==p.id); setProducts(filtered); syncToFirestore(filtered, workers, bankInfo, customers, expenses);}} className="text-red-500 p-2"><Trash2 size={16}/></button>
+                  <button onClick={()=>{const updated = products.map(x => x.id === p.id ? { ...x, visible: x.visible === false ? true : false } : x); setProducts(updated); syncToFirestore(updated, workers, bankInfo, customers, expenses, workerLedger);}} className={`p-2 rounded text-xs font-bold ${p.visible !== false ? 'bg-emerald-100 text-emerald-700' : 'bg-stone-200'}`}>{p.visible !== false ? <Eye size={14}/> : <EyeOff size={14}/>}</button>
+                  <button onClick={()=>{const filtered = products.filter(x=>x.id!==p.id); setProducts(filtered); syncToFirestore(filtered, workers, bankInfo, customers, expenses, workerLedger);}} className="text-red-500 p-2"><Trash2 size={16}/></button>
                 </div>
                 <div className="grid grid-cols-2 gap-2">
                   <div><label className="text-[9px] font-bold text-stone-500">Rate ₹</label><input type="number" defaultValue={p.p} onChange={(e) => { p.p = parseFloat(e.target.value) || 0; }} className="w-full border rounded p-1 text-xs font-black bg-white" /></div>
                   <div><label className="text-[9px] font-bold text-stone-500">Stock</label><input type="number" defaultValue={p.stock} onChange={(e) => { p.stock = parseInt(e.target.value) || 0; }} className="w-full border rounded p-1 text-xs bg-white" /></div>
                 </div>
-                <div className="text-right"><button onClick={()=>{setProducts([...products]); syncToFirestore(products, workers, bankInfo, customers, expenses); alert("Saved changes & synced to cloud!");}} className="bg-emerald-600 text-white text-xs font-bold px-3 py-1 rounded">Save Changes</button></div>
+                <div className="text-right"><button onClick={()=>{setProducts([...products]); syncToFirestore(products, workers, bankInfo, customers, expenses, workerLedger); alert("Saved changes & synced to cloud!");}} className="bg-emerald-600 text-white text-xs font-bold px-3 py-1 rounded">Save Changes</button></div>
               </div>
             ))}
           </div>
         </div>
       )}
 
-      {adminTab === "orders" && <OrdersScreen t={t} orders={orders} setOrders={setOrders} upi={upi} bankInfo={bankInfo} lang={lang} setAdminTab={setAdminTab} setInvCust={setInvCust} setInvPhone={setInvPhone} setInvAddress={setInvAddress} setBillItems={setBillItems} go={()=>{}} products={products} />}
+      {adminTab === "orders" && <OrdersScreen t={t} orders={orders} setOrders={setOrders} upi={upi} bankInfo={bankInfo} lang={lang} setAdminTab={setAdminTab} setInvCust={setInvCust} setInvPhone={setInvPhone} setInvAddress={setInvAddress} setBillItems={setBillItems} go={()=>{}} products={products} user={null} />}
       
       {adminTab === "workers" && (
         <div className="bg-white border-2 border-stone-200 rounded-2xl p-4 space-y-4 shadow-sm">
@@ -1413,7 +1414,7 @@ function AdminScreen({
               if(!name || !role) { alert("Naam aur role bhariye"); return; }
               const updatedWorkers = [{ id: Date.now(), name, role, rate, phone, icon: "👷", exp: "5 yrs", area: "Hyderabad" }, ...workers];
               setWorkers(updatedWorkers);
-              syncToFirestore(products, updatedWorkers, bankInfo, customers, expenses);
+              syncToFirestore(products, updatedWorkers, bankInfo, customers, expenses, workerLedger);
               alert("Worker successfully added!");
             }} className="w-full bg-orange-500 text-white font-bold py-2 rounded-lg text-xs">+ Add Worker to Database</button>
           </div>
@@ -1430,8 +1431,65 @@ function AdminScreen({
                 <button onClick={() => {
                   const filtered = workers.filter(x => x.id !== w.id);
                   setWorkers(filtered);
-                  syncToFirestore(products, filtered, bankInfo, customers, expenses);
+                  syncToFirestore(products, filtered, bankInfo, customers, expenses, workerLedger);
                 }} className="text-red-500 p-1.5 hover:bg-red-50 rounded"><Trash2 size={16}/></button>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {adminTab === "worker_ledger" && (
+        <div className="bg-white border-2 border-stone-200 rounded-2xl p-4 space-y-4 shadow-sm">
+          <div className="flex justify-between items-center border-b pb-2">
+            <h3 className="font-display font-black text-lg text-stone-900">Worker Khata & Balance (मजदूरों का खाता)</h3>
+            <span className="text-[10px] font-bold bg-amber-100 text-amber-800 px-2 py-0.5 rounded-full">Advance & Wage Ledger</span>
+          </div>
+          <div className="bg-stone-50 border p-3 rounded-xl space-y-2">
+            <div className="text-xs font-bold text-stone-700 uppercase">Worker Khata Entry Jodein</div>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+              <select id="wlWorkerName" className="border rounded p-2 text-xs bg-white font-bold">
+                {workers.map(w => <option key={w.id} value={w.name}>{w.name} ({w.role})</option>)}
+              </select>
+              <input id="wlAmt" type="number" placeholder="Amount ₹ (Advance / Wage)" className="border rounded p-2 text-xs bg-white font-bold" />
+              <select id="wlType" className="border rounded p-2 text-xs bg-white font-bold">
+                <option value="debit">Given Advance / Paid (भुगतान / एडवांस दिया)</option>
+                <option value="credit">Work Done / Wages Due (काम किया / मजदूरी बाकी)</option>
+              </select>
+            </div>
+            <input id="wlNote" placeholder="Note (e.g. Site work at Kukatpally / Cash advance)" className="w-full border rounded p-2 text-xs bg-white" />
+            <button onClick={() => {
+              const workerName = document.getElementById("wlWorkerName").value;
+              const amt = parseFloat(document.getElementById("wlAmt").value);
+              const type = document.getElementById("wlType").value;
+              const note = document.getElementById("wlNote").value;
+              if(!amt) { alert("Amount bhariye"); return; }
+              const entry = { id: Date.now(), worker: workerName, amt, type, note, date: new Date().toISOString() };
+              const updated = [entry, ...workerLedger];
+              setWorkerLedger(updated);
+              syncToFirestore(products, workers, bankInfo, customers, expenses, updated);
+              document.getElementById("wlAmt").value = "";
+              document.getElementById("wlNote").value = "";
+              alert("Worker khata entry added!");
+            }} className="w-full bg-orange-600 text-white font-bold py-2 rounded-lg text-xs">+ Save Worker Khata Entry</button>
+          </div>
+
+          <div className="space-y-2 max-h-[400px] overflow-auto">
+            {workerLedger.length === 0 ? <div className="text-center text-xs text-stone-400 py-6">No worker khata entries yet.</div> : null}
+            {workerLedger.map(wl => (
+              <div key={wl.id} className="p-3 border rounded-xl flex items-center justify-between bg-stone-50">
+                <div>
+                  <div className="text-xs font-bold text-stone-900">{wl.worker} <span className={`ml-2 px-2 py-0.5 rounded text-[9px] ${wl.type==='credit'?'bg-emerald-100 text-emerald-800':'bg-red-100 text-red-800'}`}>{wl.type==='credit'?'Wage Due (+)':'Advance Paid (-)'}</span></div>
+                  <div className="text-[11px] text-stone-600">{wl.note || 'No note'} • {new Date(wl.date).toLocaleDateString()}</div>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className={`text-xs font-black ${wl.type==='credit'?'text-emerald-700':'text-red-700'}`}>{wl.type==='credit'?'+':'-'}₹{wl.amt}</span>
+                  <button onClick={() => {
+                    const filtered = workerLedger.filter(x => x.id !== wl.id);
+                    setWorkerLedger(filtered);
+                    syncToFirestore(products, workers, bankInfo, customers, expenses, filtered);
+                  }} className="text-red-500 p-1"><Trash2 size={15}/></button>
+                </div>
               </div>
             ))}
           </div>
@@ -1458,7 +1516,7 @@ function AdminScreen({
               if(!name) { alert("Customer name zaroori hai"); return; }
               const updated = [{ id: Date.now(), name, phone, site, type: "Regular" }, ...customers];
               setCustomers(updated);
-              syncToFirestore(products, workers, bankInfo, updated, expenses);
+              syncToFirestore(products, workers, bankInfo, updated, expenses, workerLedger);
               alert("Customer added!");
             }} className="w-full bg-emerald-600 text-white font-bold py-2 rounded-lg text-xs">+ Save Customer</button>
           </div>
@@ -1472,7 +1530,7 @@ function AdminScreen({
                 <button onClick={() => {
                   const filtered = customers.filter(x => x.id !== c.id);
                   setCustomers(filtered);
-                  syncToFirestore(products, workers, bankInfo, filtered, expenses);
+                  syncToFirestore(products, workers, bankInfo, filtered, expenses, workerLedger);
                 }} className="text-red-500 p-1.5"><Trash2 size={16}/></button>
               </div>
             ))}
@@ -1498,7 +1556,7 @@ function AdminScreen({
               if(!title || !amt) { alert("Details bhariye"); return; }
               const updated = [{ id: Date.now(), title, amt, date: new Date().toLocaleDateString() }, ...expenses];
               setExpenses(updated);
-              syncToFirestore(products, workers, bankInfo, customers, updated);
+              syncToFirestore(products, workers, bankInfo, customers, updated, workerLedger);
               alert("Expense recorded!");
             }} className="w-full bg-amber-600 text-white font-bold py-2 rounded-lg text-xs">+ Add Expense</button>
           </div>
@@ -1514,7 +1572,7 @@ function AdminScreen({
                   <button onClick={() => {
                     const filtered = expenses.filter(x => x.id !== e.id);
                     setExpenses(filtered);
-                    syncToFirestore(products, workers, bankInfo, customers, filtered);
+                    syncToFirestore(products, workers, bankInfo, customers, filtered, workerLedger);
                   }} className="text-red-500 p-1.5"><Trash2 size={16}/></button>
                 </div>
               </div>
@@ -1539,7 +1597,7 @@ function AdminScreen({
               const newP = { id: Date.now(), n, b: b || "Standard", p, u: "per kg", cat: "tmt", stock: 500, visible: true, img: "" };
               const updated = [newP, ...products];
               setProducts(updated);
-              syncToFirestore(updated, workers, bankInfo, customers, expenses);
+              syncToFirestore(updated, workers, bankInfo, customers, expenses, workerLedger);
               alert("New item added successfully!");
             } else {
               alert("Please enter Name and Price");
@@ -1551,9 +1609,14 @@ function AdminScreen({
       {adminTab === "settings" && (
         <div className="space-y-4">
           <div className="bg-white border-2 rounded-2xl p-5 space-y-3">
-            <div className="text-xs font-black uppercase">Bank Account Manager</div>
-            <div className="grid grid-cols-2 gap-2"><input value={editBank.bankName} onChange={e=>setEditBank({...editBank, bankName:e.target.value})} placeholder="Bank Name" className="border rounded p-2 text-xs" /><input value={editBank.accNo} onChange={e=>setEditBank({...editBank, accNo:e.target.value})} placeholder="A/c No" className="border rounded p-2 text-xs" /></div>
-            <button onClick={()=>{setBankInfo(editBank); syncToFirestore(products, workers, editBank, customers, expenses); alert("Bank saved!");}} className="w-full bg-emerald-600 text-white font-bold py-2 rounded text-xs">Save Bank</button>
+            <div className="text-xs font-black uppercase">Bank Account & QR Manager</div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+              <input value={editBank.accountHolder} onChange={e=>setEditBank({...editBank, accountHolder:e.target.value})} placeholder="Account Holder Name (e.g. AS Enterprises)" className="border rounded p-2 text-xs font-bold" />
+              <input value={editBank.bankName} onChange={e=>setEditBank({...editBank, bankName:e.target.value})} placeholder="Bank Name" className="border rounded p-2 text-xs" />
+              <input value={editBank.accNo} onChange={e=>setEditBank({...editBank, accNo:e.target.value})} placeholder="A/c No" className="border rounded p-2 text-xs" />
+              <input value={editBank.ifsc} onChange={e=>setEditBank({...editBank, ifsc:e.target.value})} placeholder="IFSC Code" className="border rounded p-2 text-xs font-bold" />
+            </div>
+            <button onClick={()=>{setBankInfo(editBank); syncToFirestore(products, workers, editBank, customers, expenses, workerLedger); alert("Bank & IFSC saved!");}} className="w-full bg-emerald-600 text-white font-bold py-2 rounded text-xs">Save Bank Details</button>
           </div>
           <div className="bg-emerald-50 border-2 border-emerald-500 rounded-2xl p-5 space-y-2">
             <div className="text-xs font-black text-emerald-800 uppercase">Excel Reports (.CSV)</div>
@@ -1566,7 +1629,7 @@ function AdminScreen({
               downloadCSV(`Khata.csv`, [["ID","Date","Customer","Amount","Type"], ...ledger.map(l=>[l.id,l.date,l.customer,l.amt,l.type])]);
             }} className="bg-amber-700 text-white font-bold py-2 rounded text-xs">Export Khata</button></div>
           </div>
-          <div className="bg-red-50 border-2 border-red-500 rounded-2xl p-5"><button onClick={()=>{if(prompt("Enter PIN (6301) to reset:")==="6301"){setOrders([]); setInvoices([]); setLedger([]); setCustomers([]); setExpenses([]); localStorage.removeItem("myOrders"); localStorage.removeItem("saved_invoices"); localStorage.removeItem("ledger"); localStorage.removeItem("as_customers_v15"); localStorage.removeItem("as_expenses_v15"); alert("Reset done!"); window.location.reload();}}} className="w-full bg-red-600 text-white font-black py-2.5 rounded text-xs">Factory Reset All Old Bills & Data</button></div>
+          <div className="bg-red-50 border-2 border-red-500 rounded-2xl p-5"><button onClick={()=>{if(prompt("Enter PIN (6301) to reset:")==="6301"){setOrders([]); setInvoices([]); setLedger([]); setCustomers([]); setExpenses([]); setWorkerLedger([]); localStorage.clear(); alert("Reset done!"); window.location.reload();}}} className="w-full bg-red-600 text-white font-black py-2.5 rounded text-xs">Factory Reset All Old Bills & Data</button></div>
         </div>
       )}
     </div>
