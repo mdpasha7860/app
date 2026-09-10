@@ -145,7 +145,6 @@ export default function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [dark, setDark] = useState(ls.get("dark", false));
   
-  // Shared Invoice Maker state so Admin screen can be controlled from anywhere
   const [adminTab, setAdminTab] = useState("invoice_maker");
   const [invCust, setInvCust] = useState("");
   const [invPhone, setInvPhone] = useState("");
@@ -156,7 +155,6 @@ export default function App() {
 
   const t = T[lang];
 
-  // Real-time Firebase Sync for Products and Orders
   useEffect(() => {
     const unsubMain = onSnapshot(doc(db, "app_data", "main_store_v15"), (snap) => {
       if (snap.exists()) {
@@ -201,8 +199,6 @@ export default function App() {
       };
 
       const updatedOrders = [order, ...(orders || [])];
-
-      // Save to Firebase orders collection so admin sees it instantly
       await setDoc(doc(db, "shop_data", "orders"), { list: updatedOrders }, { merge: true });
 
       setOrders(updatedOrders);
@@ -1043,18 +1039,42 @@ function AdminScreen({
     } catch (e) { console.error("Sync error:", e); }
   };
 
+  // ✅ Fixed Image Compression & Persistent Cloud Upload Function
   const handleProductImageUpload = async (productId, file) => {
     if (!file) return;
-    try {
-      const dataUrl = await fileToDataURL(file);
-      const updated = products.map(x => x.id === productId ? { ...x, img: dataUrl } : x);
-      setProducts(updated);
-      ls.set("as_prod_master_v15", updated);
-      await syncToFirestore(updated, workers, bankInfo, customers, expenses);
-      alert("Product Image saved successfully to cloud!");
-    } catch (err) {
-      alert("Image size too large or upload failed.");
-    }
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const img = new Image();
+      img.onload = async () => {
+        const canvas = document.createElement('canvas');
+        const MAX_WIDTH = 300;
+        const MAX_HEIGHT = 300;
+        let width = img.width;
+        let height = img.height;
+
+        if (width > height) {
+          if (width > MAX_WIDTH) { height *= MAX_WIDTH / width; width = MAX_WIDTH; }
+        } else {
+          if (height > MAX_HEIGHT) { width *= MAX_HEIGHT / height; height = MAX_HEIGHT; }
+        }
+
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, width, height);
+        
+        const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.7);
+
+        const updated = products.map(x => x.id === productId ? { ...x, img: compressedDataUrl } : x);
+        setProducts(updated);
+        ls.set("as_prod_master_v15", updated);
+        
+        await syncToFirestore(updated, workers, bankInfo, customers, expenses);
+        alert("Image compressed and saved successfully to Cloud!");
+      };
+      img.src = event.target.result;
+    };
+    reader.readAsDataURL(file);
   };
 
   const addBillItem = () => setBillItems([...billItems, { n: products[0]?.n || "Sariya", b: products[0]?.b || "SAIL", q: 10, p: products[0]?.p || 60, u: "kg" }]);
@@ -1241,10 +1261,11 @@ function AdminScreen({
             );
           })()}
 
+          {/* ✅ Fixed Action Buttons including Direct WhatsApp Send Option */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 pt-2">
             <button onClick={() => handleCreateInvoice("print")} className="w-full bg-stone-900 text-white font-bold py-3 rounded-xl flex items-center justify-center gap-1.5 text-xs shadow"><Printer size={15} /> Print Tax Invoice</button>
             <button onClick={() => handleCreateInvoice("challan")} className="w-full bg-blue-700 text-white font-bold py-3 rounded-xl flex items-center justify-center gap-1.5 text-xs shadow"><Truck size={15} /> Gate Pass / Challan</button>
-            <button onClick={() => handleCreateInvoice("wa")} className="w-full bg-green-600 text-white font-bold py-3 rounded-xl flex items-center justify-center gap-1.5 text-xs shadow"><MessageCircle size={15} /> WhatsApp PDF Bill</button>
+            <button onClick={() => handleCreateInvoice("wa")} className="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 rounded-xl flex items-center justify-center gap-1.5 text-xs shadow animate-pulse"><MessageCircle size={15} /> WhatsApp PDF Bill (Send)</button>
           </div>
         </div>
       )}
