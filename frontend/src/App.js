@@ -190,10 +190,12 @@ export default function App() {
         completed: false,
         user: user?.name || user?.mobile || "Guest User",
         loyalty: Math.floor(cartTotal / 100),
-        termsAccepted: true // ✅ Terms accepted flag added for Admin display
+        termsAccepted: true 
       };
 
       const updatedOrders = [order, ...(orders || [])];
+      
+      // ✅ 100% Guaranteed Firebase Cloud Sync before navigating
       await setDoc(doc(db, "shop_data", "orders"), { list: updatedOrders }, { merge: true });
 
       setOrders(updatedOrders);
@@ -203,7 +205,7 @@ export default function App() {
       const msg = `*NEW ORDER - AS ENTERPRISES*%0AOrder ID: ${order.id}%0A${cart.map(x => `• ${x.n} x ${x.q} ${x.u} = Rs.${x.p*x.q}`).join('%0A')}%0A*Total: Rs.${cartTotal}*%0APayment: ${payment}%0AAddress: ${address}%0A%0A_Terms Accepted: Unloading customer side, non-returnable, 2-hr unloading limit, narrow road policy agreed._`;
       window.open(`https://wa.me/${CFG.wa}?text=${msg}`, "_blank");
       
-      alert("Order placed successfully! Redirecting to orders.");
+      alert("Order placed successfully!");
       go("orders");
 
     } catch (e) { 
@@ -655,7 +657,7 @@ function CartScreen({ t, cart, updateQty, removeItem, total, onCheckout, upi, us
   const [payment, setPayment] = useState("COD");
   const [termsAgreed, setTermsAgreed] = useState(false);
   const [showTermsModal, setShowTermsModal] = useState(false);
-  const [submitting, setSubmitting] = useState(false); // ✅ Double-click prevention
+  const [submitting, setSubmitting] = useState(false);
 
   if (cart.length === 0) return <div className="bg-white border-2 border-stone-200 rounded-2xl p-12 text-center text-stone-500 font-bold">{t.empty}</div>;
   
@@ -678,7 +680,6 @@ function CartScreen({ t, cart, updateQty, removeItem, total, onCheckout, upi, us
         {payment === "UPI" && (<div className="bg-stone-50 border-2 border-dashed border-orange-500 rounded-xl p-4 flex flex-col items-center gap-2"><QRCodeSVG value={`upi://pay?pa=${upi}&pn=AS%20Enterprises&am=${total}&cu=INR`} size={180} /><div className="text-sm font-bold mt-1">Pay to: <span className="text-orange-600">{upi}</span></div></div>)}
         <div className="flex justify-between items-center pt-2 border-t"><span className="font-bold text-lg">{t.total}</span><span className="font-display font-black text-2xl">₹{total}</span></div>
         
-        {/* Terms & Conditions Checkbox */}
         <div className="bg-orange-50 border border-orange-300 rounded-xl p-3 space-y-2">
           <div className="flex items-start gap-2">
             <input 
@@ -715,7 +716,6 @@ function CartScreen({ t, cart, updateQty, removeItem, total, onCheckout, upi, us
         </button>
       </div>
 
-      {/* Terms Modal Popup */}
       {showTermsModal && (
         <div className="fixed inset-0 z-50 bg-black/60 flex items-center justify-center p-4">
           <div className="bg-white rounded-2xl max-w-lg w-full p-5 space-y-4 shadow-2xl border-2 border-orange-500 max-h-[90vh] overflow-auto">
@@ -861,7 +861,6 @@ function OrdersScreen({ t, orders, setOrders, upi, bankInfo, lang, setAdminTab, 
           <div className="text-xs text-stone-600">Address: {o.address}</div>
           <div className="text-xs text-stone-500">Items: {o.items?.map(i => `${i.n} (${i.q} ${i.u})`).join(', ')}</div>
           
-          {/* ✅ Display Terms Acceptance Status on Admin/Order Screen */}
           <div className="bg-emerald-50 border border-emerald-300 rounded-lg p-2 text-[11px] text-emerald-800 font-bold flex items-center gap-1.5">
             <CheckCircle2 size={14} className="text-emerald-600 flex-shrink-0" />
             <span>✓ Terms & Conditions Accepted (Unloading, 2-hr limit & transport terms agreed)</span>
