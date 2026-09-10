@@ -28,15 +28,14 @@ const CFG = {
   phone: "+91 6301456725",
   wa: "916301456725",
   brand: "AS Enterprises",
-  gstin: "36ABCDE1234F1Z5",
   defaultHero: "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&w=1600&q=80",
   defaultHeadline: "Build Stronger. Order Smarter.",
 };
 
-const MULTI_GST_PROFILES = [
-  { id: "as_main", name: "AS Enterprises (Pasha)", gstin: "36ABCDE1234F1Z5", address: "Hyderabad Yard" },
-  { id: "son_1", name: "AS BuildMart (Son 1)", gstin: "36XYZAB5678C2Z1", address: "Secunderabad Branch" },
-  { id: "son_2", name: "AS Materials (Son 2)", gstin: "36LMNOP9012D3Z2", address: "Kukatpally Branch" }
+const DEFAULT_GST_PROFILES = [
+  { id: "firm_1", name: "Firm 1 (Main)", gstin: "", address: "Hyderabad Yard" },
+  { id: "firm_2", name: "Firm 2 (Branch)", gstin: "", address: "Secunderabad Branch" },
+  { id: "firm_3", name: "Firm 3 (Branch)", gstin: "", address: "Kukatpally Branch" }
 ];
 
 const DISTANCE_FREIGHT_RATES = [
@@ -71,7 +70,7 @@ const getHeadline = () => localStorage.getItem("bannerText") || "";
 const T = {
   EN: { b:"Build Stronger. Order Smarter.", c:"Cart", s:"Same-Day Delivery", w:"Wholesale Khata", g:"Brand Catalog", f:"Free Estimate", zip:"Download Full Site Backup", home:"Home", search:"Search Sariya, Cement, Sand, Bricks...", login:"Login", logout:"Logout", orders:"My Orders", admin:"Admin", call:"Call Now", wa:"WhatsApp", cart:"Cart", buy:"Add to Cart", total:"Total", checkout:"Place Order", address:"Delivery Address", cod:"Cash on Delivery", upi:"Pay via UPI", confirm:"Confirm Order", noResults:"No materials found. Add inventory from Admin Panel.", tracker:"Live Order Tracker", khata:"Wholesale Khata", catalog:"Brand Catalog", estimator:"Estimate Calculator", welcome:"Welcome", mobile:"Mobile Number", otp:"Enter OTP", sendOtp:"Send OTP", verify:"Verify & Login", pinLbl:"Admin Access", changeUpi:"Change UPI ID", currentUpi:"Current UPI", saveUpi:"Save UPI", zipInfo:"Full backup file", qty:"Qty (Weight)", stock:"In Stock", cat:"Category", all:"All", tmt:"Sariya (TMT)", cement:"Cement", sand:"Sand & Aggregate", brick:"Bricks", tools:"Tools", empty:"Cart is empty", noord:"No orders yet", ordid:"Order", status:"Status", pending:"Pending", scan:"Scan QR to Pay", payto:"Pay to", est:"Enter dimensions to estimate", len:"Length (ft)", wid:"Width (ft)", ht:"Height (ft)", need:"You need approx", bags:"bags of Cement", tons:"tons of Sariya", cft:"cft of Sand", bricks:"Bricks (approx)", calc:"Calculate", ledger:"Ledger", customer:"Customer", amt:"Amount", add:"Add Entry", credit:"Credit", debit:"Debit", note:"Note", del:"Delete", eta:"ETA Today", driver:"Driver", low:"LOW STOCK", tick:"★ Same-Day Delivery Across Hyderabad • Wholesale Rates • Genuine Brands • Instant WhatsApp Estimates ★" },
   HI: { b:"मजबूत बनाएं। स्मार्ट ऑर्डर करें।", c:"टोकरी", s:"आज डिलीवरी", w:"थोक खाता", g:"ब्रांड कैटलॉग", f:"फ्री एस्टीमेट", zip:"साइट बैकअप डाउनलोड करें", home:"होम", search:"सरिया, सीमेंट, रेत, ईंट खोजें...", login:"लॉगिन", logout:"लॉगआउट", orders:"मेरे ऑर्डर", admin:"एडमिन", call:"कॉल करें", wa:"व्हाट्सएप", cart:"टोकरी", buy:"जोड़ें", total:"कुल", checkout:"ऑर्डर करें", address:"पता", cod:"कैश ऑन डिलीवरी", upi:"UPI से भुगतान", confirm:"पुष्टि करें", noResults:"सामान नहीं मिला। एडमिन पैनल से स्टॉक जोड़ें।", tracker:"लाइव ऑर्डर ट्रैकर", khata:"थोक खाता", catalog:"ब्रांड कैटलॉग", estimator:"अनुमान कैलकुलेटर", welcome:"स्वागत है", mobile:"मोबाइल नंबर", otp:"OTP दर्ज करें", sendOtp:"OTP भेजें", verify:"वेरीफाई करें", pinLbl:"एडमिन एक्सेस", changeUpi:"UPI बदलें", currentUpi:"मौजूदा UPI", saveUpi:"UPI सेव करें", zipInfo:"पूरा बैकअप", qty:"वज़न (किलो / बैग)", stock:"स्टॉक में", cat:"श्रेणी", all:"सभी", tmt:"सरिया (TMT)", cement:"सीमेंट", sand:"रेत/गिट्टी", brick:"ईंट", tools:"औजार", empty:"टोकरी खाली", noord:"कोई ऑर्डर नहीं", ordid:"ऑर्डर", status:"स्थिति", pending:"लंबित", scan:"QR स्कैन करें", payto:"भुगतान", est:"माप डालें", len:"लंबाई (फीट)", wid:"चौड़ाई (फीट)", ht:"ऊंचाई (फीट)", need:"आपको चाहिए", bags:"सीमेंट बैग", tons:"टन सरिया", cft:"cft रेत", bricks:"ईंटें", calc:"गणना करें", ledger:"बही", customer:"ग्राहक", amt:"राशि", add:"जोड़ें", credit:"जमा", debit:"नाम", note:"नोट", del:"हटाएं", eta:"आज पहुंचेगा", driver:"ड्राइवर", low:"स्टॉक कम", tick:"★ हैदराबाद में आज ही डिलीवरी • थोक रेट • असली ब्रांड • इंस्टेंट व्हाट्सएप एस्टीमेट ★" },
-  TE: { b:"బలంగా నిర్మించండి. తెలివిగా ఆర్డర్ చేయండి.", c:"బుట్ట", s:"ఈరోజే డెలివరీ", w:"హోల్‌సేల్ ఖాతా", g:"బ్రాండ్ కేటలాగ్", f:"ఉచిత అంచనా", zip:"బ్యాకప్ డౌన్‌లోడ్", home:"హోమ్", search:"సరియా, సిమెంట్, ఇసుక, ఇటుకలు...", login:"లాగిన్", logout:"లాగౌట్", orders:"నా ఆర్డర్లు", admin:"అడ్మిన్", call:"కాల్ చేయండి", wa:"వాట్సాప్", cart:"బుట్ట", buy:"జోడించు", మొత్తం:"మొత్తం", checkout:"ఆర్డర్ చేయండి", address:"చిరునామా", cod:"క్యాష్ ఆన్ డెలివరీ", upi:"UPI చెల్లింపు", confirm:"నిర్ధారించండి", noResults:"సరుకులు లేవు. అడ్మిన్ ప్యానెల్ నుండి జోడించండి.", tracker:"లైవ్ ఆర్డర్ ట్రాకర్", khata:"హోల్‌సేల్ ఖాతా", catalog:"బ్రాండ్ కేటలాగ్", estimator:"అంచనా కాలిక్యులేటర్", welcome:"స్వాగతం", mobile:"మొబైల్ నంబర్", otp:"OTP నమోదు", sendOtp:"OTP పంపండి", verify:"వెరిఫై చేయండి", pinLbl:"అడ్మిన్ యాక్సెస్", changeUpi:"UPI మార్చండి", currentUpi:"ప్రస్తుత UPI", saveUpi:"UPI సేవ్ చేయండి", zipInfo:"పూర్తి బ్యాకప్", qty:"పరిమాణం (కిలోలు)", stock:"స్టాక్‌లో", cat:"వర్గం", all:"అన్నీ", tmt:"సరియా (TMT)", cement:"సిమెంట్", sand:"ఇసుక/కంకర", brick:"ఇటుకలు", tools:"పరికరాలు", empty:"బుట్ట ఖాళీ", noord:"ఆర్డర్లు లేవు", ordid:"ఆర్డర్", status:"స్థితి", pending:"పెండింగ్", scan:"QR స్కాన్ చేయండి", payto:"చెల్లింపు", est:"కొలతలు ఇవ్వండి", len:"పొడవు (అడుగు)", wid:"వెడల్పు (అడుగు)", ht:"ఎత్తు (అడుగు)", need:"కావాలి", bags:"సిమెంట్ బస్తాలు", tons:"టన్నుల సరియా", cft:"cft ఇసుక", bricks:"ఇటుకలు", calc:"లెక్కించండి", ledger:"లెడ్జర్", customer:"కస్టమర్", amt:"మొత్తం", add:"జోడించు", credit:"క్రెడిట్", debit:"డెబిట్", note:"నోట్", del:"తొలగించు", eta:"ఈరోజు", driver:"డ్రाइवर", low:"స్టాక్ తక్కువ", tick:"★ హైదరాబాద్‌లో ఈరోజే డెలివరీ • హోల్‌సేల్ రేట్లు • అసలైన బ్రాండ్ • తక్షణ వాట్సాప్ అంచనా ★" }
+  TE: { b:"బలంగా నిర్మించండి. తెలివిగా ఆర్డర్ చేయండి.", c:"బుట్ట", s:"ఈరోజే డెలివరీ", w:"హోల్‌సేల్ ఖాతా", g:"బ్రాండ్ కేటలాగ్", f:"ఉచిత అంచనా", zip:"బ్యాకప్ డౌన్‌లోడ్", home:"హోమ్", search:"సరియా, సిమెంట్, ఇసుక, ఇటుకలు...", login:"లాగిన్", logout:"లాగౌట్", orders:"నా ఆర్డర్లు", admin:"అడ్మిన్", call:"కాల్ చేయండి", wa:"వాట్సాప్", cart:"బుట్ట", buy:"జోడించు", మొత్తం:"మొత్తం", checkout:"ఆర్డర్ చేయండి", address:"చిరునామా", cod:"క్యాష్ ఆన్ డెలివరీ", upi:"UPI చెల్లింపు", confirm:"నిర్ధారించండి", noResults:"సరుకులు లేవు. అడ్మిన్ ప్యానెల్ నుండి జోడించండి.", tracker:"లైవ్ ఆర్డర్ ట్రాకర్", khata:"హోల్‌సేల్ ఖాతా", catalog:"బ్రాండ్ కేటలాగ్", estimator:"అంచనా కాలిక్యులేటర్", welcome:"స్వాగతం", mobile:"మొబైల్ నంబర్", otp:"OTP నమోదు", sendOtp:"OTP పంపండి", verify:"వెరిఫై చేయండి", pinLbl:"అడ్మిన్ యాక్సెస్", changeUpi:"UPI మార్చండి", currentUpi:"ప్రస్తుత UPI", saveUpi:"UPI సేవ్ చేయండి", zipInfo:"పూర్తి బ్యాకప్", qty:"పరిమాణం (కిలోలు)", stock:"స్టాక్‌లో", cat:"వర్గం", all:"అన్నీ", tmt:"సరియా (TMT)", cement:"సిమెంట్", sand:"ఇసుక/కంకర", brick:"ఇటుకలు", tools:"పరికరాలు", empty:"బుట్ట ఖాళీ", noord:"ఆర్డర్లు లేవు", ordid:"ఆర్డర్", status:"స్థితి", pending:"పెండింగ్", scan:"QR స్కాన్ చేయండి", payto:"చెల్లింపు", est:"కొలతలు ఇవ్వండి", len:"పొడవు (అడుగు)", wid:"వెడల్పు (అడుగు)", ht:"ఎత్తు (అడుగు)", need:"కావాలి", bags:"సిమెంట్ బస్తాలు", tons:"టన్నుల సరియా", cft:"cft ఇసుక", bricks:"ఇటుకలు", calc:"లెక్కించండి", ledger:"లెడ్జర్", customer:"కస్టమర్", amt:"మొత్తం", add:"జోడించు", credit:"క్రెడిట్", debit:"డెబిట్", note:"నోట్", del:"తొలగించు", eta:"ఈరోజు", driver:"డ్రైవర్", low:"స్టాక్ తక్కువ", tick:"★ హైదరాబాద్‌లో ఈరోజే డెలివరీ • హోల్‌సేల్ రేట్లు • అసలైన బ్రాండ్ • తక్షణ వాట్సాప్ అంచనా ★" }
 };
 
 const MAP = { sariya:'tmt', saria:'tmt', steel:'tmt', rod:'tmt', tmt:'tmt', cement:'cement', simenti:'cement', ppc:'cement', opc:'cement', ret:'sand', balu:'sand', sand:'sand', isuka:'sand', metal:'sand', aggregate:'sand', gitti:'sand', brick:'brick', eent:'brick', itukalu:'brick', block:'brick', wire:'tools', tool:'tools' };
@@ -128,6 +127,7 @@ export default function App() {
   const [products, setProducts] = useState(ls.get("as_prod_master_v15", CLEAN_FRESH_PRODUCTS));
   const [workers, setWorkers] = useState(ls.get("as_wrk_master_v15", DEFAULT_WORKERS));
   const [bankInfo, setBankInfo] = useState(ls.get("bank_info", DEFAULT_BANK));
+  const [gstProfiles, setGstProfiles] = useState(ls.get("gst_profiles_v15", DEFAULT_GST_PROFILES));
   const [gallery, setGallery] = useState(ls.get("gallery", []));
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState("ALL");
@@ -161,6 +161,10 @@ export default function App() {
         if (data.customers && Array.isArray(data.customers)) setCustomers(data.customers);
         if (data.expenses && Array.isArray(data.expenses)) setExpenses(data.expenses);
         if (data.workerLedger && Array.isArray(data.workerLedger)) setWorkerLedger(data.workerLedger);
+        if (data.gstProfiles && Array.isArray(data.gstProfiles)) {
+          setGstProfiles(data.gstProfiles);
+          ls.set("gst_profiles_v15", data.gstProfiles);
+        }
       }
     });
 
@@ -195,7 +199,6 @@ export default function App() {
 
       const updatedOrders = [order, ...(orders || [])];
       
-      // ✅ 100% Guaranteed Firebase Cloud Sync before navigating
       await setDoc(doc(db, "shop_data", "orders"), { list: updatedOrders }, { merge: true });
 
       setOrders(updatedOrders);
@@ -235,6 +238,7 @@ export default function App() {
   useEffect(() => ls.set("worker_ledger", workerLedger), [workerLedger]);
   useEffect(() => ls.set("saved_invoices", invoices), [invoices]);
   useEffect(() => ls.set("bank_info", bankInfo), [bankInfo]);
+  useEffect(() => ls.set("gst_profiles_v15", gstProfiles), [gstProfiles]);
   useEffect(() => ls.set("gallery", gallery), [gallery]);
   useEffect(() => { ls.set("dark", dark); document.documentElement.classList.toggle("dark-mode", dark); }, [dark]);
 
@@ -371,7 +375,7 @@ export default function App() {
         {screen === "orders" && (
           <OrdersScreen 
             t={t} orders={orders} setOrders={setOrders} upi={upi} bankInfo={bankInfo} lang={lang} 
-            setAdminTab={setAdminTab} setInvCust={setInvCust} setInvPhone={setInvPhone} setInvAddress={setInvAddress} setBillItems={setBillItems} go={go} products={products} user={user}
+            setAdminTab={setAdminTab} setInvCust={setInvCust} setInvPhone={setInvPhone} setInvAddress={setInvAddress} setBillItems={setBillItems} go={go} products={products} user={user} gstProfiles={gstProfiles}
           />
         )}
         {screen === "tracker" && <TrackerScreen t={t} orders={orders} />}
@@ -393,6 +397,7 @@ export default function App() {
             ledger={ledger} setLedger={setLedger}
             workerLedger={workerLedger} setWorkerLedger={setWorkerLedger}
             bankInfo={bankInfo} setBankInfo={setBankInfo}
+            gstProfiles={gstProfiles} setGstProfiles={setGstProfiles}
             lang={lang}
             adminTab={adminTab} setAdminTab={setAdminTab}
             invCust={invCust} setInvCust={setInvCust}
@@ -739,7 +744,7 @@ function CartScreen({ t, cart, updateQty, removeItem, total, onCheckout, upi, us
   );
 }
 
-function printTaxInvoiceDocument(inv, isChallan = false, currentBank = DEFAULT_BANK, currentLang = "EN") {
+function printTaxInvoiceDocument(inv, isChallan = false, currentBank = DEFAULT_BANK, currentLang = "EN", gstProfiles = DEFAULT_GST_PROFILES) {
   const taxable = parseFloat(inv.taxable || inv.total || 0);
   const discount = parseFloat(inv.discount || 0);
   const freight = parseFloat(inv.freight || 0);
@@ -747,7 +752,7 @@ function printTaxInvoiceDocument(inv, isChallan = false, currentBank = DEFAULT_B
   const gst = parseFloat(inv.gst || (adjustedTaxable * 0.18));
   const grand = Math.round(adjustedTaxable + gst + freight);
   const bank = inv.bankSnapshot || currentBank;
-  const profile = inv.profileSnapshot || MULTI_GST_PROFILES[0];
+  const profile = inv.profileSnapshot || gstProfiles[0] || { name: "AS Enterprises", gstin: "", address: "Hyderabad" };
 
   const labels = currentLang === "HI" ? {
     titleInv: "कर चालान / टैक्स इनवॉइस",
@@ -806,14 +811,14 @@ function printTaxInvoiceDocument(inv, isChallan = false, currentBank = DEFAULT_B
   };
 
   const html = `<!doctype html><html><head><meta charset="utf-8"/><title>${isChallan ? labels.titleChallan : labels.titleInv} - ${inv.id}</title><style>body { font-family: Arial, sans-serif; padding: 20px; color: #111; max-width: 800px; margin: auto; } .header { border-bottom: 3px solid #ea580c; padding-bottom: 10px; display: flex; justify-content: space-between; } table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 13px; } th, td { border: 1px solid #cbd5e1; padding: 8px; text-align: left; } th { background: #0A1931; color: #fff; } .text-right { text-align: right; }</style></head><body>
-  <div class="header"><div><h1 style="margin:0; color:#0A1931;">${profile.name}</h1><div>Wholesale Building Materials Supply — ${profile.address}</div><div>GSTIN: <b>${profile.gstin}</b> · Ph: ${CFG.phone}</div></div><div style="text-align:right;"><strong>${isChallan ? labels.titleChallan : labels.titleInv}</strong><br/>No: ${inv.id}<br/>Date: ${new Date(inv.date).toLocaleDateString('en-IN')}</div></div>
+  <div class="header"><div><h1 style="margin:0; color:#0A1931;">${profile.name || 'AS Enterprises'}</h1><div>Wholesale Building Materials Supply — ${profile.address || 'Hyderabad'}</div><div>GSTIN: <b>${profile.gstin || 'UNREGISTERED'}</b> · Ph: ${CFG.phone}</div></div><div style="text-align:right;"><strong>${isChallan ? labels.titleChallan : labels.titleInv}</strong><br/>No: ${inv.id}<br/>Date: ${new Date(inv.date).toLocaleDateString('en-IN')}</div></div>
   <p><strong>${labels.billedTo}</strong> ${inv.customer} (Ph: ${inv.phone})<br/><strong>${labels.site}</strong> ${inv.address} | <strong>${labels.vehicle}</strong> ${inv.vehicle}</p>
   <table><thead><tr><th>${labels.sno}</th><th>${labels.desc}</th><th class="text-right">${labels.qty}</th>${!isChallan ? `<th class="text-right">${labels.rate}</th><th class="text-right">${labels.amt}</th>` : ''}</tr></thead>
   <tbody>${inv.items.map((it, i)=>`<tr><td>${i+1}</td><td>${it.n}</td><td class="text-right"><strong>${it.q} ${it.u}</strong></td>${!isChallan ? `<td class="text-right">₹${it.p}</td><td class="text-right">₹${it.q*it.p}</td>` : ''}</tr>`).join('')}
   ${!isChallan ? `<tr style="font-weight:bold;"><td colspan="4" class="text-right">${labels.subtotal}</td><td class="text-right">₹${taxable.toFixed(2)}</td></tr><tr><td colspan="4" class="text-right">${labels.gstLbl}</td><td class="text-right">₹${gst.toFixed(2)}</td></tr>${freight>0?`<tr><td colspan="4" class="text-right" style="color:#ea580c;">${labels.freightLbl}</td><td class="text-right" style="color:#ea580c;">+₹${freight.toFixed(2)}</td></tr>`:''}<tr style="font-size:15px; color:#ea580c; font-weight:900;"><td colspan="4" class="text-right">${labels.grandTotal}</td><td class="text-right">₹${grand}.00</td></tr>` : ''}
   </tbody></table>
   ${!isChallan ? `<div style="margin-top:15px; font-size:12px; background:#f8fafc; padding:10px; border:1px solid #cbd5e1; display:flex; justify-content:space-between; align-items:center;"><div>${labels.bankLbl} A/c Holder: <b>${bank.accountHolder || 'AS Enterprises'}</b> | Bank: <b>${bank.bankName}</b> | A/c: <b>${bank.accNo}</b> | IFSC: <b>${bank.ifsc}</b> | UPI: <b>${getUPI()}</b></div><div style="text-align:right;"><img src="https://api.qrserver.com/v1/create-qr-code/?size=80x80&data=upi://pay?pa=${encodeURIComponent(getUPI())}%26pn=${encodeURIComponent(bank.accountHolder || 'AS Enterprises')}%26am=${grand}%26cu=INR" width="70" height="70" alt="QR"/></div></div>` : ''}
-  <div style="margin-top:30px; display:flex; justify-content:space-between; font-size:12px;"><div>${labels.recvSign}</div><div style="text-align:right;">For <b>${profile.name}</b><br/><br/>${labels.authSign}</div></div>
+  <div style="margin-top:30px; display:flex; justify-content:space-between; font-size:12px;"><div>${labels.recvSign}</div><div style="text-align:right;">For <b>${profile.name || 'AS Enterprises'}</b><br/><br/>${labels.authSign}</div></div>
   </body></html>`;
 
   const blob = new Blob([html], { type: 'text/html;charset=utf-8' });
@@ -834,7 +839,7 @@ function printCustomerStatement(customerName, entries, currentLang = "EN") {
   if (win) win.focus();
 }
 
-function OrdersScreen({ t, orders, setOrders, upi, bankInfo, lang, setAdminTab, setInvCust, setInvPhone, setInvAddress, setBillItems, go, products, user }) {
+function OrdersScreen({ t, orders, setOrders, upi, bankInfo, lang, setAdminTab, setInvCust, setInvPhone, setInvAddress, setBillItems, go, products, user, gstProfiles }) {
   const myOrders = useMemo(() => {
     if (!user) return orders;
     return orders.filter(o => o.user === (user.name || user.mobile));
@@ -884,7 +889,7 @@ function OrdersScreen({ t, orders, setOrders, upi, bankInfo, lang, setAdminTab, 
             }} className="bg-orange-600 text-white text-xs font-bold py-2 px-4 rounded-xl flex items-center gap-1 shadow">
               <FileText size={13} /> Convert to Tax Invoice & Send
             </button>
-            <button onClick={() => printTaxInvoiceDocument(o, false, bankInfo, lang)} className="bg-stone-900 text-white text-xs font-bold py-2 px-4 rounded-xl flex items-center gap-1">
+            <button onClick={() => printTaxInvoiceDocument(o, false, bankInfo, lang, gstProfiles)} className="bg-stone-900 text-white text-xs font-bold py-2 px-4 rounded-xl flex items-center gap-1">
               <Printer size={13} /> Print Invoice
             </button>
             <button onClick={async () => {
@@ -1045,14 +1050,15 @@ function AdminScreen({
   workers, setWorkers, customers, setCustomers,
   expenses, setExpenses, setHeroImg, setHeroTxt, heroImg, heroTxt,
   invoices, setInvoices, ledger, setLedger, workerLedger, setWorkerLedger,
-  bankInfo, setBankInfo, lang,
+  bankInfo, setBankInfo, gstProfiles, setGstProfiles, lang,
   adminTab, setAdminTab, invCust, setInvCust, invPhone, setInvPhone, invAddress, setInvAddress, billItems, setBillItems
 }) {
   const [pin, setPin] = useState("");
   const [adminEmailInput, setAdminEmailInput] = useState("");
   const [editBank, setEditBank] = useState({ ...bankInfo });
+  const [editGstProfiles, setEditGstProfiles] = useState([...gstProfiles]);
 
-  const [selectedProfileId, setSelectedProfileId] = useState(MULTI_GST_PROFILES[0].id);
+  const [selectedProfileId, setSelectedProfileId] = useState(gstProfiles[0]?.id || "firm_1");
   const [invVehicle, setInvVehicle] = useState("");
   const [invEway, setInvEway] = useState("");
   const [invDiscount, setInvDiscount] = useState("0");
@@ -1099,7 +1105,7 @@ function AdminScreen({
     </div>
   );
 
-  const syncToFirestore = async (newProds, newWrks, newBank, newCusts, newExps, newWrkLdg) => {
+  const syncToFirestore = async (newProds, newWrks, newBank, newCusts, newExps, newWrkLdg, newGst) => {
     try { 
       const payload = { 
         products: newProds || products, 
@@ -1107,7 +1113,8 @@ function AdminScreen({
         bankInfo: newBank || bankInfo,
         customers: newCusts || customers,
         expenses: newExps || expenses,
-        workerLedger: newWrkLdg || workerLedger
+        workerLedger: newWrkLdg || workerLedger,
+        gstProfiles: newGst || gstProfiles
       };
       await setDoc(doc(db, "app_data", "main_store_v15"), payload, { merge: true }); 
       await setDoc(doc(db, "shop_data", "items"), { list: newProds || products }, { merge: true });
@@ -1143,7 +1150,7 @@ function AdminScreen({
         setProducts(updated);
         ls.set("as_prod_master_v15", updated);
         
-        await syncToFirestore(updated, workers, bankInfo, customers, expenses, workerLedger);
+        await syncToFirestore(updated, workers, bankInfo, customers, expenses, workerLedger, gstProfiles);
         alert("Image compressed and saved successfully to Cloud!");
       };
       img.src = event.target.result;
@@ -1165,7 +1172,7 @@ function AdminScreen({
     const paidAmt = parseFloat(invPaid) || 0;
     const newDueThisBill = currentBillGrand - paidAmt;
     const totalPayableWithPrevious = currentBillGrand + customerPreviousDue;
-    const activeProfile = MULTI_GST_PROFILES.find(p => p.id === selectedProfileId) || MULTI_GST_PROFILES[0];
+    const activeProfile = gstProfiles.find(p => p.id === selectedProfileId) || gstProfiles[0];
 
     const newInv = {
       id: "INV-" + Date.now().toString().slice(-6),
@@ -1186,11 +1193,11 @@ function AdminScreen({
       setLedger([{ id: Date.now(), customer: invCust.trim(), phone: invPhone.trim(), amt: newDueThisBill, type: 'credit', note: `Bill #${newInv.id} Due (${activeProfile.name})`, date: new Date().toISOString() }, ...ledger]);
     }
 
-    if (actionType === "print") printTaxInvoiceDocument(newInv, false, bankInfo, lang);
-    else if (actionType === "challan") printTaxInvoiceDocument(newInv, true, bankInfo, lang);
+    if (actionType === "print") printTaxInvoiceDocument(newInv, false, bankInfo, lang, gstProfiles);
+    else if (actionType === "challan") printTaxInvoiceDocument(newInv, true, bankInfo, lang, gstProfiles);
     else if (actionType === "wa") {
       if (!invPhone.trim()) { alert("Enter mobile number"); return; }
-      let msg = `*${activeProfile.name.toUpperCase()} - TAX INVOICE*\nGSTIN: ${activeProfile.gstin}\nInv: ${newInv.id}\nCustomer: ${newInv.customer}\n${billItems.map(i=>`• ${i.n}: ${i.q} ${i.u} = ₹${i.q*i.p}`).join('\n')}\nGST (18%): ₹${gst.toFixed(2)}\n${freight>0?`Freight: ₹${freight}\n`:''}Current Bill: ₹${currentBillGrand}`;
+      let msg = `*${(activeProfile.name || 'Enterprise').toUpperCase()} - TAX INVOICE*\nGSTIN: ${activeProfile.gstin || 'N/A'}\nInv: ${newInv.id}\nCustomer: ${newInv.customer}\n${billItems.map(i=>`• ${i.n}: ${i.q} ${i.u} = ₹${i.q*i.p}`).join('\n')}\nGST (18%): ₹${gst.toFixed(2)}\n${freight>0?`Freight: ₹${freight}\n`:''}Current Bill: ₹${currentBillGrand}`;
       if (customerPreviousDue > 0) {
         msg += `\nPrevious Due: ₹${customerPreviousDue}\n*Total Payable: ₹${totalPayableWithPrevious}*`;
       }
@@ -1227,10 +1234,10 @@ function AdminScreen({
           <div className="border-b pb-3 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
             <div>
               <h3 className="font-display font-black text-xl text-stone-900">Multi-GST Invoice Maker</h3>
-              <p className="text-xs text-stone-500">Select which Firm / Son's GST to print on this bill</p>
+              <p className="text-xs text-stone-500">Select which Firm / GST profile to print on this bill</p>
             </div>
             <select value={selectedProfileId} onChange={e => setSelectedProfileId(e.target.value)} className="border-2 border-orange-500 bg-orange-50 font-bold text-xs rounded-lg p-2">
-              {MULTI_GST_PROFILES.map(p => <option key={p.id} value={p.id}>{p.name} ({p.gstin})</option>)}
+              {gstProfiles.map(p => <option key={p.id} value={p.id}>{p.name} ({p.gstin || 'No GSTIN'})</option>)}
             </select>
           </div>
 
@@ -1441,21 +1448,21 @@ function AdminScreen({
                 <div className="flex items-center gap-3">
                   <div className="w-14 h-14 bg-stone-200 rounded-lg overflow-hidden flex items-center justify-center border">{p.img ? <img src={p.img} alt="" className="w-full h-full object-cover" /> : <span className="text-[9px] text-stone-400">No Img</span>}</div>
                   <div className="flex-1 min-w-0"><div className="text-xs font-bold truncate">{p.n}</div><label className="cursor-pointer inline-flex items-center gap-1 bg-blue-600 text-white text-[10px] font-bold px-2 py-0.5 rounded mt-1"><Camera size={12} /> Photo<input type="file" accept="image/*" capture="environment" onChange={(e) => handleProductImageUpload(p.id, e.target.files[0])} className="hidden" /></label></div>
-                  <button onClick={()=>{const updated = products.map(x => x.id === p.id ? { ...x, visible: x.visible === false ? true : false } : x); setProducts(updated); syncToFirestore(updated, workers, bankInfo, customers, expenses, workerLedger);}} className={`p-2 rounded text-xs font-bold ${p.visible !== false ? 'bg-emerald-100 text-emerald-700' : 'bg-stone-200'}`}>{p.visible !== false ? <Eye size={14}/> : <EyeOff size={14}/>}</button>
-                  <button onClick={()=>{const filtered = products.filter(x=>x.id!==p.id); setProducts(filtered); syncToFirestore(filtered, workers, bankInfo, customers, expenses, workerLedger);}} className="text-red-500 p-2"><Trash2 size={16}/></button>
+                  <button onClick={()=>{const updated = products.map(x => x.id === p.id ? { ...x, visible: x.visible === false ? true : false } : x); setProducts(updated); syncToFirestore(updated, workers, bankInfo, customers, expenses, workerLedger, gstProfiles);}} className={`p-2 rounded text-xs font-bold ${p.visible !== false ? 'bg-emerald-100 text-emerald-700' : 'bg-stone-200'}`}>{p.visible !== false ? <Eye size={14}/> : <EyeOff size={14}/>}</button>
+                  <button onClick={()=>{const filtered = products.filter(x=>x.id!==p.id); setProducts(filtered); syncToFirestore(filtered, workers, bankInfo, customers, expenses, workerLedger, gstProfiles);}} className="text-red-500 p-2"><Trash2 size={16}/></button>
                 </div>
                 <div className="grid grid-cols-2 gap-2">
                   <div><label className="text-[9px] font-bold text-stone-500">Rate ₹</label><input type="number" defaultValue={p.p} onChange={(e) => { p.p = parseFloat(e.target.value) || 0; }} className="w-full border rounded p-1 text-xs font-black bg-white" /></div>
                   <div><label className="text-[9px] font-bold text-stone-500">Stock</label><input type="number" defaultValue={p.stock} onChange={(e) => { p.stock = parseInt(e.target.value) || 0; }} className="w-full border rounded p-1 text-xs bg-white" /></div>
                 </div>
-                <div className="text-right"><button onClick={()=>{setProducts([...products]); syncToFirestore(products, workers, bankInfo, customers, expenses, workerLedger); alert("Saved changes & synced to cloud!");}} className="bg-emerald-600 text-white text-xs font-bold px-3 py-1 rounded">Save Changes</button></div>
+                <div className="text-right"><button onClick={()=>{setProducts([...products]); syncToFirestore(products, workers, bankInfo, customers, expenses, workerLedger, gstProfiles); alert("Saved changes & synced to cloud!");}} className="bg-emerald-600 text-white text-xs font-bold px-3 py-1 rounded">Save Changes</button></div>
               </div>
             ))}
           </div>
         </div>
       )}
 
-      {adminTab === "orders" && <OrdersScreen t={t} orders={orders} setOrders={setOrders} upi={upi} bankInfo={bankInfo} lang={lang} setAdminTab={setAdminTab} setInvCust={setInvCust} setInvPhone={setInvPhone} setInvAddress={setInvAddress} setBillItems={setBillItems} go={()=>{}} products={products} user={null} />}
+      {adminTab === "orders" && <OrdersScreen t={t} orders={orders} setOrders={setOrders} upi={upi} bankInfo={bankInfo} lang={lang} setAdminTab={setAdminTab} setInvCust={setInvCust} setInvPhone={setInvPhone} setInvAddress={setInvAddress} setBillItems={setBillItems} go={()=>{}} products={products} user={null} gstProfiles={gstProfiles} />}
       
       {adminTab === "workers" && (
         <div className="bg-white border-2 border-stone-200 rounded-2xl p-4 space-y-4 shadow-sm">
@@ -1479,7 +1486,7 @@ function AdminScreen({
               if(!name || !role) { alert("Naam aur role bhariye"); return; }
               const updatedWorkers = [{ id: Date.now(), name, role, rate, phone, icon: "👷", exp: "5 yrs", area: "Hyderabad" }, ...workers];
               setWorkers(updatedWorkers);
-              syncToFirestore(products, updatedWorkers, bankInfo, customers, expenses, workerLedger);
+              syncToFirestore(products, updatedWorkers, bankInfo, customers, expenses, workerLedger, gstProfiles);
               alert("Worker successfully added!");
             }} className="w-full bg-orange-500 text-white font-bold py-2 rounded-lg text-xs">+ Add Worker to Database</button>
           </div>
@@ -1496,7 +1503,7 @@ function AdminScreen({
                 <button onClick={() => {
                   const filtered = workers.filter(x => x.id !== w.id);
                   setWorkers(filtered);
-                  syncToFirestore(products, filtered, bankInfo, customers, expenses, workerLedger);
+                  syncToFirestore(products, filtered, bankInfo, customers, expenses, workerLedger, gstProfiles);
                 }} className="text-red-500 p-1.5 hover:bg-red-50 rounded"><Trash2 size={16}/></button>
               </div>
             ))}
@@ -1532,7 +1539,7 @@ function AdminScreen({
               const entry = { id: Date.now(), worker: workerName, amt, type, note, date: new Date().toISOString() };
               const updated = [entry, ...workerLedger];
               setWorkerLedger(updated);
-              syncToFirestore(products, workers, bankInfo, customers, expenses, updated);
+              syncToFirestore(products, workers, bankInfo, customers, expenses, updated, gstProfiles);
               document.getElementById("wlAmt").value = "";
               document.getElementById("wlNote").value = "";
               alert("Worker khata entry added!");
@@ -1552,7 +1559,7 @@ function AdminScreen({
                   <button onClick={() => {
                     const filtered = workerLedger.filter(x => x.id !== wl.id);
                     setWorkerLedger(filtered);
-                    syncToFirestore(products, workers, bankInfo, customers, expenses, filtered);
+                    syncToFirestore(products, workers, bankInfo, customers, expenses, filtered, gstProfiles);
                   }} className="text-red-500 p-1"><Trash2 size={15}/></button>
                 </div>
               </div>
@@ -1581,7 +1588,7 @@ function AdminScreen({
               if(!name) { alert("Customer name zaroori hai"); return; }
               const updated = [{ id: Date.now(), name, phone, site, type: "Regular" }, ...customers];
               setCustomers(updated);
-              syncToFirestore(products, workers, bankInfo, updated, expenses, workerLedger);
+              syncToFirestore(products, workers, bankInfo, updated, expenses, workerLedger, gstProfiles);
               alert("Customer added!");
             }} className="w-full bg-emerald-600 text-white font-bold py-2 rounded-lg text-xs">+ Save Customer</button>
           </div>
@@ -1595,7 +1602,7 @@ function AdminScreen({
                 <button onClick={() => {
                   const filtered = customers.filter(x => x.id !== c.id);
                   setCustomers(filtered);
-                  syncToFirestore(products, workers, bankInfo, filtered, expenses, workerLedger);
+                  syncToFirestore(products, workers, bankInfo, filtered, expenses, workerLedger, gstProfiles);
                 }} className="text-red-500 p-1.5"><Trash2 size={16}/></button>
               </div>
             ))}
@@ -1621,7 +1628,7 @@ function AdminScreen({
               if(!title || !amt) { alert("Details bhariye"); return; }
               const updated = [{ id: Date.now(), title, amt, date: new Date().toLocaleDateString() }, ...expenses];
               setExpenses(updated);
-              syncToFirestore(products, workers, bankInfo, customers, updated, workerLedger);
+              syncToFirestore(products, workers, bankInfo, customers, updated, workerLedger, gstProfiles);
               alert("Expense recorded!");
             }} className="w-full bg-amber-600 text-white font-bold py-2 rounded-lg text-xs">+ Add Expense</button>
           </div>
@@ -1637,7 +1644,7 @@ function AdminScreen({
                   <button onClick={() => {
                     const filtered = expenses.filter(x => x.id !== e.id);
                     setExpenses(filtered);
-                    syncToFirestore(products, workers, bankInfo, customers, filtered, workerLedger);
+                    syncToFirestore(products, workers, bankInfo, customers, filtered, workerLedger, gstProfiles);
                   }} className="text-red-500 p-1.5"><Trash2 size={16}/></button>
                 </div>
               </div>
@@ -1662,7 +1669,7 @@ function AdminScreen({
               const newP = { id: Date.now(), n, b: b || "Standard", p, u: "per kg", cat: "tmt", stock: 500, visible: true, img: "" };
               const updated = [newP, ...products];
               setProducts(updated);
-              syncToFirestore(updated, workers, bankInfo, customers, expenses, workerLedger);
+              syncToFirestore(updated, workers, bankInfo, customers, expenses, workerLedger, gstProfiles);
               alert("New item added successfully!");
             } else {
               alert("Please enter Name and Price");
@@ -1674,6 +1681,55 @@ function AdminScreen({
       {adminTab === "settings" && (
         <div className="space-y-4">
           <div className="bg-white border-2 rounded-2xl p-5 space-y-3">
+            <div className="text-xs font-black uppercase text-orange-600">Multi-GST Profiles Manager (फर्म और जीएसटी नंबर सेट करें)</div>
+            <p className="text-[11px] text-stone-500">यहाँ आप अपनी फर्मों के नाम, पते और खाली या नए GSTIN नंबर खुद दर्ज कर सकते हैं:</p>
+            <div className="space-y-3">
+              {editGstProfiles.map((gp, idx) => (
+                <div key={gp.id} className="p-3 border rounded-xl bg-stone-50 space-y-2">
+                  <div className="text-xs font-bold text-stone-800">Firm Profile {idx + 1}</div>
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                    <input 
+                      value={gp.name} 
+                      onChange={e => {
+                        const next = [...editGstProfiles];
+                        next[idx].name = e.target.value;
+                        setEditGstProfiles(next);
+                      }} 
+                      placeholder="Firm Name (e.g. AS Enterprises)" 
+                      className="border rounded p-2 text-xs bg-white font-bold" 
+                    />
+                    <input 
+                      value={gp.gstin} 
+                      onChange={e => {
+                        const next = [...editGstProfiles];
+                        next[idx].gstin = e.target.value;
+                        setEditGstProfiles(next);
+                      }} 
+                      placeholder="GSTIN Number (e.g. 36XXXX... or Leave Blank)" 
+                      className="border rounded p-2 text-xs bg-white font-bold uppercase text-orange-600" 
+                    />
+                    <input 
+                      value={gp.address} 
+                      onChange={e => {
+                        const next = [...editGstProfiles];
+                        next[idx].address = e.target.value;
+                        setEditGstProfiles(next);
+                      }} 
+                      placeholder="Branch Address" 
+                      className="border rounded p-2 text-xs bg-white" 
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
+            <button onClick={()=>{
+              setGstProfiles(editGstProfiles);
+              syncToFirestore(products, workers, bankInfo, customers, expenses, workerLedger, editGstProfiles);
+              alert("GST Profiles updated successfully!");
+            }} className="w-full bg-orange-600 text-white font-bold py-2.5 rounded-xl text-xs">Save All GST Profiles</button>
+          </div>
+
+          <div className="bg-white border-2 rounded-2xl p-5 space-y-3">
             <div className="text-xs font-black uppercase">Bank Account & QR Manager</div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
               <input value={editBank.accountHolder} onChange={e=>setEditBank({...editBank, accountHolder:e.target.value})} placeholder="Account Holder Name (e.g. AS Enterprises)" className="border rounded p-2 text-xs font-bold" />
@@ -1681,7 +1737,7 @@ function AdminScreen({
               <input value={editBank.accNo} onChange={e=>setEditBank({...editBank, accNo:e.target.value})} placeholder="A/c No" className="border rounded p-2 text-xs" />
               <input value={editBank.ifsc} onChange={e=>setEditBank({...editBank, ifsc:e.target.value})} placeholder="IFSC Code" className="border rounded p-2 text-xs font-bold" />
             </div>
-            <button onClick={()=>{setBankInfo(editBank); syncToFirestore(products, workers, editBank, customers, expenses, workerLedger); alert("Bank & IFSC saved!");}} className="w-full bg-emerald-600 text-white font-bold py-2 rounded text-xs">Save Bank Details</button>
+            <button onClick={()=>{setBankInfo(editBank); syncToFirestore(products, workers, editBank, customers, expenses, workerLedger, gstProfiles); alert("Bank & IFSC saved!");}} className="w-full bg-emerald-600 text-white font-bold py-2 rounded text-xs">Save Bank Details</button>
           </div>
           <div className="bg-emerald-50 border-2 border-emerald-500 rounded-2xl p-5 space-y-2">
             <div className="text-xs font-black text-emerald-800 uppercase">Excel Reports (.CSV)</div>
