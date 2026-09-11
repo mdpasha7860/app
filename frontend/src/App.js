@@ -70,7 +70,7 @@ const getHeadline = () => localStorage.getItem("bannerText") || "";
 const T = {
   EN: { b:"Build Stronger. Order Smarter.", c:"Cart", s:"Same-Day Delivery", w:"Wholesale Khata", g:"Brand Catalog", f:"Free Estimate", zip:"Download Full Site Backup", home:"Home", search:"Search Sariya, Cement, Sand, Bricks...", login:"Login", logout:"Logout", orders:"My Orders", admin:"Admin", call:"Call Now", wa:"WhatsApp", cart:"Cart", buy:"Add to Cart", total:"Total", checkout:"Place Order", address:"Delivery Address", cod:"Cash on Delivery", upi:"Pay via UPI", confirm:"Confirm Order", noResults:"No materials found. Add inventory from Admin Panel.", tracker:"Live Order Tracker", khata:"Wholesale Khata", catalog:"Brand Catalog", estimator:"Estimate Calculator", welcome:"Welcome", mobile:"Mobile Number", otp:"Enter OTP", sendOtp:"Send OTP", verify:"Verify & Login", pinLbl:"Admin Access", changeUpi:"Change UPI ID", currentUpi:"Current UPI", saveUpi:"Save UPI", zipInfo:"Full backup file", qty:"Qty (Weight)", stock:"In Stock", cat:"Category", all:"All", tmt:"Sariya (TMT)", cement:"Cement", sand:"Sand & Aggregate", brick:"Bricks", tools:"Tools", empty:"Cart is empty", noord:"No orders yet", ordid:"Order", status:"Status", pending:"Pending", scan:"Scan QR to Pay", payto:"Pay to", est:"Enter dimensions to estimate", len:"Length (ft)", wid:"Width (ft)", ht:"Height (ft)", need:"You need approx", bags:"bags of Cement", tons:"tons of Sariya", cft:"cft of Sand", bricks:"Bricks (approx)", calc:"Calculate", ledger:"Ledger", customer:"Customer", amt:"Amount", add:"Add Entry", credit:"Credit", debit:"Debit", note:"Note", del:"Delete", eta:"ETA Today", driver:"Driver", low:"LOW STOCK", tick:"★ Same-Day Delivery Across Hyderabad • Wholesale Rates • Genuine Brands • Instant WhatsApp Estimates ★" },
   HI: { b:"मजबूत बनाएं। स्मार्ट ऑर्डर करें।", c:"टोकरी", s:"आज डिलीवरी", w:"थोक खाता", g:"ब्रांड कैटलॉग", f:"फ्री एस्टीमेट", zip:"साइट बैकअप डाउनलोड करें", home:"होम", search:"सरिया, सीमेंट, रेत, ईंट खोजें...", login:"लॉगिन", logout:"लॉगआउट", orders:"मेरे ऑर्डर", admin:"एडमिन", call:"कॉल करें", wa:"व्हाट्सएप", cart:"टोकरी", buy:"जोड़ें", total:"कुल", checkout:"ऑर्डर करें", address:"पता", cod:"कैश ऑन डिलीवरी", upi:"UPI से भुगतान", confirm:"पुष्टि करें", noResults:"सामान नहीं मिला। एडमिन पैनल से स्टॉक जोड़ें।", tracker:"लाइव ऑर्डर ट्रैकर", khata:"थोक खाता", catalog:"ब्रांड कैटलॉग", estimator:"अनुमान कैलकुलेटर", welcome:"स्वागत है", mobile:"मोबाइल नंबर", otp:"OTP दर्ज करें", sendOtp:"OTP भेजें", verify:"वेरीफाई करें", pinLbl:"एडमिन एक्सेस", changeUpi:"UPI बदलें", currentUpi:"मौजूदा UPI", saveUpi:"UPI सेव करें", zipInfo:"पूरा बैकअप", qty:"वज़न (किलो / बैग)", stock:"स्टॉक में", cat:"श्रेणी", all:"सभी", tmt:"सरिया (TMT)", cement:"सीमेंट", sand:"रेत/गिट्टी", brick:"ईंट", tools:"औजार", empty:"टोकरी खाली", noord:"कोई ऑर्डर नहीं", ordid:"ऑर्डर", status:"स्थिति", pending:"लंबित", scan:"QR स्कैन करें", payto:"भुगतान", est:"माप डालें", len:"लंबाई (फीट)", wid:"चौड़ाई (फीट)", ht:"ऊंचाई (फीट)", need:"आपको चाहिए", bags:"सीमेंट बैग", tons:"टन सरिया", cft:"cft रेत", bricks:"ईंटें", calc:"गणना करें", ledger:"बही", customer:"ग्राहक", amt:"राशि", add:"जोड़ें", credit:"जमा", debit:"नाम", note:"नोट", del:"हटाएं", eta:"आज पहुंचेगा", driver:"ड्राइवर", low:"स्टॉक कम", tick:"★ हैदराबाद में आज ही डिलीवरी • थोक रेट • असली ब्रांड • इंस्टेंट व्हाट्सएप एस्टीमेट ★" },
-  TE: { b:"బలంగా నిర్మించండి. తెలివిగా ఆర్డర్ చేయండి.", c:"బుట్ట", s:"ఈరోజే డెలివరీ", w:"హోల్‌సేల్ ఖాతా", g:"బ్రాండ్ కేటలాగ్", f:"ఉచిత అంచనా", zip:"బ్యాకప్ డౌన్‌లోడ్", home:"హోమ్", search:"సరియా, సిమెంట్, ఇసుక, ఇటుకలు...", login:"లాగిన్", logout:"లాగౌట్", orders:"నా ఆర్డర్లు", admin:"అడ్మిన్", call:"కాల్ చేయండి", wa:"వాట్సాప్", cart:"బుట్ట", buy:"జోడించు", మొత్తం:"మొత్తం", checkout:"ఆర్డర్ చేయండి", address:"చిరునామా", cod:"క్యాష్ ఆన్ డెలివరీ", upi:"UPI చెల్లింపు", confirm:"నిర్ధారించండి", noResults:"సరుకులు లేవు. అడ్మిన్ ప్యానెల్ నుండి జోడించండి.", tracker:"లైవ్ ఆర్డర్ ట్రాకర్", khata:"హోల్‌సేల్ ఖాతా", catalog:"బ్రాండ్ కేటలాగ్", estimator:"అంచనా కాలిక్యులేటర్", welcome:"స్వాగతం", mobile:"మొబైల్ నంబర్", otp:"OTP నమోదు", sendOtp:"OTP పంపండి", verify:"వెరిఫై చేయండి", pinLbl:"అడ్మిన్ యాక్సెస్", changeUpi:"UPI మార్చండి", currentUpi:"ప్రస్తుత UPI", saveUpi:"UPI సేవ్ చేయండి", zipInfo:"పూర్తి బ్యాకప్", qty:"పరిమాణం (కిలోలు)", stock:"స్టాక్‌లో", cat:"వర్గం", all:"అన్నీ", tmt:"సరియా (TMT)", cement:"సిమెంట్", sand:"ఇసుక/కంకర", brick:"ఇటుకలు", tools:"పరికరాలు", empty:"బుట్ట ఖాళీ", noord:"ఆర్డర్లు లేవు", ordid:"ఆర్డర్", status:"స్థితి", pending:"పెండింగ్", scan:"QR స్కాన్ చేయండి", payto:"చెల్లింపు", est:"కొలతలు ఇవ్వండి", len:"పొడవు (అడుగు)", wid:"వెడల్పు (అడుగు)", ht:"ఎత్తు (అడుగు)", need:"కావాలి", bags:"సిమెంట్ బస్తాలు", tons:"టన్నుల సరియా", cft:"cft ఇసుక", bricks:"ఇటుకలు", calc:"లెక్కించండి", ledger:"లెడ్జర్", customer:"కస్టమర్", amt:"మొత్తం", add:"జోడించు", credit:"క్రెడిట్", debit:"డెబిట్", note:"నోట్", del:"తొలగించు", eta:"ఈరోజు", driver:"డ్రైవర్", low:"స్టాక్ తక్కువ", tick:"★ హైదరాబాద్‌లో ఈరోజే డెలివరీ • హోల్‌సేల్ రేట్లు • అసలైన బ్రాండ్ • తక్షణ వాట్సాప్ అంచనా ★" }
+  TE: { b:"బలంగా నిర్మించండి. తెలివిగా ఆర్డర్ చేయండి.", c:"బుట్ట", s:"ఈరోజే డెలివరీ", w:"హోల్‌సేల్ ఖాతా", g:"బ్రాండ్ కేటలాగ్", f:"ఉచిత అంచనా", zip:"బ్యాకప్ డౌన్‌లోడ్", home:"హోమ్", search:"సరియా, సిమెంట్, ఇసుక, ఇటుకలు...", login:"లాగిన్", logout:"లాగౌట్", orders:"నా ఆర్డర్లు", admin:"అడ్మిన్", call:"కాల్ చేయండి", wa:"వాట్సాప్", cart:"బుట్ట", buy:"జోడించు", మొత్తం:"మొత్తం", checkout:"ఆర్డర్ చేయండి", address:"చిరునామా", cod:"క్యాష్ ఆన్ డెలివరీ", upi:"UPI చెల్లింపు", confirm:"నిర్ధారించండి", noResults:"సరుకులు లేవు. అడ్మిన్ ప్యానెల్ నుండి జోడించండి.", tracker:"లైవ్ ఆర్డర్ ట్రాకర్", khata:"హోల్‌సేల్ ఖాతా", catalog:"బ్రాండ్ కేటలాగ్", estimator:"అంచనా కాలిక్యులేటర్", welcome:"స్వాగతం", mobile:"మొబైల్ నంబర్", otp:"OTP నమోదు", sendOtp:"OTP పంపండి", verify:"వెరిఫై చేయండి", pinLbl:"అడ్మిన్ యాక్సెస్", changeUpi:"UPI మార్చండి", currentUpi:"ప్రస్తుత UPI", saveUpi:"UPI సేవ్ చేయండి", zipInfo:"పూర్తి బ్యాకప్", qty:"పరిమాణం (కిలోలు)", stock:"స్టాక్‌లో", cat:"వర్గం", all:"అన్నీ", tmt:"సరియా (TMT)", cement:"సిమెంట్", sand:"ఇసుక/కంకర", brick:"ఇటుకలు", tools:"పరికరాలు", empty:"బుట్ట ఖాళీ", noord:"ఆర్డర్లు లేవు", ordid:"ఆర్డర్", status:"స్థితి", pending:"పెండింగ్", scan:"QR స్కాన్ చేయండి", payto:"చెల్లింపు", est:"కొలతలు ఇవ్వండి", len:"పొడవు (అడుగు)", wid:"వెడల్పు (అడుగు)", ht:"ఎత్తు (అడుగు)", need:"కావాలి", bags:"సిమెంట్ బస్తాలు", tons:"టన్నుల సరియా", cft:"cft ఇసుక", bricks:"ఇటుకలు", calc:"లెక్కించండి", ledger:"లెడ్జర్", customer:"కస్టమర్", amt:"మొత్తం", add:"జోడించు", credit:"క్రెడిట్", debit:"డెబిట్", note:"నోట్", del:"తొలగించు", eta:"ఈరోజు", driver:"డ్రाइवर", low:"స్టాక్ తక్కువ", tick:"★ హైదరాబాద్‌లో ఈరోజే డెలివరీ • హోల్‌సేల్ రేట్లు • అసలైన బ్రాండ్ • తక్షణ వాట్సాప్ అంచనా ★" }
 };
 
 const MAP = { sariya:'tmt', saria:'tmt', steel:'tmt', rod:'tmt', tmt:'tmt', cement:'cement', simenti:'cement', ppc:'cement', opc:'cement', ret:'sand', balu:'sand', sand:'sand', isuka:'sand', metal:'sand', aggregate:'sand', gitti:'sand', brick:'brick', eent:'brick', itukalu:'brick', block:'brick', wire:'tools', tool:'tools' };
@@ -751,6 +751,10 @@ function printTaxInvoiceDocument(inv, isChallan = false, currentBank = DEFAULT_B
   const adjustedTaxable = Math.max(0, taxable - discount);
   const gst = parseFloat(inv.gst || (adjustedTaxable * 0.18));
   const grand = Math.round(adjustedTaxable + gst + freight);
+  const paid = parseFloat(inv.paid || 0);
+  const due = parseFloat(inv.due || Math.max(0, grand - paid));
+  const prevDue = parseFloat(inv.previousDue || 0);
+  const totalPayable = parseFloat(inv.totalPayable || (grand + prevDue));
   const bank = inv.bankSnapshot || currentBank;
   const profile = inv.profileSnapshot || gstProfiles[0] || { name: "AS Enterprises", gstin: "", address: "Hyderabad" };
 
@@ -769,9 +773,14 @@ function printTaxInvoiceDocument(inv, isChallan = false, currentBank = DEFAULT_B
     gstLbl: "जीएसटी (18%)",
     freightLbl: "भाड़ा (Freight)",
     grandTotal: "कुल योग (Grand Total)",
+    paidLbl: "जमा / एडवांस (Paid):",
+    dueLbl: "शेष बकाया (Balance Due):",
+    prevDueLbl: "पुराना बकाया (Previous Due):",
+    totalPayableLbl: "कुल देय राशि (Total Payable):",
     bankLbl: "बैंक खाता:",
     recvSign: "प्राप्तकर्ता के हस्ताक्षर",
-    authSign: "प्राधिकृत हस्ताक्षरकर्ता"
+    authSign: "प्राधिकृत हस्ताक्षरकर्ता",
+    kantaLbl: "वेब्रिज / कांटा पर्ची (Weighbridge Slip):"
   } : currentLang === "TE" ? {
     titleInv: "టాక్స్ ఇన్వాయిస్",
     titleChallan: "డెలివరీ చలాన్",
@@ -787,9 +796,14 @@ function printTaxInvoiceDocument(inv, isChallan = false, currentBank = DEFAULT_B
     gstLbl: "GST (18%)",
     freightLbl: "ఫ్రైట్ (రవాణా)",
     grandTotal: "గ్రాండ్ టోటల్",
+    paidLbl: "చెల్ల린ది (Paid):",
+    dueLbl: "మిగిలిన బకాయి (Balance Due):",
+    prevDueLbl: "పాత బకాయి (Previous Due):",
+    totalPayableLbl: "మొత్తం చెల్లించవలసినది (Total Payable):",
     bankLbl: "బ్యాంక్ ఖాతా:",
     recvSign: "స్వీకర్త సంతకం",
-    authSign: "అధికారిక సంతకం"
+    authSign: "అధికారిక సంతకం",
+    kantaLbl: "కాంటా వెయి్రిడ్జ్ స్లిప్:"
   } : {
     titleInv: "TAX INVOICE",
     titleChallan: "DELIVERY CHALLAN",
@@ -805,9 +819,14 @@ function printTaxInvoiceDocument(inv, isChallan = false, currentBank = DEFAULT_B
     gstLbl: "GST (18%)",
     freightLbl: "Freight",
     grandTotal: "GRAND TOTAL",
+    paidLbl: "Paid / Advance:",
+    dueLbl: "Balance Due:",
+    prevDueLbl: "Previous Due:",
+    totalPayableLbl: "TOTAL PAYABLE:",
     bankLbl: "Bank Account:",
     recvSign: "Receiver Signature",
-    authSign: "Authorized Signatory"
+    authSign: "Authorized Signatory",
+    kantaLbl: "Weighbridge / Kanta Slip:"
   };
 
   const html = `<!doctype html><html><head><meta charset="utf-8"/><title>${isChallan ? labels.titleChallan : labels.titleInv} - ${inv.id}</title><style>body { font-family: Arial, sans-serif; padding: 20px; color: #111; max-width: 800px; margin: auto; } .header { border-bottom: 3px solid #ea580c; padding-bottom: 10px; display: flex; justify-content: space-between; } table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 13px; } th, td { border: 1px solid #cbd5e1; padding: 8px; text-align: left; } th { background: #0A1931; color: #fff; } .text-right { text-align: right; }</style></head><body>
@@ -815,10 +834,13 @@ function printTaxInvoiceDocument(inv, isChallan = false, currentBank = DEFAULT_B
   <p><strong>${labels.billedTo}</strong> ${inv.customer} (Ph: ${inv.phone})<br/><strong>${labels.site}</strong> ${inv.address} | <strong>${labels.vehicle}</strong> ${inv.vehicle}</p>
   <table><thead><tr><th>${labels.sno}</th><th>${labels.desc}</th><th class="text-right">${labels.qty}</th>${!isChallan ? `<th class="text-right">${labels.rate}</th><th class="text-right">${labels.amt}</th>` : ''}</tr></thead>
   <tbody>${inv.items.map((it, i)=>`<tr><td>${i+1}</td><td>${it.n}</td><td class="text-right"><strong>${it.q} ${it.u}</strong></td>${!isChallan ? `<td class="text-right">₹${it.p}</td><td class="text-right">₹${it.q*it.p}</td>` : ''}</tr>`).join('')}
-  ${!isChallan ? `<tr style="font-weight:bold;"><td colspan="4" class="text-right">${labels.subtotal}</td><td class="text-right">₹${taxable.toFixed(2)}</td></tr><tr><td colspan="4" class="text-right">${labels.gstLbl}</td><td class="text-right">₹${gst.toFixed(2)}</td></tr>${freight>0?`<tr><td colspan="4" class="text-right" style="color:#ea580c;">${labels.freightLbl}</td><td class="text-right" style="color:#ea580c;">+₹${freight.toFixed(2)}</td></tr>`:''}<tr style="font-size:15px; color:#ea580c; font-weight:900;"><td colspan="4" class="text-right">${labels.grandTotal}</td><td class="text-right">₹${grand}.00</td></tr>` : ''}
+  ${!isChallan ? `<tr style="font-weight:bold;"><td colspan="4" class="text-right">${labels.subtotal}</td><td class="text-right">₹${taxable.toFixed(2)}</td></tr><tr><td colspan="4" class="text-right">${labels.gstLbl}</td><td class="text-right">₹${gst.toFixed(2)}</td></tr>${freight>0?`<tr><td colspan="4" class="text-right" style="color:#ea580c;">${labels.freightLbl}</td><td class="text-right" style="color:#ea580c;">+₹${freight.toFixed(2)}</td></tr>`:''}<tr style="font-size:15px; color:#ea580c; font-weight:900;"><td colspan="4" class="text-right">${labels.grandTotal}</td><td class="text-right">₹${grand}.00</td></tr><tr><td colspan="4" class="text-right" style="color:#16a34a;">${labels.paidLbl}</td><td class="text-right" style="color:#16a34a;">-₹${paid.toFixed(2)}</td></tr><tr><td colspan="4" class="text-right" style="color:#dc2626;">${labels.dueLbl}</td><td class="text-right" style="color:#dc2626;">₹${due.toFixed(2)}</td></tr>${prevDue>0?`<tr><td colspan="4" class="text-right">${labels.prevDueLbl}</td><td class="text-right">₹${prevDue.toFixed(2)}</td></tr><tr style="font-size:16px; font-weight:900; background:#fff7ed;"><td colspan="4" class="text-right">${labels.totalPayableLbl}</td><td class="text-right">₹${totalPayable.toFixed(2)}</td></tr>`:''}` : ''}
   </tbody></table>
-  ${!isChallan ? `<div style="margin-top:15px; font-size:12px; background:#f8fafc; padding:10px; border:1px solid #cbd5e1; display:flex; justify-content:space-between; align-items:center;"><div>${labels.bankLbl} A/c Holder: <b>${bank.accountHolder || 'AS Enterprises'}</b> | Bank: <b>${bank.bankName}</b> | A/c: <b>${bank.accNo}</b> | IFSC: <b>${bank.ifsc}</b> | UPI: <b>${getUPI()}</b></div><div style="text-align:right;"><img src="https://api.qrserver.com/v1/create-qr-code/?size=80x80&data=upi://pay?pa=${encodeURIComponent(getUPI())}%26pn=${encodeURIComponent(bank.accountHolder || 'AS Enterprises')}%26am=${grand}%26cu=INR" width="70" height="70" alt="QR"/></div></div>` : ''}
-  <div style="margin-top:30px; display:flex; justify-content:space-between; font-size:12px;"><div>${labels.recvSign}</div><div style="text-align:right;">For <b>${profile.name || 'AS Enterprises'}</b><br/><br/>${labels.authSign}</div></div>
+  
+  ${inv.kantaImg ? `<div style="margin-top:15px; padding:10px; border:1px solid #cbd5e1; background:#f8fafc;"><strong>${labels.kantaLbl}</strong><div style="margin-top:5px;"><img src="${inv.kantaImg}" style="max-height:180px; max-width:100%; object-fit:contain; border-radius:6px; border:1px solid #94a3b8;" alt="Weighbridge Slip"/></div></div>` : ''}
+
+  ${!isChallan ? `<div style="margin-top:15px; font-size:12px; background:#f8fafc; padding:10px; border:1px solid #cbd5e1; display:flex; justify-content:space-between; align-items:center;"><div>${labels.bankLbl} A/c Holder: <b>${bank.accountHolder || 'AS Enterprises'}</b> | Bank: <b>${bank.bankName}</b> | A/c: <b>${bank.accNo}</b> | IFSC: <b>${bank.ifsc}</b> | UPI: <b>${getUPI()}</b></div><div style="text-align:right;"><img src="https://api.qrserver.com/v1/create-qr-code/?size=80x80&data=upi://pay?pa=${encodeURIComponent(getUPI())}%26pn=${encodeURIComponent(bank.accountHolder || 'AS Enterprises')}%26am=${totalPayable > 0 ? totalPayable : grand}%26cu=INR" width="70" height="70" alt="QR"/></div></div>` : ''}
+  <div style="margin-top:30px; display:flex; justify-content:space-between; font-size:12px;"><div>${labels.recvSign}<br/>${inv.signature ? `<img src="${inv.signature}" style="max-height:50px; margin-top:5px;" alt="Signature"/>` : ''}</div><div style="text-align:right;">For <b>${profile.name || 'AS Enterprises'}</b><br/><br/>${labels.authSign}</div></div>
   </body></html>`;
 
   const blob = new Blob([html], { type: 'text/html;charset=utf-8' });
@@ -1261,9 +1283,9 @@ function AdminScreen({
     else if (actionType === "challan") printTaxInvoiceDocument(newInv, true, bankInfo, lang, gstProfiles);
     else if (actionType === "wa") {
       if (!invPhone.trim()) { alert("Enter mobile number"); return; }
-      let msg = `*${(activeProfile.name || 'Enterprise').toUpperCase()} - TAX INVOICE*\nGSTIN: ${activeProfile.gstin || 'N/A'}\nInv: ${newInv.id}\nCustomer: ${newInv.customer}\n${billItems.map(i=>`• ${i.n}: ${i.q} ${i.u} = ₹${i.q*i.p}`).join('\n')}\nGST (18%): ₹${gst.toFixed(2)}\n${freight>0?`Freight: ₹${freight}\n`:''}Current Bill: ₹${currentBillGrand}`;
+      let msg = `*${(activeProfile.name || 'Enterprise').toUpperCase()} - TAX INVOICE*\nGSTIN: ${activeProfile.gstin || 'N/A'}\nInv: ${newInv.id}\nCustomer: ${newInv.customer}\n${billItems.map(i=>`• ${i.n}: ${i.q} ${i.u} = ₹${i.q*i.p}`).join('\n')}\nGST (18%): ₹${gst.toFixed(2)}\n${freight>0?`Freight: ₹${freight}\n`:''}Current Bill: ₹${currentBillGrand}\nPaid/Advance: ₹${paidAmt}\nBalance Due: ₹${newDueThisBill}`;
       if (customerPreviousDue > 0) {
-        msg += `\nPrevious Due: ₹${customerPreviousDue}\n*Total Payable: ₹${totalPayableWithPrevious}*`;
+        msg += `\nPrevious Due: ₹${customerPreviousDue}\n*TOTAL PAYABLE: ₹${totalPayableWithPrevious}*`;
       }
       window.open(`https://wa.me/91${invPhone.replace(/\D/g,'').slice(-10)}?text=${encodeURIComponent(msg)}`, '_blank');
     }
@@ -1467,6 +1489,8 @@ function AdminScreen({
             const adjTaxable = Math.max(0, taxable - disc);
             const gst = adjTaxable * 0.18;
             const grand = Math.round(adjTaxable + gst + freight);
+            const paid = parseFloat(invPaid) || 0;
+            const due = Math.max(0, grand - paid);
             const totalPayableAll = grand + customerPreviousDue;
 
             return (
@@ -1475,6 +1499,8 @@ function AdminScreen({
                 <div className="flex justify-between text-stone-700"><span>GST Total (18%):</span><span className="font-bold">₹{gst.toFixed(2)}</span></div>
                 {freight > 0 && <div className="flex justify-between text-orange-800 font-bold"><span>Freight:</span><span>+₹{freight.toFixed(2)}</span></div>}
                 <div className="flex justify-between text-sm font-black text-stone-900 pt-1 border-t"><span>Current Bill Grand Total:</span><span>₹{grand.toLocaleString('en-IN')}.00</span></div>
+                <div className="flex justify-between text-emerald-700 font-bold"><span>Paid / Advance:</span><span>-₹{paid.toLocaleString('en-IN')}.00</span></div>
+                <div className="flex justify-between text-red-600 font-bold"><span>Balance Due (इस बिल का बकाया):</span><span>₹{due.toLocaleString('en-IN')}.00</span></div>
                 {customerPreviousDue > 0 ? (
                   <>
                     <div className="flex justify-between text-red-700 font-bold bg-red-100 p-1.5 rounded">
@@ -1810,10 +1836,7 @@ function AdminScreen({
               if(invoices.label===0){alert("No invoices"); return;}
               downloadCSV(`Sales.csv`, [["ID","Date","Customer","Grand Total"], ...invoices.map(i=>[i.id,i.date,i.customer,i.grand])]);
             }} className="bg-emerald-700 text-white font-bold py-2 rounded text-xs">Export Sales</button>
-            <button onClick={()=>{
-              if(ledger.length===0){alert("No khata"); return;}
-              downloadCSV(`Khata.csv`, [["ID","Date","Customer","Amount","Type"], ...ledger.map(l=>[l.id,l.date,l.customer,l.amt,l.type])]);
-            }} className="bg-amber-700 text-white font-bold py-2 rounded text-xs">Export Khata</button></div>
+            <button onClick={()}.bind(this)} className="bg-amber-700 text-white font-bold py-2 rounded text-xs">Export Khata</button></div>
           </div>
           <div className="bg-red-50 border-2 border-red-500 rounded-2xl p-5"><button onClick={()=>{if(prompt("Enter PIN (6301) to reset:")==="6301"){setOrders([]); setInvoices([]); setLedger([]); setCustomers([]); setExpenses([]); setWorkerLedger(); localStorage.clear(); alert("Reset done!"); window.location.reload();}}} className="w-full bg-red-600 text-white font-black py-2.5 rounded text-xs">Factory Reset All Old Bills & Data</button></div>
         </div>
