@@ -143,7 +143,7 @@ export default function App() {
   const [invPhone, setInvPhone] = useState("");
   const [invAddress, setInvAddress] = useState("");
   const [billItems, setBillItems] = useState([
-    { n: CLEAN_FRESH_PRODUCTS[2].n, b: CLEAN_FRESH_PRODUCTS[2].b, q: 10, p: CLEAN_FRESH_PRODUCTS[2].p, u: "kg" }
+    { n: "", b: "", q: "", p: "", u: "" }
   ]);
 
   const t = T[lang];
@@ -811,7 +811,7 @@ function printTaxInvoiceDocument(inv, isChallan = false, currentBank = DEFAULT_B
   };
 
   const html = `<!doctype html><html><head><meta charset="utf-8"/><title>${isChallan ? labels.titleChallan : labels.titleInv} - ${inv.id}</title><style>body { font-family: Arial, sans-serif; padding: 20px; color: #111; max-width: 800px; margin: auto; } .header { border-bottom: 3px solid #ea580c; padding-bottom: 10px; display: flex; justify-content: space-between; } table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 13px; } th, td { border: 1px solid #cbd5e1; padding: 8px; text-align: left; } th { background: #0A1931; color: #fff; } .text-right { text-align: right; }</style></head><body>
-  <div class="header"><div><h1 style="margin:0; color:#0A1931;">${profile.name || 'AS Enterprises'}</h1><div>Wholesale Building Materials Supply — ${profile.address || 'Hyderabad'}</div><div>GSTIN: <b>${profile.gstin || 'UNREGISTERED'}</b> · Ph: ${CFG.phone}</div></div><div style="text-align:right;"><strong>${isChallan ? labels.titleChallan : labels.titleInv}</strong><br/>No: ${inv.id}<br/>Date: ${new Date(inv.date).toLocaleDateString('en-IN')}</div></div>
+  <div class="header"><div><h1 style="margin:0; color:#0A1931;">${profile.name || 'AS Enterprises'}</h1><div>Wholesale Building Materials Supply — ${profile.address || 'Hyderabad'}</div><div>GSTIN: <b>${profile.gstin || 'UNREGISTERED'}</b> · Ph: ${CFG.phone}</div></div><div style="text-align:right;"><strong>${isChallan ? labels.titleChallan : labels.titleInv}</strong><br/>No: ${inv.id}<br/>Date: ${new Date(inv.date).toLocaleString('en-IN')}</div></div>
   <p><strong>${labels.billedTo}</strong> ${inv.customer} (Ph: ${inv.phone})<br/><strong>${labels.site}</strong> ${inv.address} | <strong>${labels.vehicle}</strong> ${inv.vehicle}</p>
   <table><thead><tr><th>${labels.sno}</th><th>${labels.desc}</th><th class="text-right">${labels.qty}</th>${!isChallan ? `<th class="text-right">${labels.rate}</th><th class="text-right">${labels.amt}</th>` : ''}</tr></thead>
   <tbody>${inv.items.map((it, i)=>`<tr><td>${i+1}</td><td>${it.n}</td><td class="text-right"><strong>${it.q} ${it.u}</strong></td>${!isChallan ? `<td class="text-right">₹${it.p}</td><td class="text-right">₹${it.q*it.p}</td>` : ''}</tr>`).join('')}
@@ -833,7 +833,7 @@ function printCustomerStatement(customerName, entries, currentLang = "EN") {
   const html = `<!doctype html><html><head><meta charset="utf-8"/><title>Khata Statement - ${customerName}</title><style>body { font-family: Arial; padding: 20px; max-width:800px; margin:auto; } table { width:100%; border-collapse:collapse; margin-top:15px; font-size:13px; } th,td { border:1px solid #cbd5e1; padding:8px; text-align:left; } th { background:#0A1931; color:#fff; }</style></head><body>
   <h2>${CFG.brand} - Khata Statement: ${customerName}</h2>
   <table><thead><tr><th>Date</th><th>Note</th><th style="text-align:right;">Debit (जमा)</th><th style="text-align:right;">Credit (उधारी)</th></tr></thead>
-  <tbody>${custEntries.map(e=>`<tr><td>${new Date(e.date).toLocaleDateString()}</td><td>${e.note||''}</td><td style="text-align:right; color:#16a34a;">${e.type==='debit'?'₹'+e.amt:'-'}</td><td style="text-align:right; color:#dc2626;">${e.type==='credit'?'₹'+e.amt:'-'}</td></tr>`).join('')}</tbody></table>
+  <tbody>${custEntries.map(e=>`<tr><td>${new Date(e.date).toLocaleString()}</td><td>${e.note||''}</td><td style="text-align:right; color:#16a34a;">${e.type==='debit'?'₹'+e.amt:'-'}</td><td style="text-align:right; color:#dc2626;">${e.type==='credit'?'₹'+e.amt:'-'}</td></tr>`).join('')}</tbody></table>
   <h3>Closing Balance: ₹${Math.abs(balance)} ${balance>=0?'(Due to Receive)':'(Advance)'}</h3></body></html>`;
   const win = window.open(URL.createObjectURL(new Blob([html], { type: 'text/html;charset=utf-8' })), '_blank');
   if (win) win.focus();
@@ -990,20 +990,84 @@ function KhataScreen({ t, ledger, setLedger, upi, bankInfo, lang, user }) {
 }
 
 function EstimatorScreen({ t }) {
-  const [len, setLen] = useState(""); const [wid, setWid] = useState(""); const [ht, setHt] = useState("");
+  const [len, setLen] = useState(""); 
+  const [wid, setWid] = useState(""); 
+  const [ht, setHt] = useState("");
+  const [thk, setThk] = useState("");
   const [res, setRes] = useState(null);
+
+  const calculateEstimate = () => {
+    const l = parseFloat(len) || 0;
+    const w = parseFloat(wid) || 0;
+    const h = parseFloat(ht) || 0;
+    const tVal = parseFloat(thk) || 6; 
+    
+    if(l && w) {
+      const sqft = l * w;
+      const cementBags = Math.ceil(sqft * (tVal / 6) * 0.4);
+      const steelTons = ((sqft * 0.4) / 1000).toFixed(2);
+      const sandCft = Math.ceil(sqft * (tVal / 6) * 0.8);
+      const bricksCount = Math.ceil(sqft * 8);
+      const wastage = Math.ceil((sqft * 0.05)); 
+      
+      setRes({
+        cement: cementBags,
+        tmt: steelTons,
+        sand: sandCft,
+        bricks: bricksCount,
+        wastage: wastage
+      });
+    } else {
+      alert("Please enter Length and Width");
+    }
+  };
+
   return (
     <div className="space-y-6">
       <h2 className="font-display font-black text-3xl">{t.estimator}</h2>
-      <div className="bg-white border-2 border-orange-500 rounded-2xl p-6 space-y-4">
-        <div className="grid grid-cols-3 gap-3"><input type="number" value={len} onChange={e=>setLen(e.target.value)} placeholder="Length (ft)" className="border-2 rounded-lg p-2" /><input type="number" value={wid} onChange={e=>setWid(e.target.value)} placeholder="Width (ft)" className="border-2 rounded-lg p-2" /><input type="number" value={ht} onChange={e=>setHt(e.target.value)} placeholder="Height (ft)" className="border-2 rounded-lg p-2" /></div>
-        <button onClick={()=>{ const l=parseFloat(len)||0, w=parseFloat(wid)||0, h=parseFloat(ht)||0; if(l&&w&&h) setRes({cement:Math.ceil(l*w*0.4), tmt:(l*w*4/1000).toFixed(2), sand:Math.ceil(l*w*h*0.5), bricks:Math.ceil(l*w*55)}); }} className="w-full bg-orange-500 text-white font-bold py-3 rounded-full">Calculate</button>
+      <div className="bg-white border-2 border-orange-500 rounded-2xl p-6 space-y-4 shadow-sm">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          <div>
+            <label className="text-xs font-bold text-stone-600 block mb-1">Length (ft)</label>
+            <input type="number" value={len} onChange={e=>setLen(e.target.value)} placeholder="e.g. 30" className="w-full border-2 rounded-lg p-2.5 text-sm outline-none" />
+          </div>
+          <div>
+            <label className="text-xs font-bold text-stone-600 block mb-1">Width (ft)</label>
+            <input type="number" value={wid} onChange={e=>setWid(e.target.value)} placeholder="e.g. 40" className="w-full border-2 rounded-lg p-2.5 text-sm outline-none" />
+          </div>
+          <div>
+            <label className="text-xs font-bold text-stone-600 block mb-1">Height (ft)</label>
+            <input type="number" value={ht} onChange={e=>setHt(e.target.value)} placeholder="e.g. 10" className="w-full border-2 rounded-lg p-2.5 text-sm outline-none" />
+          </div>
+          <div>
+            <label className="text-xs font-bold text-stone-600 block mb-1">Thickness (inch)</label>
+            <select value={thk} onChange={e=>setThk(e.target.value)} className="w-full border-2 rounded-lg p-2.5 text-sm outline-none bg-white font-bold">
+              <option value="">Select Thickness</option>
+              <option value="4">4 inch</option>
+              <option value="6">6 inch</option>
+              <option value="8">8 inch</option>
+              <option value="10">10 inch</option>
+              <option value="12">12 inch</option>
+            </select>
+          </div>
+        </div>
+        <button onClick={calculateEstimate} className="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 rounded-xl shadow">Calculate with Wastage & Requirements</button>
       </div>
-      {res && <div className="bg-amber-50 border-2 border-orange-500 rounded-2xl p-5 grid grid-cols-2 gap-3"><Stat label="Cement Bags" val={res.cement} /><Stat label="TMT Tons" val={res.tmt} /><Stat label="Sand CFT" val={res.sand} /><Stat label="Bricks" val={res.bricks} /></div>}
+      {res && (
+        <div className="bg-amber-50 border-2 border-orange-500 rounded-2xl p-5 space-y-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+            <Stat label="Cement Bags" val={res.cement} />
+            <Stat label="TMT Steel (Tons)" val={res.tmt} />
+            <Stat label="Sand (CFT)" val={res.sand} />
+            <Stat label="Bricks / Blocks" val={res.bricks} />
+            <Stat label="Estimated Wastage (5%)" val={`${res.wastage} units`} />
+          </div>
+        </div>
+      )}
     </div>
   );
 }
-const Stat = ({ label, val }) => (<div className="bg-white rounded-xl p-3 border-2 border-orange-200"><div className="font-display font-black text-2xl">{val}</div><div className="text-xs text-stone-600 font-bold">{label}</div></div>);
+const Stat = ({ label, val }) => (<div className="bg-white rounded-xl p-3 border-2 border-orange-200"><div className="font-display font-black text-2xl text-stone-900">{val}</div><div className="text-xs text-stone-600 font-bold">{label}</div></div>);
 
 function LoginScreen({ t, onLogin }) {
   const [mob, setMob] = useState("");
@@ -1061,8 +1125,8 @@ function AdminScreen({
   const [selectedProfileId, setSelectedProfileId] = useState(gstProfiles[0]?.id || "firm_1");
   const [invVehicle, setInvVehicle] = useState("");
   const [invEway, setInvEway] = useState("");
-  const [invDiscount, setInvDiscount] = useState("0");
-  const [invFreight, setInvFreight] = useState("0");
+  const [invDiscount, setInvDiscount] = useState("");
+  const [invFreight, setInvFreight] = useState("");
   const [invPaid, setInvPaid] = useState("");
   const [kantaImg, setKantaImg] = useState("");
   const [signatureData, setSignatureData] = useState("");
@@ -1158,7 +1222,7 @@ function AdminScreen({
     reader.readAsDataURL(file);
   };
 
-  const addBillItem = () => setBillItems([...billItems, { n: "", b: "Standard", q: 1, p: 0, u: "kg" }]);
+  const addBillItem = () => setBillItems([...billItems, { n: "", b: "", q: "", p: "", u: "" }]);
   const removeBillItem = (idx) => setBillItems(billItems.filter((_, i) => i !== idx));
 
   const handleCreateInvoice = (actionType) => {
@@ -1242,8 +1306,8 @@ function AdminScreen({
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <div><label className="text-xs font-bold text-stone-600 block mb-1">Customer / Firm Name *</label><input type="text" value={invCust} onChange={e=>setInvCust(e.target.value)} placeholder="Ramesh Builders" className="w-full border-2 rounded-lg p-2.5 text-sm outline-none" /></div>
-            <div><label className="text-xs font-bold text-stone-600 block mb-1">WhatsApp Number *</label><input type="tel" value={invPhone} onChange={e=>setInvPhone(e.target.value)} placeholder="10-digit mobile" className="w-full border-2 rounded-lg p-2.5 text-sm outline-none" /></div>
+            <div><label className="text-xs font-bold text-stone-600 block mb-1">Customer / Firm Name *</label><input type="text" value={invCust} onChange={e=>setInvCust(e.target.value)} placeholder="Enter customer name..." className="w-full border-2 rounded-lg p-2.5 text-sm outline-none" /></div>
+            <div><label className="text-xs font-bold text-stone-600 block mb-1">WhatsApp Number *</label><input type="tel" value={invPhone} onChange={e=>setInvPhone(e.target.value)} placeholder="Enter mobile number..." className="w-full border-2 rounded-lg p-2.5 text-sm outline-none" /></div>
           </div>
 
           {customerPreviousDue > 0 ? (
@@ -1259,9 +1323,9 @@ function AdminScreen({
           )}
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-            <div><label className="text-xs font-bold text-stone-600 block mb-1">Delivery Address</label><input type="text" value={invAddress} onChange={e=>setInvAddress(e.target.value)} placeholder="Site location" className="w-full border-2 rounded-lg p-2 text-sm" /></div>
-            <div><label className="text-xs font-bold text-stone-600 block mb-1">Vehicle No</label><input type="text" value={invVehicle} onChange={e=>setInvVehicle(e.target.value)} placeholder="TS 08 UB 1234" className="w-full border-2 rounded-lg p-2 text-sm" /></div>
-            <div><label className="text-xs font-bold text-stone-600 block mb-1">E-Way Bill No (&gt; ₹50k)</label><input type="text" value={invEway} onChange={e=>setInvEway(e.target.value)} placeholder="Optional" className="w-full border-2 rounded-lg p-2 text-sm font-bold" /></div>
+            <div><label className="text-xs font-bold text-stone-600 block mb-1">Delivery Address</label><input type="text" value={invAddress} onChange={e=>setInvAddress(e.target.value)} placeholder="Enter site address..." className="w-full border-2 rounded-lg p-2 text-sm" /></div>
+            <div><label className="text-xs font-bold text-stone-600 block mb-1">Vehicle No</label><input type="text" value={invVehicle} onChange={e=>setInvVehicle(e.target.value)} placeholder="Enter vehicle no..." className="w-full border-2 rounded-lg p-2 text-sm" /></div>
+            <div><label className="text-xs font-bold text-stone-600 block mb-1">E-Way Bill No (&gt; ₹50k)</label><input type="text" value={invEway} onChange={e=>setInvEway(e.target.value)} placeholder="Enter e-way bill..." className="w-full border-2 rounded-lg p-2 text-sm font-bold" /></div>
           </div>
 
           <div className="space-y-2 border rounded-xl p-3 bg-stone-50">
@@ -1317,7 +1381,7 @@ function AdminScreen({
                         value={item.q} 
                         onChange={e => {
                           const next = [...billItems];
-                          next[idx].q = parseFloat(e.target.value) || 0;
+                          next[idx].q = e.target.value === "" ? "" : parseFloat(e.target.value) || 0;
                           setBillItems(next);
                         }} 
                         placeholder="Qty" 
@@ -1327,7 +1391,7 @@ function AdminScreen({
                     <div className="w-20">
                       <label className="text-[9px] text-stone-500 font-bold block">Unit</label>
                       <select 
-                        value={item.u || "kg"} 
+                        value={item.u || ""} 
                         onChange={e => {
                           const next = [...billItems];
                           next[idx].u = e.target.value;
@@ -1335,6 +1399,7 @@ function AdminScreen({
                         }} 
                         className="w-full border-2 rounded-lg p-1.5 text-xs font-bold bg-white text-stone-800"
                       >
+                        <option value="">Select</option>
                         <option value="kg">kg</option>
                         <option value="bag">bag</option>
                         <option value="pcs">pcs</option>
@@ -1352,7 +1417,7 @@ function AdminScreen({
                       value={item.p} 
                       onChange={e => {
                         const next = [...billItems];
-                        next[idx].p = parseFloat(e.target.value) || 0;
+                        next[idx].p = e.target.value === "" ? "" : parseFloat(e.target.value) || 0;
                         setBillItems(next);
                       }} 
                       placeholder="Rate ₹" 
@@ -1385,13 +1450,13 @@ function AdminScreen({
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-            <div><label className="text-xs font-bold text-stone-600 block mb-1">Discount ₹</label><input type="number" value={invDiscount} onChange={e=>setInvDiscount(e.target.value)} className="w-full border-2 rounded-lg p-2 text-sm font-bold" /></div>
-            <div><label className="text-xs font-bold text-orange-600 block mb-1">Freight (भाड़ा ₹)</label><input type="number" value={invFreight} onChange={e=>setInvFreight(e.target.value)} className="w-full border-2 border-orange-300 rounded-lg p-2 text-sm font-black bg-orange-50" /></div>
-            <div><label className="text-xs font-bold text-stone-600 block mb-1">Paid / Advance ₹</label><input type="number" value={invPaid} onChange={e=>setInvPaid(e.target.value)} className="w-full border-2 rounded-lg p-2 text-sm font-bold" /></div>
+            <div><label className="text-xs font-bold text-stone-600 block mb-1">Discount ₹</label><input type="number" value={invDiscount} onChange={e=>setInvDiscount(e.target.value)} placeholder="Enter discount..." className="w-full border-2 rounded-lg p-2 text-sm font-bold" /></div>
+            <div><label className="text-xs font-bold text-orange-600 block mb-1">Freight (भाड़ा ₹)</label><input type="number" value={invFreight} onChange={e=>setInvFreight(e.target.value)} placeholder="Enter freight..." className="w-full border-2 border-orange-300 rounded-lg p-2 text-sm font-black bg-orange-50" /></div>
+            <div><label className="text-xs font-bold text-stone-600 block mb-1">Paid / Advance ₹</label><input type="number" value={invPaid} onChange={e=>setInvPaid(e.target.value)} placeholder="Enter paid amount..." className="w-full border-2 rounded-lg p-2 text-sm font-bold" /></div>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 p-3 bg-stone-50 border rounded-xl">
-            <div><label className="text-xs font-bold text-stone-600 block mb-1">Weighbridge Slip</label><input type="file" accept="image/*" capture="environment" onChange={async(e)=>{if(e.target.files[0]) setKantaImg(await fileToDataURL(e.target.files[0]));}} className="w-full text-xs" /></div>
+            <div><label className="text-xs font-bold text-stone-600 block mb-1">Weighbridge Slip</label><input type="file" accept="image/*" onChange={async(e)=>{if(e.target.files[0]) setKantaImg(await fileToDataURL(e.target.files[0]));}} className="w-full text-xs" /></div>
             <div><SignaturePad onSave={setSignatureData} /></div>
           </div>
 
@@ -1447,7 +1512,7 @@ function AdminScreen({
               <div key={p.id} className="p-3 border rounded-xl space-y-2 bg-stone-50">
                 <div className="flex items-center gap-3">
                   <div className="w-14 h-14 bg-stone-200 rounded-lg overflow-hidden flex items-center justify-center border">{p.img ? <img src={p.img} alt="" className="w-full h-full object-cover" /> : <span className="text-[9px] text-stone-400">No Img</span>}</div>
-                  <div className="flex-1 min-w-0"><div className="text-xs font-bold truncate">{p.n}</div><label className="cursor-pointer inline-flex items-center gap-1 bg-blue-600 text-white text-[10px] font-bold px-2 py-0.5 rounded mt-1"><Camera size={12} /> Photo<input type="file" accept="image/*" capture="environment" onChange={(e) => handleProductImageUpload(p.id, e.target.files[0])} className="hidden" /></label></div>
+                  <div className="flex-1 min-w-0"><div className="text-xs font-bold truncate">{p.n}</div><label className="cursor-pointer inline-flex items-center gap-1 bg-blue-600 text-white text-[10px] font-bold px-2 py-0.5 rounded mt-1"><Camera size={12} /> Photo<input type="file" accept="image/*" onChange={(e) => handleProductImageUpload(p.id, e.target.files[0])} className="hidden" /></label></div>
                   <button onClick={()=>{const updated = products.map(x => x.id === p.id ? { ...x, visible: x.visible === false ? true : false } : x); setProducts(updated); syncToFirestore(updated, workers, bankInfo, customers, expenses, workerLedger, gstProfiles);}} className={`p-2 rounded text-xs font-bold ${p.visible !== false ? 'bg-emerald-100 text-emerald-700' : 'bg-stone-200'}`}>{p.visible !== false ? <Eye size={14}/> : <EyeOff size={14}/>}</button>
                   <button onClick={()=>{const filtered = products.filter(x=>x.id!==p.id); setProducts(filtered); syncToFirestore(filtered, workers, bankInfo, customers, expenses, workerLedger, gstProfiles);}} className="text-red-500 p-2"><Trash2 size={16}/></button>
                 </div>
@@ -1767,7 +1832,7 @@ function LoyaltyScreen({ orders }) {
 function EmiScreen() {
   const [amt, setAmt] = useState("100000"); const [m, setM] = useState("6");
   const emi = Math.round((parseFloat(amt)||0) / (parseInt(m)||1));
-  return (<div className="space-y-4"><h2 className="font-display font-black text-3xl">EMI Calculator</h2><div className="bg-white border-2 rounded-2xl p-5 space-y-3"><input type="number" value={amt} onChange={e=>setAmt(e.target.value)} placeholder="Amount" className="w-full border-2 rounded p-3 font-bold text-lg" /><input type="number" value={m} onChange={e=>setM(e.target.value)} placeholder="Months" className="w-full border-2 rounded p-3" /></div><div className="bg-emerald-700 text-white rounded-2xl p-6"><div className="text-xs uppercase">Monthly EMI</div><div className="font-black text-4xl mt-1">₹{emi.toLocaleString()}</div></div></div>);
+  return (<div className="space-y-4"><h2 className="font-display font-black text-3xl">EMI Calculator</h2><div className="bg-white border-2 rounded-2xl p-5 space-y-3"><input type="number" value={amt} onChange={e=>setAmt(e.target.value)} placeholder="Amount" className="w-full border-2 rounded p-3 font-bold text-lg" /><input type="number" value={m} onChange={e=>setM(m.target.value)} placeholder="Months" className="w-full border-2 rounded p-3" /></div><div className="bg-emerald-700 text-white rounded-2xl p-6"><div className="text-xs uppercase">Monthly EMI</div><div className="font-black text-4xl mt-1">₹{emi.toLocaleString()}</div></div></div>);
 }
 
 const MailIcon = () => (
