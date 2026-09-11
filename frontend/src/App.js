@@ -1836,7 +1836,10 @@ function AdminScreen({
               if(invoices.label===0){alert("No invoices"); return;}
               downloadCSV(`Sales.csv`, [["ID","Date","Customer","Grand Total"], ...invoices.map(i=>[i.id,i.date,i.customer,i.grand])]);
             }} className="bg-emerald-700 text-white font-bold py-2 rounded text-xs">Export Sales</button>
-            <button onClick={()}.bind(this)} className="bg-amber-700 text-white font-bold py-2 rounded text-xs">Export Khata</button></div>
+            <button onClick={()=>{
+              if(ledger.length===0){alert("No khata"); return;}
+              downloadCSV(`Khata.csv`, [["ID","Date","Customer","Amount","Type"], ...ledger.map(l=>[l.id,l.date,l.customer,l.amt,l.type])]);
+            }} className="bg-amber-700 text-white font-bold py-2 rounded text-xs">Export Khata</button></div>
           </div>
           <div className="bg-red-50 border-2 border-red-500 rounded-2xl p-5"><button onClick={()=>{if(prompt("Enter PIN (6301) to reset:")==="6301"){setOrders([]); setInvoices([]); setLedger([]); setCustomers([]); setExpenses([]); setWorkerLedger(); localStorage.clear(); alert("Reset done!"); window.location.reload();}}} className="w-full bg-red-600 text-white font-black py-2.5 rounded text-xs">Factory Reset All Old Bills & Data</button></div>
         </div>
@@ -1855,7 +1858,7 @@ function LoyaltyScreen({ orders }) {
 function EmiScreen() {
   const [amt, setAmt] = useState("100000"); const [m, setM] = useState("6");
   const emi = Math.round((parseFloat(amt)||0) / (parseInt(m)||1));
-  return (<div className="space-y-4"><h2 className="font-display font-black text-3xl">EMI Calculator</h2><div className="bg-white border-2 rounded-2xl p-5 space-y-3"><input type="number" value={amt} onChange={e=>setAmt(e.target.value)} placeholder="Amount" className="w-full border-2 rounded p-3 font-bold text-lg" /><input type="number" value={m} onChange={e=>setM(m.target.value)} placeholder="Months" className="w-full border-2 rounded p-3" /></div><div className="bg-emerald-700 text-white rounded-2xl p-6"><div className="text-xs uppercase">Monthly EMI</div><div className="font-black text-4xl mt-1">₹{emi.toLocaleString()}</div></div></div>);
+  return (<div className="space-y-4"><h2 className="font-display font-black text-3xl">EMI Calculator</h2><div className="bg-white border-2 rounded-2xl p-5 space-y-3"><input type="number" value={amt} onChange={e=>setAmt(e.target.value)} placeholder="Amount" className="w-full border-2 rounded p-3 font-bold text-lg" /><input type="number" value={m} onChange={e=>setM(e.target.value)} placeholder="Months" className="w-full border-2 rounded p-3" /></div><div className="bg-emerald-700 text-white rounded-2xl p-6"><div className="text-xs uppercase">Monthly EMI</div><div className="font-black text-4xl mt-1">₹{emi.toLocaleString()}</div></div></div>);
 }
 
 const MailIcon = () => (
