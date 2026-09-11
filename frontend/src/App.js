@@ -68,9 +68,9 @@ const getHero = () => localStorage.getItem("bannerImg") || CFG.defaultHero;
 const getHeadline = () => localStorage.getItem("bannerText") || "";
 
 const T = {
-  EN: { b:"Build Stronger. Order Smarter.", c:"Cart", s:"Same-Day Delivery", w:"Wholesale Khata", g:"Brand Catalog", f:"Free Estimate", zip:"Download Full Site Backup", home:"Home", search:"Search Sariya, Cement, Sand, Bricks...", login:"Login", logout:"Logout", orders:"My Orders", admin:"Admin", call:"Call Now", wa:"WhatsApp", cart:"Cart", buy:"Add to Cart", total:"Total", checkout:"Place Order", address:"Delivery Address", cod:"Cash on Delivery", upi:"Pay via UPI", confirm:"Confirm Order", noResults:"No materials found. Add inventory from Admin Panel.", tracker:"Live Order Tracker", khata:"Wholesale Khata", catalog:"Brand Catalog", estimator:"Estimate Calculator", welcome:"Welcome", mobile:"Mobile Number", otp:"Enter OTP", sendOtp:"Send OTP", verify:"Verify & Login", pinLbl:"Admin Access", changeUpi:"Change UPI ID", currentUpi:"Current UPI", saveUpi:"Save UPI", zipInfo:"Full backup file", qty:"Qty (Weight)", stock:"In Stock", cat:"Category", all:"All", tmt:"Sariya (TMT)", cement:"Cement", sand:"Sand & Aggregate", brick:"Bricks", tools:"Tools", empty:"Cart is empty", noord:"No orders yet", ordid:"Order", status:"Status", pending:"Pending", scan:"Scan QR to Pay", payto:"Pay to", est:"Enter dimensions to estimate", len:"Length (ft)", wid:"Width (ft)", ht:"Height (ft)", need:"You need approx", bags:"bags of Cement", tons:"tons of Sariya", cft:"cft of Sand", bricks:"Bricks (approx)", calc:"Calculate", ledger:"Ledger", customer:"Customer", amt:"Amount", add:"Add Entry", credit:"Credit", debit:"Debit", note:"Note", del:"Delete", eta:"ETA Today", driver:"Driver", low:"LOW STOCK", tick:"★ Same-Day Delivery Across Hyderabad • Wholesale Rates • Genuine Brands • Instant WhatsApp Estimates ★" },
-  HI: { b:"मजबूत बनाएं। स्मार्ट ऑर्डर करें।", c:"टोकरी", s:"आज डिलीवरी", w:"थोक खाता", g:"ब्रांड कैटलॉग", f:"फ्री एस्टीमेट", zip:"साइट बैकअप डाउनलोड करें", home:"होम", search:"सरिया, सीमेंट, रेत, ईंट खोजें...", login:"लॉगिन", logout:"लॉगआउट", orders:"मेरे ऑर्डर", admin:"एडमिन", call:"कॉल करें", wa:"व्हाट्सएप", cart:"टोकरी", buy:"जोड़ें", total:"कुल", checkout:"ऑर्डर करें", address:"पता", cod:"कैश ऑन डिलीवरी", upi:"UPI से भुगतान", confirm:"पुष्टि करें", noResults:"सामान नहीं मिला। एडमिन पैनल से स्टॉक जोड़ें।", tracker:"लाइव ऑर्डर ट्रैकर", khata:"थोक खाता", catalog:"ब्रांड कैटलॉग", estimator:"अनुमान कैलकुलेटर", welcome:"स्वागत है", mobile:"मोबाइल नंबर", otp:"OTP दर्ज करें", sendOtp:"OTP भेजें", verify:"वेरीफाई करें", pinLbl:"एडमिन एक्सेस", changeUpi:"UPI बदलें", currentUpi:"मौजूदा UPI", saveUpi:"UPI सेव करें", zipInfo:"पूरा बैकअप", qty:"वज़न (किलो / बैग)", stock:"स्टॉक में", cat:"श्रेणी", all:"सभी", tmt:"सरिया (TMT)", cement:"सीमेंट", sand:"रेत/गिट्टी", brick:"ईंट", tools:"औजार", empty:"टोकरी खाली", noord:"कोई ऑर्डर नहीं", ordid:"ऑर्डर", status:"स्थिति", pending:"लंबित", scan:"QR स्कैन करें", payto:"भुगतान", est:"माप डालें", len:"लंबाई (फीट)", wid:"चौड़ाई (फीट)", ht:"ऊंचाई (फीट)", need:"आपको चाहिए", bags:"सीमेंट बैग", tons:"टन सरिया", cft:"cft रेत", bricks:"ईंटें", calc:"गणना करें", ledger:"बही", customer:"ग्राहक", amt:"राशि", add:"जोड़ें", credit:"जमा", debit:"नाम", note:"नोट", del:"हटाएं", eta:"आज पहुंचेगा", driver:"ड्राइवर", low:"स्टॉक कम", tick:"★ हैदराबाद में आज ही डिलीवरी • थोक रेट • असली ब्रांड • इंस्टेंट व्हाट्सएप एस्टीमेट ★" },
-  TE: { b:"బలంగా నిర్మించండి. తెలివిగా ఆర్డర్ చేయండి.", c:"బుట్ట", s:"ఈరోజే డెలివరీ", w:"హోల్‌సేల్ ఖాతా", g:"బ్రాండ్ కేటలాగ్", f:"ఉచిత అంచనా", zip:"బ్యాకప్ డౌన్‌లోడ్", home:"హోమ్", search:"సరియా, సిమెంట్, ఇసుక, ఇటుకలు...", login:"లాగిన్", logout:"లాగౌట్", orders:"నా ఆర్డర్లు", admin:"అడ్మిన్", call:"కాల్ చేయండి", wa:"వాట్సాప్", cart:"బుట్ట", buy:"జోడించు", మొత్తం:"మొత్తం", checkout:"ఆర్డర్ చేయండి", address:"చిరునామా", cod:"క్యాష్ ఆన్ డెలివరీ", upi:"UPI చెల్లింపు", confirm:"నిర్ధారించండి", noResults:"సరుకులు లేవు. అడ్మిన్ ప్యానెల్ నుండి జోడించండి.", tracker:"లైవ్ ఆర్డర్ ట్రాకర్", khata:"హోల్‌సేల్ ఖాతా", catalog:"బ్రాండ్ కేటలాగ్", estimator:"అంచనా కాలిక్యులేటర్", welcome:"స్వాగతం", mobile:"మొబైల్ నంబర్", otp:"OTP నమోదు", sendOtp:"OTP పంపండి", verify:"వెరిఫై చేయండి", pinLbl:"అడ్మిన్ యాక్సెస్", changeUpi:"UPI మార్చండి", currentUpi:"ప్రస్తుత UPI", saveUpi:"UPI సేవ్ చేయండి", zipInfo:"పూర్తి బ్యాకప్", qty:"పరిమాణం (కిలోలు)", stock:"స్టాక్‌లో", cat:"వర్గం", all:"అన్నీ", tmt:"సరియా (TMT)", cement:"సిమెంట్", sand:"ఇసుక/కంకర", brick:"ఇటుకలు", tools:"పరికరాలు", empty:"బుట్ట ఖాళీ", noord:"ఆర్డర్లు లేవు", ordid:"ఆర్డర్", status:"స్థితి", pending:"పెండింగ్", scan:"QR స్కాన్ చేయండి", payto:"చెల్లింపు", est:"కొలతలు ఇవ్వండి", len:"పొడవు (అడుగు)", wid:"వెడల్పు (అడుగు)", ht:"ఎత్తు (అడుగు)", need:"కావాలి", bags:"సిమెంట్ బస్తాలు", tons:"టన్నుల సరియా", cft:"cft ఇసుక", bricks:"ఇటుకలు", calc:"లెక్కించండి", ledger:"లెడ్జర్", customer:"కస్టమర్", amt:"మొత్తం", add:"జోడించు", credit:"క్రెడిట్", debit:"డెబిట్", note:"నోట్", del:"తొలగించు", eta:"ఈరోజు", driver:"డ్రाइवर", low:"స్టాక్ తక్కువ", tick:"★ హైదరాబాద్‌లో ఈరోజే డెలివరీ • హోల్‌సేల్ రేట్లు • అసలైన బ్రాండ్ • తక్షణ వాట్సాప్ అంచనా ★" }
+  EN: { b:"Build Stronger. Order Smarter.", c:"Cart", s:"Same-Day Delivery", w:"Wholesale Khata", g:"Brand Catalog", f:"Free Estimate", zip:"Download Full Site Backup", home:"Home", search:"Search Sariya, Cement, Sand, Bricks...", login:"Login", logout:"Logout", orders:"My Orders", admin:"Admin", call:"Call Now", wa:"WhatsApp", cart:"Cart", buy:"Add to Cart", total:"Total", checkout:"Place Order", address:"Delivery Address", cod:"Cash on Delivery", upi:"Pay via UPI", confirm:"Confirm Order", noResults:"No materials found. Add inventory from Admin Panel.", tracker:"Live Order Tracker", khata:"Wholesale Khata", catalog:"Brand Catalog", estimator:"AI Pro Estimator", welcome:"Welcome", mobile:"Mobile Number", otp:"Enter OTP", sendOtp:"Send OTP", verify:"Verify & Login", pinLbl:"Admin Access", changeUpi:"Change UPI ID", currentUpi:"Current UPI", saveUpi:"Save UPI", zipInfo:"Full backup file", qty:"Qty (Weight)", stock:"In Stock", cat:"Category", all:"All", tmt:"Sariya (TMT)", cement:"Cement", sand:"Sand & Aggregate", brick:"Bricks", tools:"Tools", empty:"Cart is empty", noord:"No orders yet", ordid:"Order", status:"Status", pending:"Pending", scan:"Scan QR to Pay", payto:"Pay to", est:"Enter dimensions to estimate", len:"Length (ft)", wid:"Width (ft)", ht:"Height (ft)", need:"You need approx", bags:"bags of Cement", tons:"tons of Sariya", cft:"cft of Sand", bricks:"Bricks (approx)", calc:"Calculate", ledger:"Ledger", customer:"Customer", amt:"Amount", add:"Add Entry", credit:"Credit", debit:"Debit", note:"Note", del:"Delete", eta:"ETA Today", driver:"Driver", low:"LOW STOCK", tick:"★ Same-Day Delivery Across Hyderabad • Wholesale Rates • Genuine Brands • Instant WhatsApp Estimates ★" },
+  HI: { b:"मजबूत बनाएं। स्मार्ट ऑर्डर करें।", c:"टोकरी", s:"आज डिलीवरी", w:"थोक खाता", g:"ब्रांड कैटलॉग", f:"फ्री एस्टीमेट", zip:"साइट बैकअप डाउनलोड करें", home:"होम", search:"सरिया, सीमेंट, रेत, ईंट खोजें...", login:"लॉगिन", logout:"लॉगआउट", orders:"मेरे ऑर्डर", admin:"एडमिन", call:"कॉल करें", wa:"व्हाट्सएप", cart:"टोकरी", buy:"जोड़ें", total:"कुल", checkout:"ऑर्डर करें", address:"पता", cod:"कैश ऑन डिलीवरी", upi:"UPI से भुगतान", confirm:"पुष्टि करें", noResults:"सामान नहीं मिला। एडमिन पैनल से स्टॉक जोड़ें।", tracker:"लाइव ऑर्डर ट्रैकर", khata:"थोक खाता", catalog:"ब्रांड कैटलॉग", estimator:"AI प्रो एस्टीमेटर", welcome:"स्वागत है", mobile:"मोबाइल नंबर", otp:"OTP दर्ज करें", sendOtp:"OTP भेजें", verify:"वेरीफाई करें", pinLbl:"एडमिन एक्सेस", changeUpi:"UPI बदलें", currentUpi:"मौजूदा UPI", saveUpi:"UPI सेव करें", zipInfo:"पूरा बैकअप", qty:"वज़न (किलो / बैग)", stock:"स्टॉक में", cat:"श्रेणी", all:"सभी", tmt:"सरिया (TMT)", cement:"सीमेंट", sand:"रेत/गिट्टी", brick:"ईंट", tools:"औजार", empty:"टोकरी खाली", noord:"कोई ऑर्डर नहीं", ordid:"ऑर्डर", status:"स्थिति", pending:"लंबित", scan:"QR स्कैन करें", payto:"भुगतान", est:"माप डालें", len:"लंबाई (फीट)", wid:"चौड़ाई (फीट)", ht:"ऊंचाई (फीट)", need:"आपको चाहिए", bags:"सीमेंट बैग", tons:"टन सरिया", cft:"cft रेत", bricks:"ईंटें", calc:"गणना करें", ledger:"बही", customer:"ग्राहक", amt:"राशि", add:"जोड़ें", credit:"जमा", debit:"नाम", note:"नोट", del:"हटाएं", eta:"आज पहुंचेगा", driver:"ड्राइवर", low:"स्टॉक कम", tick:"★ हैदराबाद में आज ही डिलीवरी • थोक रेट • असली ब्रांड • इंस्टेंट व्हाट्सएप एस्टीमेट ★" },
+  TE: { b:"బలంగా నిర్మించండి. తెలివిగా ఆర్డర్ చేయండి.", c:"బుట్ట", s:"ఈరోజే డెలివరీ", w:"హోల్‌సేల్ ఖాతా", g:"బ్రాండ్ కేటలాగ్", f:"ఉచిత అంచనా", zip:"బ్యాకప్ డౌన్‌లోడ్", home:"హోమ్", search:"సరియా, సిమెంట్, ఇసుక, ఇటుకలు...", login:"లాగిన్", logout:"లాగౌట్", orders:"నా ఆర్డర్లు", admin:"అడ్మిన్", call:"కాల్ చేయండి", wa:"వాట్సాప్", cart:"బుట్ట", buy:"జోడించు", మొత్తం:"మొత్తం", checkout:"ఆర్డర్ చేయండి", address:"చిరునామా", cod:"క్యాష్ ఆన్ డెలివరీ", upi:"UPI చెల్లింపు", confirm:"నిర్ధారించండి", noResults:"సరుకులు లేవు. అడ్మిన్ ప్యానెల్ నుండి జోడించండి.", tracker:"లైవ్ ఆర్డర్ ట్రాకర్", khata:"హోల్‌సేల్ ఖాతా", catalog:"బ్రాండ్ కేటలాగ్", estimator:"AI ప్రో ఎস্টিమేటర్", welcome:"స్వాగతం", mobile:"మొబైల్ నంబర్", otp:"OTP నమోదు", sendOtp:"OTP పంపండి", verify:"వెరిఫై చేయండి", pinLbl:"అడ్మిన్ యాక్సెస్", changeUpi:"UPI మార్చండి", currentUpi:"ప్రస్తుత UPI", saveUpi:"UPI సేవ్ చేయండి", zipInfo:"పూర్తి బ్యాకప్", qty:"పరిమాణం (కిలోలు)", stock:"స్టాక్‌లో", cat:"వర్గం", all:"అన్నీ", tmt:"సరియా (TMT)", cement:"సిమెంట్", sand:"ఇసుక/కంకర", brick:"ఇటుకలు", tools:"పరికరాలు", empty:"బుట్ట ఖాళీ", noord:"ఆర్డర్లు లేవు", ordid:"ఆర్డర్", status:"స్థితి", pending:"పెండింగ్", scan:"QR స్కాన్ చేయండి", payto:"చెల్లింపు", est:"కొలతలు ఇవ్వండి", len:"పొడవు (అడుగు)", wid:"వెడల్పు (అడుగు)", ht:"ఎత్తు (అడుగు)", need:"కావాలి", bags:"సిమెంట్ బస్తాలు", tons:"టన్నుల సరియా", cft:"cft ఇసుక", bricks:"ఇటుకలు", calc:"లెక్కించండి", ledger:"లెడ్జర్", customer:"కస్టమర్", amt:"మొత్తం", add:"జోడించు", credit:"క్రెడిట్", debit:"డెబిట్", note:"నోట్", del:"తొలగించు", eta:"ఈరోజు", driver:"డ్రైవర్", low:"స్టాక్ తక్కువ", tick:"★ హైదరాబాద్‌లో ఈరోజే డెలివరీ • హోల్‌సేల్ రేట్లు • అసలైన బ్రాండ్ • తక్షణ వాట్సాప్ అంచనా ★" }
 };
 
 const MAP = { sariya:'tmt', saria:'tmt', steel:'tmt', rod:'tmt', tmt:'tmt', cement:'cement', simenti:'cement', ppc:'cement', opc:'cement', ret:'sand', balu:'sand', sand:'sand', isuka:'sand', metal:'sand', aggregate:'sand', gitti:'sand', brick:'brick', eent:'brick', itukalu:'brick', block:'brick', wire:'tools', tool:'tools' };
@@ -1012,6 +1012,7 @@ function KhataScreen({ t, ledger, setLedger, upi, bankInfo, lang, user }) {
 }
 
 function EstimatorScreen({ t }) {
+  const [calcType, setCalcType] = useState("slab");
   const [len, setLen] = useState(""); 
   const [wid, setWid] = useState(""); 
   const [ht, setHt] = useState("");
@@ -1022,67 +1023,206 @@ function EstimatorScreen({ t }) {
     const l = parseFloat(len) || 0;
     const w = parseFloat(wid) || 0;
     const h = parseFloat(ht) || 0;
-    const tVal = parseFloat(thk) || 6; 
-    
-    if(l && w) {
+    const tVal = parseFloat(thk) || 6;
+
+    if (calcType === "slab") {
+      if (!l || !w) { alert("Please enter Length and Width"); return; }
       const sqft = l * w;
-      const cementBags = Math.ceil(sqft * (tVal / 6) * 0.4);
+      const thicknessFt = tVal / 12;
+      const volumeCft = sqft * thicknessFt;
+      const cementBags = Math.ceil(volumeCft * 0.8); // Approx 0.8 bags per cft for M20
       const steelTons = ((sqft * 0.4) / 1000).toFixed(2);
-      const sandCft = Math.ceil(sqft * (tVal / 6) * 0.8);
-      const bricksCount = Math.ceil(sqft * 8);
-      const wastage = Math.ceil((sqft * 0.05)); 
-      
+      const sandCft = Math.ceil(volumeCft * 0.45);
+      const aggregateCft = Math.ceil(volumeCft * 0.9);
+      const wastage = Math.ceil(sqft * 0.05);
+
       setRes({
+        type: "slab",
+        sqft,
         cement: cementBags,
         tmt: steelTons,
         sand: sandCft,
-        bricks: bricksCount,
-        wastage: wastage
+        aggregate: aggregateCft,
+        wastage
       });
-    } else {
-      alert("Please enter Length and Width");
+    } else if (calcType === "beam") {
+      if (!l || !w || !h) { alert("Please enter Length, Width and Thickness (Height)"); return; }
+      // w and h in inches, l in feet
+      const volumeCft = (l * (w / 12) * (h / 12));
+      const cementBags = Math.ceil(volumeCft * 0.8);
+      const steelKg = Math.round(volumeCft * 3.5); // Approx 3.5kg steel per cft for beams/columns
+      const sandCft = Math.ceil(volumeCft * 0.45);
+      const aggregateCft = Math.ceil(volumeCft * 0.9);
+
+      setRes({
+        type: "beam",
+        volumeCft: volumeCft.toFixed(2),
+        cement: cementBags,
+        steelKg,
+        sand: sandCft,
+        aggregate: aggregateCft
+      });
+    } else if (calcType === "redbrick" || calcType === "whiteblock") {
+      if (!l || !h) { alert("Please enter Wall Length and Height"); return; }
+      const sqft = l * h;
+      const wallThickness = tVal === 4 ? 4 : 9; // inches
+      const isWhite = calcType === "whiteblock";
+      
+      let count = 0;
+      if (isWhite) {
+        // AAC Block approx 1.15 blocks per sqft for 4 inch or 6 inch
+        count = Math.ceil(sqft * 1.15);
+      } else {
+        // Red bricks: approx 8 bricks per sqft for 4 inch, 16 for 9 inch
+        count = Math.ceil(sqft * (wallThickness === 4 ? 8 : 16));
+      }
+
+      const mortarBags = Math.ceil(sqft * 0.05);
+
+      setRes({
+        type: isWhite ? "whiteblock" : "redbrick",
+        sqft,
+        count,
+        mortarBags
+      });
+    } else if (calcType === "tiles") {
+      if (!l || !w) { alert("Please enter Room Length and Width"); return; }
+      const sqft = l * w;
+      const tilesCount = Math.ceil((sqft * 1.05) / 2.25); // assuming standard 1.5x1.5 ft (2.25 sqft) tile with 5% wastage
+      setRes({
+        type: "tiles",
+        sqft,
+        tilesCount
+      });
+    } else if (calcType === "paint") {
+      if (!l || !w || !ht) { alert("Please enter Room Length, Width and Height"); return; }
+      // Perimeter * Height = Wall Area + Ceiling Area (L*W)
+      const wallArea = (2 * (l + w) * ht);
+      const ceilingArea = l * w;
+      const totalArea = wallArea + ceilingArea - 50; // deducting doors/windows approx
+      const paintLitres = Math.ceil(totalArea / 110); // 1 litre covers ~110 sqft 2 coats
+      const puttyKg = Math.ceil(totalArea * 0.25);
+      const primerLitres = Math.ceil(totalArea / 150);
+
+      setRes({
+        type: "paint",
+        totalArea,
+        paintLitres,
+        puttyKg,
+        primerLitres
+      });
     }
   };
 
   return (
     <div className="space-y-6">
       <h2 className="font-display font-black text-3xl">{t.estimator}</h2>
+      
+      <div className="flex flex-wrap gap-1.5 bg-white border-2 border-orange-500 p-2 rounded-2xl shadow-sm">
+        <button onClick={()=>{setCalcType("slab"); setRes(null);}} className={`text-xs font-bold px-3 py-2 rounded-xl transition ${calcType==="slab"?'bg-orange-500 text-white':'bg-stone-100 text-stone-700'}`}>🏠 RCC Slab</button>
+        <button onClick={()=>{setCalcType("beam"); setRes(null);}} className={`text-xs font-bold px-3 py-2 rounded-xl transition ${calcType==="beam"?'bg-orange-500 text-white':'bg-stone-100 text-stone-700'}`}>🏛️ Beam & Column</button>
+        <button onClick={()=>{setCalcType("redbrick"); setRes(null);}} className={`text-xs font-bold px-3 py-2 rounded-xl transition ${calcType==="redbrick"?'bg-orange-500 text-white':'bg-stone-100 text-stone-700'}`}>🧱 Red Brick Wall</button>
+        <button onClick={()=>{setCalcType("whiteblock"); setRes(null);}} className={`text-xs font-bold px-3 py-2 rounded-xl transition ${calcType==="whiteblock"?'bg-orange-500 text-white':'bg-stone-100 text-stone-700'}`}>⬜ AAC White Block</button>
+        <button onClick={()=>{setCalcType("tiles"); setRes(null);}} className={`text-xs font-bold px-3 py-2 rounded-xl transition ${calcType==="tiles"?'bg-orange-500 text-white':'bg-stone-100 text-stone-700'}`}>🟫 Tiles</button>
+        <button onClick={()=>{setCalcType("paint"); setRes(null);}} className={`text-xs font-bold px-3 py-2 rounded-xl transition ${calcType==="paint"?'bg-orange-500 text-white':'bg-stone-100 text-stone-700'}`}>🎨 Paint & Color</button>
+      </div>
+
       <div className="bg-white border-2 border-orange-500 rounded-2xl p-6 space-y-4 shadow-sm">
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
           <div>
-            <label className="text-xs font-bold text-stone-600 block mb-1">Length (ft)</label>
+            <label className="text-xs font-bold text-stone-600 block mb-1">
+              {calcType === "paint" || calcType === "tiles" ? "Room Length (ft)" : calcType.includes("brick") || calcType === "whiteblock" ? "Wall Length (ft)" : "Length (ft)"}
+            </label>
             <input type="number" value={len} onChange={e=>setLen(e.target.value)} placeholder="e.g. 30" className="w-full border-2 rounded-lg p-2.5 text-sm outline-none" />
           </div>
           <div>
-            <label className="text-xs font-bold text-stone-600 block mb-1">Width (ft)</label>
-            <input type="number" value={wid} onChange={e=>setWid(e.target.value)} placeholder="e.g. 40" className="w-full border-2 rounded-lg p-2.5 text-sm outline-none" />
+            <label className="text-xs font-bold text-stone-600 block mb-1">
+              {calcType === "paint" || calcType === "tiles" ? "Room Width (ft)" : "Width / Breadth"}
+            </label>
+            <input type="number" value={wid} onChange={e=>setWid(e.target.value)} placeholder={calcType.includes("brick") || calcType === "whiteblock" ? "N/A" : "e.g. 40"} disabled={calcType.includes("brick") || calcType === "whiteblock"} className="w-full border-2 rounded-lg p-2.5 text-sm outline-none disabled:bg-stone-100" />
           </div>
           <div>
-            <label className="text-xs font-bold text-stone-600 block mb-1">Height (ft)</label>
+            <label className="text-xs font-bold text-stone-600 block mb-1">
+              {calcType.includes("brick") || calcType === "whiteblock" ? "Wall Height (ft)" : calcType === "beam" ? "Width (inch)" : calcType === "paint" ? "Ceiling Height (ft)" : "Height (ft)"}
+            </label>
             <input type="number" value={ht} onChange={e=>setHt(e.target.value)} placeholder="e.g. 10" className="w-full border-2 rounded-lg p-2.5 text-sm outline-none" />
           </div>
           <div>
-            <label className="text-xs font-bold text-stone-600 block mb-1">Thickness (inch)</label>
-            <select value={thk} onChange={e=>setThk(e.target.value)} className="w-full border-2 rounded-lg p-2.5 text-sm outline-none bg-white font-bold">
-              <option value="">Select Thickness</option>
-              <option value="4">4 inch</option>
-              <option value="6">6 inch</option>
-              <option value="8">8 inch</option>
-              <option value="10">10 inch</option>
-              <option value="12">12 inch</option>
-            </select>
+            <label className="text-xs font-bold text-stone-600 block mb-1">
+              {calcType === "beam" ? "Depth / Thickness (inch)" : calcType.includes("brick") || calcType === "whiteblock" ? "Wall Thickness" : "Thickness (inch)"}
+            </label>
+            {calcType.includes("brick") || calcType === "whiteblock" ? (
+              <select value={thk} onChange={e=>setThk(e.target.value)} className="w-full border-2 rounded-lg p-2.5 text-sm outline-none bg-white font-bold">
+                <option value="4">4 inch Wall</option>
+                <option value="9">9 inch Wall</option>
+              </select>
+            ) : calcType === "beam" ? (
+              <input type="number" value={thk} onChange={e=>setThk(e.target.value)} placeholder="e.g. 12" className="w-full border-2 rounded-lg p-2.5 text-sm outline-none" />
+            ) : (
+              <select value={thk} onChange={e=>setThk(e.target.value)} className="w-full border-2 rounded-lg p-2.5 text-sm outline-none bg-white font-bold">
+                <option value="4">4 inch</option>
+                <option value="6">6 inch</option>
+                <option value="8">8 inch</option>
+                <option value="10">10 inch</option>
+                <option value="12">12 inch</option>
+              </select>
+            )}
           </div>
         </div>
-        <button onClick={calculateEstimate} className="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 rounded-xl shadow">Calculate with Wastage & Requirements</button>
+        <button onClick={calculateEstimate} className="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 rounded-xl shadow">Calculate Professional Estimate</button>
       </div>
-      {res && (
+
+      {res && res.type === "slab" && (
         <div className="bg-amber-50 border-2 border-orange-500 rounded-2xl p-5 space-y-4">
+          <div className="text-xs font-bold text-orange-800 uppercase">🏠 RCC Slab Calculation Result ({res.sqft} Sq. Ft.)</div>
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
             <Stat label="Cement Bags" val={res.cement} />
             <Stat label="TMT Steel (Tons)" val={res.tmt} />
             <Stat label="Sand (CFT)" val={res.sand} />
-            <Stat label="Bricks / Blocks" val={res.bricks} />
-            <Stat label="Estimated Wastage (5%)" val={`${res.wastage} units`} />
+            <Stat label="Aggregate 20mm (CFT)" val={res.aggregate} />
+            <Stat label="Estimated Wastage (5%)" val={`${res.wastage} sq.ft`} />
+          </div>
+        </div>
+      )}
+
+      {res && res.type === "beam" && (
+        <div className="bg-amber-50 border-2 border-orange-500 rounded-2xl p-5 space-y-4">
+          <div className="text-xs font-bold text-orange-800 uppercase">🏛️ Beam & Column Calculation Result ({res.volumeCft} CFT)</div>
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+            <Stat label="Cement Bags" val={res.cement} />
+            <Stat label="TMT Steel (Kg)" val={`${res.steelKg} Kg`} />
+            <Stat label="Sand (CFT)" val={res.sand} />
+            <Stat label="Aggregate 20mm (CFT)" val={res.aggregate} />
+          </div>
+        </div>
+      )}
+
+      {res && (res.type === "redbrick" || res.type === "whiteblock") && (
+        <div className="bg-amber-50 border-2 border-orange-500 rounded-2xl p-5 space-y-4">
+          <div className="text-xs font-bold text-orange-800 uppercase">🧱 {res.type === "whiteblock" ? "AAC White Block Wall" : "Red Brick Wall"} Calculation ({res.sqft} Sq. Ft.)</div>
+          <div className="grid grid-cols-2 sm:grid-cols-2 gap-3">
+            <Stat label={res.type === "whiteblock" ? "White Blocks Needed" : "Red Bricks Needed"} val={res.count} />
+            <Stat label="Mortar Joint Bags" val={res.mortarBags} />
+          </div>
+        </div>
+      )}
+
+      {res && res.type === "tiles" && (
+        <div className="bg-amber-50 border-2 border-orange-500 rounded-2xl p-5 space-y-4">
+          <div className="text-xs font-bold text-orange-800 uppercase">🟫 Tiles Calculation ({res.sqft} Sq. Ft. with 5% Wastage)</div>
+          <div className="grid grid-cols-1 sm:grid-cols-1 gap-3">
+            <Stat label="Total Tiles (Standard 1.5x1.5 ft)" val={res.tilesCount} />
+          </div>
+        </div>
+      )}
+
+      {res && res.type === "paint" && (
+        <div className="bg-amber-50 border-2 border-orange-500 rounded-2xl p-5 space-y-4">
+          <div className="text-xs font-bold text-orange-800 uppercase">🎨 Paint & Color Estimator (~{res.totalArea} Sq. Ft. Surface Area)</div>
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+            <Stat label="Emulsion Paint (Litres - 2 Coats)" val={`${res.paintLitres} L`} />
+            <Stat label="Wall Putty (Kg)" val={`${res.puttyKg} Kg`} />
+            <Stat label="Primer (Litres)" val={`${res.primerLitres} L`} />
           </div>
         </div>
       )}
@@ -1858,7 +1998,7 @@ function LoyaltyScreen({ orders }) {
 function EmiScreen() {
   const [amt, setAmt] = useState("100000"); const [m, setM] = useState("6");
   const emi = Math.round((parseFloat(amt)||0) / (parseInt(m)||1));
-  return (<div className="space-y-4"><h2 className="font-display font-black text-3xl">EMI Calculator</h2><div className="bg-white border-2 rounded-2xl p-5 space-y-3"><input type="number" value={amt} onChange={e=>setAmt(e.target.value)} placeholder="Amount" className="w-full border-2 rounded p-3 font-bold text-lg" /><input type="number" value={m} onChange={e=>setM(e.target.value)} placeholder="Months" className="w-full border-2 rounded p-3" /></div><div className="bg-emerald-700 text-white rounded-2xl p-6"><div className="text-xs uppercase">Monthly EMI</div><div className="font-black text-4xl mt-1">₹{emi.toLocaleString()}</div></div></div>);
+  return (<div className="space-y-4"><h2 className="font-display font-black text-3xl">EMI Calculator</h2><div className="bg-white border-2 rounded-2xl p-5 space-y-3"><input type="number" value={amt} onChange={e=>setAmt(e.target.value)} placeholder="Amount" className="w-full border-2 rounded p-3 font-bold text-lg" /><input type="number" value={m} onChange={e=>setM(m.target.value)} placeholder="Months" className="w-full border-2 rounded p-3" /></div><div className="bg-emerald-700 text-white rounded-2xl p-6"><div className="text-xs uppercase">Monthly EMI</div><div className="font-black text-4xl mt-1">₹{emi.toLocaleString()}</div></div></div>);
 }
 
 const MailIcon = () => (
