@@ -853,7 +853,11 @@ function printTaxInvoiceDocument(inv, isChallan = false, currentBank = DEFAULT_B
     kantaLbl: "Weighbridge / Kanta Slip:"
   };
 
-  const html = `<!doctype html><html><head><meta charset="utf-8"/><title>${isChallan ? labels.titleChallan : labels.titleInv} - ${inv.id}</title><style>body { font-family: Arial, sans-serif; padding: 20px; color: #111; max-width: 800px; margin: auto; } .header { border-bottom: 3px solid #ea580c; padding-bottom: 10px; display: flex; justify-content: space-between; } table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 13px; } th, td { border: 1px solid #cbd5e1; padding: 8px; text-align: left; } th { background: #0A1931; color: #fff; } .text-right { text-align: right; }</style></head><body>
+  const html = `<!doctype html><html><head><meta charset="utf-8"/><title>${isChallan ? labels.titleChallan : labels.titleInv} - ${inv.id}</title><style>body { font-family: Arial, sans-serif; padding: 20px; color: #111; max-width: 800px; margin: auto; } .no-print { margin-bottom: 20px; display: flex; gap: 10px; } @media print { .no-print { display: none; } } .header { border-bottom: 3px solid #ea580c; padding-bottom: 10px; display: flex; justify-content: space-between; } table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 13px; } th, td { border: 1px solid #cbd5e1; padding: 8px; text-align: left; } th { background: #0A1931; color: #fff; } .text-right { text-align: right; }</style></head><body>
+  <div class="no-print">
+    <button onclick="window.print()" style="background:#0A1931; color:#fff; border:none; padding:10px 20px; font-weight:bold; border-radius:6px; cursor:pointer;">🖨️ Download PDF / Print</button>
+    <button onclick="navigator.share ? navigator.share({title:'Invoice ${inv.id}', text:'Invoice #${inv.id} for ${inv.customer} - ₹${grand}', url:window.location.href}).catch(()=>{alert('Share not supported');}) : alert('Share not supported')" style="background:#ea580c; color:#fff; border:none; padding:10px 20px; font-weight:bold; border-radius:6px; cursor:pointer;">🔗 Share Bill</button>
+  </div>
   <div class="header"><div><h1 style="margin:0; color:#0A1931;">${profile.name || 'AS Enterprises'}</h1><div>Wholesale Building Materials Supply — ${profile.address || 'Hyderabad'}</div><div>GSTIN: <b>${profile.gstin || 'UNREGISTERED'}</b> · Ph: ${CFG.phone}</div></div><div style="text-align:right;"><strong>${isChallan ? labels.titleChallan : labels.titleInv}</strong><br/>No: ${inv.id}<br/>Date: ${new Date(inv.date).toLocaleString('en-IN')}</div></div>
   <p><strong>${labels.billedTo}</strong> ${inv.customer} (Ph: ${inv.phone})<br/><strong>${labels.site}</strong> ${inv.address} | <strong>${labels.vehicle}</strong> ${inv.vehicle}</p>
   <table><thead><tr><th>${labels.sno}</th><th>${labels.desc}</th><th class="text-right">${labels.qty}</th>${!isChallan ? `<th class="text-right">${labels.rate}</th><th class="text-right">${labels.amt}</th>` : ''}</tr></thead>
@@ -2191,7 +2195,7 @@ function GalleryScreen({ gallery, setGallery }) {
 function LoyaltyScreen({ orders }) {
   const pts = orders.reduce((s,o)=>s+(o.loyalty||0),0);
   return (<div className="space-y-4"><h2 className="font-display font-black text-3xl">Mistri Loyalty</h2><div className="bg-gradient-to-br from-amber-400 to-yellow-600 text-white rounded-2xl p-6 shadow"><div className="text-xs uppercase opacity-80">Total Points</div><div className="font-display font-black text-5xl mt-1">{pts}</div></div></div>);
-  }
+}
 function EmiScreen() {
   const [amt, setAmt] = useState("100000"); const [m, setM] = useState("6");
   const emi = Math.round((parseFloat(amt)||0) / (parseInt(m)||1));
