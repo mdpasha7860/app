@@ -70,7 +70,7 @@ const getHeadline = () => localStorage.getItem("bannerText") || "";
 const T = {
   EN: { b:"Build Stronger. Order Smarter.", c:"Cart", s:"Same-Day Delivery", w:"Wholesale Khata", g:"Brand Catalog", f:"Free Estimate", zip:"Download Full Site Backup", home:"Home", search:"Search Sariya, Cement, Sand, Bricks...", login:"Login", logout:"Logout", orders:"My Orders", admin:"Admin", call:"Call Now", wa:"WhatsApp", cart:"Cart", buy:"Add to Cart", total:"Total", checkout:"Place Order", address:"Delivery Address", cod:"Cash on Delivery", upi:"Pay via UPI", confirm:"Confirm Order", noResults:"No materials found. Add inventory from Admin Panel.", tracker:"Live Order Tracker", khata:"Wholesale Khata", catalog:"Brand Catalog", estimator:"AI Pro Estimator", welcome:"Welcome", mobile:"Mobile Number", otp:"Enter OTP", sendOtp:"Send OTP", verify:"Verify & Login", pinLbl:"Admin Access", changeUpi:"Change UPI ID", currentUpi:"Current UPI", saveUpi:"Save UPI", zipInfo:"Full backup file", qty:"Qty (Weight)", stock:"In Stock", cat:"Category", all:"All", tmt:"Sariya (TMT)", cement:"Cement", sand:"Sand & Aggregate", brick:"Bricks", tools:"Tools", empty:"Cart is empty", noord:"No orders yet", ordid:"Order", status:"Status", pending:"Pending", scan:"Scan QR to Pay", payto:"Pay to", est:"Enter dimensions to estimate", len:"Length (ft)", wid:"Width (ft)", ht:"Height (ft)", need:"You need approx", bags:"bags of Cement", tons:"tons of Sariya", cft:"cft of Sand", bricks:"Bricks (approx)", calc:"Calculate", ledger:"Ledger", customer:"Customer", amt:"Amount", add:"Add Entry", credit:"Credit", debit:"Debit", note:"Note", del:"Delete", eta:"ETA Today", driver:"Driver", low:"LOW STOCK", tick:"★ Same-Day Delivery Across Hyderabad • Wholesale Rates • Genuine Brands • Instant WhatsApp Estimates ★" },
   HI: { b:"मजबूत बनाएं। स्मार्ट ऑर्डर करें।", c:"टोकरी", s:"आज डिलीवरी", w:"थोक खाता", g:"ब्रांड कैटलॉग", f:"फ्री एस्टीमेट", zip:"साइट बैकअप डाउनलोड करें", home:"होम", search:"सरिया, सीमेंट, रेत, ईंट खोजें...", login:"लॉगिन", logout:"लॉगआउट", orders:"मेरे ऑर्डर", admin:"एडमिन", call:"कॉल करें", wa:"व्हाट्सएप", cart:"टोकरी", buy:"जोड़ें", total:"कुल", checkout:"ऑर्डर करें", address:"पता", cod:"कैश ऑन डिलीवरी", upi:"UPI से भुगतान", confirm:"पुष्टि करें", noResults:"सामान नहीं मिला। एडमिन पैनल से स्टॉक जोड़ें।", tracker:"लाइव ऑर्डर ट्रैकर", khata:"थोक खाता", catalog:"ब्रांड कैटलॉग", estimator:"AI प्रो एस्टीमेटर", welcome:"स्वागत है", mobile:"मोबाइल नंबर", otp:"OTP दर्ज करें", sendOtp:"OTP भेजें", verify:"वेरीफाई करें", pinLbl:"एडमिन एक्सेस", changeUpi:"UPI बदलें", currentUpi:"मौजूदा UPI", saveUpi:"UPI सेव करें", zipInfo:"पूरा बैकअप", qty:"वज़न (किलो / बैग)", stock:"स्टॉक में", cat:"श्रेणी", all:"सभी", tmt:"सरिया (TMT)", cement:"सीमेंट", sand:"रेत/गिट्टी", brick:"ईंट", tools:"औजार", empty:"टोकरी खाली", noord:"कोई ऑर्डर नहीं", ordid:"ऑर्डर", status:"स्थिति", pending:"लंबित", scan:"QR स्कैन करें", payto:"भुगतान", est:"माप डालें", len:"लंबाई (फीट)", wid:"चौड़ाई (फीट)", ht:"ऊंचाई (फीट)", need:"आपको चाहिए", bags:"सीमेंट बैग", tons:"टन सरिया", cft:"cft रेत", bricks:"ईंटें", calc:"गणना करें", ledger:"बही", customer:"ग्राहक", amt:"राशि", add:"जोड़ें", credit:"जमा", debit:"नाम", note:"नोट", del:"हटाएं", eta:"आज पहुंचेगा", driver:"ड्राइवर", low:"स्टॉक कम", tick:"★ हैदराबाद में आज ही डिलीवरी • थोक रेट • असली ब्रांड • इंस्टेंट व्हाट्सएप एस्टीमेट ★" },
-  TE: { b:"బలంగా నిర్మించండి. తెలివిగా ఆర్డర్ చేయండి.", c:"బుట్ట", s:"ఈరోజే డెలివరీ", w:"హోల్‌సేల్ ఖాతా", g:"బ్రాండ్ కేటలాగ్", f:"ఉచిత అంచనా", zip:"బ్యాకప్ డౌన్‌లోడ్", home:"హోమ్", search:"సరియా, సిమెంట్, ఇసుక, ఇటుకలు...", login:"లాగిన్", logout:"లాగౌట్", orders:"నా ఆర్డర్లు", admin:"అడ్మిన్", call:"కాల్ చేయండి", wa:"వాట్సాప్", cart:"బుట్ట", buy:"జోడించు", మొత్తం:"మొత్తం", checkout:"ఆర్డర్ చేయండి", address:"చిరునామా", cod:"క్యాష్ ఆన్ డెలివరీ", upi:"UPI చెల్లింపు", confirm:"నిర్ధారించండి", noResults:"సరుకులు లేవు. అడ్మిన్ ప్యానెల్ నుండి జోడించండి.", tracker:"లైవ్ ఆర్డర్ ట్రాకర్", khata:"హోల్‌సేల్ ఖాతా", catalog:"బ్రాండ్ కేటలాగ్", estimator:"AI ప్రో ఎস্টিమేటర్", welcome:"స్వాగతం", mobile:"మొబైల్ నంబర్", otp:"OTP నమోదు", sendOtp:"OTP పంపండి", verify:"వెరిఫై చేయండి", pinLbl:"అడ్మిన్ యాక్సెస్", changeUpi:"UPI మార్చండి", currentUpi:"ప్రస్తుత UPI", saveUpi:"UPI సేవ్ చేయండి", zipInfo:"పూర్తి బ్యాకప్", qty:"పరిమాణం (కిలోలు)", stock:"స్టాక్‌లో", cat:"వర్గం", all:"అన్నీ", tmt:"సరియా (TMT)", cement:"సిమెంట్", sand:"ఇసుక/కంకర", brick:"ఇటుకలు", tools:"పరికరాలు", empty:"బుట్ట ఖాళీ", noord:"ఆర్డర్లు లేవు", ordid:"ఆర్డర్", status:"స్థితి", pending:"పెండింగ్", scan:"QR స్కాన్ చేయండి", payto:"చెల్లింపు", est:"కొలతలు ఇవ్వండి", len:"పొడవు (అడుగు)", wid:"వెడల్పు (అడుగు)", ht:"ఎత్తు (అడుగు)", need:"కావాలి", bags:"సిమెంట్ బస్తాలు", tons:"టన్నుల సరియా", cft:"cft ఇసుక", bricks:"ఇటుకలు", calc:"లెక్కించండి", ledger:"లెడ్జర్", customer:"కస్టమర్", amt:"మొత్తం", add:"జోడించు", credit:"క్రెడిట్", debit:"డెబిట్", note:"నోట్", del:"తొలగించు", eta:"ఈరోజు", driver:"డ్రైవర్", low:"స్టాక్ తక్కువ", tick:"★ హైదరాబాద్‌లో ఈరోజే డెలివరీ • హోల్‌సేల్ రేట్లు • అసలైన బ్రాండ్ • తక్షణ వాట్సాప్ అంచనా ★" }
+  TE: { b:"బలంగా నిర్మించండి. తెలివిగా ఆర్డర్ చేయండి.", c:"బుట్ట", s:"ఈరోజే డెలివరీ", w:"హోల్‌సేల్ ఖాతా", g:"బ్రాండ్ కేటలాగ్", f:"ఉచిత అంచనా", zip:"బ్యాకప్ డౌన్‌లోడ్", home:"హోమ్", search:"సరియా, సిమెంట్, ఇసుక, ఇటుకలు...", login:"లాగిన్", logout:"లాగౌట్", orders:"నా ఆర్డర్లు", admin:"అడ్మిన్", call:"కాల్ చేయండి", wa:"వాట్సాప్", cart:"బుట్ట", buy:"జోడించు", మొత్తం:"మొత్తం", checkout:"ఆర్డర్ చేయండి", address:"చిరునామా", cod:"క్యాష్ ఆన్ డెలివరీ", upi:"UPI చెల్లింపు", confirm:"నిర్ధారించండి", noResults:"సరుకులు లేవు. అడ్మిన్ ప్యానెల్ నుండి జోడించండి.", tracker:"లైవ్ ఆర్డర్ ట్రాకర్", khata:"హోల్‌సేల్ ఖాతా", catalog:"బ్రాండ్ కేటలాగ్", estimator:"AI ప్రో ఎস্টিమేటర్", welcome:"స్వాగతం", mobile:"మొబైల్ నంబర్", otp:"OTP నమోదు", sendOtp:"OTP పంపండి", verify:"వెరిఫై చేయండి", pinLbl:"అడ్మిన్ యాక్సెస్", changeUpi:"UPI మార్చండి", currentUpi:"ప్రస్తుత UPI", saveUpi:"UPI సేవ్ చేయండి", zipInfo:"పూర్తి బ్యాకప్", qty:"పరిమాణం (కిలోలు)", stock:"స్టాక్‌లో", cat:"వర్గం", all:"అన్నీ", tmt:"సరియా (TMT)", cement:"సిమెంట్", sand:"ఇసుక/కంకర", brick:"ఇటుకలు", tools:"పరికరాలు", empty:"బుట్ట ఖాళీ", noord:"ఆర్డర్లు లేవు", ordid:"ఆర్డర్", status:"స్థితి", pending:"పెండింగ్", scan:"QR స్కాన్ చేయండి", payto:"చెల్లింపు", est:"కొలతలు ఇవ్వండి", len:"పొడవు (అడుగు)", wid:"వెడల్పు (అడుగు)", ht:"ఎత్తు (అడుగు)", need:"కావాలి", bags:"సిమెంట్ బస్తాలు", tons:"టన్నుల సరియా", cft:"cft ఇసుక", bricks:"ఇటుకలు", calc:"లెక్కించండి", ledger:"లెడ్జర్", customer:"కస్టమర్", amt:"మొత్తం", add:"జోడించు", credit:"క్రెడిట్", debit:"డెబిట్", note:"నోట్", del:"తొలగించు", eta:"ఈరోజు", driver:"డ్రाइवर", low:"స్టాక్ తక్కువ", tick:"★ హైదరాబాద్‌లో ఈరోజే డెలివరీ • హోల్‌సేల్ రేట్లు • అసలైన బ్రాండ్ • తక్షణ వాట్సాప్ అంచనా ★" }
 };
 
 const MAP = { sariya:'tmt', saria:'tmt', steel:'tmt', rod:'tmt', tmt:'tmt', cement:'cement', simenti:'cement', ppc:'cement', opc:'cement', ret:'sand', balu:'sand', sand:'sand', isuka:'sand', metal:'sand', aggregate:'sand', gitti:'sand', brick:'brick', eent:'brick', itukalu:'brick', block:'brick', wire:'tools', tool:'tools' };
@@ -437,11 +437,8 @@ export default function App() {
 
       <footer className="border-t-4 border-orange-500 py-6 mt-8" style={{ backgroundColor: "#0A1931" }}>
         <div className="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-white/70">
-          <div className="font-bold">© 2026 {CFG.brand}. All rights reserved. Hyderabad, Telangana.</div>
-          <div className="flex gap-4">
-            <button onClick={() => go("admin")} className="flex items-center gap-1 hover:text-orange-400"><Shield size={12} /> {t.admin}</button>
-            <a href={`tel:${CFG.phone.replace(/\s/g,'')}`} className="hover:text-orange-400">{CFG.phone}</a>
-          </div>
+          <div className="font-display font-black text-white">{CFG.brand}</div>
+          <div className="text-white/60">© 2026 AS Enterprises. All rights reserved.</div>
         </div>
       </footer>
     </div>
@@ -838,6 +835,8 @@ function printTaxInvoiceDocument(inv, isChallan = false, currentBank = DEFAULT_B
   </tbody></table>
   
   ${inv.kantaImg ? `<div style="margin-top:15px; padding:10px; border:1px solid #cbd5e1; background:#f8fafc;"><strong>${labels.kantaLbl}</strong><div style="margin-top:5px;"><img src="${inv.kantaImg}" style="max-height:180px; max-width:100%; object-fit:contain; border-radius:6px; border:1px solid #94a3b8;" alt="Weighbridge Slip"/></div></div>` : ''}
+  
+  ${inv.uploadedPdf ? `<div style="margin-top:15px; padding:10px; border:1px solid #16a34a; background:#f0fdf4;"><strong>Attached Invoice / Document File:</strong> <a href="${inv.uploadedPdf}" target="_blank" style="color:#16a34a; font-weight:bold;">View Uploaded File</a></div>` : ''}
 
   ${!isChallan ? `<div style="margin-top:15px; font-size:12px; background:#f8fafc; padding:10px; border:1px solid #cbd5e1; display:flex; justify-content:space-between; align-items:center;"><div>${labels.bankLbl} A/c Holder: <b>${bank.accountHolder || 'AS Enterprises'}</b> | Bank: <b>${bank.bankName}</b> | A/c: <b>${bank.accNo}</b> | IFSC: <b>${bank.ifsc}</b> | UPI: <b>${getUPI()}</b></div><div style="text-align:right;"><img src="https://api.qrserver.com/v1/create-qr-code/?size=80x80&data=upi://pay?pa=${encodeURIComponent(getUPI())}%26pn=${encodeURIComponent(bank.accountHolder || 'AS Enterprises')}%26am=${totalPayable > 0 ? totalPayable : grand}%26cu=INR" width="70" height="70" alt="QR"/></div></div>` : ''}
   <div style="margin-top:30px; display:flex; justify-content:space-between; font-size:12px;"><div>${labels.recvSign}<br/>${inv.signature ? `<img src="${inv.signature}" style="max-height:50px; margin-top:5px;" alt="Signature"/>` : ''}</div><div style="text-align:right;">For <b>${profile.name || 'AS Enterprises'}</b><br/><br/>${labels.authSign}</div></div>
@@ -939,11 +938,84 @@ function OrdersScreen({ t, orders, setOrders, upi, bankInfo, lang, setAdminTab, 
 
 function TrackerScreen({ t }) {
   const [loc, setLoc] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [err, setErr] = useState("");
+
+  const fetchLocation = () => {
+    setLoading(true);
+    setErr("");
+    if (!navigator.geolocation) {
+      setErr("Geolocation is not supported by your browser");
+      setLoading(false);
+      return;
+    }
+    navigator.geolocation.getCurrentPosition(
+      (p) => {
+        setLoc({ lat: p.coords.latitude, lng: p.coords.longitude });
+        setLoading(false);
+      },
+      (error) => {
+        setLoading(false);
+        switch (error.code) {
+          case error.PERMISSION_DENIED:
+            setErr("Location permission denied. Please allow location access in your browser settings.");
+            break;
+          case error.POSITION_UNAVAILABLE:
+            setErr("Location information is unavailable.");
+            break;
+          case error.TIMEOUT:
+            setErr("The request to get user location timed out.");
+            break;
+          default:
+            setErr("An unknown error occurred while getting location.");
+            break;
+        }
+      },
+      { enableHighAccuracy: true, timeout: 15000, maximumAge: 0 }
+    );
+  };
+
   return (
-    <div className="space-y-6">
-      <h2 className="font-display font-black text-3xl">Live Delivery GPS Tracker</h2>
-      <button onClick={() => { if(navigator.geolocation) navigator.geolocation.getCurrentPosition(p=>setLoc({lat:p.coords.latitude, lng:p.coords.longitude})); }} className="w-full bg-orange-500 text-white font-bold py-3 rounded-xl text-xs">Fetch Current Driver GPS Location</button>
-      {loc && <div className="p-3 bg-emerald-50 border rounded-xl text-xs">Lat: {loc.lat}, Lng: {loc.lng} <a href={`https://www.google.com/maps?q=${loc.lat},${loc.lng}`} target="_blank" rel="noreferrer" className="block text-blue-600 font-bold underline mt-1">Open in Google Maps</a></div>}
+    <div className="space-y-6 max-w-xl mx-auto bg-white border-2 border-orange-500 rounded-2xl p-6 shadow-md">
+      <div className="flex items-center gap-2 border-b pb-3">
+        <Navigation className="text-orange-600" size={24} />
+        <div>
+          <h2 className="font-display font-black text-xl sm:text-2xl text-stone-900">Live Delivery GPS Tracker</h2>
+          <p className="text-xs text-stone-500">Track delivery truck and get exact GPS coordinates instantly</p>
+        </div>
+      </div>
+
+      <button 
+        onClick={fetchLocation} 
+        disabled={loading}
+        className="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 rounded-xl text-sm flex items-center justify-center gap-2 shadow transition"
+      >
+        <Navigation size={16} className={loading ? "animate-spin" : ""} />
+        {loading ? "Detecting GPS Location..." : "Fetch Current Driver GPS Location"}
+      </button>
+
+      {err && (
+        <div className="p-3 bg-red-50 border-2 border-red-300 rounded-xl text-xs text-red-700 font-bold flex items-center gap-2">
+          <AlertTriangle size={16} className="flex-shrink-0" />
+          <span>{err}</span>
+        </div>
+      )}
+
+      {loc && (
+        <div className="p-4 bg-emerald-50 border-2 border-emerald-400 rounded-xl space-y-2">
+          <div className="text-xs font-bold text-emerald-800 uppercase">✓ GPS Location Found Successfully</div>
+          <div className="text-xs text-stone-700"><b>Latitude:</b> {loc.lat}</div>
+          <div className="text-xs text-stone-700"><b>Longitude:</b> {loc.lng}</div>
+          <a 
+            href={`https://www.google.com/maps?q=${loc.lat},${loc.lng}`} 
+            target="_blank" 
+            rel="noreferrer" 
+            className="block w-full text-center bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 rounded-lg text-xs transition mt-2 shadow"
+          >
+            🗺️ Open Live Location in Google Maps
+          </a>
+        </div>
+      )}
     </div>
   );
 }
@@ -1029,11 +1101,14 @@ function EstimatorScreen({ t }) {
       if (!l || !w) { alert("Please enter Length and Width"); return; }
       const sqft = l * w;
       const thicknessFt = tVal / 12;
-      const volumeCft = sqft * thicknessFt;
-      const cementBags = Math.ceil(volumeCft * 0.8); // Approx 0.8 bags per cft for M20
-      const steelTons = ((sqft * 0.4) / 1000).toFixed(2);
-      const sandCft = Math.ceil(volumeCft * 0.45);
-      const aggregateCft = Math.ceil(volumeCft * 0.9);
+      const wetVolumeCft = sqft * thicknessFt;
+      const dryVolumeCft = wetVolumeCft * 1.54; 
+      const cementCft = dryVolumeCft * (1 / 5.5);
+      const cementBags = Math.ceil(cementCft / 1.25);
+      const sandCft = Math.ceil(dryVolumeCft * (1.5 / 5.5));
+      const aggregateCft = Math.ceil(dryVolumeCft * (3 / 5.5));
+      const steelKg = sqft * 4.0;
+      const steelTons = (steelKg / 1000).toFixed(2);
       const wastage = Math.ceil(sqft * 0.05);
 
       setRes({
@@ -1046,17 +1121,18 @@ function EstimatorScreen({ t }) {
         wastage
       });
     } else if (calcType === "beam") {
-      if (!l || !w || !h) { alert("Please enter Length, Width and Thickness (Height)"); return; }
-      // w and h in inches, l in feet
-      const volumeCft = (l * (w / 12) * (h / 12));
-      const cementBags = Math.ceil(volumeCft * 0.8);
-      const steelKg = Math.round(volumeCft * 3.5); // Approx 3.5kg steel per cft for beams/columns
-      const sandCft = Math.ceil(volumeCft * 0.45);
-      const aggregateCft = Math.ceil(volumeCft * 0.9);
+      if (!l || !w || !h) { alert("Please enter Length, Width and Thickness"); return; }
+      const wetVolumeCft = (l * (w / 12) * (h / 12));
+      const dryVolumeCft = wetVolumeCft * 1.54;
+      const cementCft = dryVolumeCft * (1 / 5.5);
+      const cementBags = Math.ceil(cementCft / 1.25);
+      const sandCft = Math.ceil(dryVolumeCft * (1.5 / 5.5));
+      const aggregateCft = Math.ceil(dryVolumeCft * (3 / 5.5));
+      const steelKg = Math.round(wetVolumeCft * 4.5);
 
       setRes({
         type: "beam",
-        volumeCft: volumeCft.toFixed(2),
+        volumeCft: wetVolumeCft.toFixed(2),
         cement: cementBags,
         steelKg,
         sand: sandCft,
@@ -1065,15 +1141,13 @@ function EstimatorScreen({ t }) {
     } else if (calcType === "redbrick" || calcType === "whiteblock") {
       if (!l || !h) { alert("Please enter Wall Length and Height"); return; }
       const sqft = l * h;
-      const wallThickness = tVal === 4 ? 4 : 9; // inches
+      const wallThickness = tVal === 4 ? 4 : 9;
       const isWhite = calcType === "whiteblock";
       
       let count = 0;
       if (isWhite) {
-        // AAC Block approx 1.15 blocks per sqft for 4 inch or 6 inch
         count = Math.ceil(sqft * 1.15);
       } else {
-        // Red bricks: approx 8 bricks per sqft for 4 inch, 16 for 9 inch
         count = Math.ceil(sqft * (wallThickness === 4 ? 8 : 16));
       }
 
@@ -1088,7 +1162,7 @@ function EstimatorScreen({ t }) {
     } else if (calcType === "tiles") {
       if (!l || !w) { alert("Please enter Room Length and Width"); return; }
       const sqft = l * w;
-      const tilesCount = Math.ceil((sqft * 1.05) / 2.25); // assuming standard 1.5x1.5 ft (2.25 sqft) tile with 5% wastage
+      const tilesCount = Math.ceil((sqft * 1.05) / 2.25);
       setRes({
         type: "tiles",
         sqft,
@@ -1096,11 +1170,10 @@ function EstimatorScreen({ t }) {
       });
     } else if (calcType === "paint") {
       if (!l || !w || !ht) { alert("Please enter Room Length, Width and Height"); return; }
-      // Perimeter * Height = Wall Area + Ceiling Area (L*W)
       const wallArea = (2 * (l + w) * ht);
       const ceilingArea = l * w;
-      const totalArea = wallArea + ceilingArea - 50; // deducting doors/windows approx
-      const paintLitres = Math.ceil(totalArea / 110); // 1 litre covers ~110 sqft 2 coats
+      const totalArea = wallArea + ceilingArea - 50;
+      const paintLitres = Math.ceil(totalArea / 110);
       const puttyKg = Math.ceil(totalArea * 0.25);
       const primerLitres = Math.ceil(totalArea / 150);
 
@@ -1132,39 +1205,43 @@ function EstimatorScreen({ t }) {
           <div>
             <label className="text-xs font-bold text-stone-600 block mb-1">
               {calcType === "paint" || calcType === "tiles" ? "Room Length (ft)" : calcType.includes("brick") || calcType === "whiteblock" ? "Wall Length (ft)" : "Length (ft)"}
+              <span className="block text-[10px] text-orange-600 font-semibold">({calcType === "paint" || calcType === "tiles" ? "कमरे की लंबाई (फीट)" : calcType.includes("brick") || calcType === "whiteblock" ? "दीवार की लंबाई (फीट)" : "लंबाई (फीट)"})</span>
             </label>
-            <input type="number" value={len} onChange={e=>setLen(e.target.value)} placeholder="e.g. 30" className="w-full border-2 rounded-lg p-2.5 text-sm outline-none" />
+            <input type="number" value={len} onChange={e=>setLen(e.target.value)} placeholder="e.g. 50" className="w-full border-2 rounded-lg p-2.5 text-sm outline-none" />
           </div>
           <div>
             <label className="text-xs font-bold text-stone-600 block mb-1">
               {calcType === "paint" || calcType === "tiles" ? "Room Width (ft)" : "Width / Breadth"}
+              <span className="block text-[10px] text-orange-600 font-semibold">({calcType === "paint" || calcType === "tiles" ? "कमरे की चौड़ाई (फीट)" : "चौड़ाई / चौड़ाई (फीट)"})</span>
             </label>
-            <input type="number" value={wid} onChange={e=>setWid(e.target.value)} placeholder={calcType.includes("brick") || calcType === "whiteblock" ? "N/A" : "e.g. 40"} disabled={calcType.includes("brick") || calcType === "whiteblock"} className="w-full border-2 rounded-lg p-2.5 text-sm outline-none disabled:bg-stone-100" />
+            <input type="number" value={wid} onChange={e=>setWid(e.target.value)} placeholder={calcType.includes("brick") || calcType === "whiteblock" ? "N/A" : "e.g. 100"} disabled={calcType.includes("brick") || calcType === "whiteblock"} className="w-full border-2 rounded-lg p-2.5 text-sm outline-none disabled:bg-stone-100" />
           </div>
           <div>
             <label className="text-xs font-bold text-stone-600 block mb-1">
               {calcType.includes("brick") || calcType === "whiteblock" ? "Wall Height (ft)" : calcType === "beam" ? "Width (inch)" : calcType === "paint" ? "Ceiling Height (ft)" : "Height (ft)"}
+              <span className="block text-[10px] text-orange-600 font-semibold">({calcType.includes("brick") || calcType === "whiteblock" ? "दीवार की ऊँचाई (फीट)" : calcType === "beam" ? "चौड़ाई (इंच)" : calcType === "paint" ? "छत की ऊँचाई (फीट)" : "ऊँचाई (फीट)"})</span>
             </label>
             <input type="number" value={ht} onChange={e=>setHt(e.target.value)} placeholder="e.g. 10" className="w-full border-2 rounded-lg p-2.5 text-sm outline-none" />
           </div>
           <div>
             <label className="text-xs font-bold text-stone-600 block mb-1">
               {calcType === "beam" ? "Depth / Thickness (inch)" : calcType.includes("brick") || calcType === "whiteblock" ? "Wall Thickness" : "Thickness (inch)"}
+              <span className="block text-[10px] text-orange-600 font-semibold">({calcType === "beam" ? "गहराई / मोटाई (इंच)" : calcType.includes("brick") || calcType === "whiteblock" ? "दीवार की मोटाई" : "मोटाई (इंच)"})</span>
             </label>
             {calcType.includes("brick") || calcType === "whiteblock" ? (
               <select value={thk} onChange={e=>setThk(e.target.value)} className="w-full border-2 rounded-lg p-2.5 text-sm outline-none bg-white font-bold">
-                <option value="4">4 inch Wall</option>
-                <option value="9">9 inch Wall</option>
+                <option value="4">4 inch Wall (4 इंच दीवार)</option>
+                <option value="9">9 inch Wall (9 इंच दीवार)</option>
               </select>
             ) : calcType === "beam" ? (
               <input type="number" value={thk} onChange={e=>setThk(e.target.value)} placeholder="e.g. 12" className="w-full border-2 rounded-lg p-2.5 text-sm outline-none" />
             ) : (
               <select value={thk} onChange={e=>setThk(e.target.value)} className="w-full border-2 rounded-lg p-2.5 text-sm outline-none bg-white font-bold">
-                <option value="4">4 inch</option>
-                <option value="6">6 inch</option>
-                <option value="8">8 inch</option>
-                <option value="10">10 inch</option>
-                <option value="12">12 inch</option>
+                <option value="4">4 inch (4 इंच)</option>
+                <option value="6">6 inch (6 इंच)</option>
+                <option value="8">8 inch (8 इंच)</option>
+                <option value="10">10 inch (10 इंच)</option>
+                <option value="12">12 inch (12 इंच)</option>
               </select>
             )}
           </div>
@@ -1229,6 +1306,7 @@ function EstimatorScreen({ t }) {
     </div>
   );
 }
+
 const Stat = ({ label, val }) => (<div className="bg-white rounded-xl p-3 border-2 border-orange-200"><div className="font-display font-black text-2xl text-stone-900">{val}</div><div className="text-xs text-stone-600 font-bold">{label}</div></div>);
 
 function LoginScreen({ t, onLogin }) {
@@ -1291,6 +1369,7 @@ function AdminScreen({
   const [invFreight, setInvFreight] = useState("");
   const [invPaid, setInvPaid] = useState("");
   const [kantaImg, setKantaImg] = useState("");
+  const [uploadedPdf, setUploadedPdf] = useState("");
   const [signatureData, setSignatureData] = useState("");
 
   const customerPreviousDue = useMemo(() => {
@@ -1411,10 +1490,13 @@ function AdminScreen({
       ewayNo: invEway.trim(),
       items: billItems, taxable, discount: disc, freight, gst, grand: currentBillGrand, paid: paidAmt, due: newDueThisBill,
       previousDue: customerPreviousDue, totalPayable: totalPayableWithPrevious,
-      kantaImg, signature: signatureData, bankSnapshot: { ...bankInfo }
+      kantaImg, uploadedPdf, signature: signatureData, bankSnapshot: { ...bankInfo }
     };
 
-    setInvoices([newInv, ...invoices]);
+    const updatedInvoices = [newInv, ...invoices];
+    setInvoices(updatedInvoices);
+    ls.set("saved_invoices", updatedInvoices);
+
     if (newDueThisBill > 0) {
       setLedger([{ id: Date.now(), customer: invCust.trim(), phone: invPhone.trim(), amt: newDueThisBill, type: 'credit', note: `Bill #${newInv.id} Due (${activeProfile.name})`, date: new Date().toISOString() }, ...ledger]);
     }
@@ -1428,11 +1510,22 @@ function AdminScreen({
         msg += `\nPrevious Due: ₹${customerPreviousDue}\n*TOTAL PAYABLE: ₹${totalPayableWithPrevious}*`;
       }
       window.open(`https://wa.me/91${invPhone.replace(/\D/g,'').slice(-10)}?text=${encodeURIComponent(msg)}`, '_blank');
+    } else if (actionType === "share") {
+      if (navigator.share) {
+        navigator.share({
+          title: `Invoice ${newInv.id} - AS Enterprises`,
+          text: `Invoice #${newInv.id} for ${newInv.customer}. Grand Total: ₹${currentBillGrand}`,
+          url: window.location.href
+        }).catch(() => {});
+      } else {
+        alert("Web Share API not supported on this browser.");
+      }
     }
   };
 
   const TABS = [
     { k:"invoice_maker", n:"📄 Multi-GST Bill Maker" },
+    { k:"saved_invoices", n:"📁 Saved Invoices & Reports" },
     { k:"day_report", n:"📊 Day Report" },
     { k:"rates", n:"Inventory & Photos" },
     { k:"orders", n:"Orders" },
@@ -1454,6 +1547,60 @@ function AdminScreen({
       <div className="flex flex-wrap gap-2">{TABS.map(x => <button key={x.k} onClick={() => setAdminTab(x.k)} className={`text-xs font-bold px-3 py-2 rounded-full transition ${adminTab===x.k?'bg-orange-500 text-white shadow':'bg-white border-2'}`}>{x.n}</button>)}</div>
 
       {adminTab === "day_report" && <DayCloseReport invoices={invoices} expenses={expenses} />}
+
+      {adminTab === "saved_invoices" && (
+        <div className="bg-white border-2 border-orange-500 rounded-2xl p-5 space-y-4 shadow-sm">
+          <div className="flex justify-between items-center border-b pb-3">
+            <div>
+              <h3 className="font-display font-black text-lg text-stone-900">Saved Invoices & Monthly Records (महीने का पूरा रिकॉर्ड)</h3>
+              <p className="text-xs text-stone-500">All generated bills are saved here for CEO download or monthly GST export</p>
+            </div>
+            {invoices.length > 0 && (
+              <button onClick={() => {
+                downloadCSV("Monthly_Invoices_Export.csv", [
+                  ["Invoice ID", "Date", "Customer", "Phone", "Taxable", "GST", "Freight", "Grand Total", "Paid", "Balance Due"],
+                  ...invoices.map(i => [i.id, i.date, i.customer, i.phone, i.taxable, i.gst, i.freight, i.grand, i.paid, i.due])
+                ]);
+              }} className="bg-emerald-600 text-white text-xs font-bold px-3 py-2 rounded-xl flex items-center gap-1 shadow">
+                <FileSpreadsheet size={14} /> Export All to Excel/CSV (CEO)
+              </button>
+            )}
+          </div>
+
+          <div className="space-y-3 max-h-[500px] overflow-auto">
+            {invoices.length === 0 ? (
+              <div className="text-center py-12 text-stone-400 text-xs font-bold">No saved invoices yet. Create bills from the Bill Maker tab.</div>
+            ) : (
+              invoices.map(inv => (
+                <div key={inv.id} className="p-4 border-2 rounded-xl bg-stone-50 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+                  <div>
+                    <div className="text-xs font-black text-orange-600">{inv.id} · <span className="text-stone-900">{inv.customer}</span> ({inv.phone})</div>
+                    <div className="text-[11px] text-stone-600">Date: {new Date(inv.date).toLocaleString()} | Grand Total: <b>₹{inv.grand}</b> | Due: <span className="text-red-600 font-bold">₹{inv.due}</span></div>
+                    {inv.uploadedPdf && <div className="text-[10px] text-emerald-600 font-bold mt-1">✓ PDF/Document File Attached</div>}
+                  </div>
+                  <div className="flex flex-wrap items-center gap-2">
+                    <button onClick={() => printTaxInvoiceDocument(inv, false, bankInfo, lang, gstProfiles)} className="bg-stone-900 text-white text-xs font-bold px-3 py-1.5 rounded-lg flex items-center gap-1"><Printer size={13} /> Print</button>
+                    <button onClick={() => {
+                      if (navigator.share) {
+                        navigator.share({ title: `Invoice ${inv.id}`, text: `Invoice #${inv.id} for ${inv.customer} - ₹${inv.grand}`, url: window.location.href }).catch(()=>{});
+                      } else {
+                        alert("Share API not supported.");
+                      }
+                    }} className="bg-orange-500 text-white text-xs font-bold px-3 py-1.5 rounded-lg flex items-center gap-1"><Share2 size={13} /> Share</button>
+                    <button onClick={() => {
+                      if (confirm(`Delete invoice ${inv.id} from record?`)) {
+                        const updated = invoices.filter(x => x.id !== inv.id);
+                        setInvoices(updated);
+                        ls.set("saved_invoices", updated);
+                      }
+                    }} className="bg-red-50 text-red-600 p-2 rounded-lg hover:bg-red-100" title="Delete Bill Record"><Trash2 size={15} /></button>
+                  </div>
+                </div>
+              ))
+            )}
+          </div>
+        </div>
+      )}
 
       {adminTab === "invoice_maker" && (
         <div className="bg-white border-2 border-orange-500 rounded-2xl p-5 space-y-4 shadow-sm">
@@ -1617,8 +1764,9 @@ function AdminScreen({
             <div><label className="text-xs font-bold text-stone-600 block mb-1">Paid / Advance ₹</label><input type="number" value={invPaid} onChange={e=>setInvPaid(e.target.value)} placeholder="Enter paid amount..." className="w-full border-2 rounded-lg p-2 text-sm font-bold" /></div>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 p-3 bg-stone-50 border rounded-xl">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 p-3 bg-stone-50 border rounded-xl">
             <div><label className="text-xs font-bold text-stone-600 block mb-1">Weighbridge Slip</label><input type="file" accept="image/*" onChange={async(e)=>{if(e.target.files[0]) setKantaImg(await fileToDataURL(e.target.files[0]));}} className="w-full text-xs" /></div>
+            <div><label className="text-xs font-bold text-stone-600 block mb-1">Upload Invoice PDF / Doc</label><input type="file" accept="application/pdf,image/*" onChange={async(e)=>{if(e.target.files[0]) setUploadedPdf(await fileToDataURL(e.target.files[0]));}} className="w-full text-xs" /></div>
             <div><SignaturePad onSave={setSignatureData} /></div>
           </div>
 
@@ -1662,10 +1810,11 @@ function AdminScreen({
             );
           })()}
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 pt-2">
+          <div className="grid grid-cols-1 sm:grid-cols-4 gap-2 pt-2">
             <button onClick={() => handleCreateInvoice("print")} className="w-full bg-stone-900 text-white font-bold py-3 rounded-xl flex items-center justify-center gap-1.5 text-xs shadow"><Printer size={15} /> Print Tax Invoice</button>
             <button onClick={() => handleCreateInvoice("challan")} className="w-full bg-blue-700 text-white font-bold py-3 rounded-xl flex items-center justify-center gap-1.5 text-xs shadow"><Truck size={15} /> Gate Pass / Challan</button>
             <button onClick={() => handleCreateInvoice("wa")} className="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 rounded-xl flex items-center justify-center gap-1.5 text-xs shadow animate-pulse"><MessageCircle size={15} /> WhatsApp PDF Bill (Send)</button>
+            <button onClick={() => handleCreateInvoice("share")} className="w-full bg-orange-600 hover:bg-orange-700 text-white font-bold py-3 rounded-xl flex items-center justify-center gap-1.5 text-xs shadow"><Share2 size={15} /> Direct Share (Customer)</button>
           </div>
         </div>
       )}
