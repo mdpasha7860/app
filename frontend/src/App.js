@@ -853,10 +853,10 @@ function printTaxInvoiceDocument(inv, isChallan = false, currentBank = DEFAULT_B
     kantaLbl: "Weighbridge / Kanta Slip:"
   };
 
-  const html = `<!doctype html><html><head><meta charset="utf-8"/><title>${isChallan ? labels.titleChallan : labels.titleInv} - ${inv.id}</title><style>body { font-family: Arial, sans-serif; padding: 20px; color: #111; max-width: 800px; margin: auto; } .no-print { margin-bottom: 20px; display: flex; gap: 10px; } @media print { .no-print { display: none; } } .header { border-bottom: 3px solid #ea580c; padding-bottom: 10px; display: flex; justify-content: space-between; } table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 13px; } th, td { border: 1px solid #cbd5e1; padding: 8px; text-align: left; } th { background: #0A1931; color: #fff; } .text-right { text-align: right; }</style></head><body>
+  const html = `<!doctype html><html><head><meta charset="utf-8"/><title>${isChallan ? labels.titleChallan : labels.titleInv} - ${inv.id}</title><style>body { font-family: Arial, sans-serif; padding: 20px; color: #111; max-width: 800px; margin: auto; } .no-print { margin-bottom: 20px; display: flex; gap: 10px; flex-wrap: wrap; } @media print { .no-print { display: none; } } .header { border-bottom: 3px solid #ea580c; padding-bottom: 10px; display: flex; justify-content: space-between; } table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 13px; } th, td { border: 1px solid #cbd5e1; padding: 8px; text-align: left; } th { background: #0A1931; color: #fff; } .text-right { text-align: right; }</style></head><body>
   <div class="no-print">
-    <button onclick="window.print()" style="background:#0A1931; color:#fff; border:none; padding:10px 20px; font-weight:bold; border-radius:6px; cursor:pointer;">🖨️ Download PDF / Print</button>
-    <button onclick="navigator.share ? navigator.share({title:'Invoice ${inv.id}', text:'Invoice #${inv.id} for ${inv.customer} - ₹${grand}', url:window.location.href}).catch(()=>{alert('Share not supported');}) : alert('Share not supported')" style="background:#ea580c; color:#fff; border:none; padding:10px 20px; font-weight:bold; border-radius:6px; cursor:pointer;">🔗 Share Bill</button>
+    <button onclick="window.print()" style="background:#0A1931; color:#fff; border:none; padding:12px 20px; font-weight:bold; border-radius:6px; cursor:pointer; font-size:14px;">🖨️ Download PDF / Save as PDF</button>
+    <button onclick="window.open('https://wa.me/?text=' + encodeURIComponent('*${profile.name} - TAX INVOICE*\\nInvoice: ${inv.id}\\nCustomer: ${inv.customer}\\nGrand Total: ₹${grand}\\nBalance Due: ₹${due}'), '_blank')" style="background:#16a34a; color:#fff; border:none; padding:12px 20px; font-weight:bold; border-radius:6px; cursor:pointer; font-size:14px;">💬 Send Bill on WhatsApp</button>
   </div>
   <div class="header"><div><h1 style="margin:0; color:#0A1931;">${profile.name || 'AS Enterprises'}</h1><div>Wholesale Building Materials Supply — ${profile.address || 'Hyderabad'}</div><div>GSTIN: <b>${profile.gstin || 'UNREGISTERED'}</b> · Ph: ${CFG.phone}</div></div><div style="text-align:right;"><strong>${isChallan ? labels.titleChallan : labels.titleInv}</strong><br/>No: ${inv.id}<br/>Date: ${new Date(inv.date).toLocaleString('en-IN')}</div></div>
   <p><strong>${labels.billedTo}</strong> ${inv.customer} (Ph: ${inv.phone})<br/><strong>${labels.site}</strong> ${inv.address} | <strong>${labels.vehicle}</strong> ${inv.vehicle}</p>
@@ -1543,15 +1543,7 @@ function AdminScreen({
       window.open(`https://wa.me/91${invPhone.replace(/\D/g,'').slice(-10)}?text=${encodeURIComponent(msg)}`, '_blank');
     } else if (actionType === "share") {
       const summaryText = `*${activeProfile.name} - TAX INVOICE*\nInvoice: ${newInv.id}\nCustomer: ${newInv.customer}\nGrand Total: ₹${currentBillGrand}\nBalance Due: ₹${newDueThisBill}`;
-      if (navigator.share) {
-        navigator.share({
-          title: `Invoice ${newInv.id} - AS Enterprises`,
-          text: summaryText,
-          url: window.location.href
-        }).catch(() => {});
-      } else {
-        window.open(`https://wa.me/?text=${encodeURIComponent(summaryText)}`, '_blank');
-      }
+      window.open(`https://wa.me/?text=${encodeURIComponent(summaryText)}`, '_blank');
     }
   };
 
@@ -1633,11 +1625,7 @@ function AdminScreen({
                     <button onClick={() => printTaxInvoiceDocument(inv, false, bankInfo, lang, gstProfiles)} className="bg-stone-900 text-white text-xs font-bold px-3 py-1.5 rounded-lg flex items-center gap-1"><Printer size={13} /> Print</button>
                     <button onClick={() => {
                       const shareTxt = `*Invoice #${inv.id}* - ${inv.customer}\nGrand Total: ₹${inv.grand}\nBalance Due: ₹${inv.due}`;
-                      if (navigator.share) {
-                        navigator.share({ title: `Invoice ${inv.id}`, text: shareTxt, url: window.location.href }).catch(()=>{});
-                      } else {
-                        window.open(`https://wa.me/?text=${encodeURIComponent(shareTxt)}`, '_blank');
-                      }
+                      window.open(`https://wa.me/?text=${encodeURIComponent(shareTxt)}`, '_blank');
                     }} className="bg-orange-500 text-white text-xs font-bold px-3 py-1.5 rounded-lg flex items-center gap-1"><Share2 size={13} /> Share</button>
                     <button onClick={() => {
                       if (confirm(`Delete invoice ${inv.id} from record?`)) {
@@ -2102,7 +2090,7 @@ function AdminScreen({
               const updated = [newP, ...products];
               setProducts(updated);
               syncToFirestore(updated, workers, bankInfo, customers, expenses, workerLedger, gstProfiles);
-              alert("New item added successfully!");
+              alert("Screenshot/New item added successfully!");
             } else {
               alert("Please enter Name and Price");
             }
@@ -2179,7 +2167,7 @@ function AdminScreen({
             }} className="bg-emerald-700 text-white font-bold py-2 rounded text-xs">Export Sales</button>
             <button onClick={()=>{
               if(ledger.length===0){alert("No khata"); return;}
-              downloadCSV(`Khata.csv`, [["ID","Date","Customer","Amount","Type"], ...ledger.map(l=>[l.id,l.date,l.customer,l.amt,l.type])]);
+              downloadCSV(`Khata.csv`, [["ID","Date","Customer","Amount","Type"], ...ledger.map(l=>[l.id,l.date,l.customer,l.amt,l.type])], 2026);
             }} className="bg-amber-700 text-white font-bold py-2 rounded text-xs">Export Khata</button></div>
           </div>
           <div className="bg-red-50 border-2 border-red-500 rounded-2xl p-5"><button onClick={()=>{if(prompt("Enter PIN (6301) to reset:")==="6301"){setOrders([]); setInvoices([]); setLedger([]); setCustomers([]); setExpenses([]); setWorkerLedger(); localStorage.clear(); alert("Reset done!"); window.location.reload();}}} className="w-full bg-red-600 text-white font-black py-2.5 rounded text-xs">Factory Reset All Old Bills & Data</button></div>
@@ -2190,7 +2178,7 @@ function AdminScreen({
 }
 
 function GalleryScreen({ gallery, setGallery }) {
-  return (<div className="space-y-4"><h2 className="font-display font-black text-3xl">Gallery</h2><input type="file" accept="image/*" multiple onChange={async(e)=>{if(e.target.files.length){const d=await Promise.all(Array.from(e.target.files).map(f=>fileToDataURL(f))); setGallery([...d.map((x,i)=>({id:Date.now()+i, img:x})), ...gallery]);}}} className="w-full border-2 p-2 rounded" /><div className="grid grid-cols-3 gap-2">{gallery.map(g=>(<div key={g.id} className="relative aspect-square border rounded"><img src={g.img} alt="" className="w-full h-full object-cover" /><button onClick={()=>setGallery(gallery.filter(x=>x.id!==g.id))} className="absolute top-1 right-1 bg-red-600 text-white p-1 rounded-full"><Trash2 size={10}/></button></div>))}</div></div>);
+  return (<div className="space-y-4"><h2 className="font-display font-black text-3xl">Gallery</h2><input type="file" accept="image/*" multiple onChange={async(e)=>{if(e.target.files.length){const d=await Promise.all(Array.from(e.target.files).map(f=>fileToDataURL(f))); setGallery([...d.map((x,i)=>({id:Date.now()+i, img:x})), ...gallery]);}}} className="v-full border-2 p-2 rounded" /><div className="grid grid-cols-3 gap-2">{gallery.map(g=>(<div key={g.id} className="relative aspect-square border rounded"><img src={g.img} alt="" className="w-full h-full object-cover" /><button onClick={()=>setGallery(gallery.filter(x=>x.id!==g.id))} className="absolute top-1 right-1 bg-red-600 text-white p-1 rounded-full"><Trash2 size={10}/></button></div>))}</div></div>);
 }
 function LoyaltyScreen({ orders }) {
   const pts = orders.reduce((s,o)=>s+(o.loyalty||0),0);
