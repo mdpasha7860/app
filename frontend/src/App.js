@@ -17,7 +17,7 @@ const firebaseConfig = {
   apiKey: "AIzaSyCEtTaCAhkGUKGfWUQRTCj1xujnidgk2vI",
   authDomain: "as-enterprises-bd7f1.firebaseapp.com",
   projectId: "as-enterprises-bd7f1",
-  storageBucket: "as-enterprises-bd7f1.firebasestorage.app",
+  storageBucket: "as-enterprises-bd7f1.appspot.com",
   messagingSenderId: "667179272592",
   appId: "1:667179272592:web:56a95a9dfdb108bdee8b15"
 };
@@ -384,7 +384,7 @@ export default function App() {
         {screen === "login" && <LoginScreen t={t} onLogin={(u)=>{setUser(u); ls.set("userProfile", u); go("home");}} />}
         {screen === "admin" && (
           <AdminScreen 
-            t={t} unlocked={adminUnlocked} setUnlocked={setAdminUnlocked} 
+            t={t} unlocked={adminUnlocked} setUnlocked={setUnlocked} 
             upi={upi} saveUpi={saveUpi} downloadZip={downloadZip} 
             orders={orders} setOrders={setOrders} 
             products={products} setProducts={setProducts} 
@@ -1511,14 +1511,15 @@ function AdminScreen({
       }
       window.open(`https://wa.me/91${invPhone.replace(/\D/g,'').slice(-10)}?text=${encodeURIComponent(msg)}`, '_blank');
     } else if (actionType === "share") {
+      const summaryText = `*${activeProfile.name} - TAX INVOICE*\nInvoice: ${newInv.id}\nCustomer: ${newInv.customer}\nGrand Total: ₹${currentBillGrand}\nBalance Due: ₹${newDueThisBill}`;
       if (navigator.share) {
         navigator.share({
           title: `Invoice ${newInv.id} - AS Enterprises`,
-          text: `Invoice #${newInv.id} for ${newInv.customer}. Grand Total: ₹${currentBillGrand}`,
+          text: summaryText,
           url: window.location.href
         }).catch(() => {});
       } else {
-        alert("Web Share API not supported on this browser.");
+        window.open(`https://wa.me/?text=${encodeURIComponent(summaryText)}`, '_blank');
       }
     }
   };
@@ -1550,21 +1551,40 @@ function AdminScreen({
 
       {adminTab === "saved_invoices" && (
         <div className="bg-white border-2 border-orange-500 rounded-2xl p-5 space-y-4 shadow-sm">
-          <div className="flex justify-between items-center border-b pb-3">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b pb-3 gap-3">
             <div>
               <h3 className="font-display font-black text-lg text-stone-900">Saved Invoices & Monthly Records (महीने का पूरा रिकॉर्ड)</h3>
               <p className="text-xs text-stone-500">All generated bills are saved here for CEO download or monthly GST export</p>
             </div>
-            {invoices.length > 0 && (
-              <button onClick={() => {
-                downloadCSV("Monthly_Invoices_Export.csv", [
-                  ["Invoice ID", "Date", "Customer", "Phone", "Taxable", "GST", "Freight", "Grand Total", "Paid", "Balance Due"],
-                  ...invoices.map(i => [i.id, i.date, i.customer, i.phone, i.taxable, i.gst, i.freight, i.grand, i.paid, i.due])
-                ]);
-              }} className="bg-emerald-600 text-white text-xs font-bold px-3 py-2 rounded-xl flex items-center gap-1 shadow">
-                <FileSpreadsheet size={14} /> Export All to Excel/CSV (CEO)
-              </button>
-            )}
+            <div className="flex flex-wrap items-center gap-2">
+              {invoices.length > 0 && (
+                <>
+                  <button onClick={() => {
+                    const reportText = `*AS ENTERPRISES - MONTHLY INVOICES REPORT*\nTotal Bills: ${invoices.length}\nTotal Sales: ₹${invoices.reduce((s,i)=>s+(i.grand||0),0)}\nTotal Due: ₹${invoices.reduce((s,i)=>s+(i.due||0),0)}\n\n_Detailed CSV export also available for CEO._`;
+                    window.open(`https://wa.me/?text=${encodeURIComponent(reportText)}`, '_blank');
+                  }} className="bg-green-600 text-white text-xs font-bold px-3 py-2 rounded-xl flex items-center gap-1 shadow">
+                    <MessageCircle size={14} /> Share Monthly Report to CEO
+                  </button>
+                  <button onClick={() => {
+                    downloadCSV("Monthly_Invoices_Export.csv", [
+                      ["Invoice ID", "Date", "Customer", "Phone", "Taxable", "GST", "Freight", "Grand Total", "Paid", "Balance Due"],
+                      ...invoices.map(i => [i.id, i.date, i.customer, i.phone, i.taxable, i.gst, i.freight, i.grand, i.paid, i.due])
+                    ]);
+                  }} className="bg-emerald-600 text-white text-xs font-bold px-3 py-2 rounded-xl flex items-center gap-1 shadow">
+                    <FileSpreadsheet size={14} /> Export All to Excel/CSV
+                  </button>
+                  <button onClick={() => {
+                    if(confirm("Are you sure you want to delete/clear all saved monthly invoices and records?")) {
+                      setInvoices([]);
+                      ls.removeItem("saved_invoices");
+                      alert("All monthly invoice records cleared successfully!");
+                    }
+                  }} className="bg-red-600 text-white text-xs font-bold px-3 py-2 rounded-xl flex items-center gap-1 shadow">
+                    <Trash2 size={14} /> Clear / Delete All Records
+                  </button>
+                </>
+              )}
+            </div>
           </div>
 
           <div className="space-y-3 max-h-[500px] overflow-auto">
@@ -1581,10 +1601,11 @@ function AdminScreen({
                   <div className="flex flex-wrap items-center gap-2">
                     <button onClick={() => printTaxInvoiceDocument(inv, false, bankInfo, lang, gstProfiles)} className="bg-stone-900 text-white text-xs font-bold px-3 py-1.5 rounded-lg flex items-center gap-1"><Printer size={13} /> Print</button>
                     <button onClick={() => {
+                      const shareTxt = `*Invoice #${inv.id}* - ${inv.customer}\nGrand Total: ₹${inv.grand}\nBalance Due: ₹${inv.due}`;
                       if (navigator.share) {
-                        navigator.share({ title: `Invoice ${inv.id}`, text: `Invoice #${inv.id} for ${inv.customer} - ₹${inv.grand}`, url: window.location.href }).catch(()=>{});
+                        navigator.share({ title: `Invoice ${inv.id}`, text: shareTxt, url: window.location.href }).catch(()=>{});
                       } else {
-                        alert("Share API not supported.");
+                        window.open(`https://wa.me/?text=${encodeURIComponent(shareTxt)}`, '_blank');
                       }
                     }} className="bg-orange-500 text-white text-xs font-bold px-3 py-1.5 rounded-lg flex items-center gap-1"><Share2 size={13} /> Share</button>
                     <button onClick={() => {
