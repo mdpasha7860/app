@@ -383,28 +383,30 @@ export default function App() {
         {screen === "estimator" && <EstimatorScreen t={t} />}
         {screen === "login" && <LoginScreen t={t} onLogin={(u)=>{setUser(u); ls.set("userProfile", u); go("home");}} />}
         {screen === "admin" && (
-          <AdminScreen 
-            t={t} unlocked={adminUnlocked} setUnlocked={setUnlocked} 
-            upi={upi} saveUpi={saveUpi} downloadZip={downloadZip} 
-            orders={orders} setOrders={setOrders} 
-            products={products} setProducts={setProducts} 
-            workers={workers} setWorkers={setWorkers} 
-            customers={customers} setCustomers={setCustomers}
-            expenses={expenses} setExpenses={setExpenses}
-            setHeroImg={setHeroImg} setHeroTxt={setHeroTxt} 
-            heroImg={heroImg} heroTxt={heroTxt}
-            invoices={invoices} setInvoices={setInvoices}
-            ledger={ledger} setLedger={setLedger}
-            workerLedger={workerLedger} setWorkerLedger={setWorkerLedger}
-            bankInfo={bankInfo} setBankInfo={setBankInfo}
-            gstProfiles={gstProfiles} setGstProfiles={setGstProfiles}
-            lang={lang}
-            adminTab={adminTab} setAdminTab={setAdminTab}
-            invCust={invCust} setInvCust={setInvCust}
-            invPhone={invPhone} setInvPhone={setInvPhone}
-            invAddress={invAddress} setInvAddress={setInvAddress}
-            billItems={billItems} setBillItems={setBillItems}
-          />
+          <AdminErrorBoundary>
+            <AdminScreen 
+              t={t} unlocked={adminUnlocked} setUnlocked={setAdminUnlocked} 
+              upi={upi} saveUpi={saveUpi} downloadZip={downloadZip} 
+              orders={orders} setOrders={setOrders} 
+              products={products} setProducts={setProducts} 
+              workers={workers} setWorkers={setWorkers} 
+              customers={customers} setCustomers={setCustomers}
+              expenses={expenses} setExpenses={setExpenses}
+              setHeroImg={setHeroImg} setHeroTxt={setHeroTxt} 
+              heroImg={heroImg} heroTxt={heroTxt}
+              invoices={invoices} setInvoices={setInvoices}
+              ledger={ledger} setLedger={setLedger}
+              workerLedger={workerLedger} setWorkerLedger={setWorkerLedger}
+              bankInfo={bankInfo} setBankInfo={setBankInfo}
+              gstProfiles={gstProfiles} setGstProfiles={setGstProfiles}
+              lang={lang}
+              adminTab={adminTab} setAdminTab={setAdminTab}
+              invCust={invCust} setInvCust={setInvCust}
+              invPhone={invPhone} setInvPhone={setInvPhone}
+              invAddress={invAddress} setInvAddress={setInvAddress}
+              billItems={billItems} setBillItems={setBillItems}
+            />
+          </AdminErrorBoundary>
         )}
         {screen === "gallery" && <GalleryScreen gallery={gallery} setGallery={setGallery} />}
         {screen === "loyalty" && <LoyaltyScreen orders={orders} user={user} />}
@@ -443,6 +445,31 @@ export default function App() {
       </footer>
     </div>
   );
+}
+
+class AdminErrorBoundary extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { hasError: false };
+  }
+  static getDerivedStateFromError(error) {
+    return { hasError: true };
+  }
+  componentDidCatch(error, errorInfo) {
+    console.error("Admin Error:", error, errorInfo);
+  }
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div className="bg-white border-2 border-red-500 rounded-2xl p-6 text-center space-y-3">
+          <h3 className="font-bold text-red-600 text-lg">Admin Panel Safe Recovery</h3>
+          <p className="text-xs text-stone-600">Something prevented rendering. Click below to safely reload.</p>
+          <button onClick={() => { localStorage.removeItem("saved_invoices"); window.location.reload(); }} className="bg-orange-500 text-white font-bold px-4 py-2 rounded-xl text-xs">Reset & Reload Panel</button>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
 }
 
 const MenuItem = ({ icon: Icon, color, label, badge, onClick }) => (
@@ -2164,7 +2191,7 @@ function GalleryScreen({ gallery, setGallery }) {
 function LoyaltyScreen({ orders }) {
   const pts = orders.reduce((s,o)=>s+(o.loyalty||0),0);
   return (<div className="space-y-4"><h2 className="font-display font-black text-3xl">Mistri Loyalty</h2><div className="bg-gradient-to-br from-amber-400 to-yellow-600 text-white rounded-2xl p-6 shadow"><div className="text-xs uppercase opacity-80">Total Points</div><div className="font-display font-black text-5xl mt-1">{pts}</div></div></div>);
-}
+  }
 function EmiScreen() {
   const [amt, setAmt] = useState("100000"); const [m, setM] = useState("6");
   const emi = Math.round((parseFloat(amt)||0) / (parseInt(m)||1));
